@@ -38,8 +38,7 @@ class LibrarySplitViewController: SplitViewController, CollectionPresenting, Lim
     }
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        if viewControllerToPresent is UIImagePickerController
-            || viewControllerToPresent is PHPickerViewController {
+        if viewControllerToPresent.shouldOverrideInterfaceStyle {
             viewControllerToPresent.overrideUserInterfaceStyle = .dark
         }
         super.present(viewControllerToPresent, animated: flag, completion: completion)

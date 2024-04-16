@@ -58,6 +58,7 @@
 		044D4CFA2547D20900701166 /* Redacting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044D4C9B2547C8EE00701166 /* Redacting.framework */; };
 		044D4D042547D25600701166 /* Redacting.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 044D4C9B2547C8EE00701166 /* Redacting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		044D4D0C2547D4CC00701166 /* TextRecognitionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BEA3E22EF879700FF07C2 /* TextRecognitionOperation.swift */; };
+		0453A9BD2BCE3443007C9B9D /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453A9BC2BCE3443007C9B9D /* UIViewControllerExtensions.swift */; };
 		045CA3AA2771823D00DEA988 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CA3A92771823D00DEA988 /* URLExtensions.swift */; };
 		045CA3D827718E5D00DEA988 /* DesktopSeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CA3D727718E5D00DEA988 /* DesktopSeekViewController.swift */; };
 		045CA3DA27718F4400DEA988 /* DesktopSeekContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CA3D927718F4400DEA988 /* DesktopSeekContainerView.swift */; };
@@ -814,6 +815,7 @@
 		044EF9F627A66DD300ECAC5D /* PurchaseMarketingTopBarHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseMarketingTopBarHeadline.swift; sourceTree = "<group>"; };
 		044EF9F827A66DF200ECAC5D /* PurchaseMarketingTopBarSubheadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseMarketingTopBarSubheadline.swift; sourceTree = "<group>"; };
 		044EF9FE27A8E88600ECAC5D /* MenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBuilder.swift; sourceTree = "<group>"; };
+		0453A9BC2BCE3443007C9B9D /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		045CA3A92771823D00DEA988 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		045CA3D727718E5D00DEA988 /* DesktopSeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSeekViewController.swift; sourceTree = "<group>"; };
 		045CA3D927718F4400DEA988 /* DesktopSeekContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSeekContainerView.swift; sourceTree = "<group>"; };
@@ -1398,6 +1400,7 @@
 			isa = PBXGroup;
 			children = (
 				0429C7C12663852300236D10 /* ViewExtensions.swift */,
+				0453A9BC2BCE3443007C9B9D /* UIViewControllerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3270,6 +3273,7 @@
 				04634DC22A05190900569D5C /* PhotoLibraryDataSourceExtraItemsProvider.swift in Sources */,
 				04634DC32A05190900569D5C /* PhotoLibraryItem.swift in Sources */,
 				04634DC42A05190900569D5C /* PhotoLibraryView.swift in Sources */,
+				0453A9BD2BCE3443007C9B9D /* UIViewControllerExtensions.swift in Sources */,
 				04634DC52A05190900569D5C /* PhotoLibraryViewController.swift in Sources */,
 				04634DC62A05190900569D5C /* PhotoLibraryViewLayout.swift in Sources */,
 				04634DC72A05190900569D5C /* DocumentScanButton.swift in Sources */,
