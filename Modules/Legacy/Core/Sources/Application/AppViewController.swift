@@ -28,7 +28,7 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
     private var preferredViewController: UIViewController {
         switch permissionsRequester.authorizationStatus() {
         case .authorized, .limited: return LibrarySplitViewController()
-        default: return IntroViewController()
+        default: return NavigationController(rootViewController: IntroViewController())
         }
     }
 
