@@ -1,4 +1,4 @@
-git_url "git@git.pado.name:pado/certificates.git"
+git_url "git@github.com:cocoatype/certificates.git"
 storage_mode "git"
 readonly true
 type "development" # The default type, can be: appstore, adhoc, enterprise or development
