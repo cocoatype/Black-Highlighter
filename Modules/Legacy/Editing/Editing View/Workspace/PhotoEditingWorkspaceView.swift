@@ -116,27 +116,31 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
     private func updateRedactableObservations() {
         let wordObservations = recognizedTextObservations ?? []
         let textCharacterObservations = textObservations?.flatMap(\.characterObservations) ?? []
-        let filteredTextCharacterObservations = textCharacterObservations.filter { characterObservation in
-            let hasIntersection = wordObservations.contains { wordObservation in
-                let wordCGPath = wordObservation.bounds.path
-                let textCGPath = characterObservation.bounds.path
+        Task.detached { [weak self] in
+            let filteredTextCharacterObservations = textCharacterObservations.filter { characterObservation in
+                let hasIntersection = wordObservations.contains { wordObservation in
+                    let wordCGPath = wordObservation.bounds.path
+                    let textCGPath = characterObservation.bounds.path
 
-                let textPath = UIBezierPath(cgPath: textCGPath)
-                let wordPath = UIBezierPath(cgPath: wordCGPath)
+                    let textPath = UIBezierPath(cgPath: textCGPath)
+                    let wordPath = UIBezierPath(cgPath: wordCGPath)
 
-                let isContained = textPath.contains(wordPath.currentPoint) || wordPath.contains(textPath.currentPoint)
-                guard isContained == false else { return true }
+                    let isContained = textPath.contains(wordPath.currentPoint) || wordPath.contains(textPath.currentPoint)
+                    guard isContained == false else { return true }
 
-                let intersections = textPath.intersection(with: wordPath)
-                guard intersections?.count ?? 0 == 0 else { return true }
+                    let intersections = textPath.intersection(with: wordPath)
+                    guard intersections?.count ?? 0 == 0 else { return true }
 
-                return false
+                    return false
+                }
+
+                return !hasIntersection
             }
 
-            return !hasIntersection
+            await MainActor.run { [weak self] in
+                self?.redactableCharacterObservations = wordObservations.flatMap(\.characterObservations) + filteredTextCharacterObservations
+            }
         }
-
-        redactableCharacterObservations = wordObservations.flatMap(\.characterObservations) + filteredTextCharacterObservations
     }
 
     func scrollViewDidZoom(to zoomScale: CGFloat) {
