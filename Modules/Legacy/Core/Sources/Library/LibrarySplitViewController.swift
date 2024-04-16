@@ -3,6 +3,7 @@
 
 import Editing
 import Photos
+import PhotosUI
 import UIKit
 
 class LibrarySplitViewController: SplitViewController, CollectionPresenting, LimitedLibraryPresenting {
@@ -37,7 +38,8 @@ class LibrarySplitViewController: SplitViewController, CollectionPresenting, Lim
     }
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        if viewControllerToPresent is UIImagePickerController {
+        if viewControllerToPresent is UIImagePickerController
+            || viewControllerToPresent is PHPickerViewController {
             viewControllerToPresent.overrideUserInterfaceStyle = .dark
         }
         super.present(viewControllerToPresent, animated: flag, completion: completion)

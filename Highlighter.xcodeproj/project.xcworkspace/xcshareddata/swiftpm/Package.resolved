@@ -1,4 +1,5 @@
 {
+  "originHash" : "fa271765ad357444f769ead94fc0770f544b0398f59382e1b6e65e7b313664c6",
   "pins" : [
     {
       "identity" : "clippingbezier",
@@ -37,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
