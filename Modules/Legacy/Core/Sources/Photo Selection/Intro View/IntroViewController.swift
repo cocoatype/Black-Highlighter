@@ -10,6 +10,8 @@ class IntroViewController: UIHostingController<IntroView>, PhotoPickerDelegate {
         self.permissionsRequester = permissionsRequester
         super.init(rootView: IntroView())
         self.rootView = IntroView(permissionAction: requestPermission, importAction: importPhoto)
+
+        navigationItem.rightBarButtonItem = SettingsBarButtonItem.standard
     }
 
     override func viewWillLayoutSubviews() {
