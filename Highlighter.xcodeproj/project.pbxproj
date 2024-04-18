@@ -2471,7 +2471,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				04BBB9D02BD1036F00121D54 /* PBXTargetDependency */,
 				0464B1B525529E8900D00FAC /* PBXTargetDependency */,
 				043911CB22C461F000D4AE30 /* PBXTargetDependency */,
 				049F92DD22CDA3DB0090C9BC /* PBXTargetDependency */,
@@ -2500,7 +2499,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				04BBB9D42BD1041500121D54 /* PBXTargetDependency */,
 				0445AA542371148200EB2A7B /* PBXTargetDependency */,
 			);
 			name = Action;
@@ -2949,7 +2947,6 @@
 				04B198E92623ADCA001A275B /* XCRemoteSwiftPackageReference "ClippingBezier" */,
 				043C28CC2659D7E30054A5A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				0447266A29ADAB16000345F8 /* XCRemoteSwiftPackageReference "SwiftClient" */,
-				04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 041EFEF62251A9F30058D8EE /* Products */;
 			projectDirPath = "";
@@ -3768,17 +3765,9 @@
 			isa = PBXTargetDependency;
 			productRef = 04B19A0D2625247B001A275B /* ClippingBezier */;
 		};
-		04BBB9D02BD1036F00121D54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 04BBB9CF2BD1036F00121D54 /* SwiftLintPlugin */;
-		};
 		04BBB9D22BD103F400121D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 04BBB9D12BD103F400121D54 /* SwiftLintPlugin */;
-		};
-		04BBB9D42BD1041500121D54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 04BBB9D32BD1041500121D54 /* SwiftLintPlugin */;
 		};
 		04BBB9D62BD1041800121D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5317,17 +5306,7 @@
 			package = 04B198E92623ADCA001A275B /* XCRemoteSwiftPackageReference "ClippingBezier" */;
 			productName = ClippingBezier;
 		};
-		04BBB9CF2BD1036F00121D54 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
 		04BBB9D12BD103F400121D54 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
-		04BBB9D32BD1041500121D54 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
