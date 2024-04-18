@@ -57,7 +57,7 @@ private class StubTextDetector: TextDetector {
     override func detectText(in image: UIImage) async throws -> [RecognizedTextObservation] {
         return try [
             XCTUnwrap(RecognizedTextObservation("hello")),
-            XCTUnwrap(RecognizedTextObservation("world"))
+            XCTUnwrap(RecognizedTextObservation("world")),
         ]
     }
 }

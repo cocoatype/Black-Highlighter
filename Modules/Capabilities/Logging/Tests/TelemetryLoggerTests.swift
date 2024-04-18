@@ -31,7 +31,7 @@ private final class SpySender: TelemetrySending {
     var name: String?
     var info: [String: String]?
 
-    func send(_ signalType: TelemetryClient.TelemetrySignalType, for clientUser: String?, floatValue: Double?, with additionalPayload: [String : String]) {
+    func send(_ signalType: TelemetryClient.TelemetrySignalType, for clientUser: String?, floatValue: Double?, with additionalPayload: [String: String]) {
         name = signalType
         info = additionalPayload
     }
