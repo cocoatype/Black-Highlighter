@@ -2535,7 +2535,6 @@
 				044D4C132547B7BC00701166 /* Sources */,
 				044D4C142547B7BC00701166 /* Frameworks */,
 				044D4C152547B7BC00701166 /* Resources */,
-				044D4C162547B7BC00701166 /* ShellScript */,
 				044D4D032547D24500701166 /* CopyFiles */,
 			);
 			buildRules = (
@@ -3119,26 +3118,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		044D4C162547B7BC00701166 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "amlint \"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		041EFEF12251A9F30058D8EE /* Sources */ = {
