@@ -2471,6 +2471,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9D02BD1036F00121D54 /* PBXTargetDependency */,
 				0464B1B525529E8900D00FAC /* PBXTargetDependency */,
 				043911CB22C461F000D4AE30 /* PBXTargetDependency */,
 				049F92DD22CDA3DB0090C9BC /* PBXTargetDependency */,
@@ -2499,6 +2500,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9D42BD1041500121D54 /* PBXTargetDependency */,
 				0445AA542371148200EB2A7B /* PBXTargetDependency */,
 			);
 			name = Action;
@@ -2519,6 +2521,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9D82BD1041B00121D54 /* PBXTargetDependency */,
 				0445AA562371148800EB2A7B /* PBXTargetDependency */,
 			);
 			name = Photo;
@@ -2541,6 +2544,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9D62BD1041800121D54 /* PBXTargetDependency */,
 				0419085E254A86F400739749 /* PBXTargetDependency */,
 			);
 			name = AutomatorActions;
@@ -2560,6 +2564,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9E62BD1043400121D54 /* PBXTargetDependency */,
 			);
 			name = Redacting;
 			productName = Redacting;
@@ -2578,6 +2583,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9D22BD103F400121D54 /* PBXTargetDependency */,
 				04634EFD2A05D28400569D5C /* PBXTargetDependency */,
 				04634F012A05D28400569D5C /* PBXTargetDependency */,
 			);
@@ -2617,6 +2623,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9E22BD1042B00121D54 /* PBXTargetDependency */,
 			);
 			name = Logging;
 			packageProductDependencies = (
@@ -2675,6 +2682,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9DA2BD1041E00121D54 /* PBXTargetDependency */,
 				04634F082A05D8BA00569D5C /* PBXTargetDependency */,
 				04634F0D2A05D8C500569D5C /* PBXTargetDependency */,
 				04634F112A05D8C500569D5C /* PBXTargetDependency */,
@@ -2716,6 +2724,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9E82BD1043700121D54 /* PBXTargetDependency */,
 			);
 			name = TestHelpers;
 			productName = TestHelpers;
@@ -2734,6 +2743,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9DC2BD1042200121D54 /* PBXTargetDependency */,
 			);
 			name = Defaults;
 			productName = Defaults;
@@ -2771,6 +2781,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9DE2BD1042500121D54 /* PBXTargetDependency */,
 				04DE87D32652249B0002BA42 /* PBXTargetDependency */,
 				04B19A0E2625247B001A275B /* PBXTargetDependency */,
 				04634EF12A05D26D00569D5C /* PBXTargetDependency */,
@@ -2816,6 +2827,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9E02BD1042800121D54 /* PBXTargetDependency */,
 				04DE87CF265224850002BA42 /* PBXTargetDependency */,
 				04634E6A2A05311D00569D5C /* PBXTargetDependency */,
 			);
@@ -2838,6 +2850,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04BBB9E42BD1043100121D54 /* PBXTargetDependency */,
 				0453B0BE2654E6D200EFE68A /* PBXTargetDependency */,
 			);
 			name = Receipts;
@@ -2935,6 +2948,7 @@
 				04B198E92623ADCA001A275B /* XCRemoteSwiftPackageReference "ClippingBezier" */,
 				043C28CC2659D7E30054A5A8 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				0447266A29ADAB16000345F8 /* XCRemoteSwiftPackageReference "SwiftClient" */,
+				04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 041EFEF62251A9F30058D8EE /* Products */;
 			projectDirPath = "";
@@ -3752,6 +3766,58 @@
 		04B19A0E2625247B001A275B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 04B19A0D2625247B001A275B /* ClippingBezier */;
+		};
+		04BBB9D02BD1036F00121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9CF2BD1036F00121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9D22BD103F400121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9D12BD103F400121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9D42BD1041500121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9D32BD1041500121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9D62BD1041800121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9D52BD1041800121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9D82BD1041B00121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9D72BD1041B00121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9DA2BD1041E00121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9D92BD1041E00121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9DC2BD1042200121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9DB2BD1042200121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9DE2BD1042500121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9DD2BD1042500121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9E02BD1042800121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9DF2BD1042800121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9E22BD1042B00121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9E12BD1042B00121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9E42BD1043100121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9E32BD1043100121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9E62BD1043400121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9E52BD1043400121D54 /* SwiftLintPlugin */;
+		};
+		04BBB9E82BD1043700121D54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 04BBB9E72BD1043700121D54 /* SwiftLintPlugin */;
 		};
 		04DE87B8265213F40002BA42 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5174,6 +5240,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:realm/SwiftLint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
 		04DE879E265209CC0002BA42 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:getsentry/sentry-cocoa.git";
@@ -5204,6 +5278,71 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 04B198E92623ADCA001A275B /* XCRemoteSwiftPackageReference "ClippingBezier" */;
 			productName = ClippingBezier;
+		};
+		04BBB9CF2BD1036F00121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9D12BD103F400121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9D32BD1041500121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9D52BD1041800121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9D72BD1041B00121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9D92BD1041E00121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9DB2BD1042200121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9DD2BD1042500121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9DF2BD1042800121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9E12BD1042B00121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9E32BD1043100121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9E52BD1043400121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		04BBB9E72BD1043700121D54 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04BBB9CE2BD1020B00121D54 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 		04DE87CE265224850002BA42 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
