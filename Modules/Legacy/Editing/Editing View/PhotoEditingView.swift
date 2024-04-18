@@ -15,7 +15,7 @@ public class PhotoEditingView: UIView, UIScrollViewDelegate {
             photoScrollView.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor),
             photoScrollView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor),
             photoScrollView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            photoScrollView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+            photoScrollView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
         ])
     }
 
@@ -62,7 +62,7 @@ public class PhotoEditingView: UIView, UIScrollViewDelegate {
         updateAccessibilityElements()
     }
 
-    func unredact<ObservationType: TextObservation>(_ observation:  ObservationType) {
+    func unredact<ObservationType: TextObservation>(_ observation: ObservationType) {
         workspaceView.unredact(observation)
         updateAccessibilityElements()
     }

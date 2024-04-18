@@ -36,7 +36,7 @@ struct AlbumsList_Previews: PreviewProvider {
             DummyCollection(title: "Screenshots", iconName: "camera.viewfinder"),
             DummyCollection(title: "Favorites", iconName: "suit.heart"),
         ]),
-        CollectionSection(title: "User Collections", collections: [])
+        CollectionSection(title: "User Collections", collections: []),
     ]
 
     static var previews: some View {

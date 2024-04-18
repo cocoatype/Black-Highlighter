@@ -21,7 +21,7 @@ class PhotoEditingScrollView: UIScrollView {
             workspaceView.centerXAnchor.constraint(equalTo: contentLayoutGuide.centerXAnchor),
             workspaceView.centerYAnchor.constraint(equalTo: contentLayoutGuide.centerYAnchor),
             workspaceView.widthAnchor.constraint(equalTo: contentLayoutGuide.widthAnchor),
-            workspaceView.heightAnchor.constraint(equalTo: contentLayoutGuide.heightAnchor)
+            workspaceView.heightAnchor.constraint(equalTo: contentLayoutGuide.heightAnchor),
         ])
     }
 

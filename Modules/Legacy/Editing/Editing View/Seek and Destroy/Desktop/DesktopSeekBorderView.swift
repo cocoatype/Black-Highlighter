@@ -24,7 +24,7 @@ class DesktopSeekBorderView: UIView {
     override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
 
-        layer.sublayers?.forEach{ sublayer in
+        layer.sublayers?.forEach { sublayer in
             sublayer.frame = layer.bounds
         }
     }

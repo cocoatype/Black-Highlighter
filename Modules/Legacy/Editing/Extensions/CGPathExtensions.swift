@@ -69,11 +69,11 @@ extension CGPath {
             case .addCurveToPoint:
                 string.append("C ")
                 string.append("\n")
-                // TODO: Implement me!
+                #warning("#60: Finish implementing this")
             case .addQuadCurveToPoint:
                 string.append("Q ")
                 string.append("\n")
-                // TODO: Implement me!
+                #warning("#60: Finish implementing this")
             case .closeSubpath:
                 string.append("Z\n")
             @unknown default: break

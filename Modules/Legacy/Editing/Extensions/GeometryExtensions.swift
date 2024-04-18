@@ -19,7 +19,7 @@ public extension CGSize {
 
 public extension CGPoint {
     static func * (point: CGPoint, multiplier: CGFloat) -> CGPoint {
-        return CGPoint(x:point.x * multiplier, y: point.y * multiplier)
+        return CGPoint(x: point.x * multiplier, y: point.y * multiplier)
     }
 
     static func + (point: CGPoint, size: CGSize) -> CGPoint {
@@ -77,14 +77,14 @@ public extension CGRect {
         let aspectRatio = width / height
         let fittingAspectRatio = fittingRect.width / fittingRect.height
 
-        if fittingAspectRatio > aspectRatio { //wider fitting rect
+        if fittingAspectRatio > aspectRatio { // wider fitting rect
             let newRectWidth = aspectRatio * fittingRect.height
             let newRectHeight = fittingRect.height
             let newRectX = (fittingRect.width - newRectWidth) / 2
             let newRectY = CGFloat(0)
 
             return CGRect(x: newRectX, y: newRectY, width: newRectWidth, height: newRectHeight)
-        } else if fittingAspectRatio < aspectRatio { //taller fitting rect
+        } else if fittingAspectRatio < aspectRatio { // taller fitting rect
             let newRectWidth = fittingRect.width
             let newRectHeight = 1 / (aspectRatio / fittingRect.width)
             let newRectX = CGFloat(0)
@@ -92,7 +92,7 @@ public extension CGRect {
 
             return CGRect(x: newRectX, y: newRectY, width: newRectWidth, height: newRectHeight)
 
-        } else { //same aspect ratio
+        } else { // same aspect ratio
             return fittingRect
         }
     }

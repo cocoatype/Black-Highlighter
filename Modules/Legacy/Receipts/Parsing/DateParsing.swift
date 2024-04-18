@@ -11,7 +11,9 @@ extension Date {
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
-        guard let dateString = String(startingAt: &datePointer, length:length), let date = dateFormatter.date(from: dateString) else { return nil }
+        guard let dateString = String(startingAt: &datePointer, length: length),
+              let date = dateFormatter.date(from: dateString)
+        else { return nil }
 
         self = date
     }

@@ -14,12 +14,11 @@ struct RecognizedText: Equatable {
         self.uuid = uuid
     }
 
-    static func ==(lhs: RecognizedText, rhs: RecognizedText) -> Bool {
+    static func == (lhs: RecognizedText, rhs: RecognizedText) -> Bool {
         lhs.uuid == rhs.uuid
     }
 }
 
-// TODO: Handle character-level bounding boxes
 protocol VisionText {
     func boundingBox(for range: Range<String.Index>) throws -> VNRectangleObservation?
     var string: String { get }

@@ -32,8 +32,7 @@ struct AssetCollection: Collection {
         default: return Icons.standardCollection
         }
     }
-    var keyAssets: PHFetchResult<PHAsset>
-    { return PHAsset.fetchKeyAssets(in: assetCollection, options: nil) ?? PHFetchResult<PHAsset>() }
+    var keyAssets: PHFetchResult<PHAsset> { return PHAsset.fetchKeyAssets(in: assetCollection, options: nil) ?? PHFetchResult<PHAsset>() }
     var identifier: String { return assetCollection.localIdentifier }
     var title: String? { return assetCollection.localizedTitle }
 

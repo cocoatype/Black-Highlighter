@@ -26,10 +26,10 @@ class PromptButton: UIButton {
     init(title string: String) {
         super.init(frame: .zero)
 
-        let attributes: [NSAttributedString.Key : Any] = [
+        let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.appFont(forTextStyle: .headline),
             .foregroundColor: UIColor.white,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
 
         let underlinedTitle = NSAttributedString(string: string, attributes: attributes)

@@ -16,7 +16,7 @@ class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UI
         navigationItem.title = Self.navigationItemTitle
         navigationItem.rightBarButtonItem = SettingsBarButtonItem.standard
 
-        hideDocumentScannerObserver = NotificationCenter.default.addObserver(forName: _hideDocumentScanner.valueDidChange, object:nil, queue: nil) { [weak self] _ in
+        hideDocumentScannerObserver = NotificationCenter.default.addObserver(forName: _hideDocumentScanner.valueDidChange, object: nil, queue: nil) { [weak self] _ in
             self?.libraryView.reloadData()
         }
     }

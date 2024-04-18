@@ -1,0 +1,12 @@
+disabled_rules:
+  - line_length # too many violations already
+  - shorthand_operator # disagree with this rule
+  - identifier_name # incompatible with "name a variable" redemption
+  - type_name # same
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+trailing_comma:
+  mandatory_comma: true
+  

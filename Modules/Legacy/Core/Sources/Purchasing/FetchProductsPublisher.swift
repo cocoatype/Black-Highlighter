@@ -13,8 +13,8 @@ class FetchProductsPublisher: NSObject, Publisher, SKProductsRequestDelegate {
         start()
     }
 
-    private let passthroughSubject = CurrentValueSubject<[SKProduct], Error>([])//PassthroughSubject<[SKProduct], Error>()
-    func receive<S>(subscriber: S) where S : Subscriber, Error == S.Failure, [SKProduct] == S.Input {
+    private let passthroughSubject = CurrentValueSubject<[SKProduct], Error>([])
+    func receive<S>(subscriber: S) where S: Subscriber, Error == S.Failure, [SKProduct] == S.Input {
         passthroughSubject.receive(subscriber: subscriber)
     }
 

@@ -91,7 +91,7 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
 }
 
 extension PHPhotoLibrary {
-    func performChanges(_ changeBlock: @escaping () -> Void) async throws -> Void {
+    func performChanges(_ changeBlock: @escaping () -> Void) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             performChanges(changeBlock) { success, error in
                 if success {

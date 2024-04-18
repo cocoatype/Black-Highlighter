@@ -21,7 +21,7 @@ class AutoRedactionsEmptyView: UIView {
             promptLabel.bottomAnchor.constraint(equalTo: centerYAnchor),
             promptLabel.widthAnchor.constraint(equalToConstant: 240),
             promptButton.leadingAnchor.constraint(equalTo: promptLabel.leadingAnchor),
-            promptButton.topAnchor.constraint(equalToSystemSpacingBelow: promptLabel.bottomAnchor, multiplier: 1)
+            promptButton.topAnchor.constraint(equalToSystemSpacingBelow: promptLabel.bottomAnchor, multiplier: 1),
         ])
     }
 

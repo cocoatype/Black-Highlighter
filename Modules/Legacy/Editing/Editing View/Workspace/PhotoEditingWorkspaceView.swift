@@ -37,7 +37,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
             brushStrokeView.centerXAnchor.constraint(equalTo: centerXAnchor),
             brushStrokeView.centerYAnchor.constraint(equalTo: centerYAnchor),
             brushStrokeView.widthAnchor.constraint(equalTo: widthAnchor),
-            brushStrokeView.heightAnchor.constraint(equalTo: heightAnchor)
+            brushStrokeView.heightAnchor.constraint(equalTo: heightAnchor),
         ])
 
         brushStrokeView.addTarget(self, action: #selector(handleStrokeCompletion), for: .touchUpInside)

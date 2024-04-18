@@ -14,9 +14,9 @@ struct PurchaseRestoreButton: View {
     }
 
     var body: some View {
-        Button(action: {
+        Button {
             purchaseStatePublisher.restore()
-        }) {
+        } label: {
             Text("PurchaseMarketingViewController.restoreButtonTitle")
                 .underline()
                 .font(.app(textStyle: .headline))

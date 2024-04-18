@@ -171,7 +171,7 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
         let characterObservationSet = Set(filteredDetectedObservations + recognizedCharacterObservations)
 
         // reduce into dictionary by textObservationUUID
-        let observationsByUUID = characterObservationSet.reduce(Dictionary<UUID, [CharacterObservation]>()) { dictionary, observation in
+        let observationsByUUID = characterObservationSet.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
             var observationsByUUID: [CharacterObservation]
             if let existing = dictionary[observation.textObservationUUID] {
                 observationsByUUID = existing
@@ -187,7 +187,7 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
         }
 
         // map dictionary keys into redactions
-        let redactions = observationsByUUID.compactMap { (key: UUID, value: [CharacterObservation]) in
+        let redactions = observationsByUUID.compactMap { (_, value: [CharacterObservation]) in
             return Redaction(value, color: color)
         }
 

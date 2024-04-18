@@ -26,7 +26,7 @@ class PhotoExtensionViewController: UIViewController, PHContentEditingController
     func finishContentEditing(completionHandler: @escaping (PHContentEditingOutput?) -> Void) {
         Task { [weak self] in
             guard let input = self?.input,
-                  let editingViewController = editingViewController,
+                  let editingViewController = self?.editingViewController,
                   let outputImage = try? await editingViewController.exportImage(),
                   let outputData = self?.imageOutputData(from: outputImage, typeIdentifier: input.uniformTypeIdentifier)
             else { return completionHandler(nil) }
@@ -122,7 +122,7 @@ class PhotoLoadingView: UIView {
 
         NSLayoutConstraint.activate([
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 

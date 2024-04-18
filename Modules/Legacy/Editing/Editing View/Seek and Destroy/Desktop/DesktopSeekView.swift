@@ -29,11 +29,11 @@ class DesktopSeekView: UIView {
             button.topAnchor.constraint(equalTo: textBox.topAnchor),
             button.trailingAnchor.constraint(equalTo: box.trailingAnchor, constant: -8),
             button.bottomAnchor.constraint(equalTo: textBox.bottomAnchor),
-            button.leadingAnchor.constraint(equalTo: textBox.trailingAnchor, constant: 8)
+            button.leadingAnchor.constraint(equalTo: textBox.trailingAnchor, constant: 8),
         ])
     }
 
-    override var intrinsicContentSize: CGSize { return CGSize(width: 312, height: 50) } //UIView.noIntrinsicMetric
+    override var intrinsicContentSize: CGSize { return CGSize(width: 312, height: 50) }
 
     // MARK: Boilerplate
 

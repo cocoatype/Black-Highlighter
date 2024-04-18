@@ -23,6 +23,8 @@ class RedactActionExportOperation: Operation {
         return imageRep
     }()
 
+    #warning("#62: Simplify & de-dupe")
+    // swiftlint:disable:next function_body_length
     override func main() {
         do {
             guard let sourceImage = input.image else { throw RedactActionExportError.noImageForInput }
@@ -49,7 +51,7 @@ class RedactActionExportOperation: Operation {
                     var currentTileRect = overlappingTileRect
                     currentTileRect.origin.y = CGFloat(y) * (tileRect.size.height + Self.seamOverlap)
 
-                    if (y == iterationCount - 1 && remainder > 0) {
+                    if y == iterationCount - 1 && remainder > 0 {
                         let diffY = currentTileRect.maxY - imageSize.height
                         currentTileRect.size.height -= diffY
                     }

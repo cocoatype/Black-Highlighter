@@ -6,7 +6,7 @@ public struct Event {
     let info: [String: String]
     var value: String { String(name.value) }
 
-    public init(name: Name, info: [String : String]) {
+    public init(name: Name, info: [String: String]) {
         self.name = name
         self.info = info
     }

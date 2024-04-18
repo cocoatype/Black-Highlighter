@@ -7,9 +7,9 @@ struct SettingsButton: View {
     @EnvironmentObject var navigationWrapper: NavigationWrapper
 
     var body: some View {
-        return Button(action: {
+        Button {
             navigationWrapper.presentSettings()
-        }) {
+        } label: {
             Image(systemName: "gear").foregroundColor(.white)
         }
     }

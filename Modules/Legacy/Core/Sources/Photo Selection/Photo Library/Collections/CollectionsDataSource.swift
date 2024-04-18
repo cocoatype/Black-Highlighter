@@ -38,7 +38,7 @@ class CollectionsDataSource: NSObject {
 
     var collectionsData: [CollectionSection] {[
         CollectionSection(title: Self.smartAlbumsHeader, collections: smartCollections),
-        CollectionSection(title: Self.userAlbumsHeader, collections: userCollections)
+        CollectionSection(title: Self.userAlbumsHeader, collections: userCollections),
     ]}
 
     // MARK: Localizable Strings

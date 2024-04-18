@@ -12,7 +12,7 @@ struct ProductPricePublisher<Upstream: Publisher>: Publisher where Upstream.Outp
         self.upstream = upstream
     }
 
-    func receive<S>(subscriber: S) where S : Subscriber, Upstream.Failure == S.Failure, String? == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, String? == S.Input {
         upstream.map { ProductPriceFormatter.formattedPrice(for: $0) }.subscribe(subscriber)
     }
 

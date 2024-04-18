@@ -18,7 +18,7 @@ class DesktopSeekContainerView: UIView {
 
         NSLayoutConstraint.activate([
             seekView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: 8),
-            seekView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            seekView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
         ])
 
         tapRecognizer.addTarget(self, action: #selector(handleTap))

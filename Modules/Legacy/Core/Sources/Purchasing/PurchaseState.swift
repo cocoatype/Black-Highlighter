@@ -7,8 +7,8 @@ import StoreKit
 enum PurchaseState {
     case loading
     case readyForPurchase(product: SKProduct)
-    case purchasing//(operation: PurchaseOperation)
-    case restoring//(operation: RestoreOperation)
+    case purchasing
+    case restoring
     case purchased
     case unavailable
 

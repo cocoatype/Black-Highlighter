@@ -20,7 +20,7 @@ class BrushStampFactory: NSObject {
         let brushScale = height / image.size.height
         let scaledBrushSize = image.size * brushScale
 
-        return NSImage(size: scaledBrushSize, flipped: false) { drawRect -> Bool in
+        return NSImage(size: scaledBrushSize, flipped: false) { _ -> Bool in
             color.setFill()
 
             CGRect(origin: .zero, size: scaledBrushSize).fill()

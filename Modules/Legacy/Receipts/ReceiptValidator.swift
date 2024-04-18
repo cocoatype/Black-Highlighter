@@ -21,7 +21,7 @@ public enum ReceiptValidator {
 
         let receiptData = try Data(contentsOf: receiptURL)
         let container = try decrypt(receiptData)
-        // TODO (#121): Fix receipt validation
+        #warning("#10: Fix receipt validation")
 //        try validate(container)
         let receipt = try parse(container)
 
@@ -128,6 +128,7 @@ public enum ReceiptValidator {
 
     #if targetEnvironment(macCatalyst)
     private static let deviceIdentifierData: Data? = {
+        // swiftlint:disable:next inclusive_language
         var masterPort: mach_port_t = 0
 
         guard IOMasterPort(UInt32(MACH_PORT_NULL), &masterPort) == KERN_SUCCESS else { return nil }

@@ -31,7 +31,7 @@ extension Defaults {
             self.init(key: key, fallback: 0)
         }
 
-        public init<ElementType>(key: Defaults.Key) where ValueType == Array<ElementType> {
+        public init<ElementType>(key: Defaults.Key) where ValueType == [ElementType] {
             self.init(key: key, fallback: [])
         }
 
@@ -39,13 +39,12 @@ extension Defaults {
         private let fallback: ValueType
 
         // MARK: Projected Value
-        
+
         public var projectedValue: CurrentValueSubject<ValueType, Never> {
             return publisher
         }
 
         private let publisher: CurrentValueSubject<ValueType, Never>
-
 
         // MARK: Boilerplate
 

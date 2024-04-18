@@ -30,13 +30,13 @@ class PhotoLibraryDataSourceChangeCalculator: NSObject {
 
         libraryView.performBatchUpdates({ [unowned libraryView, changeDetails] in
             if let removed = changeDetails.removedIndexes {
-                libraryView.deleteItems(at: removed.map { IndexPath(item: $0, section:0) })
+                libraryView.deleteItems(at: removed.map { IndexPath(item: $0, section: 0) })
             }
             if let inserted = changeDetails.insertedIndexes {
-                libraryView.insertItems(at: inserted.map { IndexPath(item: $0, section:0) })
+                libraryView.insertItems(at: inserted.map { IndexPath(item: $0, section: 0) })
             }
             if let changed = changeDetails.changedIndexes {
-                libraryView.reloadItems(at: changed.map { IndexPath(item: $0, section:0) })
+                libraryView.reloadItems(at: changed.map { IndexPath(item: $0, section: 0) })
             }
 
             changeDetails.enumerateMoves { fromIndex, toIndex in

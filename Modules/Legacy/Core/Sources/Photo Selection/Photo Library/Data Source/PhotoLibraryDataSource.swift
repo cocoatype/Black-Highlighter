@@ -31,7 +31,7 @@ class PhotoLibraryDataSource: NSObject, LibraryDataSource, UICollectionViewDataS
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch item(at: indexPath) {
-        case .asset(_):
+        case .asset:
             return assetsProvider.cell(for: collectionView, at: indexPath)
         case .documentScan:
             return extraItemsProvider.documentScannerCell(for: collectionView, at: indexPath)
@@ -49,7 +49,7 @@ class PhotoLibraryDataSource: NSObject, LibraryDataSource, UICollectionViewDataS
         guard index < photosCount else { return extraItemsProvider.item(atIndex: index - photosCount) }
         return assetsProvider.item(atIndex: index)
     }
-    
+
     func item(at indexPath: IndexPath) -> PhotoLibraryItem {
         item(at: indexPath.item)
     }

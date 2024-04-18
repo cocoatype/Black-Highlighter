@@ -27,7 +27,6 @@ extension PhotoEditingViewController {
             switch imageType {
             case .jpeg:
                 data = image?.jpegData(compressionQuality: 0.9)
-            case .png: fallthrough
             default:
                 data = image?.pngData()
             }
@@ -64,7 +63,6 @@ extension PhotoEditingViewController {
             switch imageType {
             case .jpeg:
                 data = image?.jpegData(compressionQuality: 0.9)
-            case .png: fallthrough
             default:
                 data = image?.pngData()
             }
@@ -105,7 +103,7 @@ extension PhotoEditingViewController {
 }
 
 class DesktopSaveViewController: UIDocumentPickerViewController, UIDocumentPickerDelegate {
-    private var onSave: (([URL]) -> Void)? = nil
+    private var onSave: (([URL]) -> Void)?
     convenience init(url: URL, onSave: @escaping (([URL]) -> Void)) {
         self.init(forExporting: [url], asCopy: true)
         self.onSave = onSave

@@ -9,6 +9,8 @@ public actor PhotoExportRenderer {
         self.sourceImage = image
     }
 
+    #warning("#62: Simplify & de-dupe")
+    // swiftlint:disable:next function_body_length
     public func render() throws -> UIImage {
         let imageSize = sourceImage.realSize * sourceImage.scale
 
@@ -49,7 +51,7 @@ public actor PhotoExportRenderer {
                 var currentTileRect = overlappingTileRect
                 currentTileRect.origin.y = CGFloat(y) * (tileRect.size.height + Self.seamOverlap)
 
-                if (y == iterationCount - 1 && remainder > 0) {
+                if y == iterationCount - 1 && remainder > 0 {
                     let diffY = currentTileRect.maxY - imageSize.height
                     currentTileRect.size.height -= diffY
                 }

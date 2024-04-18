@@ -2,10 +2,10 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Foundation
-//import libcrypto
 import OpenSSL
 
 extension AppReceipt {
+    // swiftlint:disable:next function_body_length
     init(startingAt cursor: inout UnsafePointer<UInt8>, payloadLength: Int) throws {
         var bundleIdentifier: String?
         var bundleIdentifierData: Data?

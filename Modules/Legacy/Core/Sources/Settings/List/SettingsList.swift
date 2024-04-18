@@ -22,7 +22,8 @@ struct SettingsList<Content>: View where Content: View {
 
 struct SettingsListPreviews: PreviewProvider {
     static var previews: some View {
-        SettingsList(dismissAction: {}) {}.preferredColorScheme(.dark)
+        SettingsList(dismissAction: {}, content: {})
+            .preferredColorScheme(.dark)
     }
 }
 

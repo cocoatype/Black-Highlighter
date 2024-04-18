@@ -14,10 +14,10 @@ struct PurchaseButton: View {
     }
 
     var body: some View {
-        Button(action: {
+        Button {
             guard let product = purchaseState.product else { return }
             purchaseStatePublisher.purchase(product)
-        }) {
+        } label: {
             Text(title)
                 .underline()
                 .font(.app(textStyle: .headline))
