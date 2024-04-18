@@ -15,7 +15,7 @@ class TabletSeekView: UIView {
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
             searchBar.bottomAnchor.constraint(equalTo: bottomAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor)
+            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
         ])
     }
 

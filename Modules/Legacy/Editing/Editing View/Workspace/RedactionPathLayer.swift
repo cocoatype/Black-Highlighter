@@ -6,7 +6,7 @@ import Foundation
 class RedactionPathLayer: CALayer {
     init(part: RedactionPart, color: UIColor, scale: CGFloat) throws {
         let pathBounds: CGRect
-        
+
         switch part {
         case .shape(let shape):
             let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: scale)

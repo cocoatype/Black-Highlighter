@@ -22,7 +22,7 @@ class DesktopSeekButton: UIButton {
             box.topAnchor.constraint(equalTo: topAnchor),
             box.trailingAnchor.constraint(equalTo: trailingAnchor),
             box.bottomAnchor.constraint(equalTo: bottomAnchor),
-            box.leadingAnchor.constraint(equalTo: leadingAnchor)
+            box.leadingAnchor.constraint(equalTo: leadingAnchor),
         ])
     }
 

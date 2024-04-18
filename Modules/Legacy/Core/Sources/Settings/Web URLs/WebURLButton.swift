@@ -12,9 +12,9 @@ struct WebURLButton: View {
     }
 
     var body: some View {
-        Button(action: {
+        Button {
             selected = true
-        }) {
+        } label: {
             VStack(alignment: .leading) {
                 WebURLTitleText(titleKey)
                 if let subtitle = subtitle {
@@ -67,7 +67,6 @@ struct WebURLSubtitleText: View {
             .foregroundColor(.primaryExtraLight)
     }
 }
-
 
 struct WebURLButtonPreviews: PreviewProvider {
     static var previews: some View {

@@ -77,9 +77,9 @@ struct PurchaseMarketingCloseButton: View {
         #if targetEnvironment(macCatalyst)
         EmptyView()
         #else
-        Button(action: {
+        Button {
             presentationMode.wrappedValue.dismiss()
-        }) {
+        } label: {
             Image(systemName: "xmark")
                 .font(.app(textStyle: .headline))
                 .foregroundColor(.white)

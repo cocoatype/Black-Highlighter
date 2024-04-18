@@ -25,7 +25,7 @@ class PhotoPicker: NSObject, PHPickerViewControllerDelegate {
             return delegate.picker(self, didSelectImage: nil)
         }
 
-        provider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+        provider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
             guard let picker = self else { return }
             delegate.picker(picker, didSelectImage: (image as? UIImage))
         }

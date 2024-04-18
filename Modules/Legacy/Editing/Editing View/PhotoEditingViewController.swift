@@ -5,6 +5,9 @@ import Defaults
 import Photos
 import UIKit
 
+#warning("#61: Simplify this class")
+// swiftlint:disable file_length
+// swiftlint:disable:next type_body_length
 public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate, UIColorPickerViewControllerDelegate, UIPopoverPresentationControllerDelegate {
     public init(asset: PHAsset? = nil, image: UIImage? = nil, redactions: [Redaction]? = nil, completionHandler: ((UIImage) -> Void)? = nil) {
         self.asset = asset
@@ -236,7 +239,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     private func updateSeekPresentation() {
-        #warning("#225: Move text between tablet and phone presentations")
+        #warning("#24: Move text between tablet and phone presentations")
         cancelSeeking(self)
     }
 
@@ -276,12 +279,12 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     #else
     private let undoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.undo), input: "z", modifierFlags: .command, discoverabilityTitle: PhotoEditingViewController.undoKeyCommandDiscoverabilityTitle)
     private let redoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.redo), input: "z", modifierFlags: [.command, .shift], discoverabilityTitle: PhotoEditingViewController.redoKeyCommandDiscoverabilityTitle)
-    
+
     open override var keyCommands: [UIKeyCommand]? {
         return [undoKeyCommand, redoKeyCommand]
     }
     #endif
-    
+
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(undo(_:)) {
             return undoManager?.canUndo ?? false
@@ -380,20 +383,19 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                 switch imageType {
                 case .jpeg?:
                     data = exportedImage.jpegData(compressionQuality: 0.9)
-                case .png?: fallthrough
                 default:
                     data = exportedImage.pngData()
                 }
 
                 let activityItems: [Any]
-                if let data = data, let _ = try? data.write(to: temporaryURL) {
+                if let data = data, (try? data.write(to: temporaryURL)) != nil {
                     activityItems = [temporaryURL]
                 } else {
                     activityItems = [exportedImage]
                 }
 
                 let activityController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                activityController.completionWithItemsHandler = { [weak self] _, completed, _, _ in
+                activityController.completionWithItemsHandler = { [weak self] _, _, _, _ in
                     self?.hasMadeEdits = false
                     Defaults.numberOfSaves = Defaults.numberOfSaves + 1
                     DispatchQueue.main.async { [weak self] in

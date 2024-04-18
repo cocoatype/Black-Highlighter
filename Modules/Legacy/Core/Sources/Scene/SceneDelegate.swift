@@ -52,7 +52,7 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
             appViewController.presentPhotoEditingViewController(for: image, animated: false) { editedImage in
                 guard let successURL = successURL,
                   var callbackURLComponents = URLComponents(url: successURL, resolvingAgainstBaseURL: true),
-                  let imageData = image.pngData(),
+                  let imageData = editedImage.pngData(),
                   let imageEncodedString = imageData.base64EncodedString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 else { return }
 

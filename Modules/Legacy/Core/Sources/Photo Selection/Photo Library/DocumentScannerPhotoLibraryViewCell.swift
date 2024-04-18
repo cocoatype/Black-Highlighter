@@ -15,7 +15,7 @@ class DocumentScannerPhotoLibraryViewCell: UICollectionViewCell {
             iconView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5),
             iconView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5),
             iconView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
 
         isAccessibilityElement = true

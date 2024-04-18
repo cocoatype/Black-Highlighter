@@ -12,7 +12,7 @@ struct FilterProductsPublisher<Upstream: Publisher>: Publisher where Upstream.Ou
         self.upstream = upstream
     }
 
-    func receive<S>(subscriber: S) where S : Subscriber, Upstream.Failure == S.Failure, SKProduct == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, SKProduct == S.Input {
         upstream.subscribe(FilterProductsSubscriber(upstream: upstream, downstream: subscriber))
     }
 

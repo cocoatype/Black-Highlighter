@@ -23,7 +23,7 @@ extension UIViewController {
             newChildView.widthAnchor.constraint(equalTo: view.widthAnchor),
             newChildView.heightAnchor.constraint(equalTo: view.heightAnchor),
             newChildView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            newChildView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            newChildView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
 

@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        if options.userActivities.contains(where: { $0.activityType == "com.cocoatype.Highlighter.settings"} ) {
+        if options.userActivities.contains(where: { $0.activityType == "com.cocoatype.Highlighter.settings"}) {
             let settingsConfiguration = UISceneConfiguration(name: "Settings", sessionRole: .windowApplication)
             return settingsConfiguration
         } else {

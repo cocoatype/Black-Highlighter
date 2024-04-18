@@ -12,7 +12,7 @@ struct LogPublisher<Upstream: Publisher>: Publisher {
         self.upstream = upstream
     }
 
-    func receive<S>(subscriber: S) where S : Subscriber, Upstream.Failure == S.Failure, Upstream.Output == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Upstream.Failure == S.Failure, Upstream.Output == S.Input {
         upstream.subscribe(LogSubscriber(upstream: upstream, downstream: subscriber))
     }
 

@@ -8,7 +8,7 @@ class PurchaseStatePublisher: Publisher {
     typealias Output = PurchaseState
     typealias Failure = Never
 
-    func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, PurchaseState == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Never == S.Failure, PurchaseState == S.Input {
         statePublisher.receive(subscriber: subscriber)
     }
 
@@ -20,6 +20,8 @@ class PurchaseStatePublisher: Publisher {
         paymentPublisher.restore()
     }
 
+    // disabling because this tuple is given to us by Combine
+    // swiftlint:disable:next large_tuple
     private func state(for combinedValues: (Bool, [SKProduct], PaymentPublisher.State)) -> PurchaseState {
         let (previousPurchase, products, paymentState) = combinedValues
 
@@ -32,7 +34,7 @@ class PurchaseStatePublisher: Publisher {
             return .purchased
         case .purchasing, .deferred:
             return .purchasing
-        case .failed(_):
+        case .failed:
             return .unavailable
         case .ready: break
         }

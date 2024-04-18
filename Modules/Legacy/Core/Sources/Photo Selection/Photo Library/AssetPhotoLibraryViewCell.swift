@@ -46,7 +46,7 @@ class AssetPhotoLibraryViewCell: UICollectionViewCell {
             imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
 
         isAccessibilityElement = true

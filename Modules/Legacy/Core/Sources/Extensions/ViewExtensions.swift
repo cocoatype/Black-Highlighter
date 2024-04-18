@@ -5,7 +5,7 @@ import Combine
 import SwiftUI
 
 extension View {
-    public func onAppReceive<P>(_ publisher: P, perform action: @escaping (P.Output) -> Void) -> some View where P : Publisher, P.Failure == Never {
+    public func onAppReceive<P>(_ publisher: P, perform action: @escaping (P.Output) -> Void) -> some View where P: Publisher, P.Failure == Never {
         let isPreview: Bool
         #if DEBUG
             isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"

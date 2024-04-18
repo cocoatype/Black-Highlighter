@@ -15,9 +15,9 @@ struct SettingsAlertButton: View {
     @ViewBuilder
     var body: some View {
         if /*purchaseState != .purchased &&*/ hideAutoRedactions == false {
-            Button(action: {
+            Button {
                 showAlert = true
-            }) {
+            } label: {
                 VStack(alignment: .leading) {
                     WebURLTitleText(titleKey)
                     if let subtitle = subtitle {
@@ -69,7 +69,6 @@ struct SettingsAlertSubtitleText: View {
             .foregroundColor(.primaryExtraLight)
     }
 }
-
 
 struct SettingsAlertButtonPreviews: PreviewProvider {
     static var previews: some View {

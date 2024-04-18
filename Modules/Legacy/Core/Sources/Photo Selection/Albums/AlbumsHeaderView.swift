@@ -17,7 +17,7 @@ class AlbumsHeaderView: UITableViewHeaderFooterView {
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
-            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15)
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
         ])
     }
 

@@ -10,6 +10,8 @@ import Foundation
 import OpenSSL
 
 extension PurchaseReceipt {
+    #warning("#45: Replace with StoreKit 2")
+    // swiftlint:disable:next function_body_length
     init(startingAt cursor: inout UnsafePointer<UInt8>?, payloadLength: Int) throws {
         var quantity: Int?
         var productIdentifier: String?

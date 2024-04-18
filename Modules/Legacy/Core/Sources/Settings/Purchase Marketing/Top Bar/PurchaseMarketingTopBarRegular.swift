@@ -5,7 +5,7 @@ import SwiftUI
 
 struct PurchaseMarketingTopBarRegular: View {
     @State private var textWidth: CGFloat?
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             PurchaseMarketingTopBarHeadline().modifier(SetWidthViewModifier(textWidth: $textWidth))

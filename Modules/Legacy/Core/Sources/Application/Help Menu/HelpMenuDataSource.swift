@@ -13,7 +13,7 @@ class HelpMenuDataSource: NSObject {
         HelpMenuAboutAction(),
         HelpMenuPrivacyAction(),
         HelpMenuAcknowledgementsAction(),
-        HelpMenuContactAction()
+        HelpMenuContactAction(),
     ]
 }
 #endif

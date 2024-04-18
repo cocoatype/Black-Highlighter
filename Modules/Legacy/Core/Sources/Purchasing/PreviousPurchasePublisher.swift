@@ -9,7 +9,7 @@ struct PreviousPurchasePublisher: Publisher {
     typealias Output = Bool
     typealias Failure = Error
 
-    func receive<S>(subscriber: S) where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
         Result.Publisher(Self.hasUserPurchasedProduct()).subscribe(subscriber)
     }
 

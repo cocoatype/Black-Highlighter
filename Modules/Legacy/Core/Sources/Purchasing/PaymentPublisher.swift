@@ -25,7 +25,7 @@ class PaymentPublisher: NSObject, Publisher, SKPaymentTransactionObserver {
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
 
-    func receive<S>(subscriber: S) where S : Subscriber, Swift.Error == S.Failure, State == S.Input {
+    func receive<S>(subscriber: S) where S: Subscriber, Swift.Error == S.Failure, State == S.Input {
         stateSubject.receive(subscriber: subscriber)
     }
 

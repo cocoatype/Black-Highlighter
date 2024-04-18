@@ -28,12 +28,12 @@ public class NavigationBar: UINavigationBar {
 
     public static let buttonTitleTextAttributes = [
         NSAttributedString.Key.font: UIFont.navigationBarButtonFont,
-        .foregroundColor: UIColor.white
+        .foregroundColor: UIColor.white,
     ]
 
     public static let titleTextAttributes = [
         NSAttributedString.Key.font: UIFont.navigationBarTitleFont,
-        .foregroundColor: UIColor.white
+        .foregroundColor: UIColor.white,
     ]
 
     // MARK: Boilerplate

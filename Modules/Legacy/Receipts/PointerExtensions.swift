@@ -2,8 +2,8 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 extension UnsafePointer {
-    var optional: Optional<UnsafePointer<Pointee>> {
+    var optional: UnsafePointer<Pointee>? {
         get { return Optional(self) }
-        set(newOptional) { if let newSelf = newOptional { self = newSelf} }
+        set(newOptional) { if let newSelf = newOptional { self = newSelf } }
     }
 }

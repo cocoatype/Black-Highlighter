@@ -68,7 +68,7 @@ public struct Shape: Hashable {
     }
 
     func union(_ other: Shape) -> Shape {
-        let transform = CGAffineTransformMakeRotation(angle);
+        let transform = CGAffineTransformMakeRotation(angle)
 
         let ourRotatedCenterLeft = centerLeft.applying(transform)
         let otherRotatedCenterLeft = other.centerLeft.applying(transform)

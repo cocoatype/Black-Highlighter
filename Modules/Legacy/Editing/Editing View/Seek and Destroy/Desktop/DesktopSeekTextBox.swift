@@ -13,7 +13,7 @@ class DesktopSeekTextBox: DesktopSeekBox {
             textField.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             textField.centerXAnchor.constraint(equalTo: centerXAnchor),
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            textField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6)
+            textField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
         ])
     }
 

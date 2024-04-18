@@ -30,7 +30,7 @@ class DesktopSeekBox: UIView {
             borderView.topAnchor.constraint(equalTo: topAnchor),
             borderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             borderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            borderView.leadingAnchor.constraint(equalTo: leadingAnchor)
+            borderView.leadingAnchor.constraint(equalTo: leadingAnchor),
         ])
     }
 

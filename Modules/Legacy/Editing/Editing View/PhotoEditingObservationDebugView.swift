@@ -61,7 +61,7 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
             return characterLayers + [textLayer]
         }
 
-        let filteredTextLayers = textLayers.filter { textLayer in
+        _ = textLayers.filter { textLayer in
             guard let textCGPath = textLayer.path else { return false }
             let textPath = UIBezierPath(cgPath: textCGPath)
 

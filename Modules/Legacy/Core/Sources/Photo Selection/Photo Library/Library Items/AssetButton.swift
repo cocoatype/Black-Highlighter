@@ -13,7 +13,9 @@ struct AssetButton: View {
     @ViewBuilder
     var body: some View {
         GeometryReader { proxy in
-            Button(action: { navigationWrapper.presentEditor(for: asset.photoAsset) }) {
+            Button {
+                navigationWrapper.presentEditor(for: asset.photoAsset)
+            } label: {
                 if let image = asset.image {
                     AssetImage(image, size: proxy.size)
                 } else {
@@ -26,7 +28,7 @@ struct AssetButton: View {
         .buttonStyle(BorderlessButtonStyle())
         .tag(asset.photoAsset.localIdentifier)
     }
-    
+
     @ObservedObject private var asset: Asset
     @EnvironmentObject private var navigationWrapper: NavigationWrapper
 }
