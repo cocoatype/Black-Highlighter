@@ -11,7 +11,9 @@ struct SettingsNavigationView<Content: View>: View {
     }
 
     var body: some View {
-        NavigationView(content: content).appNavigationBarAppearance()
+        NavigationView(content: content)
+            .appNavigationBarAppearance()
+            .navigationViewStyle(.stack)
     }
 }
 
