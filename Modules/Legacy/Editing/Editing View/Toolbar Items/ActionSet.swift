@@ -20,6 +20,7 @@ struct ActionSet {
             RedoBarButtonItem(undoManager: undoManager, target: target)
             ColorPickerBarButtonItem(target: target, color: currentColor)
             SeekBarButtonItem(target: target)
+            QuickRedactBarButtonItem(target: target)
         }
     }
 
@@ -30,6 +31,7 @@ struct ActionSet {
 
         if FeatureFlag.seekAndDestroy, sizeClass == .regular, #unavailable(iOS 16) {
             SeekBarButtonItem(target: target)
+            QuickRedactBarButtonItem(target: target)
         }
 
         if sizeClass == .regular {
@@ -53,6 +55,7 @@ struct ActionSet {
 
             if FeatureFlag.seekAndDestroy {
                 SeekBarButtonItem(target: target)
+                QuickRedactBarButtonItem(target: target)
             }
 
             ColorPickerBarButtonItem(target: target, color: currentColor)

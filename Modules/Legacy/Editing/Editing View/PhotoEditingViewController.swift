@@ -252,7 +252,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             let picker = ColorPickerViewController()
             picker.delegate = self
             picker.popoverPresentationController?.barButtonItem = barButtonItem
-            present(picker, animated: true, completion: nil)
+            present(picker, animated: true)
         }
     }
 
@@ -271,6 +271,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc private func redo(_ sender: Any) {
         undoManager?.redo()
         updateToolbarItems()
+    }
+
+    // MARK: Quick Redact
+
+    @objc private func showQuickRedactMenu(_ sender: Any) {
+        guard #available(iOS 15, *) else { return }
+        present(QuickRedactViewController(), animated: true)
     }
 
     // MARK: Key Commands

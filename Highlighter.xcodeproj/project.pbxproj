@@ -349,6 +349,8 @@
 		04B1996C26241234001A275B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1995C262411DC001A275B /* TestHelpers.swift */; };
 		04B199A726241697001A275B /* PhotoEditingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B199972624168F001A275B /* PhotoEditingViewTests.swift */; };
 		04B199B02624177F001A275B /* PhotoEditingScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B199AF2624177F001A275B /* PhotoEditingScrollViewTests.swift */; };
+		04B4E00C2BD76B590032DF72 /* QuickRedactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */; };
+		04B4E00F2BD76B6D0032DF72 /* QuickRedactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */; };
 		04BB710A278D2E4B00F5BAEC /* TabletSeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB7109278D2E4B00F5BAEC /* TabletSeekViewController.swift */; };
 		04BB710C278D2FF700F5BAEC /* TabletSeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB710B278D2FF700F5BAEC /* TabletSeekView.swift */; };
 		04BC9FD025C2704300213DBC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BC9FC725C2700200213DBC /* libz.tbd */; };
@@ -390,6 +392,7 @@
 		04F3C82C2309F3F500445A8D /* PurchaseReceiptAttributeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F3C82B2309F3F500445A8D /* PurchaseReceiptAttributeType.swift */; };
 		04F3C856230BC1F000445A8D /* PhotoEditingWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047072922268134500FF20B6 /* PhotoEditingWorkspaceView.swift */; };
 		04F3C864230BCBCF00445A8D /* PhotoEditingBrushStrokeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 04F3C863230BCBCF00445A8D /* PhotoEditingBrushStrokeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		04F834262BD768A8004EA94C /* QuickRedactBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F834252BD768A8004EA94C /* QuickRedactBarButtonItem.swift */; };
 		04FB0963286FE6C600B600A0 /* RedactedWordObservationRotor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB0962286FE6C600B600A0 /* RedactedWordObservationRotor.swift */; };
 		04FB5F2425C7AC8400A5B48D /* Editing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 049F92D722CDA3DB0090C9BC /* Editing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04FC597227C9DDCB0072481B /* DesktopSeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC597127C9DDCB0072481B /* DesktopSeekButton.swift */; };
@@ -973,6 +976,8 @@
 		04B1995C262411DC001A275B /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		04B199972624168F001A275B /* PhotoEditingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewTests.swift; sourceTree = "<group>"; };
 		04B199AF2624177F001A275B /* PhotoEditingScrollViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingScrollViewTests.swift; sourceTree = "<group>"; };
+		04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickRedactViewController.swift; sourceTree = "<group>"; };
+		04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickRedactView.swift; sourceTree = "<group>"; };
 		04BB7109278D2E4B00F5BAEC /* TabletSeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletSeekViewController.swift; sourceTree = "<group>"; };
 		04BB710B278D2FF700F5BAEC /* TabletSeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletSeekView.swift; sourceTree = "<group>"; };
 		04BC9FC725C2700200213DBC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
@@ -1049,6 +1054,7 @@
 		04F77D072894E95100FB3DE2 /* InstanceHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstanceHelper.m; sourceTree = "<group>"; };
 		04F77D092894E96700FB3DE2 /* InstanceHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstanceHelper.h; sourceTree = "<group>"; };
 		04F77D0A2894E9BA00FB3DE2 /* InstanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceHelper.swift; sourceTree = "<group>"; };
+		04F834252BD768A8004EA94C /* QuickRedactBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickRedactBarButtonItem.swift; sourceTree = "<group>"; };
 		04FB0962286FE6C600B600A0 /* RedactedWordObservationRotor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactedWordObservationRotor.swift; sourceTree = "<group>"; };
 		04FC596F27C736580072481B /* PurchaseMarketingHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseMarketingHostingController.swift; sourceTree = "<group>"; };
 		04FC597127C9DDCB0072481B /* DesktopSeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSeekButton.swift; sourceTree = "<group>"; };
@@ -2007,6 +2013,7 @@
 				04750E9726D9EF0700E98BB4 /* RedoBarButtonItem.swift */,
 				04750E9926D9EF1900E98BB4 /* UndoBarButtonItem.swift */,
 				0440943F275F1694003155CC /* ToolbarBuilder.swift */,
+				04F834252BD768A8004EA94C /* QuickRedactBarButtonItem.swift */,
 			);
 			path = "Toolbar Items";
 			sourceTree = "<group>";
@@ -2049,6 +2056,7 @@
 				04D4423A276845D800F2933C /* Seek and Destroy */,
 				04975D8726106F6D00AA2771 /* Toolbar Items */,
 				04E192A4229CD34F006F0E56 /* Workspace */,
+				04B4E00D2BD76B600032DF72 /* Quick Redact */,
 			);
 			path = "Editing View";
 			sourceTree = "<group>";
@@ -2113,6 +2121,15 @@
 				04B1994426241162001A275B /* PhotoEditingWorkspaceViewTests.swift */,
 			);
 			path = Workspace;
+			sourceTree = "<group>";
+		};
+		04B4E00D2BD76B600032DF72 /* Quick Redact */ = {
+			isa = PBXGroup;
+			children = (
+				04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */,
+				04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */,
+			);
+			path = "Quick Redact";
 			sourceTree = "<group>";
 		};
 		04BB7108278D2E4100F5BAEC /* Tablet */ = {
@@ -3441,6 +3458,7 @@
 				045CA3DC27718FC000DEA988 /* DesktopSeekView.swift in Sources */,
 				04750E9A26D9EF1900E98BB4 /* UndoBarButtonItem.swift in Sources */,
 				04750E9826D9EF0700E98BB4 /* RedoBarButtonItem.swift in Sources */,
+				04F834262BD768A8004EA94C /* QuickRedactBarButtonItem.swift in Sources */,
 				043B65CB2A02CE4D0060DE3B /* WindowSceneProvider.swift in Sources */,
 				04975D5926106DC100AA2771 /* PhotoEditingCanvasView.m in Sources */,
 				0447267029ADB84E000345F8 /* CGImageExtensions.swift in Sources */,
@@ -3499,6 +3517,7 @@
 				049F930322CDA9150090C9BC /* PhotoExporter.swift in Sources */,
 				049F92EF22CDA4C10090C9BC /* PhotoEditingImageView.swift in Sources */,
 				049F92ED22CDA4B10090C9BC /* PhotoEditingView.swift in Sources */,
+				04B4E00C2BD76B590032DF72 /* QuickRedactViewController.swift in Sources */,
 				049F930422CDAA9D0090C9BC /* NavigationController.swift in Sources */,
 				045CA3DA27718F4400DEA988 /* DesktopSeekContainerView.swift in Sources */,
 				04750E8A26D9D72F00E98BB4 /* ActionSet.swift in Sources */,
@@ -3511,6 +3530,7 @@
 				04750E9226D9EECE00E98BB4 /* ShareBarButtonItem.swift in Sources */,
 				04CEA1D028343DC30080E510 /* TextRectangleObservation.swift in Sources */,
 				049F92E922CDA43F0090C9BC /* GeometryExtensions.swift in Sources */,
+				04B4E00F2BD76B6D0032DF72 /* QuickRedactView.swift in Sources */,
 				04F3C856230BC1F000445A8D /* PhotoEditingWorkspaceView.swift in Sources */,
 				045CA3AA2771823D00DEA988 /* URLExtensions.swift in Sources */,
 				047D948828FA745600DB5E33 /* PhotoEditingError.swift in Sources */,
