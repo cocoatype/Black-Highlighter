@@ -11,8 +11,6 @@ class AutoRedactionsTableViewCell: UITableViewCell {
         backgroundColor = .tableViewCellBackground
         selectionStyle = .none
 
-        label.text = "Hello, world!"
-
         contentView.addSubview(label)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
