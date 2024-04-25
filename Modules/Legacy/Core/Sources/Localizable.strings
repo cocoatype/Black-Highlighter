@@ -28,6 +28,8 @@
 "AutoRedactionsEmptyView.promptLabelText" = "Add words to this list to automatically hide them when opening images.";
 "AutoRedactionsEmptyView.promptButtonTitle" = "Add Word";
 
+"AutoRedactionsEntryTableViewCellField.placeholder" = "Add Word…";
+
 "BasePhotoEditingViewController.undoKeyCommandDiscoverabilityTitle" = "Undo Redaction";
 "BasePhotoEditingViewController.redoKeyCommandDiscoverabilityTitle" = "Redo Redaction";
 
