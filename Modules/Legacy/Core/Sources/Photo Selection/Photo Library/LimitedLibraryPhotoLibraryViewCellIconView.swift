@@ -1,7 +1,7 @@
 //  Created by Geoff Pado on 5/28/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
-import Editing
+import DesignSystem
 import UIKit
 
 #if !targetEnvironment(macCatalyst)

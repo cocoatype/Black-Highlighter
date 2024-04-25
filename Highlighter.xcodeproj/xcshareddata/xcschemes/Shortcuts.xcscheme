@@ -44,16 +44,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "04B7EC542619E34F002875CA"
-               BuildableName = "ClippingBezierTests.xctest"
-               BlueprintName = "ClippingBezierTests"
-               ReferencedContainer = "container:Highlighter.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference
@@ -105,6 +95,28 @@
                BlueprintIdentifier = "04634ED32A05D16A00569D5C"
                BuildableName = "DefaultsTests.xctest"
                BlueprintName = "DefaultsTests"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "04F9A44E2BDA561C00B2A2DB"
+               BuildableName = "AutoRedactionsUITests.xctest"
+               BlueprintName = "AutoRedactionsUITests"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "04F9A4802BDA594100B2A2DB"
+               BuildableName = "DesignSystemTests.xctest"
+               BlueprintName = "DesignSystemTests"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </TestableReference>

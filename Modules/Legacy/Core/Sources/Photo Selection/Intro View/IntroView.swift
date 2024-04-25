@@ -1,8 +1,8 @@
 //  Created by Geoff Pado on 4/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import DesignSystem
 import SwiftUI
-import UIKit
 
 struct IntroView: View {
     init(permissionAction: @escaping (() -> Void) = {}, importAction: @escaping (() -> Void) = {}) {

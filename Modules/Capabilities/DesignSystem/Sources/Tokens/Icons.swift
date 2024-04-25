@@ -8,11 +8,11 @@ public enum Icons {
 
     public static let limitedLibrary = UIImage(systemName: "rectangle.stack.badge.plus")
 
-    static var undo: UIImage? { UIImage(systemName: "arrow.uturn.left") }
+    public static var undo: UIImage? { UIImage(systemName: "arrow.uturn.left") }
 
-    static var redo: UIImage? { UIImage(systemName: "arrow.uturn.right") }
+    public static var redo: UIImage? { UIImage(systemName: "arrow.uturn.right") }
 
-    static var seekAndDestroy: UIImage? { UIImage(systemName: "magnifyingglass") }
+    public static var seekAndDestroy: UIImage? { UIImage(systemName: "magnifyingglass") }
 
     public static var help: UIImage? { UIImage(systemName: "gear") }
 

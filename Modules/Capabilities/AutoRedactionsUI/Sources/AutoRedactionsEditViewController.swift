@@ -68,8 +68,10 @@ class AutoRedactionsEditViewController: UIViewController {
     }
 }
 
-struct AutoRedactionsEditView: View {
-    var body: some View {
+public struct AutoRedactionsEditView: View {
+    public init() {}
+
+    public var body: some View {
         wrapper
             .navigationTitle("AutoRedactionsEditViewController.navigationTitle")
             .toolbar {

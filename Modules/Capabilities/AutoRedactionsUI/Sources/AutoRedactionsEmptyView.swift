@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 8/26/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import DesignSystem
 import UIKit
 
 class AutoRedactionsEmptyView: UIView {
