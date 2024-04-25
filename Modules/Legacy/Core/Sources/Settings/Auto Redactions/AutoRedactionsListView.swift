@@ -5,13 +5,12 @@ import UIKit
 
 class AutoRedactionsListView: UITableView {
     init() {
-        super.init(frame: .zero, style: .grouped)
+        super.init(frame: .zero, style: .insetGrouped)
         backgroundColor = .primary
-        separatorColor = .primaryExtraLight
-        separatorInset = .zero
         indicatorStyle = .white
 
         register(AutoRedactionsTableViewCell.self, forCellReuseIdentifier: AutoRedactionsTableViewCell.identifier)
+        register(AutoRedactionsEntryTableViewCell.self, forCellReuseIdentifier: AutoRedactionsEntryTableViewCell.ohSheet)
     }
 
     func handleDeletion() {

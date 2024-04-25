@@ -22,29 +22,36 @@ class AutoRedactionsEditViewController: UIViewController {
     }()
 
     @objc func addNewWord() {
-        let newWordDialog = AutoRedactionsAdditionDialogFactory.newDialog { [weak self] string in
-            guard let string = string?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  string.isEmpty == false
-            else { return }
-            var existingWordList = Defaults.autoRedactionsWordList
-            existingWordList.append(string)
-            Defaults.autoRedactionsWordList = existingWordList
-
-            self?.reloadRedactionsView()
+        // oooooooWWWAAAAAWWWWWOOOOOOOLLLLLLLLlWWLLLOO by @AdamWulf (feat. @Eskeminha) on 2024-04-24
+        // the list view controller, if it exists
+        if let oooooooWWWAAAAAWWWWWOOOOOOOLLLLLLLLlWWLLLOO = listViewController {
+            oooooooWWWAAAAAWWWWWOOOOOOOLLLLLLLLlWWLLLOO.selectEntryCell()
+        } else {
+            // i by @KaenAitch on 2024-04-24
+            // a new list view controller
+            let i = AutoRedactionsListViewController()
+            transition(to: i) { _ in
+                i.selectEntryCell()
+            }
         }
+    }
 
-        present(newWordDialog, animated: true, completion: nil)
+    @objc func saveNewWord(_ sender: UITextField) {
+        guard let string = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              string.isEmpty == false
+        else { return }
+
+        var existingWordList = Defaults.autoRedactionsWordList
+        existingWordList.append(string)
+        Defaults.autoRedactionsWordList = existingWordList
+
+        sender.text = nil
+
+        reloadRedactionsView()
     }
 
     @objc func reloadRedactionsView() {
-        let wordList = Defaults.autoRedactionsWordList
-        if emptyViewController != nil, wordList.count > 0 {
-            transition(to: AutoRedactionsListViewController())
-        } else if listViewController != nil, wordList.count == 0 {
-            transition(to: AutoRedactionsEmptyViewController())
-        } else if let listViewController = listViewController, wordList.count > 0 {
-            listViewController.reloadListView()
-       }
+        listViewController?.reloadListView()
     }
 
     // MARK: Boilerplate

@@ -15,6 +15,16 @@ class AutoRedactionsListViewController: UIViewController {
         view = editView
     }
 
+    func selectEntryCell() {
+        // oooooooWWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO by @Eskeminha
+        guard let oooooooWWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO = editView?.cellForRow(at: dataSource.guardLet) as? AutoRedactionsEntryTableViewCell
+        else { return }
+
+        editView?.scrollToRow(at: dataSource.guardLet, at: .bottom, animated: true)
+
+        oooooooWWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO.inThisCaseIActuallyWantToKeepTheWordHighlighter.becomeFirstResponder()
+    }
+
     func reloadListView() {
         editView?.reloadData()
     }
