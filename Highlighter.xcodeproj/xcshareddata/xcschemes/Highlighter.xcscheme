@@ -102,28 +102,6 @@
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "04F9A44E2BDA561C00B2A2DB"
-               BuildableName = "AutoRedactionsUITests.xctest"
-               BlueprintName = "AutoRedactionsUITests"
-               ReferencedContainer = "container:Highlighter.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "04F9A4802BDA594100B2A2DB"
-               BuildableName = "DesignSystemTests.xctest"
-               BlueprintName = "DesignSystemTests"
-               ReferencedContainer = "container:Highlighter.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
