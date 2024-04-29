@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "openssl",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:krzyzanowskim/OpenSSL.git",
+      "state" : {
+        "revision" : "b0d25e59b229fad71aab93828bb4d9cab7a90ed0",
+        "version" : "3.1.5003"
+      }
+    },
+    {
       "identity" : "performancebezier",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/adamwulf/PerformanceBezier.git",
