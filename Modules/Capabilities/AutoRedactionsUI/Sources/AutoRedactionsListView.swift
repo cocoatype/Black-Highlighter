@@ -14,7 +14,7 @@ class AutoRedactionsListView: UITableView {
     }
 
     func handleDeletion() {
-        UIApplication.shared.sendAction(#selector(AutoRedactionsEditViewController.reloadRedactionsView), to: nil, from: self, for: nil)
+        UIApplication.shared.sendAction(#selector(AutoRedactionsListViewController.reloadRedactionsView), to: nil, from: self, for: nil)
     }
 
     // MARK: Boilerplate

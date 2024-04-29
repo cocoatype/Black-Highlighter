@@ -302,7 +302,6 @@
 		049F92E522CDA3FF0090C9BC /* TextRectangleDetectionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CD9CA226EB0830012F5AE /* TextRectangleDetectionOperation.swift */; };
 		049F92E622CDA3FF0090C9BC /* TextObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CD9CE226EB0C70012F5AE /* TextObservation.swift */; };
 		049F92E722CDA3FF0090C9BC /* CharacterObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A3AEF7227A924D00F21229 /* CharacterObservation.swift */; };
-		049F92E822CDA43F0090C9BC /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041EFF182251AAFE0058D8EE /* UIViewControllerExtensions.swift */; };
 		049F92E922CDA43F0090C9BC /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D68BC4225EE2C000D09BBD /* GeometryExtensions.swift */; };
 		049F92EA22CDA43F0090C9BC /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CD9D0226EB0F60012F5AE /* UIImageExtensions.swift */; };
 		049F92ED22CDA4B10090C9BC /* PhotoEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E192A6229CD38C006F0E56 /* PhotoEditingView.swift */; };
@@ -333,8 +332,6 @@
 		04B1996C26241234001A275B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B1995C262411DC001A275B /* TestHelpers.swift */; };
 		04B199A726241697001A275B /* PhotoEditingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B199972624168F001A275B /* PhotoEditingViewTests.swift */; };
 		04B199B02624177F001A275B /* PhotoEditingScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B199AF2624177F001A275B /* PhotoEditingScrollViewTests.swift */; };
-		04B4E00C2BD76B590032DF72 /* QuickRedactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */; };
-		04B4E00F2BD76B6D0032DF72 /* QuickRedactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */; };
 		04BB710A278D2E4B00F5BAEC /* TabletSeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB7109278D2E4B00F5BAEC /* TabletSeekViewController.swift */; };
 		04BB710C278D2FF700F5BAEC /* TabletSeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB710B278D2FF700F5BAEC /* TabletSeekView.swift */; };
 		04BC9FD025C2704300213DBC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BC9FC725C2700200213DBC /* libz.tbd */; };
@@ -416,6 +413,8 @@
 		04FC597227C9DDCB0072481B /* DesktopSeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC597127C9DDCB0072481B /* DesktopSeekButton.swift */; };
 		04FC597727C9E6990072481B /* InputAccessoryHostingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04FC597527C9E6990072481B /* InputAccessoryHostingViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04FC597827C9E6990072481B /* InputAccessoryHostingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FC597627C9E6990072481B /* InputAccessoryHostingViewController.m */; };
+		04FCBFC92BDCBEDD00DF2A68 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041EFF182251AAFE0058D8EE /* UIViewControllerExtensions.swift */; };
+		04FCBFCB2BDCC7C600DF2A68 /* AutoRedactionsAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FCBFCA2BDCC7C600DF2A68 /* AutoRedactionsAccessViewController.swift */; };
 		04FDEA5625257B1900F94CA9 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDEA5525257B1900F94CA9 /* SplitViewController.swift */; };
 		04FF8DAF22EFB996008CF0E9 /* TextObservationRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF8DAE22EFB996008CF0E9 /* TextObservationRedaction.swift */; };
 		04FF8DE122F6D698008CF0E9 /* WordObservationAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF8DE022F6D698008CF0E9 /* WordObservationAccessibilityElement.swift */; };
@@ -1100,8 +1099,6 @@
 		04B1995C262411DC001A275B /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		04B199972624168F001A275B /* PhotoEditingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewTests.swift; sourceTree = "<group>"; };
 		04B199AF2624177F001A275B /* PhotoEditingScrollViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingScrollViewTests.swift; sourceTree = "<group>"; };
-		04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickRedactViewController.swift; sourceTree = "<group>"; };
-		04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickRedactView.swift; sourceTree = "<group>"; };
 		04B4E0102BD771450032DF72 /* AutoRedactionsEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoRedactionsEntryTableViewCell.swift; sourceTree = "<group>"; };
 		04B4E0122BD771FD0032DF72 /* AutoRedactionsEntryTableViewCellField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoRedactionsEntryTableViewCellField.swift; sourceTree = "<group>"; };
 		04BB7109278D2E4B00F5BAEC /* TabletSeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabletSeekViewController.swift; sourceTree = "<group>"; };
@@ -1194,6 +1191,7 @@
 		04FC597127C9DDCB0072481B /* DesktopSeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSeekButton.swift; sourceTree = "<group>"; };
 		04FC597527C9E6990072481B /* InputAccessoryHostingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputAccessoryHostingViewController.h; sourceTree = "<group>"; };
 		04FC597627C9E6990072481B /* InputAccessoryHostingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputAccessoryHostingViewController.m; sourceTree = "<group>"; };
+		04FCBFCA2BDCC7C600DF2A68 /* AutoRedactionsAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoRedactionsAccessViewController.swift; sourceTree = "<group>"; };
 		04FDEA5525257B1900F94CA9 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		04FF8DAE22EFB996008CF0E9 /* TextObservationRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextObservationRedaction.swift; sourceTree = "<group>"; };
 		04FF8DB222F56E31008CF0E9 /* AutoRedactionsEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoRedactionsEditViewController.swift; sourceTree = "<group>"; };
@@ -2226,7 +2224,6 @@
 				04D4423A276845D800F2933C /* Seek and Destroy */,
 				04975D8726106F6D00AA2771 /* Toolbar Items */,
 				04E192A4229CD34F006F0E56 /* Workspace */,
-				04B4E00D2BD76B600032DF72 /* Quick Redact */,
 			);
 			path = "Editing View";
 			sourceTree = "<group>";
@@ -2293,15 +2290,6 @@
 			path = Workspace;
 			sourceTree = "<group>";
 		};
-		04B4E00D2BD76B600032DF72 /* Quick Redact */ = {
-			isa = PBXGroup;
-			children = (
-				04B4E00B2BD76B590032DF72 /* QuickRedactViewController.swift */,
-				04B4E00E2BD76B6D0032DF72 /* QuickRedactView.swift */,
-			);
-			path = "Quick Redact";
-			sourceTree = "<group>";
-		};
 		04BB7108278D2E4100F5BAEC /* Tablet */ = {
 			isa = PBXGroup;
 			children = (
@@ -2364,7 +2352,6 @@
 		04D68BC3225EE2A500D09BBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				041EFF182251AAFE0058D8EE /* UIViewControllerExtensions.swift */,
 				04D68BC4225EE2C000D09BBD /* GeometryExtensions.swift */,
 				043CD9D0226EB0F60012F5AE /* UIImageExtensions.swift */,
 				0447266F29ADB84E000345F8 /* CGImageExtensions.swift */,
@@ -2562,6 +2549,7 @@
 			isa = PBXGroup;
 			children = (
 				04FF8DB222F56E31008CF0E9 /* AutoRedactionsEditViewController.swift */,
+				04FCBFCA2BDCC7C600DF2A68 /* AutoRedactionsAccessViewController.swift */,
 				04FF8DB622F57AA1008CF0E9 /* AutoRedactionsListView.swift */,
 				04FF8DB822F57AD9008CF0E9 /* AutoRedactionsDataSource.swift */,
 				04FF8DBA22F57B09008CF0E9 /* AutoRedactionsTableViewCell.swift */,
@@ -2588,6 +2576,7 @@
 		04F9A4962BDA596B00B2A2DB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				041EFF182251AAFE0058D8EE /* UIViewControllerExtensions.swift */,
 				04F9A49E2BDA5A7500B2A2DB /* Elements */,
 				04F9A49D2BDA5A6A00B2A2DB /* Tokens */,
 			);
@@ -3848,7 +3837,6 @@
 				046C406B2482075F0069E8FB /* WordObservationRedaction.swift in Sources */,
 				046C406F24820C720069E8FB /* StringExtensions.swift in Sources */,
 				04AE0A41298E69F100CB5A24 /* Shape.swift in Sources */,
-				049F92E822CDA43F0090C9BC /* UIViewControllerExtensions.swift in Sources */,
 				04CE5EF929A28A72007E7407 /* RedactableObservation.swift in Sources */,
 				049F92FB22CDA5D90090C9BC /* Toolbar.swift in Sources */,
 				04FF8DE122F6D698008CF0E9 /* WordObservationAccessibilityElement.swift in Sources */,
@@ -3873,7 +3861,6 @@
 				049F930322CDA9150090C9BC /* PhotoExporter.swift in Sources */,
 				049F92EF22CDA4C10090C9BC /* PhotoEditingImageView.swift in Sources */,
 				049F92ED22CDA4B10090C9BC /* PhotoEditingView.swift in Sources */,
-				04B4E00C2BD76B590032DF72 /* QuickRedactViewController.swift in Sources */,
 				049F930422CDAA9D0090C9BC /* NavigationController.swift in Sources */,
 				045CA3DA27718F4400DEA988 /* DesktopSeekContainerView.swift in Sources */,
 				04750E8A26D9D72F00E98BB4 /* ActionSet.swift in Sources */,
@@ -3886,7 +3873,6 @@
 				04750E9226D9EECE00E98BB4 /* ShareBarButtonItem.swift in Sources */,
 				04CEA1D028343DC30080E510 /* TextRectangleObservation.swift in Sources */,
 				049F92E922CDA43F0090C9BC /* GeometryExtensions.swift in Sources */,
-				04B4E00F2BD76B6D0032DF72 /* QuickRedactView.swift in Sources */,
 				04F3C856230BC1F000445A8D /* PhotoEditingWorkspaceView.swift in Sources */,
 				045CA3AA2771823D00DEA988 /* URLExtensions.swift in Sources */,
 				047D948828FA745600DB5E33 /* PhotoEditingError.swift in Sources */,
@@ -3958,6 +3944,7 @@
 				04F9A46A2BDA58CE00B2A2DB /* AutoRedactionsEmptyView.swift in Sources */,
 				04F9A4742BDA58CE00B2A2DB /* AutoRedactionsListViewController.swift in Sources */,
 				04F9A46F2BDA58CE00B2A2DB /* AutoRedactionsAdditionAlertController.swift in Sources */,
+				04FCBFCB2BDCC7C600DF2A68 /* AutoRedactionsAccessViewController.swift in Sources */,
 				04F9A46C2BDA58CE00B2A2DB /* AutoRedactionsEntryTableViewCell.swift in Sources */,
 				04F9A46B2BDA58CE00B2A2DB /* AutoRedactionsListView.swift in Sources */,
 			);
@@ -3975,6 +3962,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FCBFC92BDCBEDD00DF2A68 /* UIViewControllerExtensions.swift in Sources */,
 				04F9A4992BDA59D400B2A2DB /* PromptLabel.swift in Sources */,
 				04F9A49C2BDA5A1C00B2A2DB /* Fonts.swift in Sources */,
 				04F9A49A2BDA5A1C00B2A2DB /* Colors.swift in Sources */,

@@ -2,7 +2,6 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Defaults
-import Editing
 import ErrorHandling
 import UIKit
 

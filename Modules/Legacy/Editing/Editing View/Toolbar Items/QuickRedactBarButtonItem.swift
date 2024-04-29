@@ -5,7 +5,7 @@ import UIKit
 
 class QuickRedactBarButtonItem: UIBarButtonItem {
     convenience init(target: AnyObject?) {
-        self.init(image: UIImage(systemName: "bolt"), style: .plain, target: target, action: #selector(ActionsBuilderActions.showQuickRedactMenu(_:)))
+        self.init(image: UIImage(systemName: "bolt"), style: .plain, target: target, action: #selector(ActionsBuilderActions.showAutoRedactAccess(_:)))
         accessibilityLabel = NSLocalizedString("QuickRedactBarButtonItem.accessibilityLabel", comment: "Accessibility label for the quick redact toolbar item")
     }
 }

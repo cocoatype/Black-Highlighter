@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/15/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import AutoRedactionsUI
 import Defaults
 import Photos
 import UIKit
@@ -273,11 +274,15 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         updateToolbarItems()
     }
 
-    // MARK: Quick Redact
+    // MARK: Auto Redact
 
-    @objc private func showQuickRedactMenu(_ sender: Any) {
-        guard #available(iOS 15, *) else { return }
-        present(QuickRedactViewController(), animated: true)
+    @objc private func showAutoRedactAccess(_ sender: Any) {
+        present(AutoRedactionsAccessNavigationController(), animated: true)
+    }
+
+    @objc private func hideAutoRedactAccess(_ sender: Any) {
+        guard presentedViewController is AutoRedactionsAccessNavigationController else { return }
+        dismiss(animated: true)
     }
 
     // MARK: Key Commands

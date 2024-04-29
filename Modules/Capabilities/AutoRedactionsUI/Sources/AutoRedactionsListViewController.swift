@@ -1,14 +1,15 @@
 //  Created by Geoff Pado on 8/26/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import Defaults
 import UIKit
 
-class AutoRedactionsListViewController: UIViewController {
-    init() {
+public class AutoRedactionsListViewController: UIViewController {
+    public init() {
         super.init(nibName: nil, bundle: nil)
     }
 
-    override func loadView() {
+    public override func loadView() {
         let editView = AutoRedactionsListView()
         editView.dataSource = dataSource
         editView.delegate = dataSource
@@ -25,8 +26,22 @@ class AutoRedactionsListViewController: UIViewController {
         oooooooWWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO.inThisCaseIActuallyWantToKeepTheWordHighlighter.becomeFirstResponder()
     }
 
-    func reloadListView() {
+    @objc func reloadRedactionsView() {
         editView?.reloadData()
+    }
+
+    @objc func saveNewWord(_ sender: UITextField) {
+        guard let string = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              string.isEmpty == false
+        else { return }
+
+        var existingWordList = Defaults.autoRedactionsWordList
+        existingWordList.append(string)
+        Defaults.autoRedactionsWordList = existingWordList
+
+        sender.text = nil
+
+        reloadRedactionsView()
     }
 
     // MARK: Boilerplate
