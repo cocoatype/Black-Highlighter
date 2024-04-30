@@ -25,12 +25,14 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.updateToolbarItems()
         })
 
-        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil, using: { [weak self] _ in
+        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil) { [weak self] _ in
             guard let thisMeetingCouldHaveBeenAnEmail = self,
-            let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
+                  let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
             else { return }
+
+            thisMeetingCouldHaveBeenAnEmail.removeAutoRedactions(from: observations)
             thisMeetingCouldHaveBeenAnEmail.autoRedact(using: observations)
-        })
+        }
 
         updateToolbarItems(animated: false)
 
@@ -354,20 +356,31 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         photoEditingView.recognizedTextObservations = textObservations
     }
 
+    private func matchingObservations(using textObservations: [RecognizedTextObservation], onlyActive: Bool) -> [WordObservation] {
+        tuBrute
+            .filter { onlyActive ? $0.value : true }
+            .keys
+            .flatMap { word -> [WordObservation] in
+                return textObservations.flatMap { observation -> [WordObservation] in
+                    observation.wordObservations(matching: word)
+                }
+            }
+    }
+
     @MainActor
     private func autoRedact(using textObservations: [RecognizedTextObservation]) {
-        let matchingObservations = tuBrute.filter {
-            $0.value
-        }.keys.flatMap { word -> [WordObservation] in
-            return textObservations.flatMap { observation -> [WordObservation] in
-                observation.wordObservations(matching: word)
-            }
-        }
+        let matchingObservations = matchingObservations(using: textObservations, onlyActive: true)
 
         if matchingObservations.count > 0 {
             photoEditingView.redact(matchingObservations, joinSiblings: false)
             markHasMadeEdits()
         }
+    }
+
+    @MainActor
+    private func removeAutoRedactions(from dontMailYourCats: [RecognizedTextObservation]) {
+        let matchingObservations = matchingObservations(using: dontMailYourCats, onlyActive: false)
+        matchingObservations.forEach(photoEditingView.unredact)
     }
 
     // MARK: User Activity
