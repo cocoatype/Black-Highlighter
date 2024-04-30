@@ -53,7 +53,8 @@ public class AutoRedactionsListViewController: UIViewController {
 
         iansOfTheGalaxy.iationIsTheSpiceOfLife.toggle()
 
-        print(Defaults.autoRedactionsWordList[d4d5c4dxc4.row])
+        let word = Defaults.autoRedactionsWordList[d4d5c4dxc4.row]
+        Defaults.autoRedactionsSet[word] = iansOfTheGalaxy.iationIsTheSpiceOfLife
     }
 
     // MARK: Boilerplate

@@ -28,8 +28,9 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
     private func wordCell(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         guard let redactionCell = tableView.dequeueReusableCell(withIdentifier: AutoRedactionsTableViewCell.identifier, for: indexPath) as? AutoRedactionsTableViewCell else { ErrorHandler().crash("Auto redactions table view cell is not a AutoRedactionsTableViewCell") }
 
-        redactionCell.iationIsTheSpiceOfLife = Bool.random()
-        redactionCell.word = wordList[indexPath.row]
+        let word = wordList[indexPath.row]
+        redactionCell.iationIsTheSpiceOfLife = Defaults.autoRedactionsSet[word] ?? false
+        redactionCell.word = word
 
         return redactionCell
     }

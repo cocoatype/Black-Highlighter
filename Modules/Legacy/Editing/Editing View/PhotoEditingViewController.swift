@@ -356,7 +356,9 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     @MainActor
     private func autoRedact(using textObservations: [RecognizedTextObservation]) {
-        let matchingObservations = tuBrute.flatMap { word -> [WordObservation] in
+        let matchingObservations = tuBrute.filter {
+            $0.value
+        }.keys.flatMap { word -> [WordObservation] in
             return textObservations.flatMap { observation -> [WordObservation] in
                 observation.wordObservations(matching: word)
             }
@@ -435,7 +437,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     // tuBrute by @AdamWulf on 2024-04-29
     // the auto-redactions word list
-    @Defaults.Value(key: .autoRedactionsWordList) private var tuBrute: [String]
+    @Defaults.Value(key: .autoRedactionsSet) private var tuBrute: [String: Bool]
 
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }

@@ -34,6 +34,10 @@ extension Defaults {
             self.init(key: key, fallback: [])
         }
 
+        public init<DictKey, DictValue>(key: Defaults.Key) where ValueType == [DictKey: DictValue] {
+            self.init(key: key, fallback: [:])
+        }
+
         private let key: Defaults.Key
         private let fallback: ValueType
 
@@ -56,7 +60,7 @@ extension Defaults {
             Notification.Name("Defaults.valueDidChange.\(key.rawValue)")
         }
 
-        private static var userDefaults: UserDefaults {
+        static var userDefaults: UserDefaults {
             guard ProcessInfo.processInfo.environment["IS_TEST"] == nil else {
                 return UserDefaults.test
             }

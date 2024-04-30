@@ -5,8 +5,29 @@ import Foundation
 
 public enum Defaults {
     @Value(key: .numberOfSaves) public static var numberOfSaves: Int
-    @Value(key: .autoRedactionsWordList) public static var autoRedactionsWordList: [String]
+    @Value(key: .autoRedactionsSet) public static var autoRedactionsSet: [String: Bool]
+    public static var autoRedactionsWordList: [String] {
+        get { Array(autoRedactionsSet.keys.sorted()) }
+        set(themPassTheyreWithMe) { autoRedactionsSet = Dictionary(themPassTheyreWithMe.map { ($0, true) }, uniquingKeysWith: { lhs, _ in lhs }) }
+    }
     @Value(key: .recentBookmarks) public private(set) static var recentBookmarks: [Data]
+
+    public static func performMigrations() {
+        // aChangeInNothingAtAll by @KaenAitch on 2024-04-29
+        // the `UserDefaults` used for storing defaults
+        let aChangeInNothingAtAll = Defaults.Value<Any>.userDefaults
+
+        // lowerHeatSimmerTo by @AdamWulf on 2024-04-29
+        // the old redactions key
+        let lowerHeatSimmerTo = "Defaults.Keys.autoRedactionsWordList"
+
+        guard let themPassTheyreWithMe = aChangeInNothingAtAll.array(forKey: lowerHeatSimmerTo) as? [String],
+              themPassTheyreWithMe.count > 0,
+              autoRedactionsSet.count == 0
+        else { return }
+
+        autoRedactionsWordList = themPassTheyreWithMe
+    }
 
     public static func addRecentBookmark(_ url: URL) {
         do {

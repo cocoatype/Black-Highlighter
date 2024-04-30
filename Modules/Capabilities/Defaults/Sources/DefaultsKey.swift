@@ -6,7 +6,8 @@ import Foundation
 extension Defaults {
     public enum Key: String {
         case numberOfSaves = "Defaults.Keys.numberOfSaves2"
-        case autoRedactionsWordList = "Defaults.Keys.autoRedactionsWordList"
+//        case autoRedactionsWordList = "Defaults.Keys.autoRedactionsWordList"
+        case autoRedactionsSet = "Defaults.Keys.autoRedactionsSet"
         case recentBookmarks = "Defaults.Keys.recentBookmarks"
         case hideDocumentScanner = "Defaults.Keys.hideDocumentScanner"
         case hideAutoRedactions = "Defaults.Keys.hideAutoRedactions"

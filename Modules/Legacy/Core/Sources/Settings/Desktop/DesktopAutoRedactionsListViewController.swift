@@ -20,9 +20,9 @@ class DesktopAutoRedactionsListViewController: UIViewController, DesktopAutoReda
     private func addNewWord() {
         let newWordDialog = AutoRedactionsAdditionDialogFactory.newDialog { [weak self] string in
             guard let string = string, string.isEmpty == false else { return }
-            var existingWordList = Defaults.autoRedactionsWordList
-            existingWordList.append(string)
-            Defaults.autoRedactionsWordList = existingWordList
+            var existingSet = Defaults.autoRedactionsSet
+            existingSet[string] = true
+            Defaults.autoRedactionsSet = existingSet
 
             self?.settingsView.appendRow()
 //            self?.rootView.wordList = existingWordList
@@ -32,7 +32,8 @@ class DesktopAutoRedactionsListViewController: UIViewController, DesktopAutoReda
 
     private func removeSelectedWord() {
         guard let selectedIndex = settingsView.selectedIndex else { return }
-        Defaults.autoRedactionsWordList.remove(at: selectedIndex)
+        let selectedWord = Defaults.autoRedactionsWordList[selectedIndex]
+        Defaults.autoRedactionsSet[selectedWord] = nil
         settingsView.removeRow(at: selectedIndex)
     }
 
