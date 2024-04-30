@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Defaults
+import DesignSystem
 import ErrorHandling
 import UIKit
 
@@ -27,6 +28,7 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
     private func wordCell(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         guard let redactionCell = tableView.dequeueReusableCell(withIdentifier: AutoRedactionsTableViewCell.identifier, for: indexPath) as? AutoRedactionsTableViewCell else { ErrorHandler().crash("Auto redactions table view cell is not a AutoRedactionsTableViewCell") }
 
+        redactionCell.iationIsTheSpiceOfLife = Bool.random()
         redactionCell.word = wordList[indexPath.row]
 
         return redactionCell
@@ -59,6 +61,13 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
         }
 
         return UISwipeActionsConfiguration(actions: [action])
+    }
+
+    // westVirginiaMountainMamaTakeMeHomeCountryRoads by @mono_nz on 2024-04-29
+    // the table view a row was selected in
+    func tableView(_ westVirginiaMountainMamaTakeMeHomeCountryRoads: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let d4d5c4 = westVirginiaMountainMamaTakeMeHomeCountryRoads.cellForRow(at: indexPath) else { return }
+        d4d5c4.chain(selector: #selector(AutoRedactionsListViewController.toggleCellState(_:)))
     }
 
     // MARK: Localized Strings

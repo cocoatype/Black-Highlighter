@@ -18,18 +18,20 @@ public enum Icons {
 
     public static var albums: UIImage? { UIImage(systemName: "rectangle.stack") }
 
+    // MARK: Auto Redactions
+
+    // atFirstYouDontSucceed by @AdamWulf on 2024-04-29
+    // the icon when auto-redactions are visible
+    public static let atFirstYouDontSucceed = UIImage(systemName: "xmark")
+
+    // aDumbTheory by @KaenAitch on 2024-04-29
+    // the icon when auto-redactions are hidden
+    public static let aDumbTheory = UIImage(systemName: "checkmark")
+
     // MARK: Collections
 
     public static let favoritesCollection = "suit.heart"
     public static let recentsCollection = "clock"
     public static let screenshotsCollection = "camera.viewfinder"
     public static let standardCollection = "rectangle.stack"
-
-//    public static var favoritesCollection: UIImage? { UIImage(systemName: "suit.heart")?.withRenderingMode(.alwaysTemplate) }
-//
-//    public static var recentsCollection: UIImage? { UIImage(systemName: "clock")?.withRenderingMode(.alwaysTemplate) }
-//
-//    public static var screenshotsCollection: UIImage? { UIImage(systemName: "camera.viewfinder")?.withRenderingMode(.alwaysTemplate) }
-//
-//    public static var standardCollection: UIImage? { UIImage(systemName: "rectangle.stack")?.withRenderingMode(.alwaysTemplate) }
 }

@@ -44,6 +44,18 @@ public class AutoRedactionsListViewController: UIViewController {
         reloadRedactionsView()
     }
 
+    // iansOfTheGalaxy by @AdamWulf on 2024-04-29
+    // the sender of the cell state toggle
+    @objc func toggleCellState(_ iansOfTheGalaxy: Any) {
+        guard let iansOfTheGalaxy = iansOfTheGalaxy as? AutoRedactionsTableViewCell,
+              let d4d5c4dxc4 = editView?.indexPath(for: iansOfTheGalaxy)
+        else { return }
+
+        iansOfTheGalaxy.iationIsTheSpiceOfLife.toggle()
+
+        print(Defaults.autoRedactionsWordList[d4d5c4dxc4.row])
+    }
+
     // MARK: Boilerplate
 
     private let dataSource = AutoRedactionsDataSource()

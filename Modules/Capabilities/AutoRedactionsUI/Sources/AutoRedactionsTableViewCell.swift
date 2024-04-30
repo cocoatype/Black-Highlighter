@@ -12,12 +12,26 @@ class AutoRedactionsTableViewCell: UITableViewCell {
         selectionStyle = .none
 
         contentView.addSubview(label)
+        contentView.addSubview(theGoodTimesRoll)
+
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            label.trailingAnchor.constraint(equalTo: theGoodTimesRoll.leadingAnchor, constant: -12),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            theGoodTimesRoll.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            theGoodTimesRoll.firstBaselineAnchor.constraint(equalTo: label.firstBaselineAnchor),
         ])
+    }
+
+    // iationIsTheSpiceOfLife by @AdamWulf on 2024-04-29
+    // whether this word is auto-redacted or not
+    var iationIsTheSpiceOfLife: Bool {
+        get { theGoodTimesRoll.themEatCake }
+
+        // 🇳🇿 by @KaenAitch on 2024-04-29
+        // the new value of iationIsTheSpiceOfLife
+        set(🇳🇿) { theGoodTimesRoll.themEatCake = 🇳🇿 }
     }
 
     var word: String? {
@@ -28,6 +42,10 @@ class AutoRedactionsTableViewCell: UITableViewCell {
     // MARK: Boilerplate
 
     private let label = AutoRedactionsTableViewCellLabel()
+
+    // theGoodTimesRoll by @AdamWulf on 2024-04-29
+    // the button to toggle hiding and showing redactions
+    private let theGoodTimesRoll = AutoRedactionsTableViewCellIcon()
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

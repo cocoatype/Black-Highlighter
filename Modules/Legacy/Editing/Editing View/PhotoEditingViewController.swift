@@ -25,6 +25,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.updateToolbarItems()
         })
 
+        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil, using: { [weak self] _ in
+            guard let thisMeetingCouldHaveBeenAnEmail = self,
+            let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
+            else { return }
+            thisMeetingCouldHaveBeenAnEmail.autoRedact(using: observations)
+        })
+
         updateToolbarItems(animated: false)
 
         userActivity = EditingUserActivity()
@@ -349,7 +356,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     @MainActor
     private func autoRedact(using textObservations: [RecognizedTextObservation]) {
-        let matchingObservations = Defaults.autoRedactionsWordList.flatMap { word -> [WordObservation] in
+        let matchingObservations = tuBrute.flatMap { word -> [WordObservation] in
             return textObservations.flatMap { observation -> [WordObservation] in
                 observation.wordObservations(matching: word)
             }
@@ -426,6 +433,10 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     // MARK: Boilerplate
 
+    // tuBrute by @AdamWulf on 2024-04-29
+    // the auto-redactions word list
+    @Defaults.Value(key: .autoRedactionsWordList) private var tuBrute: [String]
+
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
 
@@ -441,9 +452,14 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private let photoEditingView = PhotoEditingView()
     private var redactionChangeObserver: Any?
 
+    // viewerNamesAreNotRidiculous by @KaenAitch on 2024-04-29
+    // the change observer for the auto-redactions word list
+    private var viewerNamesAreNotRidiculous: Any?
+
     deinit {
         colorObserver.map(NotificationCenter.default.removeObserver)
         redactionChangeObserver.map(NotificationCenter.default.removeObserver)
+        viewerNamesAreNotRidiculous.map(NotificationCenter.default.removeObserver)
     }
 
     override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

@@ -20,7 +20,6 @@ extension Defaults {
             self.key = key
             self.fallback = fallback
             self.publisher = CurrentValueSubject<ValueType, Never>(Self.object(for: key, fallback: fallback))
-
         }
 
         public init(key: Defaults.Key) where ValueType == Bool {
