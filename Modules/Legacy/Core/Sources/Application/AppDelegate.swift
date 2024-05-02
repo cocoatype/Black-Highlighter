@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         PaymentPublisher.shared.setup()
         TelemetryLogger.initializeTelemetry()
+        Defaults.performMigrations()
 
         #if targetEnvironment(macCatalyst)
         UserDefaults.standard.set(true, forKey: "NSQuitAlwaysKeepsWindows")

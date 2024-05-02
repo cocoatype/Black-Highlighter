@@ -18,7 +18,7 @@ class AutoRedactionsEntryTableViewCellField: UITextField {
         textColor = .white
         translatesAutoresizingMaskIntoConstraints = false
 
-        addTarget(nil, action: #selector(AutoRedactionsEditViewController.saveNewWord(_:)), for: .editingDidEnd)
+        addTarget(nil, action: #selector(AutoRedactionsListViewController.saveNewWord(_:)), for: .editingDidEnd)
     }
 
     @available(*, unavailable)

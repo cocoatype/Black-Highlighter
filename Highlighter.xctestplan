@@ -22,6 +22,13 @@
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "04F9A44E2BDA561C00B2A2DB",
+        "name" : "AutoRedactionsUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
         "identifier" : "04634D6A2A05189C00569D5C",
         "name" : "CoreTests"
       }
@@ -31,6 +38,13 @@
         "containerPath" : "container:Highlighter.xcodeproj",
         "identifier" : "04634ED32A05D16A00569D5C",
         "name" : "DefaultsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "04F9A4802BDA594100B2A2DB",
+        "name" : "DesignSystemTests"
       }
     },
     {

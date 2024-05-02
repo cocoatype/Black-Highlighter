@@ -1,8 +1,8 @@
 //  Created by Geoff Pado on 5/19/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import AutoRedactionsUI
 import Defaults
-import Editing
 import SafariServices
 import SwiftUI
 

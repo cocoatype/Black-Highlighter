@@ -20,7 +20,6 @@ extension Defaults {
             self.key = key
             self.fallback = fallback
             self.publisher = CurrentValueSubject<ValueType, Never>(Self.object(for: key, fallback: fallback))
-
         }
 
         public init(key: Defaults.Key) where ValueType == Bool {
@@ -33,6 +32,10 @@ extension Defaults {
 
         public init<ElementType>(key: Defaults.Key) where ValueType == [ElementType] {
             self.init(key: key, fallback: [])
+        }
+
+        public init<DictKey, DictValue>(key: Defaults.Key) where ValueType == [DictKey: DictValue] {
+            self.init(key: key, fallback: [:])
         }
 
         private let key: Defaults.Key
@@ -57,7 +60,7 @@ extension Defaults {
             Notification.Name("Defaults.valueDidChange.\(key.rawValue)")
         }
 
-        private static var userDefaults: UserDefaults {
+        static var userDefaults: UserDefaults {
             guard ProcessInfo.processInfo.environment["IS_TEST"] == nil else {
                 return UserDefaults.test
             }

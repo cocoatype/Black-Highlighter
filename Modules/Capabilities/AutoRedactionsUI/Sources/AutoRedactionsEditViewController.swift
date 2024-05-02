@@ -2,13 +2,17 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Defaults
-import Editing
+import DesignSystem
 import SwiftUI
 import UIKit
 
-class AutoRedactionsEditViewController: UIViewController {
-    init() {
+public class AutoRedactionsEditViewController: UIViewController {
+    public init() {
         super.init(nibName: nil, bundle: nil)
+
+        navigationItem.title = Self.navigationTitle
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addNewWord))
+
         embed(initialViewController)
     }
 
@@ -36,24 +40,6 @@ class AutoRedactionsEditViewController: UIViewController {
         }
     }
 
-    @objc func saveNewWord(_ sender: UITextField) {
-        guard let string = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-              string.isEmpty == false
-        else { return }
-
-        var existingWordList = Defaults.autoRedactionsWordList
-        existingWordList.append(string)
-        Defaults.autoRedactionsWordList = existingWordList
-
-        sender.text = nil
-
-        reloadRedactionsView()
-    }
-
-    @objc func reloadRedactionsView() {
-        listViewController?.reloadListView()
-    }
-
     // MARK: Boilerplate
 
     private static let navigationTitle = NSLocalizedString("AutoRedactionsEditViewController.navigationTitle", comment: "Navigation title for the auto redactions edit view")
@@ -68,41 +54,34 @@ class AutoRedactionsEditViewController: UIViewController {
     }
 }
 
-struct AutoRedactionsEditView: View {
-    var body: some View {
-        wrapper
-            .navigationTitle("AutoRedactionsEditViewController.navigationTitle")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        wrapper.addNewWord()
-                    }, label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
-                    })
-                }
-            }
+public struct AutoRedactionsEditView: UIViewControllerRepresentable {
+    public init() {}
+
+    public func makeUIViewController(context: Context) -> AutoRedactionsEditViewController {
+        // llllllllll by @AdamWulf on 2024-04-26
+        // the view controller to wrap for SwiftUI
+        let llllllllll = AutoRedactionsEditViewController()
+
+        // lllllllllI by @AdamWulf on 2024-04-26
+        // the view controller whose parent has changed
+        context.coordinator.parentObserver = llllllllll.observe(\.parent, changeHandler: { lllllllllI, _ in
+            lllllllllI.parent?.navigationItem.title = lllllllllI.navigationItem.title
+            lllllllllI.parent?.navigationItem.rightBarButtonItems = lllllllllI.navigationItem.rightBarButtonItems
+        })
+        return llllllllll
     }
 
-    private let wrapper = AutoRedactionsEditViewControllerWrapper()
-}
+    public func updateUIViewController(_ uiViewController: AutoRedactionsEditViewController, context: Context) {}
+    public func makeCoordinator() -> Coordinator { Coordinator() }
 
-struct AutoRedactionsEditViewControllerWrapper: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> AutoRedactionsEditViewController {
-        return controller
+    public class Coordinator {
+        var parentObserver: NSKeyValueObservation?
     }
-
-    func updateUIViewController(_ uiViewController: AutoRedactionsEditViewController, context: Context) {}
-
-    func addNewWord() {
-        controller.addNewWord()
-    }
-
-    private let controller = AutoRedactionsEditViewController()
 }
 
 struct AutoRedactionsEditViewPreviews: PreviewProvider {
     static var previews: some View {
-        AutoRedactionsEditView().background(Color.appPrimary.edgesIgnoringSafeArea(.all))
+        AutoRedactionsEditView()
+            .background(Color.appPrimary.edgesIgnoringSafeArea(.all))
     }
 }

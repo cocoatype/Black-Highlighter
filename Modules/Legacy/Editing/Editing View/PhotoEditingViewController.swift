@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/15/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import AutoRedactionsUI
 import Defaults
 import Photos
 import UIKit
@@ -23,6 +24,15 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         redactionChangeObserver = NotificationCenter.default.addObserver(forName: PhotoEditingRedactionView.redactionsDidChange, object: nil, queue: .main, using: { [weak self] _ in
             self?.updateToolbarItems()
         })
+
+        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil) { [weak self] _ in
+            guard let thisMeetingCouldHaveBeenAnEmail = self,
+                  let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
+            else { return }
+
+            thisMeetingCouldHaveBeenAnEmail.removeAutoRedactions(from: observations)
+            thisMeetingCouldHaveBeenAnEmail.autoRedact(using: observations)
+        }
 
         updateToolbarItems(animated: false)
 
@@ -252,7 +262,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             let picker = ColorPickerViewController()
             picker.delegate = self
             picker.popoverPresentationController?.barButtonItem = barButtonItem
-            present(picker, animated: true, completion: nil)
+            present(picker, animated: true)
         }
     }
 
@@ -271,6 +281,17 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc private func redo(_ sender: Any) {
         undoManager?.redo()
         updateToolbarItems()
+    }
+
+    // MARK: Auto Redact
+
+    @objc private func showAutoRedactAccess(_ sender: Any) {
+        present(AutoRedactionsAccessNavigationController(), animated: true)
+    }
+
+    @objc private func hideAutoRedactAccess(_ sender: Any) {
+        guard presentedViewController is AutoRedactionsAccessNavigationController else { return }
+        dismiss(animated: true)
     }
 
     // MARK: Key Commands
@@ -335,18 +356,31 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         photoEditingView.recognizedTextObservations = textObservations
     }
 
+    private func matchingObservations(using textObservations: [RecognizedTextObservation], onlyActive: Bool) -> [WordObservation] {
+        tuBrute
+            .filter { onlyActive ? $0.value : true }
+            .keys
+            .flatMap { word -> [WordObservation] in
+                return textObservations.flatMap { observation -> [WordObservation] in
+                    observation.wordObservations(matching: word)
+                }
+            }
+    }
+
     @MainActor
     private func autoRedact(using textObservations: [RecognizedTextObservation]) {
-        let matchingObservations = Defaults.autoRedactionsWordList.flatMap { word -> [WordObservation] in
-            return textObservations.flatMap { observation -> [WordObservation] in
-                observation.wordObservations(matching: word)
-            }
-        }
+        let matchingObservations = matchingObservations(using: textObservations, onlyActive: true)
 
         if matchingObservations.count > 0 {
             photoEditingView.redact(matchingObservations, joinSiblings: false)
             markHasMadeEdits()
         }
+    }
+
+    @MainActor
+    private func removeAutoRedactions(from dontMailYourCats: [RecognizedTextObservation]) {
+        let matchingObservations = matchingObservations(using: dontMailYourCats, onlyActive: false)
+        matchingObservations.forEach(photoEditingView.unredact)
     }
 
     // MARK: User Activity
@@ -414,6 +448,10 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     // MARK: Boilerplate
 
+    // tuBrute by @AdamWulf on 2024-04-29
+    // the auto-redactions word list
+    @Defaults.Value(key: .autoRedactionsSet) private var tuBrute: [String: Bool]
+
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
 
@@ -429,9 +467,14 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private let photoEditingView = PhotoEditingView()
     private var redactionChangeObserver: Any?
 
+    // viewerNamesAreNotRidiculous by @KaenAitch on 2024-04-29
+    // the change observer for the auto-redactions word list
+    private var viewerNamesAreNotRidiculous: Any?
+
     deinit {
         colorObserver.map(NotificationCenter.default.removeObserver)
         redactionChangeObserver.map(NotificationCenter.default.removeObserver)
+        viewerNamesAreNotRidiculous.map(NotificationCenter.default.removeObserver)
     }
 
     override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

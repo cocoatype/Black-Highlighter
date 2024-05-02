@@ -1,22 +1,10 @@
 //  Created by Geoff Pado on 4/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import SwiftUI
 import UIKit
 
-struct IntroLabel: View {
-    private let textKey: LocalizedStringKey
-    init(_ textKey: LocalizedStringKey) {
-        self.textKey = textKey
-    }
-
-    var body: some View {
-        Text(textKey).foregroundColor(.primaryExtraLight).font(.app(textStyle: .body))
-    }
-}
-
-class PromptLabel: UILabel {
-    init(text string: String) {
+public class PromptLabel: UILabel {
+    public init(text string: String) {
         super.init(frame: .zero)
 
         adjustsFontForContentSizeCategory = true
