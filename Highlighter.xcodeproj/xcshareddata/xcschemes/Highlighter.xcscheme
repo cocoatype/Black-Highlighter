@@ -135,11 +135,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-FeatureFlag.seekAndDestroy YES"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-FeatureFlag.newFromClipboard YES"
+            argument = "-FeatureFlag.autoRedactInEdit YES"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

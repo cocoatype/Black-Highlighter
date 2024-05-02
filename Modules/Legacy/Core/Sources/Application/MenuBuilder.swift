@@ -22,10 +22,8 @@ enum MenuBuilder {
         }
 
         #if targetEnvironment(macCatalyst)
-        if FeatureFlag.newFromClipboard {
-            builder.replaceChildren(ofMenu: .newScene) {
-                $0 + [NewFromClipboardCommand()]
-            }
+        builder.replaceChildren(ofMenu: .newScene) {
+            $0 + [NewFromClipboardCommand()]
         }
         #endif
 

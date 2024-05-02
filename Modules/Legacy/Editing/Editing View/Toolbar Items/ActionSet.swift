@@ -29,7 +29,7 @@ struct ActionSet {
             ShareBarButtonItem(target: target)
         }
 
-        if FeatureFlag.seekAndDestroy, sizeClass == .regular, #unavailable(iOS 16) {
+        if sizeClass == .regular, #unavailable(iOS 16) {
             SeekBarButtonItem(target: target)
             QuickRedactBarButtonItem(target: target)
         }
@@ -53,8 +53,9 @@ struct ActionSet {
             RedoBarButtonItem(undoManager: undoManager, target: target)
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-            if FeatureFlag.seekAndDestroy {
-                SeekBarButtonItem(target: target)
+            SeekBarButtonItem(target: target)
+
+            if FeatureFlag.autoRedactInEdit {
                 QuickRedactBarButtonItem(target: target)
             }
 

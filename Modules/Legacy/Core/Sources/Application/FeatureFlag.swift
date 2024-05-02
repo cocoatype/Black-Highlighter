@@ -4,12 +4,8 @@
 import Foundation
 
 public enum FeatureFlag {
-    public static var seekAndDestroy: Bool {
-        true
-    }
-
-    public static var newFromClipboard: Bool {
-        true
+    public static var autoRedactInEdit: Bool {
+        UserDefaults.standard.bool(forKey: "FeatureFlag.autoRedactInEdit")
     }
 
     public static var shouldShowDebugOverlay: Bool {
