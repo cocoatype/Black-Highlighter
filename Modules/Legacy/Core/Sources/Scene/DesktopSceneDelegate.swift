@@ -133,13 +133,12 @@ class DesktopSceneDelegate: NSObject, UIWindowSceneDelegate, NSToolbarDelegate, 
     // MARK: NSToolbarDelegate
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        var identifiers = [NSToolbarItem.Identifier]()
-        if FeatureFlag.seekAndDestroy {
-            identifiers.append(SeekItem.identifier)
-        }
-
-        identifiers.append(contentsOf: [ColorPickerItem.identifier, ToolPickerItem.identifier, ShareItem.identifier])
-        return identifiers
+        [
+            SeekItem.identifier,
+            ColorPickerItem.identifier,
+            ToolPickerItem.identifier,
+            ShareItem.identifier,
+        ]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
