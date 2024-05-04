@@ -15,7 +15,8 @@ public enum AutoRedactionsUI {
         bundleId: "com.cocoatype.Highlighter.AutoRedactionsUI",
         sources: ["Modules/Capabilities/AutoRedactionsUI/Sources/**"],
         dependencies: [
-            .target(ErrorHandling.target)
+            .target(DesignSystem.target),
+            .target(ErrorHandling.target),
         ]
     )
 

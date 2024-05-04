@@ -16,7 +16,6 @@ public enum Core {
         sources: ["Modules/Legacy/Core/Sources/**"],
         dependencies: [
             .target(AppRatings.target),
-            .target(AutoRedactionsUI.target),
             .target(Defaults.target),
             .target(DesignSystem.target),
             .target(Editing.target),

@@ -14,6 +14,7 @@ public enum App {
         product: .app,
         bundleId: "com.cocoatype.Highlighter",
         resources: ["App/Resources/**"],
+        entitlements: "App/Highlighter.entitlements",
         dependencies: [
             .target(Core.target),
         ]

@@ -3,6 +3,7 @@
 
 import Combine
 import ErrorHandling
+import Foundation
 import Receipts
 
 struct PreviousPurchasePublisher: Publisher {

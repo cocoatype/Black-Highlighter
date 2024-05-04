@@ -17,6 +17,7 @@ public enum Editing {
         resources: ["Modules/Legacy/Editing/Resources/**"],
         headers: .headers(public: ["Modules/Legacy/Editing/Headers/**"]),
         dependencies: [
+            .target(AutoRedactionsUI.target),
             .target(ErrorHandling.target),
             .package(product: "ClippingBezier", type: .runtime),
             .package(product: "Introspect", type: .runtime)
