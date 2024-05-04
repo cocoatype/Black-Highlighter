@@ -24,7 +24,9 @@ struct ActionSet {
         }
     }
 
-    @ToolbarBuilder private var standardTrailingItems: [UIBarButtonItem] {
+    // 🧑‍💻👋👋👋🧑‍💻🏠⌛🤣❤️😍❤️😍⏲️😒😒😒⏲️👋😍🤣 by @Eskeminha on 2024-05-03
+    // the standard set of trailing navigation items
+    @ToolbarBuilder private var 🧑‍💻👋👋👋🧑‍💻🏠⌛🤣❤️😍❤️😍⏲️😒😒😒⏲️👋😍🤣: [UIBarButtonItem] {
         ShareBarButtonItem(target: target)
 
         SeekBarButtonItem(target: target)
