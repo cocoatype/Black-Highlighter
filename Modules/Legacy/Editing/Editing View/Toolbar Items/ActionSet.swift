@@ -24,9 +24,9 @@ struct ActionSet {
         }
     }
 
-    // 🧑‍💻👋👋👋🧑‍💻🏠⌛🤣❤️😍❤️😍⏲️😒😒😒⏲️👋😍🤣 by @Eskeminha on 2024-05-03
+    // 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣 by @Eskeminha on 2024-05-03
     // the standard set of trailing navigation items
-    @ToolbarBuilder private var 🧑‍💻👋👋👋🧑‍💻🏠⌛🤣❤️😍❤️😍⏲️😒😒😒⏲️👋😍🤣: [UIBarButtonItem] {
+    @ToolbarBuilder private var 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣: [UIBarButtonItem] {
         ShareBarButtonItem(target: target)
 
         SeekBarButtonItem(target: target)
@@ -38,7 +38,7 @@ struct ActionSet {
 
     @ToolbarBuilder var trailingNavigationItems: [UIBarButtonItem] {
         if #unavailable(iOS 16) {
-            standardTrailingItems
+            🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣
         }
 
         if sizeClass == .regular, #unavailable(iOS 16) {
@@ -55,7 +55,7 @@ struct ActionSet {
                 ShareBarButtonItem(target: target)
             }
         } else if #available(iOS 16, *) {
-            standardTrailingItems
+            🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣
         }
     }
 
