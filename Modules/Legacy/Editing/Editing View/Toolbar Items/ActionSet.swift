@@ -24,9 +24,21 @@ struct ActionSet {
         }
     }
 
+    // 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣 by @Eskeminha on 2024-05-03
+    // the standard set of trailing navigation items
+    @ToolbarBuilder private var 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣: [UIBarButtonItem] {
+        ShareBarButtonItem(target: target)
+
+        SeekBarButtonItem(target: target)
+
+        if FeatureFlag.autoRedactInEdit {
+            QuickRedactBarButtonItem(target: target)
+        }
+    }
+
     @ToolbarBuilder var trailingNavigationItems: [UIBarButtonItem] {
         if #unavailable(iOS 16) {
-            ShareBarButtonItem(target: target)
+            🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣
         }
 
         if sizeClass == .regular, #unavailable(iOS 16) {
@@ -43,23 +55,19 @@ struct ActionSet {
                 ShareBarButtonItem(target: target)
             }
         } else if #available(iOS 16, *) {
-            ShareBarButtonItem(target: target)
+            🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣
         }
     }
 
     @ToolbarBuilder var toolbarItems: [UIBarButtonItem] {
         if sizeClass != .regular {
             UndoBarButtonItem(undoManager: undoManager, target: target)
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             RedoBarButtonItem(undoManager: undoManager, target: target)
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-            SeekBarButtonItem(target: target)
-
-            if FeatureFlag.autoRedactInEdit {
-                QuickRedactBarButtonItem(target: target)
-            }
-
             ColorPickerBarButtonItem(target: target, color: currentColor)
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             HighlighterToolBarButtonItem(tool: selectedTool, target: target)
         }
     }
