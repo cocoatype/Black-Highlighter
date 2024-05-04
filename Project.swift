@@ -19,6 +19,7 @@ let project = Project(
     targets: [
         App.target,
         Action.target,
+        AutomatorActions.target,
         Photo.target,
         AppRatings.target,
         AutoRedactionsUI.target,
@@ -29,7 +30,7 @@ let project = Project(
         ErrorHandling.target,
         Logging.target,
         Receipts.target,
-//        Redacting.target,
+        Redacting.target,
         TestHelpers.target,
         AppRatings.testTarget,
         Core.testTarget,

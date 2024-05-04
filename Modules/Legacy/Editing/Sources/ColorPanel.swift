@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 10/7/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+#if canImport(UIKit)
 import ErrorHandling
 import UIKit
 
@@ -50,3 +51,4 @@ class ColorPanel: NSObject {
         colorObserver.map(NotificationCenter.default.removeObserver(_:))
     }
 }
+#endif

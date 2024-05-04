@@ -71,6 +71,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3310273E6FF140A5B09CD268"
+               BuildableName = "AutomatorActions.bundle"
+               BlueprintName = "AutomatorActions"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "619535A22AA80D4F075D6C37"
                BuildableName = "Core.framework"
                BlueprintName = "Core"
@@ -256,6 +270,20 @@
                BlueprintIdentifier = "A378968D4D00F5F17EDA3566"
                BuildableName = "Receipts.framework"
                BlueprintName = "Receipts"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6488C7FA3465E1BE1453E672"
+               BuildableName = "Redacting.framework"
+               BlueprintName = "Redacting"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

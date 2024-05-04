@@ -51,7 +51,7 @@ public enum ActionStrings {
 
 extension ActionStrings {
   private static func tr(_ table: String, _ key: String, _ args: CVarArg...) -> String {
-    let format = ActionResources.bundle.localizedString(forKey: key, value: nil, table: table)
+    let format = Bundle.module.localizedString(forKey: key, value: nil, table: table)
     return String(format: format, locale: Locale.current, arguments: args)
   }
 }

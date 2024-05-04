@@ -10,7 +10,7 @@ import ProjectDescription
 public enum ErrorHandling {
     public static let target = Target.target(
         name: "ErrorHandling",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.ErrorHandling",
         sources: ["Modules/Capabilities/ErrorHandling/Sources/**"],

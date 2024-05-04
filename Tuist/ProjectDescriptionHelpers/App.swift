@@ -16,6 +16,7 @@ public enum App {
         resources: ["App/Resources/**"],
         entitlements: "App/Highlighter.entitlements",
         dependencies: [
+            .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
         ]
     )

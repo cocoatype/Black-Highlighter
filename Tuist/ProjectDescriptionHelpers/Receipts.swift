@@ -16,6 +16,7 @@ public enum Receipts {
         sources: ["Modules/Legacy/Receipts/Sources/**"],
         dependencies: [
             .package(product: "OpenSSL"),
+            .target(ErrorHandling.target),
         ]
     )
 }

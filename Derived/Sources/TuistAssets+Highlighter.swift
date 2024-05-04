@@ -95,7 +95,7 @@ public final class HighlighterColors {
 public extension HighlighterColors.Color {
   @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, visionOS 1.0, *)
   convenience init?(asset: HighlighterColors) {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     #if os(iOS) || os(tvOS) || os(visionOS)
     self.init(named: asset.name, in: bundle, compatibleWith: nil)
     #elseif os(macOS)
@@ -110,7 +110,7 @@ public extension HighlighterColors.Color {
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
 public extension SwiftUI.Color {
   init(asset: HighlighterColors) {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
   }
 }
@@ -126,7 +126,7 @@ public struct HighlighterImages {
   #endif
 
   public var image: Image {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     #if os(iOS) || os(tvOS) || os(visionOS)
     let image = Image(named: name, in: bundle, compatibleWith: nil)
     #elseif os(macOS)
@@ -152,17 +152,17 @@ public struct HighlighterImages {
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
 public extension SwiftUI.Image {
   init(asset: HighlighterImages) {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
   }
 
   init(asset: HighlighterImages, label: Text) {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     self.init(asset.name, bundle: bundle, label: label)
   }
 
   init(decorative asset: HighlighterImages) {
-    let bundle = HighlighterResources.bundle
+    let bundle = Bundle.module
     self.init(decorative: asset.name, bundle: bundle)
   }
 }

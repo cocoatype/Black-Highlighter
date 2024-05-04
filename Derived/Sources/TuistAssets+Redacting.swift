@@ -19,15 +19,15 @@
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-public enum EditingAsset {
-  public static let brushEnd = EditingImages(name: "Brush End")
-  public static let brushStart = EditingImages(name: "Brush Start")
+public enum RedactingAsset {
+  public static let brushEnd = RedactingImages(name: "Brush End")
+  public static let brushStart = RedactingImages(name: "Brush Start")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-public struct EditingImages {
+public struct RedactingImages {
   public fileprivate(set) var name: String
 
   #if os(macOS)
@@ -62,17 +62,17 @@ public struct EditingImages {
 #if canImport(SwiftUI)
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
 public extension SwiftUI.Image {
-  init(asset: EditingImages) {
+  init(asset: RedactingImages) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
   }
 
-  init(asset: EditingImages, label: Text) {
+  init(asset: RedactingImages, label: Text) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle, label: label)
   }
 
-  init(decorative asset: EditingImages) {
+  init(decorative asset: RedactingImages) {
     let bundle = Bundle.module
     self.init(decorative: asset.name, bundle: bundle)
   }

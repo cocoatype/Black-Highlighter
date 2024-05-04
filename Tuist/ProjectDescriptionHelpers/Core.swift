@@ -14,6 +14,7 @@ public enum Core {
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.Core",
         sources: ["Modules/Legacy/Core/Sources/**"],
+        headers: .headers(public: ["Modules/Legacy/Core/Headers/**"]),
         dependencies: [
             .target(AppRatings.target),
             .target(Defaults.target),
