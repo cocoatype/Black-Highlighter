@@ -161,3 +161,4 @@ build-iPhoneSimulator/
 .rvmrc
 
 
+*.xcodeproj/

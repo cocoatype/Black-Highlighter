@@ -13,9 +13,11 @@ public enum App {
         destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
         product: .app,
         bundleId: "com.cocoatype.Highlighter",
+        infoPlist: "App/Info.plist",
         resources: ["App/Resources/**"],
         entitlements: "App/Highlighter.entitlements",
         dependencies: [
+            .package(product: "OpenSSL"),
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
         ]

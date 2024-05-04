@@ -15,7 +15,6 @@ public enum Receipts {
         bundleId: "com.cocoatype.Highlighter.Receipts",
         sources: ["Modules/Legacy/Receipts/Sources/**"],
         dependencies: [
-            .package(product: "OpenSSL"),
             .target(ErrorHandling.target),
         ]
     )
