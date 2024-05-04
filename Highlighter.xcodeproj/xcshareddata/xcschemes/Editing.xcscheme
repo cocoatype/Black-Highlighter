@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1520"
-   version = "1.7">
+   LastUpgradeVersion = "1010"
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "049F92D622CDA3DB0090C9BC"
+               BlueprintIdentifier = "389704E2C6DE6EDBB0ECA2D4"
                BuildableName = "Editing.framework"
                BlueprintName = "Editing"
                ReferencedContainer = "container:Highlighter.xcodeproj">
@@ -27,12 +27,18 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:Modules/Legacy/Editing/Tests/Editing.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7C98246E8C096DC5B09B72A0"
+               BuildableName = "EditingTests.xctest"
+               BlueprintName = "EditingTests"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -44,6 +50,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "389704E2C6DE6EDBB0ECA2D4"
+            BuildableName = "Editing.framework"
+            BlueprintName = "Editing"
+            ReferencedContainer = "container:Highlighter.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -54,7 +69,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "049F92D622CDA3DB0090C9BC"
+            BlueprintIdentifier = "389704E2C6DE6EDBB0ECA2D4"
             BuildableName = "Editing.framework"
             BlueprintName = "Editing"
             ReferencedContainer = "container:Highlighter.xcodeproj">
