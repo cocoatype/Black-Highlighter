@@ -13,6 +13,8 @@ public enum AppRatings {
     )
 
     public static let testTarget = Target.moduleTestTarget(name: "AppRatings", dependencies: [
+        .target(Defaults.target),
+        .target(Editing.target),
         .target(TestHelpers.target),
     ])
 }
