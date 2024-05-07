@@ -11,16 +11,28 @@ let project = Project(
         .remote(url: "git@github.com:krzyzanowskim/OpenSSL.git", requirement: .upToNextMajor(from: "3.1.5003")),
     ],
     settings: .settings(base: [
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
+        "CODE_SIGN_STYLE": "Manual",
         "DEVELOPMENT_TEAM": "287EDDET2B",
+        "ENABLE_HARDENED_RUNTIME[sdk=macosx*]": "YES",
         "IPHONEOS_DEPLOYMENT_TARGET": "14.0",
         "MACOSX_DEPLOYMENT_TARGET": "11.0",
-        "CODE_SIGN_STYLE": "Manual",
-    ], debug: ["FOO[sdk=macosx*]": "BAR"]),
+        "OTHER_CODE_SIGN_FLAGS": "--deep",
+        "TARGETED_DEVICE_FAMILY": "1,2,6",
+    ], debug: [
+        "CODE_SIGN_IDENTITY": "Apple Development: Buddy Build (D47V8Y25W5)",
+    ], release: [
+        "CODE_SIGN_IDENTITY": "Apple Distribution",
+        "CODE_SIGN_IDENTITY[sdk=macosx*]": "3rd Party Mac Developer Installer: Cocoatype, LLC (287EDDET2B)",
+    ]),
     targets: [
+        // binaries
         App.target,
         Action.target,
         AutomatorActions.target,
         Photo.target,
+        // modules
         AppRatings.target,
         AutoRedactionsUI.target,
         Core.target,
@@ -32,6 +44,7 @@ let project = Project(
         Receipts.target,
         Redacting.target,
         TestHelpers.target,
+        // tests
         AppRatings.testTarget,
         Core.testTarget,
         Defaults.testTarget,

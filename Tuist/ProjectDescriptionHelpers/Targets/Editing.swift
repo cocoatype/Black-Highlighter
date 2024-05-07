@@ -21,7 +21,13 @@ public enum Editing {
             .target(ErrorHandling.target),
             .package(product: "ClippingBezier", type: .runtime),
             .package(product: "Introspect", type: .runtime)
-        ]
+        ],
+        settings: .settings(
+            base: [
+                "ASSETCATALOG_COMPILER_APPICON_NAME": "",
+                "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "",
+            ]
+        )
     )
 
     public static let testTarget = Target.target(

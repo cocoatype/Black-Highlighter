@@ -19,45 +19,41 @@
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-public enum ActionAsset {
-  public enum Assets {
-  public static let accentColor = ActionColors(name: "Accent Color")
-    public static let albums = ActionImages(name: "Albums")
-    public static let brushEnd = ActionImages(name: "Brush End")
-    public static let brushStart = ActionImages(name: "Brush Start")
-    public static let brush = ActionImages(name: "Brush")
-    public static let favoritesAlbum = ActionImages(name: "Favorites Album")
-    public static let help = ActionImages(name: "Help")
-    public static let highlight = ActionColors(name: "Highlight")
-    public static let scanner = ActionImages(name: "Scanner")
-    public static let seek = ActionImages(name: "Seek")
-    public static let shortcuts = ActionImages(name: "Shortcuts")
-    public static let support = ActionImages(name: "Support")
-    public static let systems = ActionImages(name: "Systems")
-    public static let magicHighlighter = ActionImages(name: "Magic Highlighter")
-    public static let debigulator = ActionImages(name: "Debigulator")
-    public static let kineo = ActionImages(name: "Kineo")
-    public static let scrawl = ActionImages(name: "Scrawl")
-    public static let recentsAlbum = ActionImages(name: "Recents Album")
-    public static let redo = ActionImages(name: "Redo")
-    public static let screenshotsAlbum = ActionImages(name: "Screenshots Album")
-    public static let seekBoxInnerBorder = ActionColors(name: "Seek Box Inner Border")
-    public static let seekBoxOuterBorder = ActionColors(name: "Seek Box Outer Border")
-    public static let standardHighlighter = ActionImages(name: "Standard Highlighter")
-    public static let undo = ActionImages(name: "Undo")
-    public static let webTintColor = ActionColors(name: "Web Tint Color")
-    public static let highlighterEraser = ActionImages(name: "highlighter.eraser")
-    public static let highlighterMagic = ActionImages(name: "highlighter.magic")
-    public static let highlighterManual = ActionImages(name: "highlighter.manual")
-  }
-  public enum Media {
-  }
+public enum PhotoAsset {
+  public static let accentColor = PhotoColors(name: "Accent Color")
+  public static let albums = PhotoImages(name: "Albums")
+  public static let brushEnd = PhotoImages(name: "Brush End")
+  public static let brushStart = PhotoImages(name: "Brush Start")
+  public static let brush = PhotoImages(name: "Brush")
+  public static let favoritesAlbum = PhotoImages(name: "Favorites Album")
+  public static let help = PhotoImages(name: "Help")
+  public static let highlight = PhotoColors(name: "Highlight")
+  public static let scanner = PhotoImages(name: "Scanner")
+  public static let seek = PhotoImages(name: "Seek")
+  public static let shortcuts = PhotoImages(name: "Shortcuts")
+  public static let support = PhotoImages(name: "Support")
+  public static let systems = PhotoImages(name: "Systems")
+  public static let magicHighlighter = PhotoImages(name: "Magic Highlighter")
+  public static let debigulator = PhotoImages(name: "Debigulator")
+  public static let kineo = PhotoImages(name: "Kineo")
+  public static let scrawl = PhotoImages(name: "Scrawl")
+  public static let recentsAlbum = PhotoImages(name: "Recents Album")
+  public static let redo = PhotoImages(name: "Redo")
+  public static let screenshotsAlbum = PhotoImages(name: "Screenshots Album")
+  public static let seekBoxInnerBorder = PhotoColors(name: "Seek Box Inner Border")
+  public static let seekBoxOuterBorder = PhotoColors(name: "Seek Box Outer Border")
+  public static let standardHighlighter = PhotoImages(name: "Standard Highlighter")
+  public static let undo = PhotoImages(name: "Undo")
+  public static let webTintColor = PhotoColors(name: "Web Tint Color")
+  public static let highlighterEraser = PhotoImages(name: "highlighter.eraser")
+  public static let highlighterMagic = PhotoImages(name: "highlighter.magic")
+  public static let highlighterManual = PhotoImages(name: "highlighter.manual")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-public final class ActionColors {
+public final class PhotoColors {
   public fileprivate(set) var name: String
 
   #if os(macOS)
@@ -96,9 +92,9 @@ public final class ActionColors {
   }
 }
 
-public extension ActionColors.Color {
+public extension PhotoColors.Color {
   @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, visionOS 1.0, *)
-  convenience init?(asset: ActionColors) {
+  convenience init?(asset: PhotoColors) {
     let bundle = Bundle.module
     #if os(iOS) || os(tvOS) || os(visionOS)
     self.init(named: asset.name, in: bundle, compatibleWith: nil)
@@ -113,14 +109,14 @@ public extension ActionColors.Color {
 #if canImport(SwiftUI)
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
 public extension SwiftUI.Color {
-  init(asset: ActionColors) {
+  init(asset: PhotoColors) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
   }
 }
 #endif
 
-public struct ActionImages {
+public struct PhotoImages {
   public fileprivate(set) var name: String
 
   #if os(macOS)
@@ -155,17 +151,17 @@ public struct ActionImages {
 #if canImport(SwiftUI)
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, visionOS 1.0, *)
 public extension SwiftUI.Image {
-  init(asset: ActionImages) {
+  init(asset: PhotoImages) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle)
   }
 
-  init(asset: ActionImages, label: Text) {
+  init(asset: PhotoImages, label: Text) {
     let bundle = Bundle.module
     self.init(asset.name, bundle: bundle, label: label)
   }
 
-  init(decorative asset: ActionImages) {
+  init(decorative asset: PhotoImages) {
     let bundle = Bundle.module
     self.init(decorative: asset.name, bundle: bundle)
   }
