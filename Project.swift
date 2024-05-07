@@ -62,6 +62,6 @@ let project = Project(
                 "Highlighter.xctestplan",
             ]),
             runAction: .runAction()
-        )
+        ),
     ]
 )

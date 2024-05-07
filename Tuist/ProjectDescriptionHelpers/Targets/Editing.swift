@@ -13,7 +13,7 @@ public enum Editing {
             .target(AutoRedactionsUI.target),
             .target(ErrorHandling.target),
             .package(product: "ClippingBezier", type: .runtime),
-            .package(product: "Introspect", type: .runtime)
+            .package(product: "Introspect", type: .runtime),
         ],
         settings: .settings(
             base: [
