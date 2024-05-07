@@ -2,7 +2,7 @@
 <Scheme
    LastUpgradeVersion = "1010"
    wasCreatedForAppExtension = "YES"
-   version = "1.3">
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -71,8 +71,22 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D511BD3660BA1CD7A06AEBC1"
+               BuildableName = "AutoRedactionsUITests.xctest"
+               BlueprintName = "AutoRedactionsUITests"
+               ReferencedContainer = "container:Highlighter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "3310273E6FF140A5B09CD268"
-               BuildableName = "AutomatorActions.bundle"
+               BuildableName = "AutomatorActions.action"
                BlueprintName = "AutomatorActions"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
@@ -116,20 +130,6 @@
                BlueprintIdentifier = "08220D11055BE3252309E885"
                BuildableName = "Defaults.framework"
                BlueprintName = "Defaults"
-               ReferencedContainer = "container:Highlighter.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "830C1972DA1B1308A6754129"
-               BuildableName = "DefaultsTests.xctest"
-               BlueprintName = "DefaultsTests"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -323,9 +323,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FFC529CC7C03FA34AB5A20B3"
-               BuildableName = "CoreTests.xctest"
-               BlueprintName = "CoreTests"
+               BlueprintIdentifier = "D511BD3660BA1CD7A06AEBC1"
+               BuildableName = "AutoRedactionsUITests.xctest"
+               BlueprintName = "AutoRedactionsUITests"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -333,9 +333,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "830C1972DA1B1308A6754129"
-               BuildableName = "DefaultsTests.xctest"
-               BlueprintName = "DefaultsTests"
+               BlueprintIdentifier = "FFC529CC7C03FA34AB5A20B3"
+               BuildableName = "CoreTests.xctest"
+               BlueprintName = "CoreTests"
                ReferencedContainer = "container:Highlighter.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -376,7 +376,7 @@
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
-      askForAppToLaunch = "YES"
+      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"

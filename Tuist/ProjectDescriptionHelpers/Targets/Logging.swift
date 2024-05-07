@@ -1,10 +1,3 @@
-//
-//  Logging.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 3/15/24.
-//
-
 import ProjectDescription
 
 public enum Logging {
@@ -19,10 +12,5 @@ public enum Logging {
         ]
     )
 
-    public static let testTarget = Target.target(
-        name: "LoggingTests",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
-        product: .unitTests,
-        bundleId: "com.cocoatype.Highlighter.LoggingTests"
-    )
+    public static let testTarget = Target.moduleTestTarget(name: "Logging")
 }

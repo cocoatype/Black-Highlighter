@@ -1,10 +1,3 @@
-//
-//  Core.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 3/15/24.
-//
-
 import ProjectDescription
 
 public enum Core {
@@ -24,10 +17,5 @@ public enum Core {
         ]
     )
 
-    public static let testTarget = Target.target(
-        name: "CoreTests",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
-        product: .unitTests,
-        bundleId: "com.cocoatype.Highlighter.CoreTests"
-    )
+    public static let testTarget = Target.moduleTestTarget(name: "Core", type: "Legacy")
 }

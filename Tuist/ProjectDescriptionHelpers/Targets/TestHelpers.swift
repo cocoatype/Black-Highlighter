@@ -1,17 +1,12 @@
-//
-//  TestHelpers.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 3/15/24.
-//
-
 import ProjectDescription
 
-public struct TestHelpers {
+public enum TestHelpers {
     public static let target = Target.target(
         name: "TestHelpers",
         destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
         product: .framework,
-        bundleId: "com.cocoatype.Highlighter.TestHelpers"
+        bundleId: "com.cocoatype.Highlighter.TestHelpers",
+        sources: ["Modules/TestHelpers/Sources/**"],
+        headers: .headers(public: ["Modules/TestHelpers/Headers/**"])
     )
 }

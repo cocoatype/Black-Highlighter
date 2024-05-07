@@ -46,10 +46,22 @@ let project = Project(
         TestHelpers.target,
         // tests
         AppRatings.testTarget,
+        AutoRedactionsUI.testTarget,
         Core.testTarget,
-        Defaults.testTarget,
         Editing.testTarget,
         ErrorHandling.testTarget,
         Logging.testTarget,
+    ],
+    schemes: [
+        .scheme(
+            name: "Highlighter",
+            buildAction: .buildAction(targets: [
+                .target(App.target.name),
+            ]),
+            testAction: .testPlans([
+                "Highlighter.xctestplan",
+            ]),
+            runAction: .runAction()
+        )
     ]
 )

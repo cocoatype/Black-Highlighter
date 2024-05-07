@@ -1,10 +1,3 @@
-//
-//  AutomatorActions.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 5/4/24.
-//
-
 import ProjectDescription
 
 public enum AutomatorActions {

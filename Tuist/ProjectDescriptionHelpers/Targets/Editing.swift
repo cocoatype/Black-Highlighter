@@ -1,10 +1,3 @@
-//
-//  Editing.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 3/15/24.
-//
-
 import ProjectDescription
 
 public enum Editing {
@@ -30,10 +23,5 @@ public enum Editing {
         )
     )
 
-    public static let testTarget = Target.target(
-        name: "EditingTests",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
-        product: .unitTests,
-        bundleId: "com.cocoatype.Highlighter.EditingTests"
-    )
+    public static let testTarget = Target.moduleTestTarget(name: "Editing", type: "Legacy")
 }

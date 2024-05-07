@@ -1,10 +1,3 @@
-//
-//  AutoRedactionsUI.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 5/4/24.
-//
-
 import ProjectDescription
 
 public enum AutoRedactionsUI {
@@ -20,10 +13,5 @@ public enum AutoRedactionsUI {
         ]
     )
 
-    public static let testTarget = Target.target(
-        name: "AutoRedactionsUITests",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
-        product: .unitTests,
-        bundleId: "com.cocoatype.Highlighter.AutoRedactionsUITests"
-    )
+    public static let testTarget = Target.moduleTestTarget(name: "AutoRedactionsUI")
 }
