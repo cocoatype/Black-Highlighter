@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 5/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import Observations
+
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
@@ -122,37 +124,8 @@ extension UIBezierPath {
         cgPath.forEachPoint(function)
     }
 
-    public var isShape: Bool {
-        return shape != nil
-    }
-
-    var shape: Shape? {
-        let path = Path(self.cgPath)
-        var elements = [Path.Element]()
-        path.forEach { element in
-            elements.append(element)
-        }
-
-        let points = elements.compactMap(\.point)
-
-        return Shape(
-            bottomLeft: points[1],
-            bottomRight: points[2],
-            topLeft: points[0],
-            topRight: points[3]
-        )
-    }
-}
-
-private extension Path.Element {
-    var point: CGPoint? {
-        switch self {
-        case .move(let to): return to
-        case .line(let to): return to
-        case .quadCurve: return nil
-        case .curve: return nil
-        case .closeSubpath: return nil
-        }
-    }
+//    public var isShape: Bool {
+//        return shape != nil
+//    }
 }
 #endif

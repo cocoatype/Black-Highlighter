@@ -1,9 +1,10 @@
 //  Created by Geoff Pado on 10/19/23.
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
+import Observations
 import XCTest
 
-@testable import Editing
+@testable import Redactions
 
 final class TextObservationRedactionTests: XCTestCase {
 #if canImport(UIKit)

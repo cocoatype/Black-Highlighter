@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 7/10/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import Redactions
 import UIKit
 
 public class EditingUserActivity: NSUserActivity {

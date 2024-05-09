@@ -7,7 +7,7 @@ extension Target {
     ) -> Target {
         Target.target(
             name: name,
-            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
             product: .framework,
             bundleId: "com.cocoatype.Highlighter.\(name)",
             sources: ["Modules/Capabilities/\(name)/Sources/**"],
@@ -19,7 +19,7 @@ extension Target {
         name: String,
         dependencies: [TargetDependency] = []
     ) -> Target {
-        moduleTestTarget(name: name, type: "Capabilities", dependencies: [])
+        moduleTestTarget(name: name, type: "Capabilities", dependencies: dependencies)
     }
 
     static func moduleTestTarget(name: String, type: String, dependencies: [TargetDependency] = []) -> Target {

@@ -5,6 +5,7 @@ import AppRatings
 import Editing
 import ErrorHandling
 import Photos
+import Redactions
 import UIKit
 import VisionKit
 import SwiftUI

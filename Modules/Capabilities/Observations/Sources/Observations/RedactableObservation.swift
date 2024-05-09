@@ -3,6 +3,6 @@
 
 import Foundation
 
-protocol RedactableObservation {
+public protocol RedactableObservation {
     var characterObservations: [CharacterObservation] { get }
 }

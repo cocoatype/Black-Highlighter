@@ -36,6 +36,7 @@ public enum Redacting {
         resources: ["Modules/Legacy/Editing/Resources/**"],
         dependencies: [
             .target(ErrorHandling.target),
+            .target(Observations.target),
         ]
     )
 }

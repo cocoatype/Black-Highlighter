@@ -41,6 +41,7 @@ let project = Project(
         Editing.target,
         ErrorHandling.target,
         Logging.target,
+        Observations.target,
         Receipts.target,
         Redacting.target,
         Redactions.target,
@@ -52,6 +53,7 @@ let project = Project(
         Editing.testTarget,
         ErrorHandling.testTarget,
         Logging.testTarget,
+        Observations.testTarget,
         Redactions.testTarget,
     ],
     schemes: [

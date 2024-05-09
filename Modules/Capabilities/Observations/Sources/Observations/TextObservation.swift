@@ -7,6 +7,6 @@ public protocol TextObservation: Equatable {
     var bounds: Shape { get }
 }
 
-extension TextObservation {
+public extension TextObservation {
     var path: CGPath { bounds.path }
 }

@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import ErrorHandling
+import Redactions
 import UIKit
 
 public class PhotoEditingRedactionView: UIView {

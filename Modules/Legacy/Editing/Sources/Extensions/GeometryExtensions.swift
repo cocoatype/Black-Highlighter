@@ -1,11 +1,7 @@
 //  Created by Geoff Pado on 4/10/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
-import UIKit
-#endif
+import CoreGraphics
 
 public extension CGSize {
     static func * (size: CGSize, multiplier: CGFloat) -> CGSize {
@@ -24,19 +20,6 @@ public extension CGPoint {
 
     static func + (point: CGPoint, size: CGSize) -> CGPoint {
         return CGPoint(x: point.x + size.width, y: point.y + size.height)
-    }
-
-    static func flippedPoint(from point: CGPoint, scaledTo size: CGSize) -> CGPoint {
-        var scaledPoint = point
-
-        #if canImport(UIKit)
-        scaledPoint.y = (1.0 - scaledPoint.y)
-        #endif
-
-        scaledPoint.x *= size.width
-        scaledPoint.y *= size.height
-
-        return scaledPoint
     }
 
     func isEqual(to otherPoint: CGPoint, accuracy: Double) -> Bool {
