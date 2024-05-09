@@ -7,7 +7,7 @@ extension Target {
     ) -> Target {
         Target.target(
             name: name,
-            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
             product: .framework,
             bundleId: "com.cocoatype.Highlighter.\(name)",
             sources: ["Modules/Capabilities/\(name)/Sources/**"],

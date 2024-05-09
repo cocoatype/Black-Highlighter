@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 5/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import Observations
+
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
@@ -126,7 +128,7 @@ extension UIBezierPath {
         return shape != nil
     }
 
-    var shape: Shape? {
+    var shape: Observations.Shape? {
         let path = Path(self.cgPath)
         var elements = [Path.Element]()
         path.forEach { element in

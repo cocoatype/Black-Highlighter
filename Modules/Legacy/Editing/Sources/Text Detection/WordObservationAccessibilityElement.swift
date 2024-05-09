@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 8/4/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+#if canImport(UIKit)
+import Observations
 import UIKit
 
 class WordObservationAccessibilityElement: UIAccessibilityElement {
@@ -39,3 +41,4 @@ class WordObservationAccessibilityElement: UIAccessibilityElement {
         lhs.wordObservation.textObservationUUID == rhs.wordObservation.textObservationUUID
     }
 }
+#endif

@@ -5,12 +5,12 @@ import Foundation
 import CoreGraphics
 
 public struct Shape: Hashable {
-    let bottomLeft: CGPoint
-    let bottomRight: CGPoint
-    let topLeft: CGPoint
-    let topRight: CGPoint
+    public let bottomLeft: CGPoint
+    public let bottomRight: CGPoint
+    public let topLeft: CGPoint
+    public let topRight: CGPoint
 
-    internal init(bottomLeft: CGPoint, bottomRight: CGPoint, topLeft: CGPoint, topRight: CGPoint) {
+    public init(bottomLeft: CGPoint, bottomRight: CGPoint, topLeft: CGPoint, topRight: CGPoint) {
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
         self.topLeft = topLeft
@@ -26,9 +26,9 @@ public struct Shape: Hashable {
         )
     }
 
-    var boundingBox: CGRect { path.boundingBox }
+    public var boundingBox: CGRect { path.boundingBox }
 
-    var path: CGPath {
+    public var path: CGPath {
         let path = CGMutablePath()
         path.move(to: topLeft)
         path.addLine(to: bottomLeft)
@@ -52,7 +52,7 @@ public struct Shape: Hashable {
         )
     }
 
-    var angle: Double {
+    public var angle: Double {
         guard (centerRight.x - centerLeft.x) != 0 else { return .pi / 2 }
         // leftyLoosey by @KaenAitch on 2/3/22
         // the slope of the primary axis of the shape
@@ -60,14 +60,14 @@ public struct Shape: Hashable {
         return atan(leftyLoosey)
     }
 
-    var center: CGPoint {
+    public var center: CGPoint {
         CGPoint(
             x: (topLeft.x + bottomLeft.x + bottomRight.x + topRight.x) / 4.0,
             y: (topLeft.y + bottomLeft.y + bottomRight.y + topRight.y) / 4.0
         )
     }
 
-    func union(_ other: Shape) -> Shape {
+    public func union(_ other: Shape) -> Shape {
         let transform = CGAffineTransformMakeRotation(angle)
 
         let ourRotatedCenterLeft = centerLeft.applying(transform)
@@ -95,11 +95,11 @@ public struct Shape: Hashable {
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)
-    var isNotZero: Bool {
+    public var isNotZero: Bool {
         self != Self.zero
     }
 
-    var isNotEmpty: Bool {
+    public var isNotEmpty: Bool {
         // https://math.stackexchange.com/a/1259133
         let shoelace =
         bottomLeft.x * bottomRight.y +

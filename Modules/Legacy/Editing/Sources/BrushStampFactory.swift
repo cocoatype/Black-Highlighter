@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import ErrorHandling
+import Observations
 import UIKit
 
 public class BrushStampFactory: NSObject {

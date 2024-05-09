@@ -11,8 +11,9 @@ import UIKit
 
 public typealias RedactionColor = UIColor
 public typealias RedactionPath = UIBezierPath
-
 #endif
+
+import Observations
 
 public enum RedactionPart: Equatable {
     case path(RedactionPath)

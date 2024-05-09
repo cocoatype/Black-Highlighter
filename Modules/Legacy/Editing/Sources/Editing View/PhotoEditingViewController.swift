@@ -3,6 +3,7 @@
 
 import AutoRedactionsUI
 import Defaults
+import Observations
 import Photos
 import UIKit
 
