@@ -4,6 +4,7 @@
 import Defaults
 import Editing
 import ErrorHandling
+import Purchasing
 import VisionKit
 
 class PhotoLibraryDataSourceExtraItemsProvider: NSObject {

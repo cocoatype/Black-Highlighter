@@ -13,6 +13,7 @@ public enum Core {
             .target(Defaults.target),
             .target(DesignSystem.target),
             .target(Editing.target),
+            .target(Purchasing.target),
             .target(Receipts.target),
         ]
     )

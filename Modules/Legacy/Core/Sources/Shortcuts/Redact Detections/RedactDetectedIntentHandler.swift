@@ -2,7 +2,8 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 import Intents
-import os.log
+import OSLog
+import Purchasing
 
 class RedactDetectedIntentHandler: NSObject {
     // 💩 by @eaglenaut on 5/16/22
