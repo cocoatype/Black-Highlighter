@@ -1,14 +1,14 @@
 //  Created by Geoff Pado on 2/4/23.
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 public struct Shape: Hashable {
-    let bottomLeft: CGPoint
-    let bottomRight: CGPoint
-    let topLeft: CGPoint
-    let topRight: CGPoint
+    public let bottomLeft: CGPoint
+    public let bottomRight: CGPoint
+    public let topLeft: CGPoint
+    public let topRight: CGPoint
 
     internal init(bottomLeft: CGPoint, bottomRight: CGPoint, topLeft: CGPoint, topRight: CGPoint) {
         self.bottomLeft = bottomLeft
@@ -112,5 +112,12 @@ public struct Shape: Hashable {
         bottomLeft.x * topLeft.y
         let area = 0.5 * abs(shoelace)
         return abs(area) > 0.01
+    }
+}
+
+extension CGPoint: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
     }
 }
