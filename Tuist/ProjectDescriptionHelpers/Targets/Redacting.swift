@@ -7,7 +7,7 @@
 
 import ProjectDescription
 
-public struct Redacting {
+public enum Redacting {
     public static let target = Target.target(
         name: "Redacting",
         destinations: [.mac],
@@ -36,6 +36,7 @@ public struct Redacting {
         resources: ["Modules/Legacy/Editing/Resources/**"],
         dependencies: [
             .target(ErrorHandling.target),
+            .target(Observations.target),
         ]
     )
 }

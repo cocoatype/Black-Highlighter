@@ -1,22 +1,26 @@
 //  Created by Geoff Pado on 5/17/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
-import Vision
-
 #if canImport(AppKit)
 import AppKit
-#elseif canImport(UIKit)
+#endif
+
+#if canImport(UIKit)
 import UIKit
 #endif
 
+import Vision
+
 public struct TextRectangleObservation: TextObservation, RedactableObservation {
     #if canImport(UIKit)
-    init(_ textObservation: VNTextObservation, in image: UIImage) {
+    public init(_ textObservation: VNTextObservation, in image: UIImage) {
         let imageSize = image.size * image.scale
         self.init(textObservation, scaledTo: imageSize)
     }
-    #elseif canImport(AppKit)
-    init(_ textObservation: VNTextObservation, in image: NSImage) {
+    #endif
+
+    #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+    public init(_ textObservation: VNTextObservation, in image: NSImage) {
         self.init(textObservation, scaledTo: image.size)
     }
     #endif
@@ -32,5 +36,5 @@ public struct TextRectangleObservation: TextObservation, RedactableObservation {
     }
 
     public let bounds: Shape
-    let characterObservations: [CharacterObservation]
+    public let characterObservations: [CharacterObservation]
 }

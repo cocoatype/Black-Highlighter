@@ -1,11 +1,8 @@
 //  Created by Geoff Pado on 5/17/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
-import UIKit
-#endif
+import CoreGraphics
+import Foundation
 
 public struct WordObservation: TextObservation {
     init?(recognizedText: RecognizedText, string: String, range: Range<String.Index>, imageSize: CGSize) {

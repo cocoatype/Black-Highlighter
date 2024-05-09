@@ -5,7 +5,7 @@ import Foundation
 import Vision
 
 public struct RecognizedTextObservation: TextObservation, RedactableObservation {
-    init?(_ recognizedText: RecognizedText, imageSize: CGSize) {
+    public init?(_ recognizedText: RecognizedText, imageSize: CGSize) {
         self.recognizedText = recognizedText
         self.imageSize = imageSize
 
@@ -42,7 +42,7 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
         }
     }
 
-    var allWordObservations: [WordObservation] {
+    public var allWordObservations: [WordObservation] {
         wordObservations { _, _ in true }
     }
 
@@ -55,7 +55,7 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
     private let recognizedText: RecognizedText
     private let imageSize: CGSize
 
-    let characterObservations: [CharacterObservation]
+    public let characterObservations: [CharacterObservation]
 }
 
 extension Shape {

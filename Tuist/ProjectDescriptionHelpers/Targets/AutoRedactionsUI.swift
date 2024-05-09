@@ -13,5 +13,5 @@ public enum AutoRedactionsUI {
         ]
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "AutoRedactionsUI")
+    public static let testTarget = Target.capabilitiesTestTarget(name: "AutoRedactionsUI")
 }
