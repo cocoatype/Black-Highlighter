@@ -12,5 +12,5 @@ public enum ErrorHandling {
         ]
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "ErrorHandling")
+    public static let testTarget = Target.capabilitiesTestTarget(name: "ErrorHandling")
 }

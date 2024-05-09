@@ -12,5 +12,5 @@ public enum Logging {
         ]
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "Logging")
+    public static let testTarget = Target.capabilitiesTestTarget(name: "Logging")
 }
