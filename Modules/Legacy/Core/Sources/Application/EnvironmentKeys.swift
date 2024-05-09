@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/24/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Purchasing
 import SwiftUI
 
 struct ReadableWidthKey: EnvironmentKey {

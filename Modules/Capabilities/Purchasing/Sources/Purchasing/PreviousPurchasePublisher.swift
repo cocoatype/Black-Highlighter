@@ -6,17 +6,17 @@ import ErrorHandling
 import Foundation
 import Receipts
 
-struct PreviousPurchasePublisher: Publisher {
-    typealias Output = Bool
-    typealias Failure = Error
+public struct PreviousPurchasePublisher: Publisher {
+    public typealias Output = Bool
+    public typealias Failure = Error
 
-    func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+    public func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
         Result.Publisher(Self.hasUserPurchasedProduct()).subscribe(subscriber)
     }
 
     // MARK: Purchase Validation
 
-    static func hasUserPurchasedProduct(receiptFetchingMethod: (() throws -> AppReceipt) = ReceiptValidator.validatedAppReceipt) -> Result<Bool, Error> {
+    public static func hasUserPurchasedProduct(receiptFetchingMethod: (() throws -> AppReceipt) = ReceiptValidator.validatedAppReceipt) -> Result<Bool, Error> {
         guard ProcessInfo.processInfo.environment.keys.contains("OVERRIDE_PURCHASE") == false else {
             return .success(false)
         }
