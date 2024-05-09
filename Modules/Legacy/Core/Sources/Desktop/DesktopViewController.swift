@@ -3,6 +3,7 @@
 
 import Editing
 import ErrorHandling
+import Redactions
 import UIKit
 
 #if targetEnvironment(macCatalyst)

@@ -3,8 +3,8 @@
 
 import XCTest
 
-@testable import Editing
 @testable import Observations
+@testable import Redactions
 
 final class RestoredRedactionTests: XCTestCase {
 #if canImport(UIKit)

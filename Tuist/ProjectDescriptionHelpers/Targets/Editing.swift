@@ -13,6 +13,7 @@ public enum Editing {
             .target(AutoRedactionsUI.target),
             .target(ErrorHandling.target),
             .target(Observations.target),
+            .target(Redactions.target),
             .package(product: "ClippingBezier", type: .runtime),
             .package(product: "Introspect", type: .runtime),
         ],

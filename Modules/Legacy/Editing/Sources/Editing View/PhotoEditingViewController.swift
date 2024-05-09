@@ -5,6 +5,7 @@ import AutoRedactionsUI
 import Defaults
 import Observations
 import Photos
+import Redactions
 import UIKit
 
 #warning("#61: Simplify this class")

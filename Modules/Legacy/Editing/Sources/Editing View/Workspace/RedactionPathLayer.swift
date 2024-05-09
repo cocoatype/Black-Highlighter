@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import Observations
+import Redactions
 import UIKit
 
 class RedactionPathLayer: CALayer {

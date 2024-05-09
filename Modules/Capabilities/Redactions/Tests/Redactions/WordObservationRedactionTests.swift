@@ -4,8 +4,8 @@
 import Vision
 import XCTest
 
-@testable import Editing
 @testable import Observations
+@testable import Redactions
 
 final class WordObservationRedactionTests: XCTestCase {
 #if canImport(UIKit)

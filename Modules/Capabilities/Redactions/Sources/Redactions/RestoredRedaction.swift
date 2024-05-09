@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 9/2/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+#if canImport(UIKit)
 import UIKit
 
 extension Redaction: Codable {
@@ -29,3 +30,4 @@ extension Redaction: Codable {
         case color, paths
     }
 }
+#endif

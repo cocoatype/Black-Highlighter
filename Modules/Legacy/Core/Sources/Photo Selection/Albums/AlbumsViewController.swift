@@ -3,6 +3,7 @@
 
 import Editing
 import Photos
+import Redactions
 import SwiftUI
 
 class AlbumsViewController: UIHostingController<AlbumsList>, NavigationWrapper.NavigationObject {

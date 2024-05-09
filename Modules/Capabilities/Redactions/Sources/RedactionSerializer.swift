@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 10/16/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+#if canImport(UIKit)
 import UIKit
 
 public class RedactionSerializer: NSObject {
@@ -35,3 +36,4 @@ public class RedactionSerializer: NSObject {
         }
     }
 }
+#endif

@@ -4,6 +4,7 @@
 import AppRatings
 import Defaults
 import Editing
+import Redactions
 import UIKit
 
 #if targetEnvironment(macCatalyst)

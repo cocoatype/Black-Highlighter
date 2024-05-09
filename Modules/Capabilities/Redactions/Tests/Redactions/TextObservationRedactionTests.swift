@@ -4,7 +4,7 @@
 import Observations
 import XCTest
 
-@testable import Editing
+@testable import Redactions
 
 final class TextObservationRedactionTests: XCTestCase {
 #if canImport(UIKit)

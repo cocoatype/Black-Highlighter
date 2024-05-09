@@ -8,10 +8,3 @@ public struct CharacterObservation: Hashable {
     public let bounds: Shape
     public let textObservationUUID: UUID
 }
-
-extension CGPoint: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
-    }
-}

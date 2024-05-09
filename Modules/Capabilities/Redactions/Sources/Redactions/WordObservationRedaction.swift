@@ -1,11 +1,12 @@
 //  Created by Geoff Pado on 5/29/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+#if canImport(UIKit)
 import Observations
 import UIKit
 
 extension Redaction {
-    init(_ wordObservations: [WordObservation], color: UIColor) {
+    public init(_ wordObservations: [WordObservation], color: UIColor) {
         let parts = wordObservations.reduce(into: [UUID: [WordObservation]]()) { result, wordObservation in
             let textObservationUUID = wordObservation.textObservationUUID
             var siblingObservations = result[textObservationUUID] ?? []
@@ -20,3 +21,4 @@ extension Redaction {
         self.init(color: color, parts: parts)
     }
 }
+#endif

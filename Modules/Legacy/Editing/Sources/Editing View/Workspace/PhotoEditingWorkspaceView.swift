@@ -3,6 +3,7 @@
 
 @_implementationOnly import ClippingBezier
 import Observations
+import Redactions
 import UIKit
 
 class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {

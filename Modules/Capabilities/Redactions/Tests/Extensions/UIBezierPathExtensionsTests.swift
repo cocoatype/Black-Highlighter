@@ -3,7 +3,7 @@
 
 import XCTest
 
-@testable import Editing
+@testable import Redactions
 
 final class UIBezierPathExtensionsTests: XCTestCase {
     func testCreatingShape() throws {

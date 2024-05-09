@@ -3,6 +3,7 @@
 
 import Intents
 import Observations
+import Redactions
 import UniformTypeIdentifiers
 import Vision
 import XCTest

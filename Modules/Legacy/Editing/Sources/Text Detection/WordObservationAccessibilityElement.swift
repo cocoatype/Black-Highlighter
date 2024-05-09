@@ -3,6 +3,7 @@
 
 #if canImport(UIKit)
 import Observations
+import Redactions
 import UIKit
 
 class WordObservationAccessibilityElement: UIAccessibilityElement {

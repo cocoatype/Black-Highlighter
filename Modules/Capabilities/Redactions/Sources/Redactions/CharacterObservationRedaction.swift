@@ -7,7 +7,7 @@ import Observations
 import AppKit
 
 extension Redaction {
-    init?(_ characterObservations: [CharacterObservation], color: NSColor) {
+    public init?(_ characterObservations: [CharacterObservation], color: NSColor) {
         guard characterObservations.count > 0 else { return nil }
 
         let parts = characterObservations.reduce(into: [UUID: [CharacterObservation]]()) { result, characterObservation in
@@ -29,7 +29,7 @@ extension Redaction {
 import UIKit
 
 extension Redaction {
-    init?(_ characterObservations: [CharacterObservation], color: UIColor) {
+    public init?(_ characterObservations: [CharacterObservation], color: UIColor) {
         guard characterObservations.count > 0 else { return nil }
 
         let parts = characterObservations.reduce(into: [UUID: [CharacterObservation]]()) { result, characterObservation in

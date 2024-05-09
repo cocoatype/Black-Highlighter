@@ -3,8 +3,9 @@
 
 import Editing
 import Intents
-import os.log
 import Observations
+import OSLog
+import Redactions
 import UIKit
 import UniformTypeIdentifiers
 
