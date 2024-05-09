@@ -5,11 +5,12 @@ import Vision
 import XCTest
 
 @testable import Editing
+@testable import Observations
 
 final class WordObservationRedactionTests: XCTestCase {
 #if canImport(UIKit)
     func testInitIgnoresEmptyShapes() throws {
-        let observation = try mockObservation(shape: TestHelpers.emptyShape)
+    let observation = try mockObservation(shape: TestHelpers.emptyShape)
         let redaction = Redaction([observation], color: .black)
 
         XCTAssertEqual(redaction.parts.count, 0)
