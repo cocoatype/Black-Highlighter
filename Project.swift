@@ -14,6 +14,7 @@ let project = Project(
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
         "CODE_SIGN_STYLE": "Manual",
+        "CURRENT_PROJECT_VERSION": "0",
         "DEVELOPMENT_TEAM": "287EDDET2B",
         "ENABLE_HARDENED_RUNTIME[sdk=macosx*]": "YES",
         "IPHONEOS_DEPLOYMENT_TARGET": "14.0",
@@ -47,6 +48,7 @@ let project = Project(
         Redacting.target,
         Redactions.target,
         TestHelpers.target,
+        Unpurchased.target,
         // tests
         AppRatings.testTarget,
         AutoRedactionsUI.testTarget,

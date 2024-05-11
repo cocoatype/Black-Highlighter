@@ -1,0 +1,7 @@
+"UnpurchasedAlert.dismissButton" = "OK";
+"UnpurchasedAlert.hideButton" = "Hide This Feature";
+"UnpurchasedAlert.learnMoreButton" = "Learn More…";
+"UnpurchasedAlert.title" = "Requires Ultra Highlighter";
+
+"UnpurchasedFeature.autoRedactions.message" = "Automatically hiding words requires the Ultra Highlighter, a one-time purchase.";
+"UnpurchasedFeature.documentScanner.message" = "Using the document scanner requires the Ultra Highlighter, a one-time purchase.";

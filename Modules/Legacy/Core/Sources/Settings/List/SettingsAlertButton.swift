@@ -4,6 +4,7 @@
 import Defaults
 import Editing
 import SwiftUI
+import Unpurchased
 
 struct SettingsAlertButton: View {
     @State private var showAlert = false
@@ -24,15 +25,9 @@ struct SettingsAlertButton: View {
                         WebURLSubtitleText(subtitle)
                     }
                 }
-            }.alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("SettingsView.notPurchasedAlertTitle"),
-                    message: Text("SettingsView.notPurchasedAlertMessage"),
-                    primaryButton: .cancel(Text("SettingsView.notPurchasedDismissButton")),
-                    secondaryButton: .default(Text("SettingsView.notPurchasedHideButton")) {
-                        hideAutoRedactions = true
-                    })
-            }.settingsCell()
+            }
+            .unpurchasedAlert(for: .autoRedactions, isPresented: $showAlert)
+            .settingsCell()
         }
     }
 

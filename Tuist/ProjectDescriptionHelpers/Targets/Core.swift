@@ -15,6 +15,7 @@ public enum Core {
             .target(Editing.target),
             .target(Purchasing.target),
             .target(Receipts.target),
+            .target(Unpurchased.target),
         ]
     )
 
