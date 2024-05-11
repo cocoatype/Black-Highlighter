@@ -30,6 +30,8 @@
 
 "AutoRedactionsEntryTableViewCellField.placeholder" = "Add Word…";
 
+"AutoRedactionsAccessViewController.navigationTitle" = "Auto-Hidden Words";
+
 "BasePhotoEditingViewController.undoKeyCommandDiscoverabilityTitle" = "Undo Redaction";
 "BasePhotoEditingViewController.redoKeyCommandDiscoverabilityTitle" = "Redo Redaction";
 
