@@ -6,7 +6,7 @@ import UIKit
 
 public class UnpurchasedAlertControllerFactory {
     public init() {}
-    
+
     public func alertController(for feature: UnpurchasedFeature) -> UIAlertController {
         let alertController = UIAlertController(
             title: Strings.title,
@@ -46,7 +46,6 @@ public class UnpurchasedAlertControllerFactory {
                 handler: { _ in }
             )
         )
-
 
         return alertController
     }

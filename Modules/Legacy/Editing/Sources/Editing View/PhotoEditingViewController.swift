@@ -28,12 +28,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         })
 
         viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil) { [weak self] _ in
-            guard let thisMeetingCouldHaveBeenAnEmail = self,
-                  let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
+            // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
+            // this view's recognized text observations
+            guard let thisMeetingCouldHaveBeenAnEmail = self?.photoEditingView.recognizedTextObservations
             else { return }
 
-            thisMeetingCouldHaveBeenAnEmail.removeAutoRedactions(from: observations)
-            thisMeetingCouldHaveBeenAnEmail.autoRedact(using: observations)
+            self?.removeAutoRedactions(from: thisMeetingCouldHaveBeenAnEmail)
+            self?.autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
         }
 
         updateToolbarItems(animated: false)
@@ -288,7 +289,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // MARK: Auto Redact
 
     @objc private func showAutoRedactAccess(_ sender: Any) {
-        present(AutoRedactionsAccessNavigationController(), animated: true)
+        present(PhotoEditingAutoRedactionsAccessProvider().autoRedactionsAccessViewController(), animated: true)
     }
 
     @objc private func hideAutoRedactAccess(_ sender: Any) {

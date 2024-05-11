@@ -19,6 +19,7 @@ let project = Project(
         "ENABLE_HARDENED_RUNTIME[sdk=macosx*]": "YES",
         "IPHONEOS_DEPLOYMENT_TARGET": "14.0",
         "MACOSX_DEPLOYMENT_TARGET": "11.0",
+        "MARKETING_VERSION": "999",
         "OTHER_CODE_SIGN_FLAGS": "--deep",
         "TARGETED_DEVICE_FAMILY": "1,2,6",
     ], debug: [
