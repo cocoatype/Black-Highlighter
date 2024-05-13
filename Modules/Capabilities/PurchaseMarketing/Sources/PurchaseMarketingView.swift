@@ -1,12 +1,15 @@
 //  Created by Geoff Pado on 5/18/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import DesignSystem
 import SwiftUI
 
-struct PurchaseMarketingView: View {
+public struct PurchaseMarketingView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    var body: some View {
+    public init() {}
+
+    public var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
                 Color.primaryDark

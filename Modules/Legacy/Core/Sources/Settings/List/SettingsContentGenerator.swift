@@ -3,6 +3,7 @@
 
 import AutoRedactionsUI
 import Defaults
+import PurchaseMarketing
 import Purchasing
 import SafariServices
 import SwiftUI

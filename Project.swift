@@ -44,6 +44,7 @@ let project = Project(
         ErrorHandling.target,
         Logging.target,
         Observations.target,
+        PurchaseMarketing.target,
         Purchasing.target,
         Receipts.target,
         Redacting.target,
@@ -58,6 +59,7 @@ let project = Project(
         ErrorHandling.testTarget,
         Logging.testTarget,
         Observations.testTarget,
+        PurchaseMarketing.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
         Unpurchased.testTarget,
@@ -71,7 +73,17 @@ let project = Project(
             testAction: .testPlans([
                 "Highlighter.xctestplan",
             ]),
-            runAction: .runAction()
+            runAction: .runAction(
+                arguments: .arguments(
+                    environmentVariables: [
+                        "OVERRIDE_PURCHASE": .environmentVariable(value: "", isEnabled: false),
+                        "SHOW_DEBUG_OVERLAY": .environmentVariable(value: "", isEnabled: false),
+                    ],
+                    launchArguments: [
+                        .launchArgument(name: "-FeatureFlag.autoRedactInEdit YES", isEnabled: false),
+                    ]
+                )
+            )
         ),
     ]
 )

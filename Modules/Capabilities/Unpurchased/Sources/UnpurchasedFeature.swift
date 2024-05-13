@@ -10,7 +10,7 @@ public struct UnpurchasedFeature {
     public static func autoRedactions(learnMoreAction: LearnMoreAction? = nil) -> UnpurchasedFeature {
         UnpurchasedFeature(
             message: Strings.AutoRedactions.message,
-            learnMoreAction: nil,
+            learnMoreAction: learnMoreAction,
             hideFeatureKey: .hideAutoRedactions
         )
     }

@@ -5,6 +5,7 @@ import AutoRedactionsUI
 import Defaults
 import Observations
 import Photos
+import PurchaseMarketing
 import Redactions
 import UIKit
 
@@ -292,8 +293,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         present(
             PhotoEditingAutoRedactionsAccessProvider()
                 .autoRedactionsAccessViewController { [weak self] in
-                    // TODO: present purchase marketing view
-//                    self?.present(PurchaseMarketingHostingController(), animated: true)
+                    self?.present(PurchaseMarketingHostingController(), animated: true)
                 },
             animated: true)
     }

@@ -3,8 +3,8 @@
 
 import StoreKit
 
-enum ProductPriceFormatter {
-    static func formattedPrice(for product: SKProduct) -> String? {
+public enum ProductPriceFormatter {
+    public static func formattedPrice(for product: SKProduct) -> String? {
         if product.priceLocale != Self.priceFormatter.locale {
             Self.priceFormatter.locale = product.priceLocale
         }
