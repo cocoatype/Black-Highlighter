@@ -29,11 +29,5 @@ public struct UnpurchasedFeature {
     let learnMoreAction: LearnMoreAction?
     let hideFeatureKey: Defaults.Key?
 
-    init(message: String, learnMoreAction: LearnMoreAction?, hideFeatureKey: Defaults.Key?) {
-        self.message = message
-        self.learnMoreAction = learnMoreAction
-        self.hideFeatureKey = hideFeatureKey
-    }
-
     private typealias Strings = UnpurchasedStrings.UnpurchasedFeature
 }
