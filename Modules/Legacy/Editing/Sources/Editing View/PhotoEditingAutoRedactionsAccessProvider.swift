@@ -9,7 +9,7 @@ import Unpurchased
 class PhotoEditingAutoRedactionsAccessProvider: NSObject {
     func autoRedactionsAccessViewController(learnMoreAction: @escaping UnpurchasedFeature.LearnMoreAction) -> UIViewController {
         if purchased {
-            return AutoRedactionsAccessViewController()
+            return AutoRedactionsAccessNavigationController()
         } else {
             return UnpurchasedAlertControllerFactory()
                 .alertController(for: .autoRedactions(learnMoreAction: learnMoreAction))

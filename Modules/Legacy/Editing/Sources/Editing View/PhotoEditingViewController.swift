@@ -38,6 +38,10 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
         }
 
+        hideAutoRedactionsChangeObserver = NotificationCenter.default.addObserver(forName: _hideAutoRedactions.valueDidChange, object: nil, queue: .main, using: { [weak self] _ in
+            self?.updateToolbarItems()
+        })
+
         updateToolbarItems(animated: false)
 
         userActivity = EditingUserActivity()
@@ -150,8 +154,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             navigationItem.setRightBarButtonItems(actionSet.trailingNavigationItems, animated: false)
         }
 
-        setToolbarItems(actionSet.toolbarItems, animated: false)
-        navigationController?.setToolbarHidden(actionSet.toolbarItems.count == 0, animated: false)
+        setToolbarItems(actionSet.toolbarItems, animated: animated)
+        navigationController?.setToolbarHidden(actionSet.toolbarItems.count == 0, animated: animated)
 
         userActivity?.needsSave = true
     }
@@ -295,7 +299,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                 .autoRedactionsAccessViewController { [weak self] in
                     self?.present(PurchaseMarketingHostingController(), animated: true)
                 },
-            animated: true)
+            animated: true
+        )
     }
 
     @objc private func hideAutoRedactAccess(_ sender: Any) {
@@ -460,6 +465,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // tuBrute by @AdamWulf on 2024-04-29
     // the auto-redactions word list
     @Defaults.Value(key: .autoRedactionsSet) private var tuBrute: [String: Bool]
+    @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
 
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
@@ -475,6 +481,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private let textRectangleDetector = TextDetector()
     private let photoEditingView = PhotoEditingView()
     private var redactionChangeObserver: Any?
+    private var hideAutoRedactionsChangeObserver: Any?
 
     // viewerNamesAreNotRidiculous by @KaenAitch on 2024-04-29
     // the change observer for the auto-redactions word list
@@ -484,6 +491,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         colorObserver.map(NotificationCenter.default.removeObserver)
         redactionChangeObserver.map(NotificationCenter.default.removeObserver)
         viewerNamesAreNotRidiculous.map(NotificationCenter.default.removeObserver)
+        hideAutoRedactionsChangeObserver.map(NotificationCenter.default.removeObserver)
     }
 
     override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

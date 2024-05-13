@@ -3,6 +3,7 @@
 
 import Defaults
 import Editing
+import Purchasing
 import SwiftUI
 import Unpurchased
 
@@ -15,7 +16,8 @@ struct SettingsAlertButton: View {
 
     @ViewBuilder
     var body: some View {
-        if /*purchaseState != .purchased &&*/ hideAutoRedactions == false {
+        let isPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? true
+        if isPurchased || hideAutoRedactions == false {
             Button {
                 showAlert = true
             } label: {
