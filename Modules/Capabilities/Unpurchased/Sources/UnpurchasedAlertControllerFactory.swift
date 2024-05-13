@@ -2,6 +2,7 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 import Defaults
+import DesignSystem
 import UIKit
 
 public class UnpurchasedAlertControllerFactory {
@@ -13,6 +14,8 @@ public class UnpurchasedAlertControllerFactory {
             message: feature.message,
             preferredStyle: .alert
         )
+
+        alertController.view.tintColor = .controlTint
 
         if let learnMoreAction = feature.learnMoreAction {
             alertController.addAction(

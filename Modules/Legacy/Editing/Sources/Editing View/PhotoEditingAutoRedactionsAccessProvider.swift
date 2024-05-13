@@ -7,12 +7,12 @@ import UIKit
 import Unpurchased
 
 class PhotoEditingAutoRedactionsAccessProvider: NSObject {
-    func autoRedactionsAccessViewController() -> UIViewController {
+    func autoRedactionsAccessViewController(learnMoreAction: UnpurchasedFeature.LearnMoreAction) -> UIViewController {
         if purchased {
             return AutoRedactionsAccessViewController()
         } else {
             return UnpurchasedAlertControllerFactory()
-                .alertController(for: .autoRedactions)
+                .alertController(for: .autoRedactions(learnMoreAction: nil))
         }
     }
 

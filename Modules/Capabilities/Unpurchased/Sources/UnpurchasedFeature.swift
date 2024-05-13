@@ -5,13 +5,17 @@ import Defaults
 import Foundation
 
 public struct UnpurchasedFeature {
-    public static let autoRedactions = UnpurchasedFeature(
-        message: Strings.AutoRedactions.message,
-        learnMoreAction: nil,
-        hideFeatureKey: .hideAutoRedactions
-    )
+    public typealias LearnMoreAction = () -> Void
 
-    public static func documentScanner(learnMoreAction: (() -> Void)?) -> UnpurchasedFeature {
+    public static func autoRedactions(learnMoreAction: LearnMoreAction? = nil) -> UnpurchasedFeature {
+        UnpurchasedFeature(
+            message: Strings.AutoRedactions.message,
+            learnMoreAction: nil,
+            hideFeatureKey: .hideAutoRedactions
+        )
+    }
+
+    public static func documentScanner(learnMoreAction: LearnMoreAction?) -> UnpurchasedFeature {
         UnpurchasedFeature(
             message: Strings.DocumentScanner.message,
             learnMoreAction: learnMoreAction,
@@ -22,10 +26,10 @@ public struct UnpurchasedFeature {
     // MARK: - Implementation Details
 
     let message: String
-    let learnMoreAction: (() -> Void)?
+    let learnMoreAction: LearnMoreAction?
     let hideFeatureKey: Defaults.Key?
 
-    private init(message: String, learnMoreAction: ( () -> Void)?, hideFeatureKey: Defaults.Key?) {
+    init(message: String, learnMoreAction: LearnMoreAction?, hideFeatureKey: Defaults.Key?) {
         self.message = message
         self.learnMoreAction = learnMoreAction
         self.hideFeatureKey = hideFeatureKey

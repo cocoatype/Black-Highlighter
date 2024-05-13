@@ -289,7 +289,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // MARK: Auto Redact
 
     @objc private func showAutoRedactAccess(_ sender: Any) {
-        present(PhotoEditingAutoRedactionsAccessProvider().autoRedactionsAccessViewController(), animated: true)
+        present(
+            PhotoEditingAutoRedactionsAccessProvider()
+                .autoRedactionsAccessViewController { [weak self] in
+                    // TODO: present purchase marketing view
+//                    self?.present(PurchaseMarketingHostingController(), animated: true)
+                },
+            animated: true)
     }
 
     @objc private func hideAutoRedactAccess(_ sender: Any) {

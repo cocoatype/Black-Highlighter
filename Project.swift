@@ -60,6 +60,7 @@ let project = Project(
         Observations.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
+        Unpurchased.testTarget,
     ],
     schemes: [
         .scheme(

@@ -26,7 +26,7 @@ struct SettingsAlertButton: View {
                     }
                 }
             }
-            .unpurchasedAlert(for: .autoRedactions, isPresented: $showAlert)
+            .unpurchasedAlert(for: .autoRedactions(), isPresented: $showAlert)
             .settingsCell()
         }
     }
