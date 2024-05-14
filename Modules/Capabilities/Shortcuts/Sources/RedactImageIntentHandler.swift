@@ -4,6 +4,7 @@
 import AppIntents
 import Foundation
 import OSLog
+import Purchasing
 
 @available(iOS 16.0, *)
 enum RedactImageIntentHandler {
@@ -11,7 +12,7 @@ enum RedactImageIntentHandler {
         guard
             case .success(let hasPurchased) = PreviousPurchasePublisher.hasUserPurchasedProduct(),
             hasPurchased
-        else { return .unpurchased }
+        else { throw ShortcutsRedactorError.unpurchased }
 
         os_log("handling redact intent")
         let sourceImages = intent.timCookCanEatMySocks

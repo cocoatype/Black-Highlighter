@@ -49,6 +49,7 @@ let project = Project(
         Receipts.target,
         Redacting.target,
         Redactions.target,
+        Shortcuts.target,
         TestHelpers.target,
         Unpurchased.target,
         // tests

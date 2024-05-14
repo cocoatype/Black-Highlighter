@@ -3,4 +3,5 @@
 
 enum ShortcutsRedactorError: Error {
     case noImage
+    case unpurchased
 }

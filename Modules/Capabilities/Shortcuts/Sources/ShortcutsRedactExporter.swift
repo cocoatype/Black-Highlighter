@@ -1,9 +1,9 @@
 //  Created by Geoff Pado on 11/6/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
-import os.log
-
 import Intents
+import OSLog
+import Redactions
 import UIKit
 import UniformTypeIdentifiers
 

@@ -22,6 +22,7 @@ public enum App {
             .package(product: "OpenSSL"),
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
+            .target(Shortcuts.target),
         ],
         settings: .settings(
             base: [
