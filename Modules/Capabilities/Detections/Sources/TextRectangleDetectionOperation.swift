@@ -1,17 +1,17 @@
 //  Created by Geoff Pado on 4/22/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import os.log
+import OSLog
 import Vision
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
+#if canImport(UIKit) && targetEnvironment(macCatalyst)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 class TextRectangleDetectionOperation: Operation {
-    #if canImport(UIKit)
+    #if canImport(UIKit) && targetEnvironment(macCatalyst)
     init?(image: UIImage) {
         guard let cgImage = image.cgImage else { return nil }
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)

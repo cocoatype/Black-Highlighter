@@ -4,14 +4,14 @@
 import Observations
 import Vision
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
+#if canImport(UIKit) && targetEnvironment(macCatalyst)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 open class TextDetector: NSObject {
-    #if canImport(UIKit)
+    #if canImport(UIKit) && targetEnvironment(macCatalyst)
     public func detectTextRectangles(in image: UIImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
         guard let detectionOperation = TextRectangleDetectionOperation(image: image) else {
             completionHandler?(nil)

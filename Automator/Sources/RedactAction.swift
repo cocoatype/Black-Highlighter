@@ -3,8 +3,9 @@
 
 import AppKit
 import Automator
+import Detections
 import Redacting
-import os.log
+import OSLog
 
 class RedactAction: AMBundleAction, NSTextFieldDelegate {
     override func runAsynchronously(withInput input: Any?) {

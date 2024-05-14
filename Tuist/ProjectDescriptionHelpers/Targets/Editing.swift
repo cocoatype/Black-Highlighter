@@ -11,6 +11,7 @@ public enum Editing {
         headers: .headers(public: ["Modules/Legacy/Editing/Headers/**"]),
         dependencies: [
             .target(AutoRedactionsUI.target),
+            .target(Detections.target),
             .target(ErrorHandling.target),
             .target(Observations.target),
             .target(PurchaseMarketing.target),
