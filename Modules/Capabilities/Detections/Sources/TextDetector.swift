@@ -75,7 +75,7 @@ open class TextDetector: NSObject {
             .flatMap(\.allWordObservations)
     }
 
-    #if canImport(UIKit)
+    #if canImport(UIKit) && targetEnvironment(macCatalyst)
     public func detectWords(in image: UIImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
         guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
         Task {

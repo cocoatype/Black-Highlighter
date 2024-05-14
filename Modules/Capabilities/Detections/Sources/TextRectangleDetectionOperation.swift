@@ -4,14 +4,14 @@
 import OSLog
 import Vision
 
-#if canImport(UIKit) && targetEnvironment(macCatalyst)
+#if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
 
 class TextRectangleDetectionOperation: Operation {
-    #if canImport(UIKit) && targetEnvironment(macCatalyst)
+    #if canImport(UIKit)
     init?(image: UIImage) {
         guard let cgImage = image.cgImage else { return nil }
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)
