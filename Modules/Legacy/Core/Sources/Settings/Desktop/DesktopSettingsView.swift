@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 9/27/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+import PurchaseMarketing
+import Purchasing
 import SwiftUI
 
 struct DesktopSettingsView: View {

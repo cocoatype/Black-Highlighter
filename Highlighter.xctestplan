@@ -15,57 +15,78 @@
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04634E972A05CEC000569D5C",
+        "identifier" : "4CA37C6F81D42C86B5E1F67B",
         "name" : "AppRatingsTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04F9A44E2BDA561C00B2A2DB",
+        "identifier" : "D511BD3660BA1CD7A06AEBC1",
         "name" : "AutoRedactionsUITests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04634D6A2A05189C00569D5C",
+        "identifier" : "FFC529CC7C03FA34AB5A20B3",
         "name" : "CoreTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04634ED32A05D16A00569D5C",
-        "name" : "DefaultsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04F9A4802BDA594100B2A2DB",
-        "name" : "DesignSystemTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04B19921262410D5001A275B",
+        "identifier" : "7C98246E8C096DC5B09B72A0",
         "name" : "EditingTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04634E7A2A05C2D300569D5C",
+        "identifier" : "FF81604FD0F405EF2D1CCC8B",
         "name" : "ErrorHandlingTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:Highlighter.xcodeproj",
-        "identifier" : "04634E4A2A052C4400569D5C",
+        "identifier" : "97F888315DF72D8A476D3EF9",
         "name" : "LoggingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "2B4661F6B9957A37CFC75AF1",
+        "name" : "ObservationsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "2475A1B3C4289BC5302DD4C4",
+        "name" : "PurchaseMarketingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "933937713B5A4BE454914256",
+        "name" : "PurchasingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "B5E4762CECC52CCD6E2B0990",
+        "name" : "RedactionsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "77D525B0D7498E1676A96CC5",
+        "name" : "UnpurchasedTests"
       }
     }
   ],

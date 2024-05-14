@@ -2,6 +2,7 @@
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
 import Editing
+import Redactions
 import UIKit
 
 #if targetEnvironment(macCatalyst)

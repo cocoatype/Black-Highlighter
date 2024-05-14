@@ -3,6 +3,7 @@
 
 import Editing
 import Photos
+import Redactions
 import UIKit
 
 protocol PhotoEditorPresenting {

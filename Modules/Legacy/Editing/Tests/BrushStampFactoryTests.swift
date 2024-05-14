@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/13/23.
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
+import Observations
 import XCTest
 
 @testable import Editing

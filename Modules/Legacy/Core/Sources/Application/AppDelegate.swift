@@ -2,10 +2,12 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Defaults
+import DesignSystem
 import Editing
 import ErrorHandling
 import Logging
 import Intents
+import Purchasing
 import UniformTypeIdentifiers
 import UIKit
 
