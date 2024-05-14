@@ -8,14 +8,7 @@
 import ProjectDescription
 
 public enum Receipts {
-    public static let target = Target.target(
-        name: "Receipts",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
-        product: .framework,
-        bundleId: "com.cocoatype.Highlighter.Receipts",
-        sources: ["Modules/Legacy/Receipts/Sources/**"],
-        dependencies: [
-            .target(ErrorHandling.target),
-        ]
-    )
+    public static let target = Target.capabilitiesTarget(name: "Receipts", dependencies: [
+        .target(ErrorHandling.target()),
+    ])
 }

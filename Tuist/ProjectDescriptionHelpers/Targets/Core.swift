@@ -3,7 +3,7 @@ import ProjectDescription
 public enum Core {
     public static let target = Target.target(
         name: "Core",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+        destinations: SDK.catalyst.destinations,
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.Core",
         sources: ["Modules/Legacy/Core/Sources/**"],
@@ -17,7 +17,15 @@ public enum Core {
             .target(Purchasing.target),
             .target(Receipts.target),
             .target(Unpurchased.target),
-        ]
+        ],
+        settings: .settings(
+            base: [
+                "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
+            ],
+            defaultSettings: .recommended(excluding: [
+                "CODE_SIGN_IDENTITY",
+            ])
+        )
     )
 
     public static let testTarget = Target.moduleTestTarget(name: "Core", type: "Legacy")

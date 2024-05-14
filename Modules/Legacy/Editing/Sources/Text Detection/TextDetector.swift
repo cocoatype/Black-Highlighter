@@ -1,17 +1,18 @@
 //  Created by Geoff Pado on 4/22/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import Observations
 import Vision
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
+#if targetEnvironment(macCatalyst) || os(iOS)
+import Observations
 import UIKit
+#else
+import AppKit
+import ObservationsNative
 #endif
 
 open class TextDetector: NSObject {
-    #if canImport(UIKit)
+    #if targetEnvironment(macCatalyst) || os(iOS)
     public func detectTextRectangles(in image: UIImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
         guard let detectionOperation = TextRectangleDetectionOperation(image: image) else {
             completionHandler?(nil)
@@ -25,7 +26,7 @@ open class TextDetector: NSObject {
 
         operationQueue.addOperation(detectionOperation)
     }
-    #elseif canImport(AppKit)
+    #else
     public func detectTextRectangles(in image: NSImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
         guard let detectionOperation = TextRectangleDetectionOperation(image: image) else {
             completionHandler?(nil)
@@ -75,7 +76,7 @@ open class TextDetector: NSObject {
             .flatMap(\.allWordObservations)
     }
 
-    #if canImport(UIKit)
+    #if targetEnvironment(macCatalyst) || os(iOS)
     public func detectWords(in image: UIImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
         guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
         Task {
@@ -94,7 +95,7 @@ open class TextDetector: NSObject {
         }
     }
 
-    #elseif canImport(AppKit)
+    #else
     @available(macOS 10.15, *)
     public func detectWords(in image: NSImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
         guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }

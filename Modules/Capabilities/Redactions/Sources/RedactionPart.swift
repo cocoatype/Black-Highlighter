@@ -1,7 +1,11 @@
 //  Created by Geoff Pado on 5/8/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+#if targetEnvironment(macCatalyst) || os(iOS)
 import Observations
+#else
+import ObservationsNative
+#endif
 
 public enum RedactionPart: Equatable {
     case path(RedactionPath)

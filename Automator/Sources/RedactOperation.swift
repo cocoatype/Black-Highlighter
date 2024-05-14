@@ -3,7 +3,7 @@
 
 import Foundation
 import Redacting
-import Redactions
+import RedactionsNative
 
 class RedactOperation: Operation {
     var result: Result<String, Error>?

@@ -3,7 +3,7 @@
 
 import AppKit
 import Redacting
-import Redactions
+import RedactionsNative
 
 class RedactActionExportOperation: Operation {
     var result: Result<String, Error>?

@@ -1,10 +1,9 @@
 //  Created by Geoff Pado on 5/8/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
-import Observations
-
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
+import ObservationsNative
 
 extension NSBezierPath {
     convenience init(cgPath: CGPath) {

@@ -3,7 +3,7 @@ import ProjectDescription
 public enum AutomatorActions {
     public static let target = Target.target(
         name: "AutomatorActions",
-        destinations: [.mac],
+        destinations: SDK.native.destinations,
         product: .automatorAction,
         bundleId: "com.cocoatype.Highlighter.Automator",
         infoPlist: "Automator/Info.plist",
@@ -11,7 +11,7 @@ public enum AutomatorActions {
         resources: ["Automator/Resources/**"],
         dependencies: [
             .target(Redacting.target),
-            .target(Redactions.target),
+            .target(Redactions.target(sdk: .native)),
         ],
         settings: .settings(base: [
             "WRAPPER_EXTENSION": "action",

@@ -1,13 +1,12 @@
 //  Created by Geoff Pado on 5/15/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+#if targetEnvironment(macCatalyst) || os(iOS)
 import Observations
-
-#if canImport(AppKit) && !targetEnvironment(macCatalyst)
-import AppKit
+import UIKit
 
 extension Redaction {
-    public init?(_ characterObservations: [CharacterObservation], color: NSColor) {
+    public init?(_ characterObservations: [CharacterObservation], color: UIColor) {
         guard characterObservations.count > 0 else { return nil }
 
         let parts = characterObservations.reduce(into: [UUID: [CharacterObservation]]()) { result, characterObservation in
@@ -24,12 +23,12 @@ extension Redaction {
         self.init(color: color, parts: parts)
     }
 }
-
-#elseif canImport(UIKit)
-import UIKit
+#else
+import AppKit
+import ObservationsNative
 
 extension Redaction {
-    public init?(_ characterObservations: [CharacterObservation], color: UIColor) {
+    public init?(_ characterObservations: [CharacterObservation], color: NSColor) {
         guard characterObservations.count > 0 else { return nil }
 
         let parts = characterObservations.reduce(into: [UUID: [CharacterObservation]]()) { result, characterObservation in

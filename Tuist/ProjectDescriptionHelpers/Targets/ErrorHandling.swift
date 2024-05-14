@@ -1,16 +1,11 @@
 import ProjectDescription
 
 public enum ErrorHandling {
-    public static let target = Target.target(
-        name: "ErrorHandling",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
-        product: .framework,
-        bundleId: "com.cocoatype.Highlighter.ErrorHandling",
-        sources: ["Modules/Capabilities/ErrorHandling/Sources/**"],
-        dependencies: [
-            .target(Logging.target),
-        ]
-    )
+    public static func target(sdk: SDK = .catalyst) -> Target {
+        Target.capabilitiesTarget(name: "ErrorHandling", sdk: sdk, dependencies: [
+            .target(Logging.target(sdk: sdk)),
+        ])
+    }
 
     public static let testTarget = Target.capabilitiesTestTarget(name: "ErrorHandling")
 }

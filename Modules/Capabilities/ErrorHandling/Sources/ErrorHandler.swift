@@ -2,7 +2,12 @@
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+
+#if targetEnvironment(macCatalyst) || os(iOS)
 import Logging
+#else
+import LoggingNative
+#endif
 
 public struct ErrorHandler: ErrorHandling {
     private var logger: Logger

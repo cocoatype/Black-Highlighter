@@ -1,10 +1,33 @@
 //  Created by Geoff Pado on 5/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+#if targetEnvironment(macCatalyst) || os(iOS)
 import Observations
+import SwiftUI
+import UIKit
 
-#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+extension UIBezierPath {
+    var strokeBorderPath: UIBezierPath {
+        let cgPath = self.cgPath
+        let strokedCGPath = cgPath.copy(strokingWithWidth: lineWidth, lineCap: lineCapStyle, lineJoin: lineJoinStyle, miterLimit: miterLimit)
+        return UIBezierPath(cgPath: strokedCGPath)
+    }
+
+    public var dashedPath: UIBezierPath {
+        let cgPath = self.cgPath
+        let dashedCGPath = cgPath.copy(dashingWithPhase: 0, lengths: [4, 4])
+        let dashedPath = UIBezierPath(cgPath: dashedCGPath)
+        dashedPath.lineWidth = lineWidth
+        return dashedPath
+    }
+
+    public func forEachPoint(_ function: @escaping ((CGPoint) -> Void)) {
+        cgPath.forEachPoint(function)
+    }
+}
+#else
 import AppKit
+import ObservationsNative
 
 extension NSBezierPath {
     convenience init(cgPath: CGPath) {
@@ -99,33 +122,5 @@ extension NSBezierPath.LineJoinStyle {
         @unknown default: return .round
         }
     }
-}
-
-#elseif canImport(UIKit)
-import SwiftUI
-import UIKit
-
-extension UIBezierPath {
-    var strokeBorderPath: UIBezierPath {
-        let cgPath = self.cgPath
-        let strokedCGPath = cgPath.copy(strokingWithWidth: lineWidth, lineCap: lineCapStyle, lineJoin: lineJoinStyle, miterLimit: miterLimit)
-        return UIBezierPath(cgPath: strokedCGPath)
-    }
-
-    public var dashedPath: UIBezierPath {
-        let cgPath = self.cgPath
-        let dashedCGPath = cgPath.copy(dashingWithPhase: 0, lengths: [4, 4])
-        let dashedPath = UIBezierPath(cgPath: dashedCGPath)
-        dashedPath.lineWidth = lineWidth
-        return dashedPath
-    }
-
-    public func forEachPoint(_ function: @escaping ((CGPoint) -> Void)) {
-        cgPath.forEachPoint(function)
-    }
-
-//    public var isShape: Bool {
-//        return shape != nil
-//    }
 }
 #endif
