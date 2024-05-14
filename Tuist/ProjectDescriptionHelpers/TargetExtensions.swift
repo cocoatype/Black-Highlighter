@@ -3,6 +3,7 @@ import ProjectDescription
 extension Target {
     static func capabilitiesTarget(
         name: String,
+        hasResources: Bool = false,
         dependencies: [TargetDependency] = []
     ) -> Target {
         Target.target(
@@ -11,6 +12,7 @@ extension Target {
             product: .framework,
             bundleId: "com.cocoatype.Highlighter.\(name)",
             sources: ["Modules/Capabilities/\(name)/Sources/**"],
+            resources: hasResources ? ["Modules/Capabilities/\(name)/Resources/**"] : nil,
             dependencies: dependencies
         )
     }

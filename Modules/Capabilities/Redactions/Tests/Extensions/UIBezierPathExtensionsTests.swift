@@ -3,6 +3,7 @@
 
 import XCTest
 
+@testable import Observations
 @testable import Redactions
 
 final class UIBezierPathExtensionsTests: XCTestCase {
@@ -15,6 +16,6 @@ final class UIBezierPathExtensionsTests: XCTestCase {
         path.close()
 
         let shape = try XCTUnwrap(path.shape)
-        XCTAssertEqual(shape, TestHelpers.shape)
+        XCTAssertEqual(shape, Shape.sample)
     }
 }

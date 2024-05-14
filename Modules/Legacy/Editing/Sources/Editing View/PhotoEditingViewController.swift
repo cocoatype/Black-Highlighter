@@ -5,6 +5,7 @@ import AutoRedactionsUI
 import Defaults
 import Observations
 import Photos
+import PurchaseMarketing
 import Redactions
 import UIKit
 
@@ -28,13 +29,18 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         })
 
         viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil) { [weak self] _ in
-            guard let thisMeetingCouldHaveBeenAnEmail = self,
-                  let observations = thisMeetingCouldHaveBeenAnEmail.photoEditingView.recognizedTextObservations
+            // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
+            // this view's recognized text observations
+            guard let thisMeetingCouldHaveBeenAnEmail = self?.photoEditingView.recognizedTextObservations
             else { return }
 
-            thisMeetingCouldHaveBeenAnEmail.removeAutoRedactions(from: observations)
-            thisMeetingCouldHaveBeenAnEmail.autoRedact(using: observations)
+            self?.removeAutoRedactions(from: thisMeetingCouldHaveBeenAnEmail)
+            self?.autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
         }
+
+        hideAutoRedactionsChangeObserver = NotificationCenter.default.addObserver(forName: _hideAutoRedactions.valueDidChange, object: nil, queue: .main, using: { [weak self] _ in
+            self?.updateToolbarItems()
+        })
 
         updateToolbarItems(animated: false)
 
@@ -148,8 +154,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             navigationItem.setRightBarButtonItems(actionSet.trailingNavigationItems, animated: false)
         }
 
-        setToolbarItems(actionSet.toolbarItems, animated: false)
-        navigationController?.setToolbarHidden(actionSet.toolbarItems.count == 0, animated: false)
+        setToolbarItems(actionSet.toolbarItems, animated: animated)
+        navigationController?.setToolbarHidden(actionSet.toolbarItems.count == 0, animated: animated)
 
         userActivity?.needsSave = true
     }
@@ -288,7 +294,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // MARK: Auto Redact
 
     @objc private func showAutoRedactAccess(_ sender: Any) {
-        present(AutoRedactionsAccessNavigationController(), animated: true)
+        present(
+            PhotoEditingAutoRedactionsAccessProvider()
+                .autoRedactionsAccessViewController { [weak self] in
+                    self?.present(PurchaseMarketingHostingController(), animated: true)
+                },
+            animated: true
+        )
     }
 
     @objc private func hideAutoRedactAccess(_ sender: Any) {
@@ -453,6 +465,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // tuBrute by @AdamWulf on 2024-04-29
     // the auto-redactions word list
     @Defaults.Value(key: .autoRedactionsSet) private var tuBrute: [String: Bool]
+    @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
 
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
@@ -468,6 +481,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private let textRectangleDetector = TextDetector()
     private let photoEditingView = PhotoEditingView()
     private var redactionChangeObserver: Any?
+    private var hideAutoRedactionsChangeObserver: Any?
 
     // viewerNamesAreNotRidiculous by @KaenAitch on 2024-04-29
     // the change observer for the auto-redactions word list
@@ -477,6 +491,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         colorObserver.map(NotificationCenter.default.removeObserver)
         redactionChangeObserver.map(NotificationCenter.default.removeObserver)
         viewerNamesAreNotRidiculous.map(NotificationCenter.default.removeObserver)
+        hideAutoRedactionsChangeObserver.map(NotificationCenter.default.removeObserver)
     }
 
     override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

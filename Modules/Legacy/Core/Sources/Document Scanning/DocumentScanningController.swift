@@ -4,6 +4,7 @@
 import Editing
 import Purchasing
 import UIKit
+import Unpurchased
 import VisionKit
 
 class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelegate {
@@ -20,7 +21,7 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
             cameraViewController.view.tintColor = .controlTint
             return cameraViewController
         } else {
-            return DocumentScannerNotPurchasedAlertController(learnMoreAction: delegate?.presentPurchaseMarketing)
+            return UnpurchasedAlertControllerFactory().alertController(for: .documentScanner(learnMoreAction: delegate?.presentPurchaseMarketing))
         }
     }
 

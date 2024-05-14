@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 8/27/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import Defaults
+import Purchasing
 import UIKit
 
 struct ActionSet {
@@ -20,7 +22,8 @@ struct ActionSet {
             RedoBarButtonItem(undoManager: undoManager, target: target)
             ColorPickerBarButtonItem(target: target, color: currentColor)
             SeekBarButtonItem(target: target)
-            QuickRedactBarButtonItem(target: target)
+
+            if shouldShowQuickRedact { QuickRedactBarButtonItem(target: target) }
         }
     }
 
@@ -31,9 +34,7 @@ struct ActionSet {
 
         SeekBarButtonItem(target: target)
 
-        if FeatureFlag.autoRedactInEdit {
-            QuickRedactBarButtonItem(target: target)
-        }
+        if shouldShowQuickRedact { QuickRedactBarButtonItem(target: target) }
     }
 
     @ToolbarBuilder var trailingNavigationItems: [UIBarButtonItem] {
@@ -43,7 +44,7 @@ struct ActionSet {
 
         if sizeClass == .regular, #unavailable(iOS 16) {
             SeekBarButtonItem(target: target)
-            QuickRedactBarButtonItem(target: target)
+            if shouldShowQuickRedact { QuickRedactBarButtonItem(target: target) }
         }
 
         if sizeClass == .regular {
@@ -71,6 +72,16 @@ struct ActionSet {
             HighlighterToolBarButtonItem(tool: selectedTool, target: target)
         }
     }
+
+    // MARK: Decisions
+
+    private var shouldShowQuickRedact: Bool {
+        let isPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? true
+        @Defaults.Value(key: .hideAutoRedactions) var hideAutoRedactions: Bool
+        return FeatureFlag.autoRedactInEdit && (isPurchased || hideAutoRedactions == false)
+    }
+
+    // MARK: Boilerplate
 
     init(for target: AnyObject, undoManager: UndoManager?, selectedTool: HighlighterTool, sizeClass: UIUserInterfaceSizeClass, currentColor: UIColor) {
         self.target = target

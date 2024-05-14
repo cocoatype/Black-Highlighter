@@ -19,13 +19,26 @@ public extension UIColor {
     static let primary = UIColor(hexLiteral: 0x212121)
     static let primaryDark = UIColor(hexLiteral: 0x1b1b1b)
 
-    static let controlTint = UIColor(named: "Web Tint Color")
+    static let controlTint = UIColor(light: .primary, dark: .white)
     static let tableViewCellBackground = UIColor(hexLiteral: 0x2c2c2c)
     static let tableViewCellBackgroundHighlighted = UIColor.primaryLight
     static let tableViewSeparator = UIColor(hexLiteral: 0x878787)
 
     static let seekBoxInnerBorder = UIColor(named: "Seek Box Inner Border")
     static let seekBoxOuterBorder = UIColor(named: "Seek Box Outer Border")
+
+    // MARK: - Dynamic Colors
+    convenience init(light: UIColor, dark: UIColor) {
+        self.init { traitCollection in
+            switch traitCollection.userInterfaceStyle {
+            case .dark: return dark
+            case .light, .unspecified: fallthrough
+            @unknown default: return light
+            }
+        }
+    }
+
+    // MARK: - Hex
 
     convenience init(hexLiteral hex: Int) {
         let red = CGFloat((hex & 0xFF0000) >> 16)

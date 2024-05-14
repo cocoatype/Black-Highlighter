@@ -4,8 +4,8 @@
 import SwiftUI
 import UIKit
 
-class PurchaseMarketingHostingController: UIHostingController<PurchaseMarketingView> {
-    init() {
+public class PurchaseMarketingHostingController: UIHostingController<PurchaseMarketingView> {
+    public init() {
         super.init(rootView: PurchaseMarketingView())
         modalPresentationStyle = .formSheet
         preferredContentSize = CGSize(width: 640, height: 640)

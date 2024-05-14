@@ -10,14 +10,14 @@ import XCTest
 final class WordObservationRedactionTests: XCTestCase {
 #if canImport(UIKit)
     func testInitIgnoresEmptyShapes() throws {
-    let observation = try mockObservation(shape: TestHelpers.emptyShape)
+        let observation = try mockObservation(shape: Shape.emptySample)
         let redaction = Redaction([observation], color: .black)
 
         XCTAssertEqual(redaction.parts.count, 0)
     }
 
     func testInitIncludesNonEmptyShapes() throws {
-        let observation = try mockObservation(shape: TestHelpers.shape)
+        let observation = try mockObservation(shape: Shape.sample)
         let redaction = Redaction([observation], color: .black)
 
         XCTAssertEqual(redaction.parts.count, 1)

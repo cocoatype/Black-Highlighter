@@ -14,10 +14,12 @@ let project = Project(
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
         "CODE_SIGN_STYLE": "Manual",
+        "CURRENT_PROJECT_VERSION": "0",
         "DEVELOPMENT_TEAM": "287EDDET2B",
         "ENABLE_HARDENED_RUNTIME[sdk=macosx*]": "YES",
         "IPHONEOS_DEPLOYMENT_TARGET": "14.0",
         "MACOSX_DEPLOYMENT_TARGET": "11.0",
+        "MARKETING_VERSION": "999",
         "OTHER_CODE_SIGN_FLAGS": "--deep",
         "TARGETED_DEVICE_FAMILY": "1,2,6",
     ], debug: [
@@ -42,11 +44,13 @@ let project = Project(
         ErrorHandling.target,
         Logging.target,
         Observations.target,
+        PurchaseMarketing.target,
         Purchasing.target,
         Receipts.target,
         Redacting.target,
         Redactions.target,
         TestHelpers.target,
+        Unpurchased.target,
         // tests
         AppRatings.testTarget,
         AutoRedactionsUI.testTarget,
@@ -55,8 +59,10 @@ let project = Project(
         ErrorHandling.testTarget,
         Logging.testTarget,
         Observations.testTarget,
+        PurchaseMarketing.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
+        Unpurchased.testTarget,
     ],
     schemes: [
         .scheme(
@@ -67,7 +73,17 @@ let project = Project(
             testAction: .testPlans([
                 "Highlighter.xctestplan",
             ]),
-            runAction: .runAction()
+            runAction: .runAction(
+                arguments: .arguments(
+                    environmentVariables: [
+                        "OVERRIDE_PURCHASE": .environmentVariable(value: "", isEnabled: false),
+                        "SHOW_DEBUG_OVERLAY": .environmentVariable(value: "", isEnabled: false),
+                    ],
+                    launchArguments: [
+                        .launchArgument(name: "-FeatureFlag.autoRedactInEdit YES", isEnabled: false),
+                    ]
+                )
+            )
         ),
     ]
 )
