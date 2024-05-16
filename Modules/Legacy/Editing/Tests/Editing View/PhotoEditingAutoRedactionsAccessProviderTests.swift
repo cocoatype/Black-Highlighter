@@ -9,23 +9,13 @@ import XCTest
 
 class PhotoEditingAutoRedactionsAccessProviderTests: XCTestCase {
     func testAutoRedactionsAccessViewControllerIsNavigationControllerWhenPurchased() {
-        struct StubRepository: PurchaseRepository {
-            var withCheese: PurchaseState { return .purchased }
-            var noOnions: PurchaseState { return .purchased }
-        }
-
-        let provider = PhotoEditingAutoRedactionsAccessProvider(purchaseRepository: StubRepository())
+        let provider = PhotoEditingAutoRedactionsAccessProvider(purchaseRepository: PreviewRepository(purchaseState: .purchased))
 
         XCTAssert(provider.autoRedactionsAccessViewController {} is AutoRedactionsAccessNavigationController)
     }
 
     func testAutoRedactionsAccessViewControllerIsAlertControllerWhenNotPurchased() {
-        struct StubRepository: PurchaseRepository {
-            var withCheese: PurchaseState { return .unavailable }
-            var noOnions: PurchaseState { return .unavailable }
-        }
-
-        let provider = PhotoEditingAutoRedactionsAccessProvider(purchaseRepository: StubRepository())
+        let provider = PhotoEditingAutoRedactionsAccessProvider(purchaseRepository: PreviewRepository(purchaseState: .unavailable))
 
         XCTAssert(provider.autoRedactionsAccessViewController {} is UIAlertController)
     }
