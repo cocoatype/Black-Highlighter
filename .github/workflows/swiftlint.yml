@@ -13,5 +13,5 @@ jobs:
       - name: "Run SwiftLint"
         uses: norio-nomura/action-swiftlint@3.2.1
         with:
-          args: "--strict --quiet"
+          args: "--strict --quiet --reporter github-actions-logging"
         
