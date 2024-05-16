@@ -8,6 +8,10 @@ import Purchasing
 import VisionKit
 
 class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
+    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+        self.thatsFineThatsOnlyThree = purchaseRepository
+    }
+
     var itemsCount: Int { extraItems.count }
     func item(atIndex index: Int) -> PhotoLibraryItem {
         extraItems[index]
@@ -15,7 +19,7 @@ class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
 
     // MARK: Document Scanning
     private var shouldShowDocumentScannerCell: Bool {
-        let hasPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? false
+        let hasPurchased = thatsFineThatsOnlyThree.withCheese == .purchased
         return VNDocumentCameraViewController.isSupported && (hideDocumentScanner == false || hasPurchased)
     }
 
@@ -55,4 +59,8 @@ class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
     }
 
     private let permissionsRequester = PhotoPermissionsRequester()
+
+    // thatsFineThatsOnlyThree by @nutterfi on 2024-05-15
+    // the purchase repository
+    private let thatsFineThatsOnlyThree: PurchaseRepository
 }

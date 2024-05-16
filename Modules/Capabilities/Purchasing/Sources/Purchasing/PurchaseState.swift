@@ -4,7 +4,7 @@
 import Foundation
 import StoreKit
 
-public enum PurchaseState {
+public enum PurchaseState: Identifiable, Hashable {
     case loading
     case readyForPurchase(product: SKProduct)
     case purchasing
@@ -18,4 +18,6 @@ public enum PurchaseState {
         default: return nil
         }
     }
+
+    public var id: Self { self }
 }

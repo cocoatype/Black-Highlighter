@@ -6,7 +6,7 @@ import ErrorHandling
 import Foundation
 import Receipts
 
-public struct PreviousPurchasePublisher: Publisher {
+struct PreviousPurchasePublisher: Publisher {
     public typealias Output = Bool
     public typealias Failure = Error
 

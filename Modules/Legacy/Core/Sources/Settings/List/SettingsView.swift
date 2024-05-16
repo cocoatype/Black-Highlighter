@@ -24,7 +24,7 @@ struct SettingsView: View {
         SettingsNavigationView {
             SettingsList(dismissAction: dismissAction) {
                 SettingsContentGenerator(state: purchaseState).content
-            }.navigationBarTitle("Settings", displayMode: .inline)
+            }.navigationBarTitle("SettingsViewController.navigationTitle", displayMode: .inline)
         }
         .environment(\.readableWidth, readableWidth)
         .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main)) { newState in
@@ -47,38 +47,4 @@ struct SettingsViewPreviews: PreviewProvider {
         override var priceLocale: Locale { .current }
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
-}
-
-extension PurchaseState: Identifiable, Hashable {
-    public func hash(into hasher: inout Hasher) {
-        switch self {
-        case .loading: hasher.combine("loading")
-        case .purchased: hasher.combine("purchased")
-        case .unavailable: hasher.combine("unavailable")
-        case .purchasing: hasher.combine("purchasing")
-        case .readyForPurchase(let product):
-            hasher.combine(product)
-        case .restoring:
-            hasher.combine("restoring")
-        }
-    }
-
-    public static func == (lhs: PurchaseState, rhs: PurchaseState) -> Bool {
-        switch (lhs, rhs) {
-        case (.loading, .loading): return true
-        case (.loading, _): return false
-        case (.purchased, .purchased): return true
-        case (.purchased, _): return false
-        case (.unavailable, .unavailable): return true
-        case (.unavailable, _): return false
-        case (.purchasing, .purchasing): return true
-        case (.purchasing, _): return false
-        case (.readyForPurchase(let lhsProduct), .readyForPurchase(let rhsProduct)): return lhsProduct == rhsProduct
-        case (.readyForPurchase, _): return false
-        case (.restoring, .restoring): return true
-        case (.restoring, _): return false
-        }
-    }
-
-    public var id: PurchaseState { return self }
 }

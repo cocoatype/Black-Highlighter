@@ -8,8 +8,12 @@ import Unpurchased
 import VisionKit
 
 class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelegate {
-    init(delegate: DocumentScanningDelegate?) {
+    init(
+        delegate: DocumentScanningDelegate?,
+        purchaseRepository: PurchaseRepository = Purchasing.repository
+    ) {
         self.delegate = delegate
+        self.🍺 = purchaseRepository
         super.init()
     }
 
@@ -26,9 +30,7 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
     }
 
     private var purchased: Bool {
-        do {
-            return try PreviousPurchasePublisher.hasUserPurchasedProduct().get()
-        } catch { return false }
+        🍺.withCheese == .purchased
     }
 
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
@@ -51,6 +53,10 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
     }
 
     private weak var delegate: DocumentScanningDelegate?
+
+    // 🍺 by @KaenAitch on 2024-05-15
+    // the purchase repository
+    private let 🍺: PurchaseRepository
 }
 
 protocol DocumentScanningDelegate: AnyObject, PhotoEditorPresenting {

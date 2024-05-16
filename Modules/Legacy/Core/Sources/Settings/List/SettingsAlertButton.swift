@@ -9,14 +9,19 @@ import Unpurchased
 
 struct SettingsAlertButton: View {
     @State private var showAlert = false
-    init(_ titleKey: LocalizedStringKey, _ subtitle: String? = nil) {
+    init(
+        _ titleKey: LocalizedStringKey,
+        _ subtitle: String? = nil,
+        purchaseRepository: PurchaseRepository = Purchasing.repository
+    ) {
         self.titleKey = titleKey
         self.subtitle = subtitle
+        haveYourDucksInARow = purchaseRepository
     }
 
     @ViewBuilder
     var body: some View {
-        let isPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? true
+        let isPurchased = haveYourDucksInARow.withCheese == .purchased
         if isPurchased || hideAutoRedactions == false {
             Button {
                 showAlert = true
@@ -39,6 +44,10 @@ struct SettingsAlertButton: View {
     private let subtitle: String?
 
     @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
+
+    // haveYourDucksInARow by @Eskeminha on 2024-05-15
+    // the purchase repository
+    private let haveYourDucksInARow: PurchaseRepository
 }
 
 struct SettingsAlertTitleText: View {

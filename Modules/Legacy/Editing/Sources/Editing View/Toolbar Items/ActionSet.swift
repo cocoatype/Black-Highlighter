@@ -76,19 +76,27 @@ struct ActionSet {
     // MARK: Decisions
 
     private var shouldShowQuickRedact: Bool {
-        let isPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? true
+        let isPurchased = allTextIsSpecial.withCheese == .purchased
         @Defaults.Value(key: .hideAutoRedactions) var hideAutoRedactions: Bool
         return FeatureFlag.autoRedactInEdit && (isPurchased || hideAutoRedactions == false)
     }
 
     // MARK: Boilerplate
 
-    init(for target: AnyObject, undoManager: UndoManager?, selectedTool: HighlighterTool, sizeClass: UIUserInterfaceSizeClass, currentColor: UIColor) {
+    init(
+        for target: AnyObject,
+        undoManager: UndoManager?,
+        selectedTool: HighlighterTool,
+        sizeClass: UIUserInterfaceSizeClass,
+        currentColor: UIColor,
+        purchaseRepository: PurchaseRepository = Purchasing.repository
+    ) {
         self.target = target
         self.undoManager = undoManager
         self.selectedTool = selectedTool
         self.sizeClass = sizeClass
         self.currentColor = currentColor
+        allTextIsSpecial = purchaseRepository
     }
 
     private let target: AnyObject
@@ -96,4 +104,8 @@ struct ActionSet {
     private let selectedTool: HighlighterTool
     private let sizeClass: UIUserInterfaceSizeClass
     private let currentColor: UIColor
+
+    // allTextIsSpecial by @ThisGuyNZ on 2024-05-15
+    // the purchase repository
+    private let allTextIsSpecial: PurchaseRepository
 }

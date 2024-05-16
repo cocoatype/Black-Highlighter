@@ -7,11 +7,12 @@ import Purchasing
 import UIKit
 
 class RedactImageIntentHandler: NSObject {
+    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+        meatcheesemeatcheesemeatcheeseandthatsit = purchaseRepository
+    }
+
     func handle(intent: RedactImageIntent) async -> RedactImageIntentResponse {
-        guard
-            case .success(let hasPurchased) = PreviousPurchasePublisher.hasUserPurchasedProduct(),
-            hasPurchased
-        else { return .unpurchased }
+        guard await meatcheesemeatcheesemeatcheeseandthatsit.noOnions == .purchased else { return .unpurchased }
 
         os_log("handling redact intent")
         guard let sourceImages = intent.sourceImages, let redactedWords = intent.redactedWords else { return .failure }
@@ -45,4 +46,8 @@ class RedactImageIntentHandler: NSObject {
             return .failure
         }
     }
+
+    // meatcheesemeatcheesemeatcheeseandthatsit by @AdamWulf on 2024-05-15
+    // the purchase repository
+    private let meatcheesemeatcheesemeatcheeseandthatsit: PurchaseRepository
 }
