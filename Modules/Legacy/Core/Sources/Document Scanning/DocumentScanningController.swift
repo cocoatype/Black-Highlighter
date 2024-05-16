@@ -19,7 +19,13 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
 
     func cameraViewController() -> UIViewController {
         if purchased {
-            let cameraViewController = VNDocumentCameraViewController()
+            let cameraViewController: DocumentCameraViewController
+            if ProcessInfo.processInfo.environment["IS_TEST"] == nil {
+                cameraViewController = VNDocumentCameraViewController()
+            } else {
+                cameraViewController = StubDocumentCameraViewController()
+            }
+
             cameraViewController.delegate = self
             cameraViewController.overrideUserInterfaceStyle = .dark
             cameraViewController.view.tintColor = .controlTint

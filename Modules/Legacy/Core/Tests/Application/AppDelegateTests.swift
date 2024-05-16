@@ -14,7 +14,7 @@ class AppDelegateTests: XCTestCase {
         let logger = SpyLogger()
         let delegate = AppDelegate(purchaseRepository: repository, logger: logger)
 
-        delegate.application(UIApplication.shared, willFinishLaunchingWithOptions: nil)
+        _ = delegate.application(UIApplication.shared, willFinishLaunchingWithOptions: nil)
 
         waitForExpectations(timeout: 1)
     }
