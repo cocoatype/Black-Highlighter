@@ -8,16 +8,21 @@ import StoreKit
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.purchaseStatePublisher) private var purchaseStatePublisher: PurchaseStatePublisher
+    private let purchaseRepository: PurchaseRepository
     @State private var purchaseState: PurchaseState
     @State private var selectedURL: URL?
     private let dismissAction: () -> Void
     private let readableWidth: CGFloat
 
-    init(purchaseState: PurchaseState = .loading, readableWidth: CGFloat = .zero, dismissAction: @escaping (() -> Void)) {
-        self._purchaseState = State<PurchaseState>(initialValue: purchaseState)
+    init(
+        purchaseRepository: PurchaseRepository = Purchasing.repository,
+        readableWidth: CGFloat = .zero,
+        dismissAction: @escaping (() -> Void)
+    ) {
+        self._purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
         self.dismissAction = dismissAction
         self.readableWidth = readableWidth
+        self.purchaseRepository = purchaseRepository
     }
 
     var body: some View {
@@ -27,8 +32,9 @@ struct SettingsView: View {
             }.navigationBarTitle("SettingsViewController.navigationTitle", displayMode: .inline)
         }
         .environment(\.readableWidth, readableWidth)
-        .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main)) { newState in
-            purchaseState = newState
+        .task {
+            #warning("#97: Replace with published sequence")
+            purchaseState = await purchaseRepository.noOnions
         }
     }
 }
@@ -38,8 +44,12 @@ struct SettingsViewPreviews: PreviewProvider {
 
     static var previews: some View {
         ForEach(states) { state in
-            SettingsView(purchaseState: state, readableWidth: 288, dismissAction: {})
-                .previewDevice("iPhone 12 Pro Max")
+            SettingsView(
+                purchaseRepository: PreviewRepository(purchaseState: state),
+                readableWidth: 288,
+                dismissAction: {}
+            )
+            .previewDevice("iPhone 12 Pro Max")
         }
     }
 

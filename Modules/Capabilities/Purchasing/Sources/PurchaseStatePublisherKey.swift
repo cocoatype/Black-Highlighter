@@ -7,7 +7,7 @@ struct PurchaseStatePublisherKey: EnvironmentKey {
     static let defaultValue = PurchaseStatePublisher()
 }
 
-public extension EnvironmentValues {
+extension EnvironmentValues {
     var purchaseStatePublisher: PurchaseStatePublisher {
         get { self[PurchaseStatePublisherKey.self] }
         set { self[PurchaseStatePublisherKey.self] = newValue }

@@ -8,15 +8,18 @@ import SwiftUI
 
 struct PurchaseRestoreButton: View {
     @State private var purchaseState: PurchaseState
-    @Environment(\.purchaseStatePublisher) private var purchaseStatePublisher: PurchaseStatePublisher
+    private let purchaseRepository: PurchaseRepository
 
-    init(purchaseState: PurchaseState = .loading) {
-        _purchaseState = State<PurchaseState>(initialValue: purchaseState)
+    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+        _purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
+        self.purchaseRepository = purchaseRepository
     }
 
     var body: some View {
         Button {
-            purchaseStatePublisher.restore()
+            Task {
+                purchaseState = await purchaseRepository.restore()
+            }
         } label: {
             Text("PurchaseMarketingViewController.restoreButtonTitle")
                 .underline()
@@ -25,9 +28,10 @@ struct PurchaseRestoreButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(disabled)
-        .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main), perform: { newState in
-            purchaseState = newState
-        })
+        .task {
+            #warning("#97: Replace with published sequence")
+            purchaseState = await purchaseRepository.noOnions
+        }
     }
 
     private var disabled: Bool {
@@ -39,13 +43,19 @@ struct PurchaseRestoreButton: View {
 }
 
 struct PurchaseRestoreButton_Previews: PreviewProvider {
+    static let states = [
+        PurchaseState.loading,
+        .readyForPurchase(product: MockProduct()),
+        .purchasing,
+        .purchased,
+        .unavailable,
+    ]
+
     static var previews: some View {
         VStack(alignment: .leading, spacing: 3) {
-            PurchaseRestoreButton(purchaseState: .loading)
-            PurchaseRestoreButton(purchaseState: .readyForPurchase(product: MockProduct()))
-            PurchaseRestoreButton(purchaseState: .purchasing)
-            PurchaseRestoreButton(purchaseState: .purchased)
-            PurchaseRestoreButton(purchaseState: .unavailable)
+            ForEach(states) { state in
+                PurchaseRestoreButton(purchaseRepository: PreviewRepository(purchaseState: state))
+            }
         }
         .padding()
         .background(Color.appPrimary)

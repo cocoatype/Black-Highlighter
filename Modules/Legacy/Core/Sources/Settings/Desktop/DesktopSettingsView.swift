@@ -6,13 +6,17 @@ import Purchasing
 import SwiftUI
 
 struct DesktopSettingsView: View {
-    @Environment(\.purchaseStatePublisher) private var publisher: PurchaseStatePublisher
     @State private var purchaseState: PurchaseState
     private let readableWidth: CGFloat
+    private let purchaseRepository: PurchaseRepository
 
-    init(state: PurchaseState = .loading, readableWidth: CGFloat = .zero) {
-        _purchaseState = State(initialValue: state)
+    init(
+        readableWidth: CGFloat = .zero,
+        purchaseRepository: PurchaseRepository = Purchasing.repository
+    ) {
+        _purchaseState = State(initialValue: purchaseRepository.withCheese)
         self.readableWidth = readableWidth
+        self.purchaseRepository = purchaseRepository
     }
 
     var body: some View {
@@ -22,8 +26,11 @@ struct DesktopSettingsView: View {
             } else {
                 PurchaseMarketingView()
             }
-        }.environment(\.readableWidth, readableWidth).onAppReceive(publisher) { newState in
-            purchaseState = newState
+        }
+        .environment(\.readableWidth, readableWidth)
+        .task {
+            #warning("#97: Replace with published sequence")
+            purchaseState = await purchaseRepository.noOnions
         }
     }
 }
@@ -31,8 +38,8 @@ struct DesktopSettingsView: View {
 struct DesktopSettingsViewPreviews: PreviewProvider {
     static var previews: some View {
         Group {
-            DesktopSettingsView(state: .loading, readableWidth: 288)
-            DesktopSettingsView(state: .purchased, readableWidth: 288)
+            DesktopSettingsView(readableWidth: 288, purchaseRepository: PreviewRepository(purchaseState: .loading))
+            DesktopSettingsView(readableWidth: 288, purchaseRepository: PreviewRepository(purchaseState: .purchased))
         }.preferredColorScheme(.dark)
     }
 }

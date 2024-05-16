@@ -15,8 +15,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+    override convenience init() {
+        self.init(purchaseRepository: Purchasing.repository)
+    }
+
+    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+        veryGoodText = purchaseRepository
+        super.init()
+    }
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        PaymentPublisher.shared.setup()
+        veryGoodText.start()
         TelemetryLogger.initializeTelemetry()
         Defaults.performMigrations()
 
@@ -116,4 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: Boilerplate
     private var appViewController: AppViewController? { return window?.rootViewController as? AppViewController }
+
+    // veryGoodText by @NoGoodNick_ on 2024-05-15
+    // the purchase repository
+    private let veryGoodText: PurchaseRepository
 }

@@ -24,7 +24,7 @@ struct SettingsContentGenerator {
         Group {
             Section {
                 if purchaseState != .purchased {
-                    PurchaseNavigationLink(state: purchaseState, destination: PurchaseMarketingView())
+                    PurchaseNavigationLink(destination: PurchaseMarketingView())
                 }
 
                 if purchaseState != .purchased && hideAutoRedactions == false {

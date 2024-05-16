@@ -19,5 +19,12 @@ public enum PurchaseState: Identifiable, Hashable {
         }
     }
 
+    public var isReadyForPurchase: Bool {
+        switch self {
+        case .readyForPurchase: return true
+        case .loading, .purchasing, .restoring, .purchased, .unavailable: return false
+        }
+    }
+
     public var id: Self { self }
 }

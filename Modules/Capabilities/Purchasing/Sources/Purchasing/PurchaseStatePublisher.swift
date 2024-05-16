@@ -4,7 +4,7 @@
 import Combine
 import StoreKit
 
-public class PurchaseStatePublisher: Publisher {
+class PurchaseStatePublisher: Publisher {
     public typealias Output = PurchaseState
     public typealias Failure = Never
 

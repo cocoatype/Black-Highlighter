@@ -4,7 +4,7 @@
 import Combine
 import StoreKit
 
-public class PaymentPublisher: NSObject, Publisher, SKPaymentTransactionObserver {
+class PaymentPublisher: NSObject, Publisher, SKPaymentTransactionObserver {
     public typealias Output = State
     public typealias Failure = Swift.Error
 

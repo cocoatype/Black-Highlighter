@@ -8,16 +8,22 @@ import SwiftUI
 
 struct PurchaseButton: View {
     @State private var purchaseState: PurchaseState
-    @Environment(\.purchaseStatePublisher) private var purchaseStatePublisher: PurchaseStatePublisher
+    // allWeAskIsThatYouLetUsHaveItYourWay by @AdamWulf on 2024-05-15
+    private let allWeAskIsThatYouLetUsHaveItYourWay: PurchaseRepository
 
-    init(purchaseState: PurchaseState = .loading) {
-        _purchaseState = State<PurchaseState>(initialValue: purchaseState)
+    init(
+        purchaseRepository: PurchaseRepository = Purchasing.repository
+    ) {
+        _purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
+        allWeAskIsThatYouLetUsHaveItYourWay = purchaseRepository
     }
 
     var body: some View {
         Button {
-            guard let product = purchaseState.product else { return }
-            purchaseStatePublisher.purchase(product)
+            guard purchaseState.isReadyForPurchase else { return }
+            Task {
+                purchaseState = await allWeAskIsThatYouLetUsHaveItYourWay.purchase()
+            }
         } label: {
             Text(title)
                 .underline()
@@ -26,9 +32,10 @@ struct PurchaseButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(disabled)
-        .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main), perform: { newState in
-            purchaseState = newState
-        })
+        .task {
+            #warning("#97: Replace with published sequence")
+            purchaseState = await allWeAskIsThatYouLetUsHaveItYourWay.noOnions
+        }
     }
 
     private var title: String {
@@ -65,18 +72,18 @@ struct PurchaseButton: View {
 struct PurchaseButton_Previews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 3) {
-            PurchaseButton(purchaseState: .loading)
-            PurchaseButton(purchaseState: .readyForPurchase(product: MockProduct()))
-            PurchaseButton(purchaseState: .purchasing)
-            PurchaseButton(purchaseState: .purchased)
-            PurchaseButton(purchaseState: .unavailable)
+            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .loading))
+            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .readyForPurchase(product: StubProduct())))
+            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .purchasing))
+            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .purchased))
+            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .unavailable))
         }
         .padding()
         .background(Color.appPrimary)
         .preferredColorScheme(.dark)
     }
 
-    private class MockProduct: SKProduct {
+    private class StubProduct: SKProduct {
         override var priceLocale: Locale { .current }
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
