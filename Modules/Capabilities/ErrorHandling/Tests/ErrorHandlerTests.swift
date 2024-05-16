@@ -1,7 +1,9 @@
 //  Created by Geoff Pado on 5/5/23.
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
+import LoggingDoubles
 import XCTest
+
 @testable import ErrorHandling
 @testable import Logging
 
@@ -11,7 +13,7 @@ final class ErrorHandlerTests: XCTestCase {
         let handler = ErrorHandler(logger: logger)
 
         handler.log(SampleError.sample)
-        let event = try XCTUnwrap(logger.loggedEvent)
+        let event = try XCTUnwrap(logger.loggedEvents.first)
 
         XCTAssertEqual(event.value, "logError")
         XCTAssertEqual(event.info, ["errorDescription": "sample"])
@@ -23,7 +25,7 @@ final class ErrorHandlerTests: XCTestCase {
         let error = NSError(domain: "sample", code: 19)
 
         handler.log(error)
-        let event = try XCTUnwrap(logger.loggedEvent)
+        let event = try XCTUnwrap(logger.loggedEvents.first)
 
         XCTAssertEqual(event.value, "logError")
         XCTAssertEqual(event.info, ["errorDescription": "sample - 19: The operation couldn’t be completed. (sample error 19.)"])
@@ -33,7 +35,7 @@ final class ErrorHandlerTests: XCTestCase {
         let logger = SpyLogger()
         let crashExpectation = expectation(description: "exit method called")
         let handler = ErrorHandler(logger: logger) { message in
-            guard let event = logger.loggedEvent else { return Self.stubbedExit() }
+            guard let event = logger.loggedEvents.first else { return Self.stubbedExit() }
             XCTAssertEqual(event.value, "crash")
             XCTAssertEqual(event.info, ["message": "crash"])
             XCTAssertEqual(message, "crash")
@@ -52,7 +54,7 @@ final class ErrorHandlerTests: XCTestCase {
         let logger = SpyLogger()
         let crashExpectation = expectation(description: "exit method called")
         let handler = ErrorHandler(logger: logger) { message in
-            guard let event = logger.loggedEvent else { return Self.stubbedExit() }
+            guard let event = logger.loggedEvents.first else { return Self.stubbedExit() }
             XCTAssertEqual(event.value, "notImplemented")
             XCTAssertEqual(event.info["file"], #fileID)
             XCTAssertEqual(event.info["function"], #function)
@@ -77,12 +79,4 @@ final class ErrorHandlerTests: XCTestCase {
 
 private enum SampleError: Error {
     case sample
-}
-
-private final class SpyLogger: Logger {
-    var loggedEvent: Event?
-
-    func log(_ event: Event) {
-        loggedEvent = event
-    }
 }

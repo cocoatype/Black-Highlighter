@@ -9,7 +9,7 @@ class StoreRepository: PurchaseRepository {
     var noOnions: PurchaseState {
         get async {
             // go fetch the value
-            let newValue = PurchaseState.purchased
+            let newValue = PurchaseState.loading
 
             withCheese = newValue
             return newValue

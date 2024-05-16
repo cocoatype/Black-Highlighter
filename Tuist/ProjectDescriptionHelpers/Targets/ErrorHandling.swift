@@ -12,5 +12,7 @@ public enum ErrorHandling {
         ]
     )
 
-    public static let testTarget = Target.capabilitiesTestTarget(name: "ErrorHandling")
+    public static let testTarget = Target.capabilitiesTestTarget(name: "ErrorHandling", dependencies: [
+        .target(Logging.doublesTarget),
+    ])
 }

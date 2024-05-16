@@ -36,7 +36,9 @@ struct PurchaseNavigationLink<Destination: View>: View {
     }
 }
 
-struct PurchaseNavigationLink_Previews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum PurchaseNavigationLinkPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 8) {
             PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .loading), destination: Text?.none)
@@ -49,3 +51,4 @@ struct PurchaseNavigationLink_Previews: PreviewProvider {
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
+#endif

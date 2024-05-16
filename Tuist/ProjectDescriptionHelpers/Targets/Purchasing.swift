@@ -6,5 +6,9 @@ public enum Purchasing {
         .target(Receipts.target),
     ])
 
-    public static let testTarget = Target.capabilitiesTestTarget(name: "Purchasing")
+    public static let testTarget = Target.capabilitiesTestTarget(name: "Purchasing", dependencies: [
+        .target(doublesTarget),
+    ])
+
+    public static let doublesTarget = Target.capabilitiesDoublesTarget(name: "Purchasing")
 }

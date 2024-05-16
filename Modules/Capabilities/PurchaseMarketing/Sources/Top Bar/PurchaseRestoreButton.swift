@@ -42,7 +42,9 @@ struct PurchaseRestoreButton: View {
     }
 }
 
-struct PurchaseRestoreButton_Previews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum PurchaseRestoreButtonPreviews: PreviewProvider {
     static let states = [
         PurchaseState.loading,
         .readyForPurchase(product: MockProduct()),
@@ -67,3 +69,4 @@ struct PurchaseRestoreButton_Previews: PreviewProvider {
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
+#endif

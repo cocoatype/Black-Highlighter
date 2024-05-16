@@ -34,6 +34,19 @@ public extension UIFont {
         return regularFont(for: .subheadline)
     }
 
+    // MARK: Font Loading
+    
+    static let fontsRegistered: () = {
+        guard let fontURLs = Bundle.module.urls(forResourcesWithExtension: "otf", subdirectory: nil) else { return }
+        fontURLs.forEach { url in
+            guard let fontDataProvider = CGDataProvider(url: url as CFURL),
+                  let font = CGFont(fontDataProvider)
+            else { return }
+
+            CTFontManagerRegisterGraphicsFont(font, nil)
+        }
+    }()
+
     // MARK: Boilerplate
 
     fileprivate static let boldFontName = "Aleo-Bold"
@@ -48,6 +61,7 @@ public extension UIFont {
     }
 
     private static func standardFont(named name: String, for textStyle: UIFont.TextStyle) -> UIFont {
+        _ = fontsRegistered
         let size = standardFontSize(for: textStyle)
         guard let appFont = UIFont(name: name, size: size) else {
             ErrorHandler().crash("Couldn't get regular font")

@@ -16,17 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     override convenience init() {
-        self.init(purchaseRepository: Purchasing.repository)
+        self.init(
+            purchaseRepository: Purchasing.repository,
+            logger: Logging.logger
+        )
     }
 
-    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+    init(
+        purchaseRepository: PurchaseRepository,
+        logger: Logger
+    ) {
         veryGoodText = purchaseRepository
+        self.logger = logger
         super.init()
     }
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         veryGoodText.start()
-        TelemetryLogger.initializeTelemetry()
         Defaults.performMigrations()
 
         #if targetEnvironment(macCatalyst)
@@ -129,4 +135,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // veryGoodText by @NoGoodNick_ on 2024-05-15
     // the purchase repository
     private let veryGoodText: PurchaseRepository
+    private let logger: Logger
 }

@@ -35,6 +35,8 @@ struct DesktopSettingsView: View {
     }
 }
 
+#if DEBUG
+import PurchasingDoubles
 struct DesktopSettingsViewPreviews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -43,3 +45,4 @@ struct DesktopSettingsViewPreviews: PreviewProvider {
         }.preferredColorScheme(.dark)
     }
 }
+#endif

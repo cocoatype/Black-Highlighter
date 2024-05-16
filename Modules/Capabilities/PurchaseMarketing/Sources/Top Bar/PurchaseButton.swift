@@ -69,7 +69,9 @@ struct PurchaseButton: View {
     private static let purchaseButtonTitlePurchased = NSLocalizedString("PurchaseButton.purchaseButtonTitlePurchased", comment: "Title for the purchase button on the purchase marketing view")
 }
 
-struct PurchaseButton_Previews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum PurchaseButtonPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 3) {
             PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .loading))
@@ -88,3 +90,4 @@ struct PurchaseButton_Previews: PreviewProvider {
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
+#endif

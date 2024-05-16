@@ -39,7 +39,9 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsViewPreviews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum SettingsViewPreviews: PreviewProvider {
     static let states = [PurchaseState.loading, .readyForPurchase(product: MockProduct()), .purchased]
 
     static var previews: some View {
@@ -58,3 +60,4 @@ struct SettingsViewPreviews: PreviewProvider {
         override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
+#endif

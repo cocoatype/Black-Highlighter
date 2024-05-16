@@ -3,6 +3,7 @@
 
 import Defaults
 import Editing
+import LoggingDoubles
 import TestHelpers
 import XCTest
 
@@ -56,7 +57,7 @@ class AppRatingsPrompterTests: XCTestCase {
 
         prompter.displayRatingsPrompt(in: nil)
 
-        let event = try XCTUnwrap(spy.loggedEvent)
+        let event = try XCTUnwrap(spy.loggedEvents.first)
         XCTAssertEqual(event.value, "logError")
         XCTAssertEqual(event.info, ["errorDescription": "missingWindowScene"])
     }
@@ -69,14 +70,7 @@ class AppRatingsPrompterTests: XCTestCase {
 
         prompter.displayRatingsPrompt(in: windowScene)
 
-        let event = try XCTUnwrap(spy.loggedEvent)
+        let event = try XCTUnwrap(spy.loggedEvents.first)
         XCTAssertEqual(event.value, "AppRatingsPrompter.requestedRating")
-    }
-}
-
-private class SpyLogger: Logger {
-    private(set) var loggedEvent: Event?
-    func log(_ event: Event) {
-        loggedEvent = event
     }
 }

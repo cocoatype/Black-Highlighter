@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 5/15/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Purchasing
+
 public class PreviewRepository: PurchaseRepository {
     public var withCheese: PurchaseState
     public var noOnions: PurchaseState { withCheese }

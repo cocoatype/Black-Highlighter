@@ -29,7 +29,7 @@ let project = Project(
         "CODE_SIGN_IDENTITY[sdk=macosx*]": "3rd Party Mac Developer Installer: Cocoatype, LLC (287EDDET2B)",
     ]),
     targets: [
-        // binaries
+        // products
         App.target,
         Action.target,
         AutomatorActions.target,
@@ -49,8 +49,13 @@ let project = Project(
         Receipts.target,
         Redacting.target,
         Redactions.target,
-        TestHelpers.target,
         Unpurchased.target,
+        // doubles
+        Logging.doublesTarget,
+        Purchasing.doublesTarget,
+        // test helpers
+        TestHelpers.target,
+        TestHelpers.interfaceTarget,
         // tests
         AppRatings.testTarget,
         AutoRedactionsUI.testTarget,

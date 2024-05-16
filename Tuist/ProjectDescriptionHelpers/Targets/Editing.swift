@@ -14,6 +14,7 @@ public enum Editing {
             .target(ErrorHandling.target),
             .target(Observations.target),
             .target(PurchaseMarketing.target),
+            .target(Purchasing.doublesTarget),
             .target(Redactions.target),
             .package(product: "ClippingBezier", type: .runtime),
             .package(product: "Introspect", type: .runtime),
@@ -26,5 +27,8 @@ public enum Editing {
         )
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "Editing", type: "Legacy")
+    public static let testTarget = Target.moduleTestTarget(name: "Editing", type: "Legacy", dependencies: [
+        .target(AutoRedactionsUI.target),
+        .target(Purchasing.doublesTarget),
+    ])
 }

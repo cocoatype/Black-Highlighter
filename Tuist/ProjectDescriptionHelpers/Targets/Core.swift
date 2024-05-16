@@ -15,10 +15,14 @@ public enum Core {
             .target(Editing.target),
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
+            .target(Purchasing.doublesTarget),
             .target(Receipts.target),
             .target(Unpurchased.target),
         ]
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "Core", type: "Legacy")
+    public static let testTarget = Target.moduleTestTarget(name: "Core", type: "Legacy", dependencies: [
+        .target(Logging.doublesTarget),
+        .target(Purchasing.doublesTarget),
+    ])
 }

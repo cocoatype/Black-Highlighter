@@ -2,7 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import AutoRedactionsUI
-import Purchasing
+import PurchasingDoubles
 import XCTest
 
 @testable import Editing
