@@ -19,7 +19,6 @@ public enum App {
         ] + Shared.resources),
         entitlements: "App/Highlighter.entitlements",
         dependencies: [
-            .package(product: "OpenSSL"),
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
         ],
@@ -33,7 +32,10 @@ public enum App {
             ], release: [
                 "PROVISIONING_PROFILE_SPECIFIER": "match AppStore com.cocoatype.Highlighter",
                 "PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]": "match AppStore com.cocoatype.Highlighter macos",
-            ]
+            ],
+            defaultSettings: .recommended(excluding: [
+                "CODE_SIGN_IDENTITY",
+            ])
         )
     )
 }

@@ -8,7 +8,6 @@ let project = Project(
         .remote(url: "git@github.com:adamwulf/ClippingBezier.git", requirement: .upToNextMajor(from: "1.2.0")),
         .remote(url: "https://github.com/siteline/SwiftUI-Introspect.git", requirement: .upToNextMajor(from: "0.1.3")),
         .remote(url: "git@github.com:TelemetryDeck/SwiftClient.git", requirement: .upToNextMajor(from: "1.0.0")),
-        .remote(url: "git@github.com:krzyzanowskim/OpenSSL.git", requirement: .upToNextMajor(from: "3.1.5003")),
     ],
     settings: .settings(base: [
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
@@ -46,7 +45,6 @@ let project = Project(
         Observations.target,
         PurchaseMarketing.target,
         Purchasing.target,
-        Receipts.target,
         Redacting.target,
         Redactions.target,
         Unpurchased.target,
