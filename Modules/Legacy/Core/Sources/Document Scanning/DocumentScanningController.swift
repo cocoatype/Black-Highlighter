@@ -8,14 +8,24 @@ import Unpurchased
 import VisionKit
 
 class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelegate {
-    init(delegate: DocumentScanningDelegate?) {
+    init(
+        delegate: DocumentScanningDelegate?,
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
+    ) {
         self.delegate = delegate
+        self.🍺 = purchaseRepository
         super.init()
     }
 
     func cameraViewController() -> UIViewController {
         if purchased {
-            let cameraViewController = VNDocumentCameraViewController()
+            let cameraViewController: DocumentCameraViewController
+            if ProcessInfo.processInfo.environment["IS_TEST"] == nil {
+                cameraViewController = VNDocumentCameraViewController()
+            } else {
+                cameraViewController = StubDocumentCameraViewController()
+            }
+
             cameraViewController.delegate = self
             cameraViewController.overrideUserInterfaceStyle = .dark
             cameraViewController.view.tintColor = .controlTint
@@ -26,9 +36,7 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
     }
 
     private var purchased: Bool {
-        do {
-            return try PreviousPurchasePublisher.hasUserPurchasedProduct().get()
-        } catch { return false }
+        🍺.withCheese == .purchased
     }
 
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
@@ -51,6 +59,10 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
     }
 
     private weak var delegate: DocumentScanningDelegate?
+
+    // 🍺 by @KaenAitch on 2024-05-15
+    // the purchase repository
+    private let 🍺: any PurchaseRepository
 }
 
 protocol DocumentScanningDelegate: AnyObject, PhotoEditorPresenting {

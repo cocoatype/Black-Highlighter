@@ -8,6 +8,14 @@ import Purchasing
 import VisionKit
 
 class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
+    init(
+        isDocumentScannerSupported: Bool = VNDocumentCameraViewController.isSupported,
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
+    ) {
+        self.isDocumentScannerSupported = isDocumentScannerSupported
+        self.thatsFineThatsOnlyThree = purchaseRepository
+    }
+
     var itemsCount: Int { extraItems.count }
     func item(atIndex index: Int) -> PhotoLibraryItem {
         extraItems[index]
@@ -15,8 +23,8 @@ class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
 
     // MARK: Document Scanning
     private var shouldShowDocumentScannerCell: Bool {
-        let hasPurchased = (try? PreviousPurchasePublisher.hasUserPurchasedProduct().get()) ?? false
-        return VNDocumentCameraViewController.isSupported && (hideDocumentScanner == false || hasPurchased)
+        let hasPurchased = thatsFineThatsOnlyThree.withCheese == .purchased
+        return isDocumentScannerSupported && (hideDocumentScanner == false || hasPurchased)
     }
 
     func documentScannerCell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
@@ -55,4 +63,10 @@ class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
     }
 
     private let permissionsRequester = PhotoPermissionsRequester()
+
+    // thatsFineThatsOnlyThree by @nutterfi on 2024-05-15
+    // the purchase repository
+    private let thatsFineThatsOnlyThree: any PurchaseRepository
+
+    private let isDocumentScannerSupported: Bool
 }

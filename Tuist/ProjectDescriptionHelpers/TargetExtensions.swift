@@ -34,4 +34,15 @@ extension Target {
             dependencies: [.target(name: name)] + dependencies
         )
     }
+
+    static func capabilitiesDoublesTarget(name: String) -> Target {
+        return Target.target(
+            name: "\(name)Doubles",
+            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+            product: .framework,
+            bundleId: "com.cocoatype.Highlighter.\(name)Doubles",
+            sources: ["Modules/Capabilities/\(name)/Doubles/**"],
+            dependencies: [.target(name: name), .target(TestHelpers.interfaceTarget)]
+        )
+    }
 }

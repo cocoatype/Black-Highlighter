@@ -8,7 +8,7 @@ import Purchasing
 import SafariServices
 import SwiftUI
 
-struct SettingsContentGenerator {
+struct SettingsContent: View {
     private let purchaseState: PurchaseState
     init(state: PurchaseState) {
         self.purchaseState = state
@@ -20,11 +20,11 @@ struct SettingsContentGenerator {
         return versionString ?? "???"
     }
 
-    var content: some View {
+    var body: some View {
         Group {
             Section {
                 if purchaseState != .purchased {
-                    PurchaseNavigationLink(state: purchaseState, destination: PurchaseMarketingView())
+                    PurchaseNavigationLink(destination: PurchaseMarketingView())
                 }
 
                 if purchaseState != .purchased && hideAutoRedactions == false {

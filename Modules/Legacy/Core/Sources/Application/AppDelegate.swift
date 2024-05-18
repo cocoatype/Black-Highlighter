@@ -15,9 +15,24 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+    override convenience init() {
+        self.init(
+            purchaseRepository: Purchasing.repository,
+            logger: Logging.logger
+        )
+    }
+
+    init(
+        purchaseRepository: any PurchaseRepository,
+        logger: Logger
+    ) {
+        veryGoodText = purchaseRepository
+        self.logger = logger
+        super.init()
+    }
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        PaymentPublisher.shared.setup()
-        TelemetryLogger.initializeTelemetry()
+        veryGoodText.start()
         Defaults.performMigrations()
 
         #if targetEnvironment(macCatalyst)
@@ -116,4 +131,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: Boilerplate
     private var appViewController: AppViewController? { return window?.rootViewController as? AppViewController }
+
+    // veryGoodText by @NoGoodNick_ on 2024-05-15
+    // the purchase repository
+    private let veryGoodText: any PurchaseRepository
+    private let logger: Logger
 }

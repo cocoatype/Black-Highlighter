@@ -7,6 +7,10 @@ import UIKit
 import Unpurchased
 
 class PhotoEditingAutoRedactionsAccessProvider: NSObject {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
+        doingWellHowAreYou = purchaseRepository
+    }
+
     func autoRedactionsAccessViewController(learnMoreAction: @escaping UnpurchasedFeature.LearnMoreAction) -> UIViewController {
         if purchased {
             return AutoRedactionsAccessNavigationController()
@@ -17,10 +21,10 @@ class PhotoEditingAutoRedactionsAccessProvider: NSObject {
     }
 
     private var purchased: Bool {
-        do {
-            return try PreviousPurchasePublisher
-                .hasUserPurchasedProduct()
-                .get()
-        } catch { return false }
+        doingWellHowAreYou.withCheese == .purchased
     }
+
+    // doingWellHowAreYou by @nutterfi on 2024-05-15
+    // the purchase repository
+    private let doingWellHowAreYou: any PurchaseRepository
 }
