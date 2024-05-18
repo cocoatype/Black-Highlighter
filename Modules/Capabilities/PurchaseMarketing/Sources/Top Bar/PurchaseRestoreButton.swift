@@ -17,6 +17,7 @@ struct PurchaseRestoreButton: View {
 
     var body: some View {
         Button {
+            purchaseState = .restoring
             Task {
                 purchaseState = await purchaseRepository.restore()
             }
@@ -47,7 +48,7 @@ import PurchasingDoubles
 enum PurchaseRestoreButtonPreviews: PreviewProvider {
     static let states = [
         PurchaseState.loading,
-        .readyForPurchase(product: MockProduct()),
+        .readyForPurchase(product: PreviewProduct()),
         .purchasing,
         .purchased,
         .unavailable,
@@ -62,11 +63,6 @@ enum PurchaseRestoreButtonPreviews: PreviewProvider {
         .padding()
         .background(Color.appPrimary)
         .preferredColorScheme(.dark)
-    }
-
-    private class MockProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
 #endif

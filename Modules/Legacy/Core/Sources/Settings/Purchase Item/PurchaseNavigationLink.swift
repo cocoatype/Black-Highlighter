@@ -42,13 +42,8 @@ enum PurchaseNavigationLinkPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 8) {
             PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .loading), destination: Text?.none)
-            PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .readyForPurchase(product: MockProduct())), destination: Text?.none)
+            PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .readyForPurchase(product: PreviewProduct())), destination: Text?.none)
         }.preferredColorScheme(.dark)
-    }
-
-    private class MockProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
     }
 }
 #endif

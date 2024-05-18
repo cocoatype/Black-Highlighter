@@ -3,10 +3,10 @@
 
 enum PurchaseConstants {
     static let productIdentifier = "com.cocoatype.Highlighter.unlock"
+}
 
-    enum Error: Swift.Error {
-        case paymentsNotAvailable
-        case productNotFound(identifier: String)
-        case unknown
-    }
+enum PurchaseError: Error {
+    case paymentsNotAvailable
+    case productNotFound(identifier: String)
+    case unknown
 }

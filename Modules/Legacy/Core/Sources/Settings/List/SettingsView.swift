@@ -42,7 +42,7 @@ struct SettingsView: View {
 #if DEBUG
 import PurchasingDoubles
 enum SettingsViewPreviews: PreviewProvider {
-    static let states = [PurchaseState.loading, .readyForPurchase(product: MockProduct()), .purchased]
+    static let states = [PurchaseState.loading, .readyForPurchase(product: PreviewProduct()), .purchased]
 
     static var previews: some View {
         ForEach(states) { state in

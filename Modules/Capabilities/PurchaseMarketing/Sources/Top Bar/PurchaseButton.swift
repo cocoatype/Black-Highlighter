@@ -21,6 +21,7 @@ struct PurchaseButton: View {
     var body: some View {
         Button {
             guard purchaseState.isReadyForPurchase else { return }
+            purchaseState = .purchasing
             Task {
                 purchaseState = await allWeAskIsThatYouLetUsHaveItYourWay.purchase()
             }
@@ -45,8 +46,7 @@ struct PurchaseButton: View {
         case .purchasing, .restoring:
             return Self.purchaseButtonTitlePurchasing
         case .readyForPurchase(let product):
-            guard let price = ProductPriceFormatter.formattedPrice(for: product) else { return Self.purchaseButtonTitleLoading }
-            return String(format: Self.purchaseButtonTitleReady, price)
+            return String(format: Self.purchaseButtonTitleReady, product.displayPrice)
         case .unavailable:
             return Self.purchaseButtonTitleLoading
         case .purchased:
@@ -74,20 +74,21 @@ import PurchasingDoubles
 enum PurchaseButtonPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 3) {
-            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .loading))
-            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .readyForPurchase(product: StubProduct())))
-            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .purchasing))
-            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .purchased))
-            PurchaseButton(purchaseRepository: PreviewRepository(purchaseState: .unavailable))
+            PurchaseButton(state: .loading)
+            PurchaseButton(state: .readyForPurchase(product: PreviewProduct()))
+            PurchaseButton(state: .purchasing)
+            PurchaseButton(state: .purchased)
+            PurchaseButton(state: .unavailable)
         }
         .padding()
         .background(Color.appPrimary)
         .preferredColorScheme(.dark)
     }
+}
 
-    private class StubProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
+extension PurchaseButton {
+    init(state: PurchaseState) {
+        self.init(purchaseRepository: PreviewRepository(purchaseState: state))
     }
 }
 #endif

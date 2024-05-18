@@ -5,7 +5,7 @@
   ],
   "products" : [
     {
-      "displayPrice" : "2.99",
+      "displayPrice" : "5.99",
       "familyShareable" : false,
       "internalID" : "F7423F26",
       "localizations" : [
@@ -22,7 +22,57 @@
   ],
   "settings" : {
     "_askToBuyEnabled" : false,
-    "_billingIssuesEnabled" : false
+    "_billingIssuesEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
   },
   "subscriptionGroups" : [
 
@@ -32,7 +82,7 @@
     "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgURFeyUUG7V+lJqVrfdDVGcV3iDiEBFQ76WIAK7MBH9agCgYIKoZIzj0DAQehRANCAATT6yZ9zEMzSiqYoWeZx8IHxX3ShGI73VlCUJZMt8WEzwdzWjSGGXD0zkLdWahaUrgZXOiTvOWYKWXPmHrqnlEP"
   },
   "version" : {
-    "major" : 1,
-    "minor" : 1
+    "major" : 3,
+    "minor" : 0
   }
 }
