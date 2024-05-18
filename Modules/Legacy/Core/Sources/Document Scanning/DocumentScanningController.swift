@@ -10,7 +10,7 @@ import VisionKit
 class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelegate {
     init(
         delegate: DocumentScanningDelegate?,
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         self.delegate = delegate
         self.🍺 = purchaseRepository
@@ -62,7 +62,7 @@ class DocumentScanningController: NSObject, VNDocumentCameraViewControllerDelega
 
     // 🍺 by @KaenAitch on 2024-05-15
     // the purchase repository
-    private let 🍺: PurchaseRepository
+    private let 🍺: any PurchaseRepository
 }
 
 protocol DocumentScanningDelegate: AnyObject, PhotoEditorPresenting {

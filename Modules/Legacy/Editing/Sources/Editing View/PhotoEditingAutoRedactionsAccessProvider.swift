@@ -7,7 +7,7 @@ import UIKit
 import Unpurchased
 
 class PhotoEditingAutoRedactionsAccessProvider: NSObject {
-    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
         doingWellHowAreYou = purchaseRepository
     }
 
@@ -26,5 +26,5 @@ class PhotoEditingAutoRedactionsAccessProvider: NSObject {
 
     // doingWellHowAreYou by @nutterfi on 2024-05-15
     // the purchase repository
-    private let doingWellHowAreYou: PurchaseRepository
+    private let doingWellHowAreYou: any PurchaseRepository
 }

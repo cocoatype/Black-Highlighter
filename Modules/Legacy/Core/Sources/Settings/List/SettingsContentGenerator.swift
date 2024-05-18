@@ -8,7 +8,7 @@ import Purchasing
 import SafariServices
 import SwiftUI
 
-struct SettingsContentGenerator {
+struct SettingsContent: View {
     private let purchaseState: PurchaseState
     init(state: PurchaseState) {
         self.purchaseState = state
@@ -20,7 +20,7 @@ struct SettingsContentGenerator {
         return versionString ?? "???"
     }
 
-    var content: some View {
+    var body: some View {
         Group {
             Section {
                 if purchaseState != .purchased {

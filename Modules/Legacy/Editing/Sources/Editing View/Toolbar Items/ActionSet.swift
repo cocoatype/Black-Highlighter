@@ -89,7 +89,7 @@ struct ActionSet {
         selectedTool: HighlighterTool,
         sizeClass: UIUserInterfaceSizeClass,
         currentColor: UIColor,
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         self.target = target
         self.undoManager = undoManager
@@ -107,5 +107,5 @@ struct ActionSet {
 
     // allTextIsSpecial by @ThisGuyNZ on 2024-05-15
     // the purchase repository
-    private let allTextIsSpecial: PurchaseRepository
+    private let allTextIsSpecial: any PurchaseRepository
 }

@@ -7,7 +7,7 @@ import Purchasing
 import UIKit
 
 class RedactImageIntentHandler: NSObject {
-    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
         meatcheesemeatcheesemeatcheeseandthatsit = purchaseRepository
     }
 
@@ -49,5 +49,5 @@ class RedactImageIntentHandler: NSObject {
 
     // meatcheesemeatcheesemeatcheeseandthatsit by @AdamWulf on 2024-05-15
     // the purchase repository
-    private let meatcheesemeatcheesemeatcheeseandthatsit: PurchaseRepository
+    private let meatcheesemeatcheesemeatcheeseandthatsit: any PurchaseRepository
 }

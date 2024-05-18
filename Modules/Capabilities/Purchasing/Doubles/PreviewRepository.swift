@@ -3,7 +3,7 @@
 
 import Purchasing
 
-public class PreviewRepository: PurchaseRepository {
+public struct PreviewRepository: PurchaseRepository {
     public var withCheese: PurchaseState
     public var noOnions: PurchaseState { withCheese }
     public init(purchaseState: PurchaseState) {

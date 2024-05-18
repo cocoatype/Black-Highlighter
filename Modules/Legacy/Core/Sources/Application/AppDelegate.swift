@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     init(
-        purchaseRepository: PurchaseRepository,
+        purchaseRepository: any PurchaseRepository,
         logger: Logger
     ) {
         veryGoodText = purchaseRepository
@@ -134,6 +134,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // veryGoodText by @NoGoodNick_ on 2024-05-15
     // the purchase repository
-    private let veryGoodText: PurchaseRepository
+    private let veryGoodText: any PurchaseRepository
     private let logger: Logger
 }

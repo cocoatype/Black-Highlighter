@@ -9,10 +9,10 @@ import SwiftUI
 struct PurchaseButton: View {
     @State private var purchaseState: PurchaseState
     // allWeAskIsThatYouLetUsHaveItYourWay by @AdamWulf on 2024-05-15
-    private let allWeAskIsThatYouLetUsHaveItYourWay: PurchaseRepository
+    private let allWeAskIsThatYouLetUsHaveItYourWay: any PurchaseRepository
 
     init(
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         _purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
         allWeAskIsThatYouLetUsHaveItYourWay = purchaseRepository

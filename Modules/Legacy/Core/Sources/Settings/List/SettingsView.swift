@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     private let purchaseRepository: PurchaseRepository
     @State private var purchaseState: PurchaseState
-    @State private var selectedURL: URL?
     private let dismissAction: () -> Void
     private let readableWidth: CGFloat
 
@@ -28,7 +27,7 @@ struct SettingsView: View {
     var body: some View {
         SettingsNavigationView {
             SettingsList(dismissAction: dismissAction) {
-                SettingsContentGenerator(state: purchaseState).content
+                SettingsContent(state: purchaseState)
             }.navigationBarTitle("SettingsViewController.navigationTitle", displayMode: .inline)
         }
         .environment(\.readableWidth, readableWidth)
@@ -47,7 +46,6 @@ enum SettingsViewPreviews: PreviewProvider {
     static var previews: some View {
         ForEach(states) { state in
             SettingsView(
-                purchaseRepository: PreviewRepository(purchaseState: state),
                 readableWidth: 288,
                 dismissAction: {}
             )

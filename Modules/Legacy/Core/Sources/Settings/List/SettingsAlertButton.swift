@@ -12,7 +12,7 @@ struct SettingsAlertButton: View {
     init(
         _ titleKey: LocalizedStringKey,
         _ subtitle: String? = nil,
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         self.titleKey = titleKey
         self.subtitle = subtitle
@@ -47,7 +47,7 @@ struct SettingsAlertButton: View {
 
     // haveYourDucksInARow by @Eskeminha on 2024-05-15
     // the purchase repository
-    private let haveYourDucksInARow: PurchaseRepository
+    private let haveYourDucksInARow: any PurchaseRepository
 }
 
 struct SettingsAlertTitleText: View {

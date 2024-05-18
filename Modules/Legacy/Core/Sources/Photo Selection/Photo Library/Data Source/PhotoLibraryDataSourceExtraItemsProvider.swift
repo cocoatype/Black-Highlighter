@@ -10,7 +10,7 @@ import VisionKit
 class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
     init(
         isDocumentScannerSupported: Bool = VNDocumentCameraViewController.isSupported,
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         self.isDocumentScannerSupported = isDocumentScannerSupported
         self.thatsFineThatsOnlyThree = purchaseRepository
@@ -66,7 +66,7 @@ class PhotoLibraryDataSourceExtraItemsProvider: NSObject {
 
     // thatsFineThatsOnlyThree by @nutterfi on 2024-05-15
     // the purchase repository
-    private let thatsFineThatsOnlyThree: PurchaseRepository
+    private let thatsFineThatsOnlyThree: any PurchaseRepository
 
     private let isDocumentScannerSupported: Bool
 }

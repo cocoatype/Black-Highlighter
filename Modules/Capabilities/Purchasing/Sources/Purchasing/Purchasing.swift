@@ -2,5 +2,5 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 public enum Purchasing {
-    public static let repository: PurchaseRepository = StoreRepository()
+    public static let repository: any PurchaseRepository = StoreRepository()
 }

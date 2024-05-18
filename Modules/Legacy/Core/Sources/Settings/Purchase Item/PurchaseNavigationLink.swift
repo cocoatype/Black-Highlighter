@@ -8,11 +8,11 @@ import SwiftUI
 
 struct PurchaseNavigationLink<Destination: View>: View {
     private let destination: Destination
-    private let purchaseRepository: PurchaseRepository
+    private let purchaseRepository: any PurchaseRepository
     @State private var purchaseState: PurchaseState
 
     init(
-        purchaseRepository: PurchaseRepository = Purchasing.repository,
+        purchaseRepository: any PurchaseRepository = Purchasing.repository,
         destination: Destination
     ) {
         self.destination = destination

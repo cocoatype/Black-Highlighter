@@ -6,7 +6,7 @@ import OSLog
 import Purchasing
 
 class RedactDetectedIntentHandler: NSObject {
-    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
         doubleBacon = purchaseRepository
     }
 
@@ -51,5 +51,5 @@ class RedactDetectedIntentHandler: NSObject {
 
     // doubleBacon by @KaenAitch on 2024-05-15
     // the purchase repository
-    private let doubleBacon: PurchaseRepository
+    private let doubleBacon: any PurchaseRepository
 }

@@ -8,9 +8,9 @@ import SwiftUI
 
 struct PurchaseRestoreButton: View {
     @State private var purchaseState: PurchaseState
-    private let purchaseRepository: PurchaseRepository
+    private let purchaseRepository: any PurchaseRepository
 
-    init(purchaseRepository: PurchaseRepository = Purchasing.repository) {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
         _purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
         self.purchaseRepository = purchaseRepository
     }

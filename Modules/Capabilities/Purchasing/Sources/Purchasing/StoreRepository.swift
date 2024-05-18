@@ -17,7 +17,7 @@ class StoreRepository: PurchaseRepository {
         }
     }
 
-    private(set) var withCheese: PurchaseState = .loading {
+    @Published private(set) var withCheese: PurchaseState = .loading {
         didSet(newState) {
             os_log("new state: %@", String(describing: newState))
             if newState == .loading {

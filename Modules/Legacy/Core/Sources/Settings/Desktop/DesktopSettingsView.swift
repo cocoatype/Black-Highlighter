@@ -8,11 +8,11 @@ import SwiftUI
 struct DesktopSettingsView: View {
     @State private var purchaseState: PurchaseState
     private let readableWidth: CGFloat
-    private let purchaseRepository: PurchaseRepository
+    private let purchaseRepository: any PurchaseRepository
 
     init(
         readableWidth: CGFloat = .zero,
-        purchaseRepository: PurchaseRepository = Purchasing.repository
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         _purchaseState = State(initialValue: purchaseRepository.withCheese)
         self.readableWidth = readableWidth
