@@ -34,14 +34,14 @@ public struct SpyRepository: PurchaseRepository {
     public func start() {
         startExpectation?.fulfill()
     }
-    
+
     public var purchaseExpectation: Expectation?
     public var purchaseResponse: PurchaseState = .loading
     public func purchase() async -> PurchaseState {
         purchaseExpectation?.fulfill()
         return purchaseResponse
     }
-    
+
     public var restoreExpectation: Expectation?
     public var restoreResponse: PurchaseState = .loading
     public func restore() async -> PurchaseState {

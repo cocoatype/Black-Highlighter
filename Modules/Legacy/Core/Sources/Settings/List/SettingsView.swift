@@ -40,21 +40,12 @@ struct SettingsView: View {
 #if DEBUG
 import PurchasingDoubles
 enum SettingsViewPreviews: PreviewProvider {
-    static let states = [PurchaseState.loading, .readyForPurchase(product: PreviewProduct()), .purchased]
-
     static var previews: some View {
-        ForEach(states) { state in
-            SettingsView(
-                readableWidth: 288,
-                dismissAction: {}
-            )
-            .previewDevice("iPhone 12 Pro Max")
-        }
-    }
-
-    private class MockProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
+        SettingsView(
+            readableWidth: 288,
+            dismissAction: {}
+        )
+        .previewDevice("iPhone 12 Pro Max")
     }
 }
 #endif

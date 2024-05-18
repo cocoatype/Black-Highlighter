@@ -35,7 +35,7 @@ public extension UIFont {
     }
 
     // MARK: Font Loading
-    
+
     static let fontsRegistered: () = {
         guard let fontURLs = Bundle.module.urls(forResourcesWithExtension: "otf", subdirectory: nil) else { return }
         fontURLs.forEach { url in

@@ -59,6 +59,6 @@ private extension PurchaseState {
         .purchasing,
         .restoring,
         .purchased,
-        .unavailable
+        .unavailable,
     ]
 }

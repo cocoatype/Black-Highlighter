@@ -10,7 +10,7 @@ public enum TestHelpers {
         headers: .headers(public: ["Modules/TestHelpers/Headers/**"]),
         dependencies: [
             .target(interfaceTarget),
-            .xctest
+            .xctest,
         ]
     )
 
