@@ -31,6 +31,8 @@ struct PurchaseSubtitle: View {
     private static let subtitleWithProduct = NSLocalizedString("PurchaseItem.subtitleWithProduct", comment: "Subtitle for the purchase settings content item with space for the product price")
 }
 
+#if DEBUG
+import PurchasingDoubles
 struct PurchaseSubtitlePreviews: PreviewProvider {
     static var previews: some View {
         VStack {
@@ -39,3 +41,4 @@ struct PurchaseSubtitlePreviews: PreviewProvider {
         }
     }
 }
+#endif

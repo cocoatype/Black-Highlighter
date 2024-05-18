@@ -28,9 +28,8 @@ struct DesktopSettingsView: View {
             }
         }
         .environment(\.readableWidth, readableWidth)
-        .task {
-            #warning("#97: Replace with published sequence")
-            purchaseState = await purchaseRepository.noOnions
+        .onReceive(purchaseRepository.purchaseStates.eraseToAnyPublisher()) { newState in
+            purchaseState = newState
         }
     }
 }

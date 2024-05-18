@@ -29,9 +29,8 @@ struct PurchaseNavigationLink<Destination: View>: View {
         }
         .padding(.vertical, 6)
         .settingsCell()
-        .task {
-            #warning("#97: Replace with published sequence")
-            purchaseState = await purchaseRepository.noOnions
+        .onReceive(purchaseRepository.purchaseStates.eraseToAnyPublisher()) { newState in
+            purchaseState = newState
         }
     }
 }

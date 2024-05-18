@@ -2,6 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+import Purchasing
 import StoreKit
 
 public struct PreviewProduct: PurchaseProduct {

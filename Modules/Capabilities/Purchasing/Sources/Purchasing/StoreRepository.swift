@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/15/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Combine
 import ErrorHandling
 import OSLog
 import StoreKit
@@ -19,11 +20,14 @@ class StoreRepository: PurchaseRepository {
 
     @Published private(set) var withCheese: PurchaseState = .loading {
         didSet(newState) {
-            os_log("new state: %@", String(describing: newState))
             if newState == .loading {
                 refresh()
             }
         }
+    }
+
+    var purchaseStates: any Publisher<PurchaseState, Never> {
+        _withCheese.projectedValue.receive(on: DispatchQueue.main)
     }
 
     var noOnions: PurchaseState {

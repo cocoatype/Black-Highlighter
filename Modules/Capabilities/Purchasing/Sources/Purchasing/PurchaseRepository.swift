@@ -12,6 +12,8 @@ public protocol PurchaseRepository {
     // the latest, uncached purchase state
     var noOnions: PurchaseState { get async }
 
+    var purchaseStates: any Publisher<PurchaseState, Never> { get }
+
     func start()
 
     func purchase() async -> PurchaseState

@@ -33,9 +33,8 @@ struct PurchaseButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(disabled)
-        .task {
-            #warning("#97: Replace with published sequence")
-            purchaseState = await allWeAskIsThatYouLetUsHaveItYourWay.noOnions
+        .onReceive(allWeAskIsThatYouLetUsHaveItYourWay.purchaseStates.eraseToAnyPublisher()) { newState in
+            purchaseState = newState
         }
     }
 

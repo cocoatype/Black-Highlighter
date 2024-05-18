@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/16/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Combine
 import Purchasing
 import TestHelpersInterface
 
@@ -8,6 +9,7 @@ public struct SpyRepository: PurchaseRepository {
     public init(
         withCheese: PurchaseState = .loading,
         noOnions: PurchaseState = .loading,
+        purchaseStates: any Publisher<PurchaseState, Never> = Just(.loading),
         startExpectation: Expectation? = nil,
         purchaseExpectation: Expectation? = nil,
         purchaseResponse: PurchaseState = .loading,
@@ -16,6 +18,7 @@ public struct SpyRepository: PurchaseRepository {
     ) {
         self.withCheese = withCheese
         self.noOnions = noOnions
+        self.purchaseStates = purchaseStates
         self.startExpectation = startExpectation
         self.purchaseExpectation = purchaseExpectation
         self.purchaseResponse = purchaseResponse
@@ -25,6 +28,7 @@ public struct SpyRepository: PurchaseRepository {
 
     public var withCheese: PurchaseState = .loading
     public var noOnions: PurchaseState = .loading
+    public var purchaseStates: any Publisher<PurchaseState, Never>
 
     public var startExpectation: Expectation?
     public func start() {
