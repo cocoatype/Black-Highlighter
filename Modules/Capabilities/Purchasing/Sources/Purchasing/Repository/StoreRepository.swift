@@ -3,19 +3,15 @@
 
 import Combine
 import ErrorHandling
-import OSLog
 import StoreKit
 
 class StoreRepository: PurchaseRepository {
-    static var product: any PurchaseProduct {
-        get async throws {
-            let products = try await Product.products(for: [PurchaseConstants.productIdentifier])
-            guard let product = products.first else {
-                throw PurchaseError.productNotFound(identifier: PurchaseConstants.productIdentifier)
-            }
-
-            return product
-        }
+    init(
+        productProvider: any ProductProvider = StoreProductProvider(),
+        versionProvider: any PurchaseVersionProvider = AppPurchaseVersionProvider()
+    ) {
+        self.productProvider = productProvider
+        self.versionProvider = versionProvider
     }
 
     @Published private(set) var withCheese: PurchaseState = .loading {
@@ -36,51 +32,16 @@ class StoreRepository: PurchaseRepository {
         }
     }
 
-    private var product: any PurchaseProduct {
-        get async throws {
-            if let existingProduct = withCheese.product {
-                return existingProduct
-            } else {
-                return try await Self.product
-            }
-        }
-    }
-
     private let transactionUpdateObserver = TransactionUpdateObserver()
     private var transactionUpdateTask: Task<Void, Never>?
     func start() {
         transactionUpdateTask = Task(priority: .background) {
-            // subscribe to transaction updates
             for await state in transactionUpdateObserver.start() {
                 withCheese = state
             }
         }
 
         refresh()
-    }
-
-    private func refresh() {
-        Task {
-            await update()
-        }
-    }
-
-    @discardableResult private func update() async -> PurchaseState {
-        do {
-            let product = try await self.product
-            let resultState: PurchaseState
-            if case .verified = await product.currentEntitlement {
-                resultState = .purchased
-            } else {
-                resultState = .readyForPurchase(product: product)
-            }
-
-            withCheese = resultState
-            return resultState
-        } catch {
-            ErrorHandler().log(error)
-            return withCheese
-        }
     }
 
     func purchase() async -> PurchaseState {
@@ -117,4 +78,52 @@ class StoreRepository: PurchaseRepository {
             return withCheese
         }
     }
+
+    // MARK: Helpers
+
+    private func refresh() {
+        Task {
+            await update()
+        }
+    }
+
+    private var product: any PurchaseProduct {
+        get async throws {
+            if let existingProduct = withCheese.product {
+                return existingProduct
+            } else {
+                return try await productProvider.product
+            }
+        }
+    }
+
+    @discardableResult private func update() async -> PurchaseState {
+        do {
+            let resultState: PurchaseState
+            let version = try await versionProvider.originalPurchaseVersion
+
+            if version <= Self.freePurchaseCutoff {
+                resultState = .purchased
+            } else {
+                let product = try await self.product
+                if case .verified = await product.currentEntitlement {
+                    resultState = .purchased
+                } else {
+                    resultState = .readyForPurchase(product: product)
+                }
+            }
+
+            withCheese = resultState
+            return resultState
+        } catch {
+            ErrorHandler().log(error)
+            return withCheese
+        }
+    }
+
+    // MARK: Boilerplate
+
+    private static let freePurchaseCutoff = 200 // arbitrary build in between 19.3 and 19.4
+    private let versionProvider: any PurchaseVersionProvider
+    private let productProvider: any ProductProvider
 }

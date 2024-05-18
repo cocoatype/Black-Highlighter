@@ -8,10 +8,10 @@ import XCTest
 
 class PurchaseStateTests: XCTestCase {
     func testProductReturnsIfReadyForPurchase() {
-        let product = SKProduct()
+        let product = TestProduct()
         let state = PurchaseState.readyForPurchase(product: product)
 
-        XCTAssertIdentical(state.product, product)
+        XCTAssertEqual(state.product as? TestProduct, product)
     }
 
     func testProductIsNilIfNotReadyForPurchase() {
@@ -21,7 +21,7 @@ class PurchaseStateTests: XCTestCase {
     }
 
     func testIsReadyForPurchaseIfReadyForPurchase() {
-        let state = PurchaseState.readyForPurchase(product: SKProduct())
+        let state = PurchaseState.readyForPurchase(product: TestProduct())
         XCTAssertTrue(state.isReadyForPurchase)
     }
 
@@ -32,13 +32,23 @@ class PurchaseStateTests: XCTestCase {
     }
 
     func testReadyForPurchaseIdentifier() {
-        let state = PurchaseState.readyForPurchase(product: SKProduct())
+        let state = PurchaseState.readyForPurchase(product: TestProduct())
         XCTAssertEqual(state, state.id)
     }
 
     func testNonProductStateIdentifiers() {
         for state in PurchaseState.nonProductStates {
             XCTAssertEqual(state, state.id)
+        }
+    }
+
+    private struct TestProduct: PurchaseProduct {
+        let id = "test"
+        let displayPrice = ""
+        let currentEntitlement: VerificationResult<Transaction>? = nil
+
+        func purchase(options: Set<Product.PurchaseOption>) async throws -> Product.PurchaseResult {
+            .userCancelled
         }
     }
 }
