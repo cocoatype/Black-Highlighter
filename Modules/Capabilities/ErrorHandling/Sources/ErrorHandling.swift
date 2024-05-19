@@ -2,7 +2,12 @@
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import LoggingMac
+#else
 import Logging
+#endif
 
 public protocol ErrorHandling {
     init(logger: Logger)

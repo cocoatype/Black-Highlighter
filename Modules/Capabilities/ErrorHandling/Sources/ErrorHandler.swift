@@ -2,7 +2,12 @@
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import LoggingMac
+#else
 import Logging
+#endif
 
 public struct ErrorHandler: ErrorHandling {
     private var logger: Logger

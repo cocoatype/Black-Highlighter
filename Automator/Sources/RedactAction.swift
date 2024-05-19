@@ -3,7 +3,7 @@
 
 import AppKit
 import Automator
-import Detections
+import DetectionsMac
 import Redacting
 import OSLog
 

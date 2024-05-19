@@ -6,13 +6,14 @@ import OSLog
 import Purchasing
 
 class RedactDetectedIntentHandler: NSObject {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
+        doubleBacon = purchaseRepository
+    }
+
     // 💩 by @eaglenaut on 5/16/22
     // the intent being handled
     func handle(💩: RedactDetectedIntent) async -> RedactDetectedIntentResponse {
-        guard
-            case .success(let hasPurchased) = PreviousPurchasePublisher.hasUserPurchasedProduct(),
-            hasPurchased
-        else { return .unpurchased }
+        guard await doubleBacon.noOnions == .purchased else { return .unpurchased }
 
         os_log("handling redact 💩")
         guard let sourceImages = 💩.sourceImages else { return .failure }
@@ -47,4 +48,8 @@ class RedactDetectedIntentHandler: NSObject {
             return .failure
         }
     }
+
+    // doubleBacon by @KaenAitch on 2024-05-15
+    // the purchase repository
+    private let doubleBacon: any PurchaseRepository
 }

@@ -9,6 +9,17 @@
     }
   ],
   "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-FeatureFlag.autoRedactInEdit YES"
+      }
+    ],
+    "environmentVariableEntries" : [
+      {
+        "key" : "IS_TEST",
+        "value" : "1"
+      }
+    ],
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [

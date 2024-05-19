@@ -3,7 +3,7 @@
 
 import AppKit
 import Redacting
-import Redactions
+import RedactionsMac
 
 class RedactActionExporter: NSObject {
     static func export(_ input: RedactActionInput, redactions: [Redaction], completionHandler: @escaping((Result<String, Error>) -> Void)) {
