@@ -8,12 +8,16 @@ import SwiftUI
 
 struct PurchaseNavigationLink<Destination: View>: View {
     private let destination: Destination
-    @Environment(\.purchaseStatePublisher) private var purchaseStatePublisher: PurchaseStatePublisher
+    private let purchaseRepository: any PurchaseRepository
     @State private var purchaseState: PurchaseState
 
-    init(state: PurchaseState = .loading, destination: Destination) {
+    init(
+        purchaseRepository: any PurchaseRepository = Purchasing.repository,
+        destination: Destination
+    ) {
         self.destination = destination
-        self._purchaseState = State<PurchaseState>(initialValue: state)
+        self.purchaseRepository = purchaseRepository
+        self._purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
     }
 
     var body: some View {
@@ -25,22 +29,20 @@ struct PurchaseNavigationLink<Destination: View>: View {
         }
         .padding(.vertical, 6)
         .settingsCell()
-        .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main), perform: { newState in
+        .onReceive(purchaseRepository.purchaseStates.eraseToAnyPublisher()) { newState in
             purchaseState = newState
-        })
+        }
     }
 }
 
-struct PurchaseNavigationLink_Previews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum PurchaseNavigationLinkPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PurchaseNavigationLink(destination: Text?.none)
-            PurchaseNavigationLink(state: .readyForPurchase(product: MockProduct()), destination: Text?.none)
+            PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .loading), destination: Text?.none)
+            PurchaseNavigationLink(purchaseRepository: PreviewRepository(purchaseState: .readyForPurchase(product: PreviewProduct())), destination: Text?.none)
         }.preferredColorScheme(.dark)
     }
-
-    private class MockProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
-    }
 }
+#endif

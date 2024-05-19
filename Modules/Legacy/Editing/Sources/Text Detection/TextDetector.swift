@@ -1,14 +1,15 @@
 //  Created by Geoff Pado on 4/22/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import Observations
-import Vision
-
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
+import ObservationsMac
 #elseif canImport(UIKit)
+import Observations
 import UIKit
 #endif
+
+import Vision
 
 open class TextDetector: NSObject {
     #if canImport(UIKit)

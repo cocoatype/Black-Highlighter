@@ -8,16 +8,23 @@ import SwiftUI
 
 struct PurchaseButton: View {
     @State private var purchaseState: PurchaseState
-    @Environment(\.purchaseStatePublisher) private var purchaseStatePublisher: PurchaseStatePublisher
+    // allWeAskIsThatYouLetUsHaveItYourWay by @AdamWulf on 2024-05-15
+    private let allWeAskIsThatYouLetUsHaveItYourWay: any PurchaseRepository
 
-    init(purchaseState: PurchaseState = .loading) {
-        _purchaseState = State<PurchaseState>(initialValue: purchaseState)
+    init(
+        purchaseRepository: any PurchaseRepository = Purchasing.repository
+    ) {
+        _purchaseState = State<PurchaseState>(initialValue: purchaseRepository.withCheese)
+        allWeAskIsThatYouLetUsHaveItYourWay = purchaseRepository
     }
 
     var body: some View {
         Button {
-            guard let product = purchaseState.product else { return }
-            purchaseStatePublisher.purchase(product)
+            guard purchaseState.isReadyForPurchase else { return }
+            purchaseState = .purchasing
+            Task {
+                purchaseState = await allWeAskIsThatYouLetUsHaveItYourWay.purchase()
+            }
         } label: {
             Text(title)
                 .underline()
@@ -26,9 +33,9 @@ struct PurchaseButton: View {
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(disabled)
-        .onAppReceive(purchaseStatePublisher.receive(on: RunLoop.main), perform: { newState in
+        .onReceive(allWeAskIsThatYouLetUsHaveItYourWay.purchaseStates.eraseToAnyPublisher()) { newState in
             purchaseState = newState
-        })
+        }
     }
 
     private var title: String {
@@ -38,8 +45,7 @@ struct PurchaseButton: View {
         case .purchasing, .restoring:
             return Self.purchaseButtonTitlePurchasing
         case .readyForPurchase(let product):
-            guard let price = ProductPriceFormatter.formattedPrice(for: product) else { return Self.purchaseButtonTitleLoading }
-            return String(format: Self.purchaseButtonTitleReady, price)
+            return String(format: Self.purchaseButtonTitleReady, product.displayPrice)
         case .unavailable:
             return Self.purchaseButtonTitleLoading
         case .purchased:
@@ -62,22 +68,26 @@ struct PurchaseButton: View {
     private static let purchaseButtonTitlePurchased = NSLocalizedString("PurchaseButton.purchaseButtonTitlePurchased", comment: "Title for the purchase button on the purchase marketing view")
 }
 
-struct PurchaseButton_Previews: PreviewProvider {
+#if DEBUG
+import PurchasingDoubles
+enum PurchaseButtonPreviews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading, spacing: 3) {
-            PurchaseButton(purchaseState: .loading)
-            PurchaseButton(purchaseState: .readyForPurchase(product: MockProduct()))
-            PurchaseButton(purchaseState: .purchasing)
-            PurchaseButton(purchaseState: .purchased)
-            PurchaseButton(purchaseState: .unavailable)
+            PurchaseButton(state: .loading)
+            PurchaseButton(state: .readyForPurchase(product: PreviewProduct()))
+            PurchaseButton(state: .purchasing)
+            PurchaseButton(state: .purchased)
+            PurchaseButton(state: .unavailable)
         }
         .padding()
         .background(Color.appPrimary)
         .preferredColorScheme(.dark)
     }
+}
 
-    private class MockProduct: SKProduct {
-        override var priceLocale: Locale { .current }
-        override var price: NSDecimalNumber { NSDecimalNumber(value: 1.99) }
+extension PurchaseButton {
+    init(state: PurchaseState) {
+        self.init(purchaseRepository: PreviewRepository(purchaseState: state))
     }
 }
+#endif
