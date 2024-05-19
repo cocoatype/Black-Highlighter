@@ -4,11 +4,6 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: "Highlighter",
     organizationName: "Cocoatype, LLC",
-    packages: [
-        .remote(url: "git@github.com:adamwulf/ClippingBezier.git", requirement: .upToNextMajor(from: "1.2.0")),
-        .remote(url: "https://github.com/siteline/SwiftUI-Introspect.git", requirement: .upToNextMajor(from: "0.1.3")),
-        .remote(url: "git@github.com:TelemetryDeck/SwiftClient.git", requirement: .upToNextMajor(from: "1.0.0")),
-    ],
     settings: .settings(base: [
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
@@ -20,12 +15,12 @@ let project = Project(
         "MACOSX_DEPLOYMENT_TARGET": "12.0",
         "MARKETING_VERSION": "999",
         "OTHER_CODE_SIGN_FLAGS": "--deep",
+        "SWIFT_VERSION": "5.0",
         "TARGETED_DEVICE_FAMILY": "1,2,6",
     ], debug: [
         "CODE_SIGN_IDENTITY": "Apple Development: Buddy Build (D47V8Y25W5)",
     ], release: [
         "CODE_SIGN_IDENTITY": "Apple Distribution",
-        "CODE_SIGN_IDENTITY[sdk=macosx*]": "3rd Party Mac Developer Installer: Cocoatype, LLC (287EDDET2B)",
     ]),
     targets: [
         // products
@@ -40,13 +35,17 @@ let project = Project(
         Defaults.target,
         DesignSystem.target,
         Editing.target,
-        ErrorHandling.target,
-        Logging.target,
-        Observations.target,
+        ErrorHandling.target(sdk: .catalyst),
+        ErrorHandling.target(sdk: .native),
+        Logging.target(sdk: .catalyst),
+        Logging.target(sdk: .native),
+        Observations.target(sdk: .catalyst),
+        Observations.target(sdk: .native),
         PurchaseMarketing.target,
         Purchasing.target,
         Redacting.target,
-        Redactions.target,
+        Redactions.target(sdk: .catalyst),
+        Redactions.target(sdk: .native),
         Unpurchased.target,
         // doubles
         Logging.doublesTarget,

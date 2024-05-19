@@ -10,7 +10,7 @@ import ProjectDescription
 public enum Photo {
     public static let target = Target.target(
         name: "Photo",
-        destinations: [.iPhone, .iPad, .appleVisionWithiPadDesign],
+        destinations: SDK.catalyst.destinations,
         product: .appExtension,
         bundleId: "com.cocoatype.Highlighter.Photo",
         infoPlist: "Photo/Info.plist",

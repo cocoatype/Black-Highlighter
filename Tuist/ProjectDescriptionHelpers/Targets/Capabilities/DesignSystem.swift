@@ -5,7 +5,7 @@ public enum DesignSystem {
         name: "DesignSystem",
         hasResources: true,
         dependencies: [
-            .target(ErrorHandling.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
         ]
     )
 }

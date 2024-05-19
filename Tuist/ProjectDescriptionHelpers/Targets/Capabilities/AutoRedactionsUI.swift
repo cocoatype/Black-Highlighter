@@ -5,7 +5,7 @@ public enum AutoRedactionsUI {
         name: "AutoRedactionsUI",
         dependencies: [
             .target(DesignSystem.target),
-            .target(ErrorHandling.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
         ]
     )
 

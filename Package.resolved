@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "clippingbezier",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:adamwulf/ClippingBezier.git",
+      "state" : {
+        "revision" : "7b55731c019b2e9de3c9543d2892f034dba86da8",
+        "version" : "1.2.5"
+      }
+    },
+    {
+      "identity" : "performancebezier",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adamwulf/PerformanceBezier.git",
+      "state" : {
+        "revision" : "b3cc82221836a8ce1f0692033d58b1ff836c57f8",
+        "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "swiftclient",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:TelemetryDeck/SwiftClient.git",
+      "state" : {
+        "revision" : "d20ccc4b8266cf739eede58cdfc7e9c6ffb41cda",
+        "version" : "1.5.1"
+      }
+    },
+    {
+      "identity" : "swiftui-introspect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
+      "state" : {
+        "revision" : "121c146fe591b1320238d054ae35c81ffa45f45a",
+        "version" : "0.12.0"
+      }
+    }
+  ],
+  "version" : 2
+}
