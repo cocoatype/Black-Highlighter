@@ -17,11 +17,20 @@ public enum Core {
             .target(Purchasing.target),
             .target(Purchasing.doublesTarget),
             .target(Unpurchased.target),
-        ]
+        ],
+        settings: .settings(
+            defaultSettings: .recommended(excluding: [
+                "CODE_SIGN_IDENTITY",
+            ])
+        )
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "Core", type: "Legacy", dependencies: [
-        .target(Logging.doublesTarget),
-        .target(Purchasing.doublesTarget),
-    ])
+    public static let testTarget = Target.moduleTestTarget(
+        name: "Core",
+        type: "Legacy",
+        dependencies: [
+            .target(Logging.doublesTarget),
+            .target(Purchasing.doublesTarget),
+        ]
+    )
 }

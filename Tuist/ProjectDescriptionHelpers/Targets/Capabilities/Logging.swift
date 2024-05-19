@@ -1,12 +1,8 @@
 import ProjectDescription
 
 public enum Logging {
-    public static let target = Target.target(
+    public static let target = Target.capabilitiesTarget(
         name: "Logging",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
-        product: .framework,
-        bundleId: "com.cocoatype.Highlighter.Logging",
-        sources: ["Modules/Capabilities/Logging/Sources/**"],
         dependencies: [
             .package(product: "TelemetryClient", type: .runtime),
         ]
