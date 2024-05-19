@@ -16,8 +16,8 @@ public enum Editing {
             .target(PurchaseMarketing.target),
             .target(Purchasing.doublesTarget),
             .target(Redactions.target(sdk: .catalyst)),
-            .package(product: "ClippingBezier", type: .runtime),
-            .package(product: "Introspect", type: .runtime),
+            .external(name: "ClippingBezier"),
+            .external(name: "Introspect"),
         ],
         settings: .settings(
             base: [

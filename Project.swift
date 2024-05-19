@@ -4,11 +4,6 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: "Highlighter",
     organizationName: "Cocoatype, LLC",
-    packages: [
-        .remote(url: "git@github.com:adamwulf/ClippingBezier.git", requirement: .upToNextMajor(from: "1.2.0")),
-        .remote(url: "https://github.com/siteline/SwiftUI-Introspect.git", requirement: .upToNextMajor(from: "0.1.3")),
-        .remote(url: "git@github.com:TelemetryDeck/SwiftClient.git", requirement: .upToNextMajor(from: "1.0.0")),
-    ],
     settings: .settings(base: [
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
@@ -26,7 +21,6 @@ let project = Project(
         "CODE_SIGN_IDENTITY": "Apple Development: Buddy Build (D47V8Y25W5)",
     ], release: [
         "CODE_SIGN_IDENTITY": "Apple Distribution",
-        "CODE_SIGN_IDENTITY[sdk=macosx*]": "3rd Party Mac Developer Installer: Cocoatype, LLC (287EDDET2B)",
     ]),
     targets: [
         // products

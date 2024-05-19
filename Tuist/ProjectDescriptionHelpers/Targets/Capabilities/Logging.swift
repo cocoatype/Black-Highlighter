@@ -6,7 +6,7 @@ public enum Logging {
             name: "Logging",
             sdk: sdk,
             dependencies: [
-                .package(product: "TelemetryClient", type: .runtime),
+                .external(name: "TelemetryClient"),
             ]
         )
     }
