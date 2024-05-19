@@ -1,10 +1,3 @@
-//
-//  Redacting.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by Geoff Pado on 3/15/24.
-//
-
 import ProjectDescription
 
 public enum Redacting {
@@ -37,6 +30,11 @@ public enum Redacting {
         dependencies: [
             .target(ErrorHandling.target),
             .target(Observations.target),
-        ]
+        ],
+        settings: .settings(
+            defaultSettings: .recommended(excluding: [
+                "CODE_SIGN_IDENTITY",
+            ])
+        )
     )
 }

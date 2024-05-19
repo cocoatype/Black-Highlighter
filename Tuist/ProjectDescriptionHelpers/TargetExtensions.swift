@@ -38,7 +38,7 @@ extension Target {
     static func capabilitiesDoublesTarget(name: String) -> Target {
         return Target.target(
             name: "\(name)Doubles",
-            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+            destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
             product: .framework,
             bundleId: "com.cocoatype.Highlighter.\(name)Doubles",
             sources: ["Modules/Capabilities/\(name)/Doubles/**"],

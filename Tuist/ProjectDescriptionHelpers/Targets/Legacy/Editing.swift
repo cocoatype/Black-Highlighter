@@ -23,12 +23,19 @@ public enum Editing {
             base: [
                 "ASSETCATALOG_COMPILER_APPICON_NAME": "",
                 "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "",
-            ]
+            ],
+            defaultSettings: .recommended(excluding: [
+                "CODE_SIGN_IDENTITY",
+            ])
         )
     )
 
-    public static let testTarget = Target.moduleTestTarget(name: "Editing", type: "Legacy", dependencies: [
-        .target(AutoRedactionsUI.target),
-        .target(Purchasing.doublesTarget),
-    ])
+    public static let testTarget = Target.moduleTestTarget(
+        name: "Editing",
+        type: "Legacy",
+        dependencies: [
+            .target(AutoRedactionsUI.target),
+            .target(Purchasing.doublesTarget),
+        ]
+    )
 }
