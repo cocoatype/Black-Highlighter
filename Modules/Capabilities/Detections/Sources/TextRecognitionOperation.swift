@@ -5,28 +5,28 @@ import Foundation
 import OSLog
 import Vision
 
-#if canImport(UIKit) && targetEnvironment(macCatalyst)
-import UIKit
-#elseif canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
+#elseif canImport(UIKit)
+import UIKit
 #endif
 
 class TextRecognitionOperation: Operation {
-    #if canImport(UIKit) && targetEnvironment(macCatalyst)
-    init(image: UIImage) throws {
-        guard let cgImage = image.cgImage else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
-        self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)
-        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
-
-        super.init()
-    }
-    #elseif canImport(AppKit)
+    #if canImport(AppKit) && !targetEnvironment(macCatalyst)
     init(image: NSImage) throws {
         var imageRect = NSRect(origin: .zero, size: image.size)
         guard let cgImage = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
 
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
         self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+    }
+    #elseif canImport(UIKit)
+    init(image: UIImage) throws {
+        guard let cgImage = image.cgImage else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
+        self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)
+        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+
+        super.init()
     }
     #endif
 

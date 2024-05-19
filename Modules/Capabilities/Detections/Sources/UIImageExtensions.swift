@@ -1,7 +1,7 @@
 //  Created by Geoff Pado on 5/13/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
-#if canImport(UIKit) && targetEnvironment(macCatalyst)
+#if canImport(UIKit)
 import UIKit
 
 extension UIImage.Orientation {

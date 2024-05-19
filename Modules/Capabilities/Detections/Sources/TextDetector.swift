@@ -12,8 +12,8 @@ import UIKit
 import Vision
 
 open class TextDetector: NSObject {
-    #if canImport(UIKit) && targetEnvironment(macCatalyst)
-    public func detectTextRectangles(in image: UIImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
+    #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+    public func detectTextRectangles(in image: NSImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
         guard let detectionOperation = TextRectangleDetectionOperation(image: image) else {
             completionHandler?(nil)
             return
@@ -26,8 +26,8 @@ open class TextDetector: NSObject {
 
         operationQueue.addOperation(detectionOperation)
     }
-    #elseif canImport(AppKit)
-    public func detectTextRectangles(in image: NSImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
+    #elseif canImport(UIKit)
+    public func detectTextRectangles(in image: UIImage, completionHandler: (([TextRectangleObservation]?) -> Void)? = nil) {
         guard let detectionOperation = TextRectangleDetectionOperation(image: image) else {
             completionHandler?(nil)
             return
@@ -76,7 +76,22 @@ open class TextDetector: NSObject {
             .flatMap(\.allWordObservations)
     }
 
-    #if canImport(UIKit) && targetEnvironment(macCatalyst)
+    #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+    @available(macOS 10.15, *)
+    public func detectWords(in image: NSImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
+        guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
+        Task {
+            await completionHandler(detectWords(with: recognitionOperation))
+        }
+    }
+
+    public func detectText(in image: NSImage, completionHandler: @escaping (([RecognizedTextObservation]?) -> Void)) {
+        guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
+        Task {
+            await completionHandler(detectText(with: recognitionOperation))
+        }
+    }
+    #elseif canImport(UIKit)
     public func detectWords(in image: UIImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
         guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
         Task {
@@ -92,22 +107,6 @@ open class TextDetector: NSObject {
     public func detectText(in image: UIImage, completionHandler: @escaping (([RecognizedTextObservation]?) -> Void)) {
         Task {
             await completionHandler(try? detectText(in: image))
-        }
-    }
-
-    #elseif canImport(AppKit)
-    @available(macOS 10.15, *)
-    public func detectWords(in image: NSImage, completionHandler: @escaping (([WordObservation]?) -> Void)) {
-        guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
-        Task {
-            await completionHandler(detectWords(with: recognitionOperation))
-        }
-    }
-
-    public func detectText(in image: NSImage, completionHandler: @escaping (([RecognizedTextObservation]?) -> Void)) {
-        guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
-        Task {
-            await completionHandler(detectText(with: recognitionOperation))
         }
     }
     #endif
