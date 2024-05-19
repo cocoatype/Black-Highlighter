@@ -19,7 +19,9 @@ extension Target {
                 base: [
                     "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
                 ],
-                defaultSettings: .none
+                defaultSettings: .recommended(excluding: [
+                    "CODE_SIGN_IDENTITY",
+                ])
             )
         )
     }
@@ -66,7 +68,15 @@ extension Target {
             dependencies: [
                 .target(name: name + sdk.nameSuffix),
                 .target(TestHelpers.interfaceTarget),
-            ]
+            ],
+            settings: .settings(
+                base: [
+                    "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
+                ],
+                defaultSettings: .recommended(excluding: [
+                    "CODE_SIGN_IDENTITY",
+                ])
+            )
         )
     }
 }
