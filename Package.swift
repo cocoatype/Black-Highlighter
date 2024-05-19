@@ -9,6 +9,7 @@ let packageSettings = PackageSettings(
     productTypes: [
         "TelemetryClient": .framework,
     ],
+    baseSettings: Shared.settings,
     targetSettings: [
         "TelemetryClient": [
             "UNINSTALLED_PRODUCTS_DIR": "$(TEMP_ROOT)/UninstalledProducts$(EFFECTIVE_PLATFORM_NAME)",
