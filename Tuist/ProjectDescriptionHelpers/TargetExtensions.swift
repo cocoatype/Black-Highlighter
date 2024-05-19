@@ -65,7 +65,7 @@ extension Target {
             sources: ["Modules/Capabilities/\(name)/Doubles/**"],
             dependencies: [
                 .target(name: name + sdk.nameSuffix),
-                .target(TestHelpers.interfaceTarget)
+                .target(TestHelpers.interfaceTarget),
             ]
         )
     }
