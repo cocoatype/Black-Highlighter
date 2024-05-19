@@ -3,7 +3,7 @@ import ProjectDescription
 public enum Editing {
     public static let target = Target.target(
         name: "Editing",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
+        destinations: SDK.catalyst.destinations,
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.Editing",
         sources: ["Modules/Legacy/Editing/Sources/**"],
@@ -11,11 +11,11 @@ public enum Editing {
         headers: .headers(public: ["Modules/Legacy/Editing/Headers/**"]),
         dependencies: [
             .target(AutoRedactionsUI.target),
-            .target(ErrorHandling.target),
-            .target(Observations.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
+            .target(Observations.target(sdk: .catalyst)),
             .target(PurchaseMarketing.target),
             .target(Purchasing.doublesTarget),
-            .target(Redactions.target),
+            .target(Redactions.target(sdk: .catalyst)),
             .package(product: "ClippingBezier", type: .runtime),
             .package(product: "Introspect", type: .runtime),
         ],
@@ -32,6 +32,7 @@ public enum Editing {
 
     public static let testTarget = Target.moduleTestTarget(
         name: "Editing",
+        sdk: .catalyst,
         type: "Legacy",
         dependencies: [
             .target(AutoRedactionsUI.target),

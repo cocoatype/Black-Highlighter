@@ -28,8 +28,8 @@ public enum Redacting {
         ],
         resources: ["Modules/Legacy/Editing/Resources/**"],
         dependencies: [
-            .target(ErrorHandling.target),
-            .target(Observations.target),
+            .target(ErrorHandling.target(sdk: .native)),
+            .target(Observations.target(sdk: .native)),
         ],
         settings: .settings(
             defaultSettings: .recommended(excluding: [

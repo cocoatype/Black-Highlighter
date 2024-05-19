@@ -3,7 +3,7 @@ import ProjectDescription
 public enum Core {
     public static let target = Target.target(
         name: "Core",
-        destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign],
+        destinations: SDK.catalyst.destinations,
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.Core",
         sources: ["Modules/Legacy/Core/Sources/**"],
@@ -27,6 +27,7 @@ public enum Core {
 
     public static let testTarget = Target.moduleTestTarget(
         name: "Core",
+        sdk: .catalyst,
         type: "Legacy",
         dependencies: [
             .target(Logging.doublesTarget),

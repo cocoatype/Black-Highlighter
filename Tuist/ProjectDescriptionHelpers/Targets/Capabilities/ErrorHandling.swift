@@ -1,12 +1,15 @@
 import ProjectDescription
 
 public enum ErrorHandling {
-    public static let target = Target.capabilitiesTarget(
-        name: "ErrorHandling",
-        dependencies: [
-            .target(Logging.target),
-        ]
-    )
+    public static func target(sdk: SDK) -> Target {
+        Target.capabilitiesTarget(
+            name: "ErrorHandling",
+            sdk: sdk,
+            dependencies: [
+                .target(Logging.target(sdk: sdk)),
+            ]
+        )
+    }
 
     public static let testTarget = Target.capabilitiesTestTarget(
         name: "ErrorHandling",

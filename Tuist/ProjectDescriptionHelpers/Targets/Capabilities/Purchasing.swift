@@ -4,7 +4,7 @@ public enum Purchasing {
     public static let target = Target.capabilitiesTarget(
         name: "Purchasing",
         dependencies: [
-            .target(ErrorHandling.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
         ]
     )
 

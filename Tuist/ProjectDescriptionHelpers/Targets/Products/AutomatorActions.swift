@@ -11,7 +11,7 @@ public enum AutomatorActions {
         resources: ["Automator/Resources/**"],
         dependencies: [
             .target(Redacting.target),
-            .target(Redactions.target),
+            .target(Redactions.target(sdk: .native)),
         ],
         settings: .settings(base: [
             "WRAPPER_EXTENSION": "action",

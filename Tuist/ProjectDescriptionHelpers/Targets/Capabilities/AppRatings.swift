@@ -4,7 +4,7 @@ public enum AppRatings {
     public static let target = Target.capabilitiesTarget(
         name: "AppRatings",
         dependencies: [
-            .target(ErrorHandling.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
         ]
     )
 

@@ -1,10 +1,10 @@
 //  Created by Geoff Pado on 5/1/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import Observations
 
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
+import ObservationsMac
 
 extension NSBezierPath {
     convenience init(cgPath: CGPath) {
@@ -102,6 +102,7 @@ extension NSBezierPath.LineJoinStyle {
 }
 
 #elseif canImport(UIKit)
+import Observations
 import SwiftUI
 import UIKit
 
