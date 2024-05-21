@@ -3,6 +3,7 @@
 
 import AutoRedactionsUI
 import Defaults
+import Detections
 import Observations
 import Photos
 import PurchaseMarketing

@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 11/2/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+import DetectionsMac
 import Foundation
 import Redacting
 import RedactionsMac

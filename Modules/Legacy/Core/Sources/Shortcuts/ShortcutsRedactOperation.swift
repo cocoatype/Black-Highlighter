@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 11/4/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+import Detections
 import Editing
 import Intents
 import Observations

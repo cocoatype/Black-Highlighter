@@ -1,54 +1,60 @@
-//  Created by Geoff Pado on 4/22/19.
+//  Created by Geoff Pado on 7/29/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import os.log
+import Foundation
+import OSLog
 import Vision
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 #elseif canImport(UIKit)
 import UIKit
 #endif
 
-class TextRectangleDetectionOperation: Operation {
-    #if canImport(UIKit)
-    init?(image: UIImage) {
-        guard let cgImage = image.cgImage else { return nil }
+class TextRecognitionOperation: Operation {
+    #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+    init(image: NSImage) throws {
+        var imageRect = NSRect(origin: .zero, size: image.size)
+        guard let cgImage = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
+
+        self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
+        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+    }
+    #elseif canImport(UIKit)
+    init(image: UIImage) throws {
+        guard let cgImage = image.cgImage else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)
+        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
 
         super.init()
     }
-    #elseif canImport(AppKit)
-    init?(image: NSImage) {
-        var imageRect = NSRect(origin: .zero, size: image.size)
-        guard let cgImage = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) else { return nil }
-
-        self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
-    }
     #endif
 
-    var textRectangleResults: [VNTextObservation]?
+    var recognizedTextResults: [VNRecognizedTextObservation]?
+    let imageSize: CGSize
 
     override func start() {
-        let imageRequest = VNDetectTextRectanglesRequest { [weak self] request, error in
-            guard let textObservations = (request.results as? [VNTextObservation]) else {
+        os_log("running recognition")
+        let imageRequest = VNRecognizeTextRequest { [weak self] request, error in
+            guard let textObservations = (request.results as? [VNRecognizedTextObservation]) else {
                 TextRectangleDetectionOperation.log("error getting text rectangles: \(error?.localizedDescription ?? "(null)")", type: .error)
                 self?._finished = true
                 self?._executing = false
                 return
             }
 
-            self?.textRectangleResults = textObservations
+            self?.recognizedTextResults = textObservations
             self?._finished = true
             self?._executing = false
         }
-        imageRequest.reportCharacterBoxes = true
+        imageRequest.recognitionLevel = .accurate
+        imageRequest.usesLanguageCorrection = true
 
         do {
             try imageRequestHandler.perform([imageRequest])
             _executing = true
         } catch {
-            TextRectangleDetectionOperation.log("error starting image request: \(error.localizedDescription)", type: .error)
+            TextRecognitionOperation.log("error starting image request: \(error.localizedDescription)", type: .error)
             _finished = true
             _executing = false
         }
@@ -58,7 +64,7 @@ class TextRectangleDetectionOperation: Operation {
 
     static var log: OSLog { return OSLog(subsystem: "com.cocoatype.Highlighter", category: "Text Detection") }
     static func log(_ text: String, type: OSLogType = .default) {
-        os_log("%@", log: TextRectangleDetectionOperation.log, type: type, text)
+        os_log("%@", log: TextRecognitionOperation.log, type: type, text)
     }
 
     // MARK: Boilerplate
@@ -88,4 +94,8 @@ class TextRectangleDetectionOperation: Operation {
         }
     }
     override var isFinished: Bool { return _finished }
+}
+
+public enum TextRecognitionOperationError: Error {
+    case cannotCreateCGImageFromImage
 }

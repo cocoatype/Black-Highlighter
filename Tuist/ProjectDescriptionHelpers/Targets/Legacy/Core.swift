@@ -12,6 +12,7 @@ public enum Core {
             .target(AppRatings.target),
             .target(Defaults.target),
             .target(DesignSystem.target),
+            .target(Detections.target(sdk: .catalyst)),
             .target(Editing.target),
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
