@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import Editing
+import Exporting
 import Intents
 import OSLog
 import Redactions

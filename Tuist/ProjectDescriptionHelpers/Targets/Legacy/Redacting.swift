@@ -26,8 +26,8 @@ public enum Redacting {
             "Modules/Legacy/Editing/Sources/Text Detection/CharacterObservation.swift",
             "Modules/Legacy/Editing/Sources/Text Detection/TextRectangleObservation.swift",
         ],
-        resources: ["Modules/Legacy/Editing/Resources/**"],
         dependencies: [
+            .target(Brushes.target(sdk: .native)),
             .target(ErrorHandling.target(sdk: .native)),
             .target(Observations.target(sdk: .native)),
         ],

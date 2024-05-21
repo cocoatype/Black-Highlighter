@@ -1,8 +1,43 @@
 //  Created by Geoff Pado on 7/8/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import AppKit
+import ErrorHandlingMac
+import GeometryMac
+
+class BrushStampFactory: NSObject {
+    static func brushStart(scaledToHeight height: CGFloat, color: NSColor) -> NSImage {
+        guard let standardImage = Bundle(for: Self.self).image(forResource: "Brush Start") else { fatalError("Unable to load brush start image") }
+        return scaledImage(from: standardImage, toHeight: height, color: color)
+    }
+
+    static func brushEnd(scaledToHeight height: CGFloat, color: NSColor) -> NSImage {
+        guard let standardImage = Bundle(for: Self.self).image(forResource: "Brush End") else { fatalError("Unable to load brush end image") }
+        return scaledImage(from: standardImage, toHeight: height, color: color)
+    }
+
+    private static func scaledImage(from image: NSImage, toHeight height: CGFloat, color: NSColor) -> NSImage {
+        let brushScale = height / image.size.height
+        let scaledBrushSize = image.size * brushScale
+
+        return NSImage(size: scaledBrushSize, flipped: false) { _ -> Bool in
+            color.setFill()
+
+            CGRect(origin: .zero, size: scaledBrushSize).fill()
+
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            context.scaleBy(x: brushScale, y: brushScale)
+
+            image.draw(at: .zero, from: CGRect(origin: .zero, size: image.size), operation: .destinationIn, fraction: 1)
+
+            return true
+        }
+    }
+}
+#elseif canImport(UIKit)
 import ErrorHandling
-import Observations
+import Geometry
 import UIKit
 
 public class BrushStampFactory: NSObject {
@@ -82,3 +117,4 @@ public class BrushStampFactory: NSObject {
 enum BrushStampFactoryError: Error {
     case cannotGenerateCGImage(shape: Shape, color: UIColor, scale: CGFloat)
 }
+#endif

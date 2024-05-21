@@ -1,21 +1,9 @@
-//  Created by Geoff Pado on 2/3/23.
-//  Copyright © 2023 Cocoatype, LLC. All rights reserved.
+//  Created by Geoff Pado on 5/20/24.
+//  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
-import Foundation
 import CoreGraphics
 
-extension CGPath {
-    func forEachPoint(_ function: @escaping ((CGPoint) -> Void)) {
-        applyWithBlock { elementPointer in
-            let element = elementPointer.pointee
-            let elementType = element.type
-            guard elementType == .moveToPoint || elementType == .addLineToPoint else { return }
-
-            let elementPoint = element.points.pointee
-            function(elementPoint)
-        }
-    }
-
+public extension CGPath {
     func isEqual(to otherPath: CGPath, accuracy: Double) -> Bool {
         var ourPathElements = [CGPathElement]()
         applyWithBlock { elementPointer in
@@ -47,6 +35,17 @@ extension CGPath {
             @unknown default:
                 return true
             }
+        }
+    }
+
+    func forEachPoint(_ function: @escaping ((CGPoint) -> Void)) {
+        applyWithBlock { elementPointer in
+            let element = elementPointer.pointee
+            let elementType = element.type
+            guard elementType == .moveToPoint || elementType == .addLineToPoint else { return }
+
+            let elementPoint = element.points.pointee
+            function(elementPoint)
         }
     }
 

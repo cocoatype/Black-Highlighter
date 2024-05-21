@@ -3,7 +3,7 @@
 
 import XCTest
 
-@testable import Observations
+@testable import Geometry
 
 final class ShapeTests: XCTestCase {
     func testIsNotEmptyReturnsFalseForEmptyShape() {

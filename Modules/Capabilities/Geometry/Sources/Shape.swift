@@ -17,7 +17,7 @@ public struct Shape: Hashable {
         self.topRight = topRight
     }
 
-    func scaled(to imageSize: CGSize) -> Shape {
+    public func scaled(to imageSize: CGSize) -> Shape {
         return Shape(
             bottomLeft: CGPoint.flippedPoint(from: bottomLeft, scaledTo: imageSize),
             bottomRight: CGPoint.flippedPoint(from: bottomRight, scaledTo: imageSize),

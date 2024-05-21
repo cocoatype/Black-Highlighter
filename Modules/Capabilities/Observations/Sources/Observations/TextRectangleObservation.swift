@@ -1,11 +1,11 @@
 //  Created by Geoff Pado on 5/17/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
-#endif
-
-#if canImport(UIKit)
+import GeometryMac
+#elseif canImport(UIKit)
+import Geometry
 import UIKit
 #endif
 
