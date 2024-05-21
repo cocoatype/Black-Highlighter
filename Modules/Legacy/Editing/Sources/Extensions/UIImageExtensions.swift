@@ -8,10 +8,10 @@ extension UIImage {
     public var type: UTType? {
         guard let imageTypeString = cgImage?.utType
         else { return nil }
-        
+
         return UTType(imageTypeString as String)
     }
-    
+
     public var realSize: CGSize {
         switch imageOrientation {
         case .up, .down, .upMirrored, .downMirrored:

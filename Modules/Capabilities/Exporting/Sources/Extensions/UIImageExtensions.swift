@@ -31,4 +31,3 @@ extension UIImage.Orientation {
         }
     }
 }
-
