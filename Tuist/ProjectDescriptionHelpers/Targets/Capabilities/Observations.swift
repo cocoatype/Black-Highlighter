@@ -4,7 +4,10 @@ public enum Observations {
     public static func target(sdk: SDK) -> Target {
         Target.capabilitiesTarget(
             name: "Observations",
-            sdk: sdk
+            sdk: sdk,
+            dependencies: [
+                .target(Geometry.target(sdk: sdk)),
+            ]
         )
     }
 

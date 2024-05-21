@@ -1,10 +1,10 @@
 //  Created by Geoff Pado on 5/13/23.
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
-import Observations
+import Geometry
 import XCTest
 
-@testable import Editing
+@testable import Brushes
 
 final class BrushStampFactoryTests: XCTestCase {
     private let regularShape = Shape(bottomLeft: CGPoint(x: 0, y: 100), bottomRight: CGPoint(x: 100, y: 100), topLeft: CGPoint(x: 0, y: 0), topRight: CGPoint(x: 100, y: 0))

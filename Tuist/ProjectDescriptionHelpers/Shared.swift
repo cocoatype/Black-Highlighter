@@ -6,7 +6,6 @@ public enum Shared {
     ]
 
     public static let settings: Settings = .settings(base: [
-        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "Accent Color",
         "CODE_SIGN_STYLE": "Manual",
         "CURRENT_PROJECT_VERSION": "0",

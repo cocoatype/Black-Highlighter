@@ -4,6 +4,7 @@ public enum AutoRedactionsUI {
     public static let target = Target.capabilitiesTarget(
         name: "AutoRedactionsUI",
         dependencies: [
+            .target(Defaults.target),
             .target(DesignSystem.target),
             .target(ErrorHandling.target(sdk: .catalyst)),
         ]

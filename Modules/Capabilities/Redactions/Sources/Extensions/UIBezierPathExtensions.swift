@@ -2,12 +2,12 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 #if canImport(UIKit)
-import Observations
+import Geometry
 import SwiftUI
 import UIKit
 
 extension UIBezierPath {
-    var shape: Observations.Shape? {
+    var shape: Geometry.Shape? {
         let path = Path(self.cgPath)
         var elements = [Path.Element]()
         path.forEach { element in

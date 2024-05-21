@@ -1,6 +1,12 @@
 //  Created by Geoff Pado on 5/17/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import GeometryMac
+#elseif canImport(UIKit)
+import Geometry
+#endif
+
 import Foundation
 import Vision
 
@@ -60,9 +66,11 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
 
 extension Shape {
     init(_ observation: VNRectangleObservation) {
-        self.bottomLeft = observation.bottomLeft
-        self.bottomRight = observation.bottomRight
-        self.topLeft = observation.topLeft
-        self.topRight = observation.topRight
+        self.init(
+            bottomLeft: observation.bottomLeft,
+            bottomRight: observation.bottomRight,
+            topLeft: observation.topLeft,
+            topRight: observation.topRight
+        )
     }
 }

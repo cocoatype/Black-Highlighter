@@ -2,9 +2,9 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
-import ObservationsMac
+import GeometryMac
 #else
-import Observations
+import Geometry
 #endif
 
 public enum RedactionPart: Equatable {
