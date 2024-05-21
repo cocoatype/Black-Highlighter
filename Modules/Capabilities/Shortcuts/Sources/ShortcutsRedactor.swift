@@ -1,17 +1,20 @@
 //  Created by Geoff Pado on 5/3/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import AppIntents
+import Detections
 import Observations
 import Redactions
 import UIKit
 
+@available(iOS 16.0, *)
 class ShortcutRedactor: NSObject {
     init(detector: TextDetector = TextDetector(), exporter: ShortcutsRedactExporter = ShortcutsRedactExporter()) {
         self.detector = detector
         self.exporter = exporter
     }
 
-    func redact(_ input: INFile, words wordList: [String]) async throws -> INFile {
+    func redact(_ input: IntentFile, words wordList: [String]) async throws -> IntentFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
         let textObservations = try await detector.detectText(in: image)
         let matchingObservations = wordList.flatMap { word -> [WordObservation] in
@@ -22,7 +25,7 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: matchingObservations)
     }
 
-    func redact(_ input: INFile, detection: DetectionKind) async throws -> INFile {
+    func redact(_ input: IntentFile, detection: DetectionKind) async throws -> IntentFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
 
         let texts = try await detector.detectText(in: image)
@@ -35,7 +38,7 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: wordObservations)
     }
 
-    private func redact(_ input: INFile, wordObservations: [WordObservation]) async throws -> INFile {
+    private func redact(_ input: IntentFile, wordObservations: [WordObservation]) async throws -> IntentFile {
         let redactions = wordObservations.map { Redaction($0, color: .black) }
 
         return try await exporter.export(input, redactions: redactions)

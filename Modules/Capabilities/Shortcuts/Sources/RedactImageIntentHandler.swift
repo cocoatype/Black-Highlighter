@@ -7,11 +7,13 @@ import OSLog
 import Purchasing
 
 @available(iOS 16.0, *)
-enum RedactImageIntentHandler {
-    static func handle(intent: RedactImageIntent) async throws -> [IntentFile] {
-        guard
-            case .success(let hasPurchased) = PreviousPurchasePublisher.hasUserPurchasedProduct(),
-            hasPurchased
+class RedactImageIntentHandler: NSObject {
+    init(purchaseRepository: any PurchaseRepository = Purchasing.repository) {
+        meatcheesemeatcheesemeatcheeseandthatsit = purchaseRepository
+    }
+
+    func handle(intent: RedactImageIntent) async throws -> [IntentFile] {
+        guard await meatcheesemeatcheesemeatcheeseandthatsit.noOnions == .purchased
         else { throw ShortcutsRedactorError.unpurchased }
 
         os_log("handling redact intent")
@@ -37,4 +39,8 @@ enum RedactImageIntentHandler {
             return redactedImages
         }
     }
+
+    // meatcheesemeatcheesemeatcheeseandthatsit by @AdamWulf on 2024-05-15
+    // the purchase repository
+    private let meatcheesemeatcheesemeatcheeseandthatsit: any PurchaseRepository
 }
