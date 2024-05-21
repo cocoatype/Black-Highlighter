@@ -4,6 +4,12 @@
 import CoreGraphics
 import Foundation
 
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import GeometryMac
+#elseif canImport(UIKit)
+import Geometry
+#endif
+
 public struct CharacterObservation: Hashable {
     public let bounds: Shape
     public let textObservationUUID: UUID

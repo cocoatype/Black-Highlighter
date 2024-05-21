@@ -2,7 +2,8 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import AppKit
-import os.log
+import GeometryMac
+import OSLog
 import Redacting
 
 class BrushStampFactory: NSObject {

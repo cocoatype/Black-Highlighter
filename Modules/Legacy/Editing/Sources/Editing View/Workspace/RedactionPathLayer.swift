@@ -1,6 +1,8 @@
 //  Created by Geoff Pado on 1/2/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+import Brushes
+import Geometry
 import Observations
 import Redactions
 import UIKit

@@ -2,8 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import CoreGraphics
-
-@testable import Observations
+import Geometry
 
 extension Shape {
     static let emptySample = Shape(

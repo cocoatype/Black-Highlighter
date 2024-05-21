@@ -1,22 +1,21 @@
 import ProjectDescription
 
-public enum Redactions {
+public enum Brushes {
     public static func target(sdk: SDK) -> Target {
         Target.capabilitiesTarget(
-            name: "Redactions",
+            name: "Brushes",
             sdk: sdk,
+            hasResources: true,
             dependencies: [
+                .target(ErrorHandling.target(sdk: sdk)),
                 .target(Geometry.target(sdk: sdk)),
-                .target(Observations.target(sdk: sdk)),
             ]
         )
     }
 
     public static let testTarget = Target.capabilitiesTestTarget(
-        name: "Redactions",
+        name: "Brushes",
         dependencies: [
-            .target(Observations.target(sdk: .catalyst)),
-            .target(TestHelpers.target),
         ]
     )
 }

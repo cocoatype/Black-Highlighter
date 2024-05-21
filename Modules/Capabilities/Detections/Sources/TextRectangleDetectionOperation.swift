@@ -1,60 +1,54 @@
-//  Created by Geoff Pado on 7/29/19.
+//  Created by Geoff Pado on 4/22/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
-import Foundation
-import os.log
+import OSLog
 import Vision
 
-#if canImport(AppKit)
-import AppKit
-#elseif canImport(UIKit)
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
-class TextRecognitionOperation: Operation {
+class TextRectangleDetectionOperation: Operation {
     #if canImport(UIKit)
-    init(image: UIImage) throws {
-        guard let cgImage = image.cgImage else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
+    init?(image: UIImage) {
+        guard let cgImage = image.cgImage else { return nil }
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: image.imageOrientation.cgImagePropertyOrientation)
-        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
 
         super.init()
     }
     #elseif canImport(AppKit)
-    init(image: NSImage) throws {
+    init?(image: NSImage) {
         var imageRect = NSRect(origin: .zero, size: image.size)
-        guard let cgImage = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) else { throw TextRecognitionOperationError.cannotCreateCGImageFromImage }
+        guard let cgImage = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) else { return nil }
 
         self.imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
-        self.imageSize = CGSize(width: cgImage.width, height: cgImage.height)
     }
     #endif
 
-    var recognizedTextResults: [VNRecognizedTextObservation]?
-    let imageSize: CGSize
+    var textRectangleResults: [VNTextObservation]?
 
     override func start() {
-        os_log("running recognition")
-        let imageRequest = VNRecognizeTextRequest { [weak self] request, error in
-            guard let textObservations = (request.results as? [VNRecognizedTextObservation]) else {
+        let imageRequest = VNDetectTextRectanglesRequest { [weak self] request, error in
+            guard let textObservations = (request.results as? [VNTextObservation]) else {
                 TextRectangleDetectionOperation.log("error getting text rectangles: \(error?.localizedDescription ?? "(null)")", type: .error)
                 self?._finished = true
                 self?._executing = false
                 return
             }
 
-            self?.recognizedTextResults = textObservations
+            self?.textRectangleResults = textObservations
             self?._finished = true
             self?._executing = false
         }
-        imageRequest.recognitionLevel = .accurate
-        imageRequest.usesLanguageCorrection = true
+        imageRequest.reportCharacterBoxes = true
 
         do {
             try imageRequestHandler.perform([imageRequest])
             _executing = true
         } catch {
-            TextRecognitionOperation.log("error starting image request: \(error.localizedDescription)", type: .error)
+            TextRectangleDetectionOperation.log("error starting image request: \(error.localizedDescription)", type: .error)
             _finished = true
             _executing = false
         }
@@ -64,7 +58,7 @@ class TextRecognitionOperation: Operation {
 
     static var log: OSLog { return OSLog(subsystem: "com.cocoatype.Highlighter", category: "Text Detection") }
     static func log(_ text: String, type: OSLogType = .default) {
-        os_log("%@", log: TextRecognitionOperation.log, type: type, text)
+        os_log("%@", log: TextRectangleDetectionOperation.log, type: type, text)
     }
 
     // MARK: Boilerplate
@@ -94,8 +88,4 @@ class TextRecognitionOperation: Operation {
         }
     }
     override var isFinished: Bool { return _finished }
-}
-
-public enum TextRecognitionOperationError: Error {
-    case cannotCreateCGImageFromImage
 }

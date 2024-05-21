@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Editing
+import Exporting
 import Photos
 import Redactions
 import SwiftUI

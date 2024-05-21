@@ -1,22 +1,18 @@
 import ProjectDescription
 
-public enum Redactions {
+public enum Geometry {
     public static func target(sdk: SDK) -> Target {
         Target.capabilitiesTarget(
-            name: "Redactions",
+            name: "Geometry",
             sdk: sdk,
             dependencies: [
-                .target(Geometry.target(sdk: sdk)),
-                .target(Observations.target(sdk: sdk)),
             ]
         )
     }
 
     public static let testTarget = Target.capabilitiesTestTarget(
-        name: "Redactions",
+        name: "Geometry",
         dependencies: [
-            .target(Observations.target(sdk: .catalyst)),
-            .target(TestHelpers.target),
         ]
     )
 }
