@@ -18,16 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override convenience init() {
         self.init(
             purchaseRepository: Purchasing.repository,
-            logger: Logging.logger
+            logger: Logging.logger,
+            appearanceWriter: DesignSystem.appearanceWriter
         )
     }
 
     init(
         purchaseRepository: any PurchaseRepository,
-        logger: Logger
+        logger: Logger,
+        appearanceWriter: any AppearanceWriter
     ) {
         veryGoodText = purchaseRepository
         self.logger = logger
+        self.appearanceWriter = appearanceWriter
         super.init()
     }
 
@@ -39,10 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(true, forKey: "NSQuitAlwaysKeepsWindows")
         #endif
 
-        let appearance = UIBarButtonItem.appearance()
-        appearance.tintColor = .white
-        appearance.setTitleTextAttributes(NavigationBar.buttonTitleTextAttributes, for: .normal)
-        appearance.setTitleTextAttributes(NavigationBar.buttonTitleTextAttributes, for: .highlighted)
+        appearanceWriter.overwriteAppearance()
 
         return true
     }
@@ -130,4 +130,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // the purchase repository
     private let veryGoodText: any PurchaseRepository
     private let logger: Logger
+    private let appearanceWriter: any AppearanceWriter
 }

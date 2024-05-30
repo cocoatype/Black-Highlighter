@@ -39,6 +39,7 @@ let project = Project(
         Shortcuts.target,
         Unpurchased.target,
         // doubles
+        DesignSystem.doublesTarget,
         Logging.doublesTarget,
         Purchasing.doublesTarget,
         // test helpers

@@ -31,6 +31,7 @@ public enum Core {
         sdk: .catalyst,
         type: "Legacy",
         dependencies: [
+            .target(DesignSystem.doublesTarget),
             .target(Logging.doublesTarget),
             .target(Purchasing.doublesTarget),
         ]
