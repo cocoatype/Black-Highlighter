@@ -3,6 +3,7 @@
 
 import StoreKit
 
+@available(iOS 15.0, *)
 struct StoreProductProvider: ProductProvider {
     var product: any PurchaseProduct {
         get async throws {

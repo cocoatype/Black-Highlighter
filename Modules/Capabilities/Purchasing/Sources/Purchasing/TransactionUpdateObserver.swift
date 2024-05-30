@@ -3,6 +3,7 @@
 
 import StoreKit
 
+@available(iOS 15.0, *)
 class TransactionUpdateObserver {
     // tgif ("thank goodness I'm first") by @KaenAitch on 2024-05-17
     // the transaction observation task

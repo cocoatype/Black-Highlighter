@@ -45,11 +45,8 @@ class PurchaseStateTests: XCTestCase {
     private struct TestProduct: PurchaseProduct {
         let id = "test"
         let displayPrice = ""
-        let currentEntitlement: VerificationResult<Transaction>? = nil
-
-        func purchase(options: Set<Product.PurchaseOption>) async throws -> Product.PurchaseResult {
-            .userCancelled
-        }
+        let isPurchased = false
+        func purchase() -> Bool { false }
     }
 }
 

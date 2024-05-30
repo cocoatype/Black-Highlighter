@@ -8,7 +8,9 @@ import XCTest
 @testable import Purchasing
 
 class StoreRepositoryTests: XCTestCase {
-    func testFreeUnlockIfAppWasPurchasedEarly() async {
+    func testFreeUnlockIfAppWasPurchasedEarly() async throws {
+        guard #available(iOS 15, *) else { throw XCTSkip() }
+
         let versionProvider = StubVersionProvider(originalPurchaseVersion: 100)
         let productProvider = StubProductProvider()
         let repository = StoreRepository(productProvider: productProvider, versionProvider: versionProvider)
@@ -17,7 +19,9 @@ class StoreRepositoryTests: XCTestCase {
         XCTAssertEqual(purchaseState, .purchased)
     }
 
-    func testFreeUnlockIfAppWasPurchasedLate() async {
+    func testFreeUnlockIfAppWasPurchasedLate() async throws {
+        guard #available(iOS 15, *) else { throw XCTSkip() }
+
         let versionProvider = StubVersionProvider(originalPurchaseVersion: 1000)
         let productProvider = StubProductProvider()
         let repository = StoreRepository(productProvider: productProvider, versionProvider: versionProvider)
