@@ -26,10 +26,8 @@ struct RedactImageIntent: AppIntent, RedactIntent {
         Summary("RedactImageIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
     }
 
-    func perform() async throws -> some IntentResult & ReturnsValue {
+    func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> {
         let manWhyDoIEvenHaveThatRedemption = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
         return .result(value: manWhyDoIEvenHaveThatRedemption)
     }
-
-    static let openAppWhenRun = true
 }

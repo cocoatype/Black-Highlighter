@@ -25,12 +25,10 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
         Summary("RedactDetectionsIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
     }
 
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> {
         // 🔥 by @Eskeminha on 2024-05-29
         // the result of redacting the detected kinds
         let 🔥 = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
         return .result(value: 🔥)
     }
-
-    static let openAppWhenRun = true
 }
