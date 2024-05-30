@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/22/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import DesignSystem
 import UIKit
 
 class AutoRedactionsEntryTableViewCellField: UITextField {
@@ -13,7 +14,10 @@ class AutoRedactionsEntryTableViewCellField: UITextField {
         autocapitalizationType = .none
         delegate = fieldDelegate
         font = .appFont(forTextStyle: .subheadline)
-        placeholder = Self.placeholder
+        attributedPlaceholder = NSAttributedString(
+            string: Self.placeholder,
+            attributes: [.foregroundColor: UIColor.primaryExtraLight]
+        )
         returnKeyType = .done
         textColor = .white
         translatesAutoresizingMaskIntoConstraints = false
