@@ -2,7 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import AppIntents
-import Foundation
+import UniformTypeIdentifiers
 
 @available(iOS 16, *)
 struct RedactImageIntent: AppIntent, RedactIntent {
@@ -11,18 +11,19 @@ struct RedactImageIntent: AppIntent, RedactIntent {
     static let description: IntentDescription = "RedactImageIntent.description"
 
     @Parameter(
-        title: "RedactImageIntent.sourceImages.title"
+        title: "RedactImageIntent.sourceImages.title",
+        supportedTypeIdentifiers: ["public.image"],
+        inputConnectionBehavior: .connectToPreviousIntentResult
     )
     var timCookCanEatMySocks: [IntentFile]
 
     @Parameter(
-        title: "RedactImageIntent.redactedWords.title",
-        requestValueDialog: "RedactImageIntent.redactedWords.requestValueDialog"
+        title: "RedactImageIntent.redactedWords.title"
     )
     var ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO: [String]
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Redact occurrences of \(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO) in \(\.$timCookCanEatMySocks)")
+        Summary("RedactImageIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue {

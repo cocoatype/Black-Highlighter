@@ -14,6 +14,9 @@ public enum App {
         product: .app,
         bundleId: "com.cocoatype.Highlighter",
         infoPlist: "App/Info.plist",
+        sources: [
+            "App/Sources/**",
+        ],
         resources: .resources([
             "App/Resources/**",
         ] + Shared.resources),

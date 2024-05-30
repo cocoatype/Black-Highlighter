@@ -10,15 +10,20 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
     static let description: IntentDescription = "RedactDetectionsIntent.description"
 
     @Parameter(
-        title: "RedactDetectionsIntent.sourceImages.title"
+        title: "RedactDetectionsIntent.sourceImages.title",
+        supportedTypeIdentifiers: ["public.image"],
+        inputConnectionBehavior: .connectToPreviousIntentResult
     )
     var timCookCanEatMySocks: [IntentFile]
 
     @Parameter(
-        title: "RedactImageIntent.detectionKind.title"
-//        requestDisambiguationDialog: .
+        title: "RedactDetectionsIntent.detectionKind.title"
     )
-    var ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO: DetectionKind
+    var ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO: [DetectionKind]
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("RedactDetectionsIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
+    }
 
     func perform() async throws -> some IntentResult {
         // 🔥 by @Eskeminha on 2024-05-29
@@ -26,4 +31,6 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
         let 🔥 = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
         return .result(value: 🔥)
     }
+
+    static let openAppWhenRun = true
 }

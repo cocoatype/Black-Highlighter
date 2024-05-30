@@ -3,6 +3,7 @@ import ProjectDescription
 public enum Shortcuts {
     public static let target = Target.capabilitiesTarget(
         name: "Shortcuts",
+        hasResources: true,
         dependencies: [
             .target(Exporting.target),
             .target(Observations.target(sdk: .catalyst)),

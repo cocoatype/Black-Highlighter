@@ -25,13 +25,14 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: matchingObservations)
     }
 
-    func redact(_ input: IntentFile, detection: DetectionKind) async throws -> IntentFile {
+    func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> IntentFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
 
         let texts = try await detector.detectText(in: image)
         let wordObservations = texts.flatMap { text -> [WordObservation] in
             print("checking \(text.string)")
-            return detection.taggingFunction(text.string).compactMap { match -> WordObservation? in
+            return detections.flatMap { detection in detection.taggingFunction(text.string)
+            }.compactMap { match -> WordObservation? in
                 text.wordObservation(for: match)
             }
         }
