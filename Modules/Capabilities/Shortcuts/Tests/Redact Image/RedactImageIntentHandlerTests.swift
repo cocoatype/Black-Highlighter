@@ -4,7 +4,7 @@
 import PurchasingDoubles
 import XCTest
 
-@testable import Core
+@testable import Shortcuts
 
 class RedactImageIntentHandlerTests: XCTestCase {
     func testHandleReturnsUnpurchasedIfNotPurchased() async {

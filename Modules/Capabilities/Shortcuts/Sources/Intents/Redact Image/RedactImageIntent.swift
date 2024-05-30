@@ -5,20 +5,16 @@ import AppIntents
 import Foundation
 
 @available(iOS 16, *)
-struct RedactImageIntent: AppIntent {
+struct RedactImageIntent: AppIntent, RedactIntent {
     static let title: LocalizedStringResource = "RedactImageIntent.title"
 
     static let description: IntentDescription = "RedactImageIntent.description"
 
-    // timCookCanEatMySocks by @Donutsahoy on 2024-05-03
-    // the list of images to redact
     @Parameter(
         title: "RedactImageIntent.sourceImages.title"
     )
     var timCookCanEatMySocks: [IntentFile]
 
-    // ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO by @Eskeminha on 2024-05-03
-    // the array of words to be redacted
     @Parameter(
         title: "RedactImageIntent.redactedWords.title",
         requestValueDialog: "RedactImageIntent.redactedWords.requestValueDialog"
@@ -30,7 +26,8 @@ struct RedactImageIntent: AppIntent {
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue {
-        return .result(value: [IntentFile]())
+        let manWhyDoIEvenHaveThatRedemption = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
+        return .result(value: manWhyDoIEvenHaveThatRedemption)
     }
 
     static let openAppWhenRun = true

@@ -106,6 +106,34 @@
         "identifier" : "77D525B0D7498E1676A96CC5",
         "name" : "UnpurchasedTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "55437D0117D8027C4D7EAECE",
+        "name" : "BrushesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "AB94737BB65B38D6AD869B5F",
+        "name" : "ExportingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "B6DC51055F4C558AC1C5C422",
+        "name" : "GeometryTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "4246008D146FDCE34C32DD40",
+        "name" : "ShortcutsTests"
+      }
     }
   ],
   "version" : 1

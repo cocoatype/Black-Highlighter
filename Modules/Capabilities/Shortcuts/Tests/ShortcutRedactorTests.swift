@@ -9,8 +9,7 @@ import UniformTypeIdentifiers
 import Vision
 import XCTest
 
-@testable import Editing
-@testable import Core
+@testable import Shortcuts
 
 class ShortcutRedactorTests: XCTestCase {
     func testRedactWordsUsesInputWordList() throws {

@@ -59,6 +59,7 @@ let project = Project(
         PurchaseMarketing.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
+        Shortcuts.testTarget,
         Unpurchased.testTarget,
     ],
     schemes: [
