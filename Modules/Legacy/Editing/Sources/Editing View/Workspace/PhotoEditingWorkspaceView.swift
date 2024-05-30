@@ -45,6 +45,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
         brushStrokeView.addTarget(self, action: #selector(handleStrokeCompletion), for: .touchUpInside)
 
         addGestureRecognizer(switchControlGestureRecognizer)
+        addInteraction(pencilDelegate.newPencilInteraction())
     }
 
     var highlighterTool = HighlighterTool.magic {
@@ -229,6 +230,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
     private let debugView = PhotoEditingObservationDebugView()
     private let redactionView = PhotoEditingRedactionView()
     private let brushStrokeView: (UIControl & PhotoEditingBrushStrokeView) = PhotoEditingCanvasBrushStrokeView()
+    private let pencilDelegate = PhotoEditingWorkspacePencilDelegate()
 
     @available(*, unavailable)
     required init(coder: NSCoder) {
