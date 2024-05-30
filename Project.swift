@@ -78,7 +78,6 @@ let project = Project(
                         "SHOW_DEBUG_OVERLAY": .environmentVariable(value: "", isEnabled: false),
                     ],
                     launchArguments: [
-                        .launchArgument(name: "-FeatureFlag.autoRedactInEdit YES", isEnabled: false),
                     ]
                 ),
                 options: .options(

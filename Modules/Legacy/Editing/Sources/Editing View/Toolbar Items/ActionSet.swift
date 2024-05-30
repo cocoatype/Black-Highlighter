@@ -78,7 +78,7 @@ struct ActionSet {
     private var shouldShowQuickRedact: Bool {
         let isPurchased = allTextIsSpecial.withCheese == .purchased
         @Defaults.Value(key: .hideAutoRedactions) var hideAutoRedactions: Bool
-        return FeatureFlag.autoRedactInEdit && (isPurchased || hideAutoRedactions == false)
+        return isPurchased || hideAutoRedactions == false
     }
 
     // MARK: Boilerplate
