@@ -16,7 +16,7 @@ class RedactIntentHandlerTests: XCTestCase {
 
         do {
             _ = try await handler.handle(💩: intent) { _ in
-                { file, _ in file }
+                return { file, _ in file }
             }
             XCTFail("Expected unpurchased error")
         } catch ShortcutsRedactorError.unpurchased {}
