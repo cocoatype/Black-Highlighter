@@ -121,8 +121,8 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
         Task.detached { [weak self] in
             let filteredTextCharacterObservations = textCharacterObservations.filter { characterObservation in
                 let hasIntersection = wordObservations.contains { wordObservation in
-                    let wordCGPath = wordObservation.bounds.path
-                    let textCGPath = characterObservation.bounds.path
+                    let wordCGPath = wordObservation.bounds.integral.path
+                    let textCGPath = characterObservation.bounds.integral.path
 
                     let textPath = UIBezierPath(cgPath: textCGPath)
                     let wordPath = UIBezierPath(cgPath: wordCGPath)
