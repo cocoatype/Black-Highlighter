@@ -8,4 +8,6 @@ public enum DesignSystem {
             .target(ErrorHandling.target(sdk: .catalyst)),
         ]
     )
+
+    public static let doublesTarget = Target.capabilitiesDoublesTarget(name: "DesignSystem")
 }
