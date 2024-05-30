@@ -5,6 +5,7 @@ import Combine
 import ErrorHandling
 import StoreKit
 
+@available(iOS 16.0, *)
 class StoreRepository: PurchaseRepository {
     init(
         productProvider: any ProductProvider = StoreProductProvider(),
@@ -47,22 +48,10 @@ class StoreRepository: PurchaseRepository {
     func purchase() async -> PurchaseState {
         do {
             withCheese = .purchasing
-            let product = try await self.product
-            let result = try await product.purchase(options: [])
-            switch result {
-            case .success(let verificationResult):
-                if case .verified(let transaction) = verificationResult {
-                    withCheese = .purchased
-                    await transaction.finish()
-                    return withCheese
-                } else {
-                    fallthrough
-                }
-            case .userCancelled, .pending:
-                fallthrough
-            @unknown default:
-                return withCheese
+            if try await product.purchase() {
+                withCheese = .purchased
             }
+            return withCheese
         } catch {
             ErrorHandler().log(error)
             return withCheese
@@ -106,7 +95,7 @@ class StoreRepository: PurchaseRepository {
                 resultState = .purchased
             } else {
                 let product = try await self.product
-                if case .verified = await product.currentEntitlement {
+                if await product.isPurchased {
                     resultState = .purchased
                 } else {
                     resultState = .readyForPurchase(product: product)

@@ -1,13 +1,43 @@
 //  Created by Geoff Pado on 5/17/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import ErrorHandling
 import StoreKit
 
 public protocol PurchaseProduct: Hashable, Identifiable {
     var id: String { get }
     var displayPrice: String { get }
-    var currentEntitlement: VerificationResult<Transaction>? { get async }
-    func purchase(options: Set<Product.PurchaseOption>) async throws -> Product.PurchaseResult
+    var isPurchased: Bool { get async }
+
+    func purchase() async throws -> Bool
 }
 
-extension Product: PurchaseProduct {}
+@available(iOS 15.0, *)
+extension Product: PurchaseProduct {
+    public var isPurchased: Bool {
+        get async {
+            if case .verified = await currentEntitlement {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
+    public func purchase() async throws -> Bool {
+        let result = try await purchase(options: [])
+        switch result {
+        case .success(let verificationResult):
+            if case .verified(let transaction) = verificationResult {
+                await transaction.finish()
+                return true
+            } else {
+                fallthrough
+            }
+        case .userCancelled, .pending:
+            fallthrough
+        @unknown default:
+            return false
+        }
+    }
+}

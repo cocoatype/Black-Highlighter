@@ -8,13 +8,13 @@ import StoreKit
 public struct PreviewProduct: PurchaseProduct {
     public let id: String
     public let displayPrice = "$1.99"
-    public let currentEntitlement = VerificationResult<Transaction>?.none
+    public let isPurchased = false
 
     public init() {
         id = UUID().uuidString
     }
 
-    public func purchase(options: Set<Product.PurchaseOption>) async throws -> Product.PurchaseResult {
-        return .userCancelled
+    public func purchase() -> Bool {
+        return false
     }
 }
