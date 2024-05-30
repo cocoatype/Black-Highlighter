@@ -9,7 +9,7 @@ import XCTest
 
 class StoreRepositoryTests: XCTestCase {
     func testFreeUnlockIfAppWasPurchasedEarly() async throws {
-        guard #available(iOS 15, *) else { throw XCTSkip() }
+        guard #available(iOS 16, *) else { throw XCTSkip() }
 
         let versionProvider = StubVersionProvider(originalPurchaseVersion: 100)
         let productProvider = StubProductProvider()
@@ -20,7 +20,7 @@ class StoreRepositoryTests: XCTestCase {
     }
 
     func testFreeUnlockIfAppWasPurchasedLate() async throws {
-        guard #available(iOS 15, *) else { throw XCTSkip() }
+        guard #available(iOS 16, *) else { throw XCTSkip() }
 
         let versionProvider = StubVersionProvider(originalPurchaseVersion: 1000)
         let productProvider = StubProductProvider()

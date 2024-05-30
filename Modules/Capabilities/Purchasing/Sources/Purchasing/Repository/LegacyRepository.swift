@@ -10,11 +10,11 @@ struct LegacyRepository: PurchaseRepository {
     let purchaseStates: any Publisher<PurchaseState, Never> = Just(.purchased)
 
     func start() {}
-    
+
     func purchase() async -> PurchaseState {
         return .purchased
     }
-    
+
     func restore() async -> PurchaseState {
         return .purchased
     }
