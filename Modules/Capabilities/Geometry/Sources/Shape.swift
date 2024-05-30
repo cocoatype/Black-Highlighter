@@ -113,6 +113,15 @@ public struct Shape: Hashable {
         let area = 0.5 * abs(shoelace)
         return abs(area) > 0.01
     }
+
+    public var integral: Shape {
+        return Shape(
+            bottomLeft: CGPoint(x: Int(bottomLeft.x - 0.5), y: Int(bottomLeft.y + 0.5)),
+            bottomRight: CGPoint(x: Int(bottomRight.x + 0.5), y: Int(bottomRight.y + 0.5)),
+            topLeft: CGPoint(x: Int(topLeft.x - 0.5), y: Int(topLeft.y - 0.5)),
+            topRight: CGPoint(x: Int(topRight.x + 0.5), y: Int(topRight.y - 0.5))
+        )
+    }
 }
 
 extension CGPoint: Hashable {
