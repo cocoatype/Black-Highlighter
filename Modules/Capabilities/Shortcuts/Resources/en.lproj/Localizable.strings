@@ -1,0 +1,19 @@
+"DetectionKind.addresses" = "Addresses";
+"DetectionKind.names" = "Names";
+"DetectionKind.phoneNumbers" = "Phone Numbers";
+"DetectionKind.typeDisplayRepresentation" = "Detectable Item";
+
+"RedactDetectionsIntent.description" = "Redact detected items in an image.";
+"RedactDetectionsIntent.detectionKind.title" = "Items to Detect";
+"RedactDetectionsIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact detected ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
+"RedactDetectionsIntent.sourceImages.title" = "Source Images";
+"RedactDetectionsIntent.title" = "Redact Detected Items";
+
+"RedactImageIntent.description" = "Redact an image.";
+"RedactImageIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact occurrences of ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
+"RedactImageIntent.redactedWords.title" = "Redacted Words";
+"RedactImageIntent.sourceImages.title" = "Source Images";
+"RedactImageIntent.title" = "Redact Image";
+
+"ShortcutsRedactorError.noImage.localizedStringResource" = "No Image Provided";
+"ShortcutsRedactorError.unpurchased.localizedStringResource" = "Requires Ultra Highlighter";

@@ -14,6 +14,9 @@ public enum App {
         product: .app,
         bundleId: "com.cocoatype.Highlighter",
         infoPlist: "App/Info.plist",
+        sources: [
+            "App/Sources/**",
+        ],
         resources: .resources([
             "App/Resources/**",
         ] + Shared.resources),
@@ -21,6 +24,7 @@ public enum App {
         dependencies: [
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
+            .target(Shortcuts.target),
         ],
         settings: .settings(
             base: [

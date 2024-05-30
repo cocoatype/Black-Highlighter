@@ -1,22 +1,20 @@
-//  Created by Geoff Pado on 11/4/20.
-//  Copyright © 2020 Cocoatype, LLC. All rights reserved.
+//  Created by Geoff Pado on 5/3/24.
+//  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import AppIntents
 import Detections
-import Editing
-import Intents
 import Observations
-import OSLog
 import Redactions
 import UIKit
-import UniformTypeIdentifiers
 
+@available(iOS 16.0, *)
 class ShortcutRedactor: NSObject {
     init(detector: TextDetector = TextDetector(), exporter: ShortcutsRedactExporter = ShortcutsRedactExporter()) {
         self.detector = detector
         self.exporter = exporter
     }
 
-    func redact(_ input: INFile, words wordList: [String]) async throws -> INFile {
+    func redact(_ input: IntentFile, words wordList: [String]) async throws -> IntentFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
         let textObservations = try await detector.detectText(in: image)
         let matchingObservations = wordList.flatMap { word -> [WordObservation] in
@@ -27,20 +25,21 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: matchingObservations)
     }
 
-    func redact(_ input: INFile, detection: DetectionKind) async throws -> INFile {
+    func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> IntentFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
 
         let texts = try await detector.detectText(in: image)
         let wordObservations = texts.flatMap { text -> [WordObservation] in
             print("checking \(text.string)")
-            return detection.taggingFunction(text.string).compactMap { match -> WordObservation? in
+            return detections.flatMap { detection in detection.taggingFunction(text.string)
+            }.compactMap { match -> WordObservation? in
                 text.wordObservation(for: match)
             }
         }
         return try await redact(input, wordObservations: wordObservations)
     }
 
-    private func redact(_ input: INFile, wordObservations: [WordObservation]) async throws -> INFile {
+    private func redact(_ input: IntentFile, wordObservations: [WordObservation]) async throws -> IntentFile {
         let redactions = wordObservations.map { Redaction($0, color: .black) }
 
         return try await exporter.export(input, redactions: redactions)
@@ -50,19 +49,4 @@ class ShortcutRedactor: NSObject {
 
     private let detector: TextDetector
     private let exporter: ShortcutsRedactExporter
-}
-
-extension DetectionKind {
-    var taggingFunction: ((String) -> [Substring]) {
-        switch self {
-        case .unknown: return { _ in [] }
-        case .addresses: return StringTagger.detectAddresses(in:)
-        case .names: return StringTagger.detectNames(in:)
-        case .phoneNumbers: return StringTagger.detectPhoneNumbers(in:)
-        }
-    }
-}
-
-enum ShortcutsRedactorError: Error {
-    case noImage
 }

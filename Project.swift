@@ -36,6 +36,7 @@ let project = Project(
         Redacting.target,
         Redactions.target(sdk: .catalyst),
         Redactions.target(sdk: .native),
+        Shortcuts.target,
         Unpurchased.target,
         // doubles
         Logging.doublesTarget,
@@ -58,6 +59,7 @@ let project = Project(
         PurchaseMarketing.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
+        Shortcuts.testTarget,
         Unpurchased.testTarget,
     ],
     schemes: [
@@ -78,6 +80,9 @@ let project = Project(
                     launchArguments: [
                         .launchArgument(name: "-FeatureFlag.autoRedactInEdit YES", isEnabled: false),
                     ]
+                ),
+                options: .options(
+                    storeKitConfigurationPath: "App/Configuration.storekit"
                 )
             )
         ),

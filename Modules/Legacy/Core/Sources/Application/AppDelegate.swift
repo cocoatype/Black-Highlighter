@@ -123,12 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     #endif
 
-    // MARK: Intent Handling
-
-    func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any? {
-        return IntentHandler()
-    }
-
     // MARK: Boilerplate
     private var appViewController: AppViewController? { return window?.rootViewController as? AppViewController }
 

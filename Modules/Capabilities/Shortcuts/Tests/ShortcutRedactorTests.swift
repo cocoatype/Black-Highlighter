@@ -1,23 +1,24 @@
 //  Created by Geoff Pado on 7/29/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
+import AppIntents
 import Detections
-import Intents
 import Observations
 import Redactions
 import UniformTypeIdentifiers
 import Vision
 import XCTest
 
-@testable import Editing
-@testable import Core
+@testable import Shortcuts
 
 class ShortcutRedactorTests: XCTestCase {
     func testRedactWordsUsesInputWordList() throws {
+        guard #available(iOS 16, *) else { throw XCTSkip() }
+
         let exportExpectation = expectation(description: "export called")
         let redactor = ShortcutRedactor(detector: StubTextDetector(), exporter: StubRedactExporter(exportExpectation: exportExpectation, expectedRedactionCount: 1))
         let imageData = try XCTUnwrap(UIImage(systemName: "bolt")?.pngData())
-        let file = INFile(data: imageData, filename: "image.png", typeIdentifier: UTType.png.identifier)
+        let file = IntentFile(data: imageData, filename: "image.png", type: .png)
 
         Task {
             try await redactor.redact(file, words: ["hello"])
@@ -27,11 +28,13 @@ class ShortcutRedactorTests: XCTestCase {
     }
 
     func testRedactionThrowsError() throws {
+        guard #available(iOS 16, *) else { throw XCTSkip() }
+
         let exportExpectation = expectation(description: "export called")
         exportExpectation.isInverted = true
         let redactor = ShortcutRedactor(detector: StubTextDetector(), exporter: StubRedactExporter(exportExpectation: exportExpectation, expectedRedactionCount: 1))
         let imageData = Data()
-        let file = INFile(data: imageData, filename: "image.png", typeIdentifier: UTType.png.identifier)
+        let file = IntentFile(data: imageData, filename: "image.png", type: .png)
 
         Task {
             do {
@@ -73,6 +76,7 @@ private extension RecognizedTextObservation {
     }
 }
 
+@available(iOS 16.0, *)
 private class StubRedactExporter: ShortcutsRedactExporter {
     let exportExpectation: XCTestExpectation
     let expectedRedactionCount: Int
@@ -83,9 +87,9 @@ private class StubRedactExporter: ShortcutsRedactExporter {
         super.init()
     }
 
-    override func export(_ input: INFile, redactions: [Redaction]) async throws -> INFile {
+    override func export(_ input: IntentFile, redactions: [Redaction]) async throws -> IntentFile {
         XCTAssertEqual(redactions.count, expectedRedactionCount)
         exportExpectation.fulfill()
-        return INFile()
+        return input
     }
 }

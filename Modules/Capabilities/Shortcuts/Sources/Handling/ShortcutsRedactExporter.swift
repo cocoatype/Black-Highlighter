@@ -1,15 +1,16 @@
 //  Created by Geoff Pado on 11/6/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
-import Editing
+import AppIntents
 import Exporting
-import Intents
 import OSLog
 import Redactions
+import UIKit
 import UniformTypeIdentifiers
 
+@available(iOS 16.0, *)
 class ShortcutsRedactExporter: NSObject {
-    func export(_ input: INFile, redactions: [Redaction]) async throws -> INFile {
+    func export(_ input: IntentFile, redactions: [Redaction]) async throws -> IntentFile {
         os_log("starting export with redactions: %{public}@", String(describing: redactions))
         guard let sourceImage = UIImage(data: input.data)
         else { throw ShortcutsExportError.noImageForInput }
@@ -25,8 +26,10 @@ class ShortcutsRedactExporter: NSObject {
 
         os_log("got rendered image data")
 
-        let filename = ((input.filename as NSString).deletingPathExtension as NSString).appendingPathExtension(for: UTType.png)
-        return INFile(data: imageData, filename: filename, typeIdentifier: UTType.png.identifier)
+        let filename = ((input.filename as NSString)
+            .deletingPathExtension as NSString)
+            .appendingPathExtension(for: UTType.png)
+        return IntentFile(data: imageData, filename: filename, type: .png)
     }
 }
 
