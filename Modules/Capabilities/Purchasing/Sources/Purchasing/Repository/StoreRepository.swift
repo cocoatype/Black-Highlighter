@@ -100,7 +100,7 @@ class StoreRepository: PurchaseRepository {
     @discardableResult private func update() async -> PurchaseState {
         do {
             let resultState: PurchaseState
-            let version = try await versionProvider.originalPurchaseVersion
+            let version = await versionProvider.originalPurchaseVersion
 
             if version <= Self.freePurchaseCutoff {
                 resultState = .purchased

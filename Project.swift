@@ -80,6 +80,9 @@ let project = Project(
                     launchArguments: [
                         .launchArgument(name: "-FeatureFlag.autoRedactInEdit YES", isEnabled: false),
                     ]
+                ),
+                options: .options(
+                    storeKitConfigurationPath: "App/Configuration.storekit"
                 )
             )
         ),
