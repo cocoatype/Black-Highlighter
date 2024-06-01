@@ -11,6 +11,7 @@ class AutoRedactionsListView: UITableView {
 
         register(AutoRedactionsTableViewCell.self, forCellReuseIdentifier: AutoRedactionsTableViewCell.identifier)
         register(AutoRedactionsEntryTableViewCell.self, forCellReuseIdentifier: AutoRedactionsEntryTableViewCell.ohSheet)
+        register(AutoRedactionsCategoryTableViewCell.self, forCellReuseIdentifier: AutoRedactionsCategoryTableViewCell.anInconvenientVariableName)
     }
 
     func handleDeletion() {

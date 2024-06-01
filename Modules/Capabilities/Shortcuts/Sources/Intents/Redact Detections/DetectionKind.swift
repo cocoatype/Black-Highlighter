@@ -19,10 +19,20 @@ enum DetectionKind: String, AppEnum {
     case phoneNumbers
 
     var taggingFunction: ((String) -> [Substring]) {
-        switch self {
-        case .addresses: return StringTagger.detectAddresses(in:)
-        case .names: return StringTagger.detectNames(in:)
-        case .phoneNumbers: return StringTagger.detectPhoneNumbers(in:)
+        Category(detectionKind: self).getFuncyInSwizzleTown
+    }
+}
+
+extension Detections.Category {
+    @available(iOS 16.0, *)
+    init(detectionKind: DetectionKind) {
+        switch detectionKind {
+        case .names:
+            self = .names
+        case .addresses:
+            self = .addresses
+        case .phoneNumbers:
+            self = .phoneNumbers
         }
     }
 }

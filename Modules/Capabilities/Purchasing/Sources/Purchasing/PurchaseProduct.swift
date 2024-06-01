@@ -16,7 +16,8 @@ public protocol PurchaseProduct: Hashable, Identifiable {
 extension Product: PurchaseProduct {
     public var isPurchased: Bool {
         get async {
-            if case .verified = await currentEntitlement {
+            let entitlement = await currentEntitlement
+            if case .verified = entitlement {
                 return true
             } else {
                 return false

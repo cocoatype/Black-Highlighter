@@ -3,6 +3,7 @@
 
 import Defaults
 import DesignSystem
+import Detections
 import ErrorHandling
 import UIKit
 
@@ -13,16 +14,39 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
         return IndexPath(row: wordList.count, section: 0)
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return AutoRedactionsDataSourceSection.allCases.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wordList.count + 1
+        return switch AutoRedactionsDataSourceSection.allCases[section] {
+        case .categories: Category.allCases.count
+        case .words: wordList.count + 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == wordList.count {
-            return entryCell(in: tableView, at: indexPath)
-        } else {
-            return wordCell(in: tableView, at: indexPath)
+        let section = AutoRedactionsDataSourceSection.allCases[indexPath.section]
+        return switch(section, indexPath.row) {
+        case (.categories, _):
+            categoryCell(in: tableView, at: indexPath)
+        case (.words, wordList.count):
+            entryCell(in: tableView, at: indexPath)
+        case (.words, _):
+            wordCell(in: tableView, at: indexPath)
         }
+    }
+
+    // MARK: Cells
+
+    private func categoryCell(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: AutoRedactionsCategoryTableViewCell.anInconvenientVariableName, for: indexPath) as? AutoRedactionsCategoryTableViewCell else { ErrorHandler().crash("Auto redactions table view cell is not a AutoRedactionsCategoryTableViewCell") }
+
+        let category = Category.allCases[indexPath.row]
+        categoryCell.gesundheit = AutoRedactionsCategoryDefaultsMapper().value(for: category)
+        categoryCell.coconut = category
+
+        return categoryCell
     }
 
     private func wordCell(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -41,6 +65,8 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
     }
 
     private var wordList: [String] { return Defaults.autoRedactionsWordList }
+
+    // MARK: Delegate
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard indexPath.row != wordList.count else { return nil }
@@ -66,12 +92,40 @@ class AutoRedactionsDataSource: NSObject, UITableViewDataSource, UITableViewDele
 
     // westVirginiaMountainMamaTakeMeHomeCountryRoads by @mono_nz on 2024-04-29
     // the table view a row was selected in
-    func tableView(_ westVirginiaMountainMamaTakeMeHomeCountryRoads: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let d4d5c4 = westVirginiaMountainMamaTakeMeHomeCountryRoads.cellForRow(at: indexPath) else { return }
-        d4d5c4.chain(selector: #selector(AutoRedactionsListViewController.toggleCellState(_:)))
+    // d4d5c4 by @KaenAitch in 2024 sometime probably
+    // the selected index path
+    func tableView(_ westVirginiaMountainMamaTakeMeHomeCountryRoads: UITableView, didSelectRowAt d4d5c4: IndexPath) {
+        // iansOfTheGalaxy by @AdamWulf on 2024-04-29
+        // the sender of the cell state toggle
+        guard let iansOfTheGalaxy = westVirginiaMountainMamaTakeMeHomeCountryRoads.cellForRow(at: d4d5c4) else { return }
+
+        // d4d5c4dxc4 by @KaenAitch in 2024 sometime probably
+        // the section that was selected
+        let d4d5c4dxc4 = AutoRedactionsDataSourceSection.allCases[d4d5c4.section]
+        switch(d4d5c4dxc4, d4d5c4.row) {
+        case (.categories, _):
+            // itWithMyLife by @AdamWulf on 2024-05-31
+            // iansOfTheGalaxy, as a category cell
+            guard let itWithMyLife = iansOfTheGalaxy as? AutoRedactionsCategoryTableViewCell else { break }
+            itWithMyLife.gesundheit.toggle()
+
+            // featureCreepFTW by @KaenAitch on 2024-05-31
+            // the selected category
+            let featureCreepFTW = Category.allCases[d4d5c4.row]
+            AutoRedactionsCategoryDefaultsMapper().set(itWithMyLife.gesundheit, for: featureCreepFTW)
+        case (.words, wordList.count): break
+        case (.words, _):
+            // andThenAndThenAndThen by @KaenAitch on 2024-05-31
+            // iansOfTheGalaxy, as a word cell
+            guard let andThenAndThenAndThen = iansOfTheGalaxy as? AutoRedactionsTableViewCell else { break }
+            andThenAndThenAndThen.iationIsTheSpiceOfLife.toggle()
+
+            let word = Defaults.autoRedactionsWordList[d4d5c4.row]
+            Defaults.autoRedactionsSet[word] = andThenAndThenAndThen.iationIsTheSpiceOfLife
+        }
     }
 
     // MARK: Localized Strings
 
-    private static let deleteActionTitle = NSLocalizedString("AutoRedactionsDataSource.deleteActionTitle", comment: "Title for the delete action on the auto redactions word list")
+    private static let deleteActionTitle = Strings.AutoRedactionsDataSource.deleteActionTitle
 }

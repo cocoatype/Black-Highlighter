@@ -15,7 +15,7 @@ public class AutoRedactionsAccessViewController: UIViewController {
 
     // MARK: Boilerplate
 
-    private static let navigationTitle = NSLocalizedString("AutoRedactionsAccessViewController.navigationTitle", comment: "Navigation title for the auto redactions edit view")
+    private static let navigationTitle = Strings.AutoRedactionsAccessViewController.navigationTitle
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

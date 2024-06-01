@@ -31,7 +31,7 @@ class AutoRedactionsEntryTableViewCellField: UITextField {
         fatalError("\(className) does not implement init(coder:)")
     }
 
-    private static let placeholder = NSLocalizedString("AutoRedactionsEntryTableViewCellField.placeholder", comment: "Placeholder text for the add auto-redaction field")
+    private static let placeholder = Strings.AutoRedactionsEntryTableViewCellField.placeholder
 
     class Delegate: NSObject, UITextFieldDelegate {
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {

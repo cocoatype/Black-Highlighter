@@ -28,8 +28,8 @@ class AutoRedactionsEmptyView: UIView {
 
     // MARK: Boilerplate
 
-    private static let promptLabelText = NSLocalizedString("AutoRedactionsEmptyView.promptLabelText", comment: "Text for the empty state of the auto redactions view")
-    private static let promptButtonTitle = NSLocalizedString("AutoRedactionsEmptyView.promptButtonTitle", comment: "Buttton title for the empty state of the auto redactions view")
+    private static let promptLabelText = Strings.AutoRedactionsEmptyView.promptLabelText
+    private static let promptButtonTitle = Strings.AutoRedactionsEmptyView.promptButtonTitle
 
     @available(*, unavailable)
     required init(coder: NSCoder) {
