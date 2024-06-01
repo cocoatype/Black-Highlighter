@@ -24,7 +24,7 @@ public enum AutoRedactionsAdditionDialogFactory {
 
     // MARK: Localized Strings
 
-    private static let addButtonTitle = NSLocalizedString("AutoRedactionsAdditionDialogFactory.addButtonTitle", comment: "Title for the add button on the auto redactions addition dialog")
-    private static let placeholder = NSLocalizedString("AutoRedactionsAdditionDialogFactory.placeholder", comment: "Placeholder for the auto redactions addition dialog")
-    private static let dialogTitle = NSLocalizedString("AutoRedactionsAdditionDialogFactory.dialogTitle", comment: "Title for the auto redactions addition dialog")
+    private static let addButtonTitle = Strings.AutoRedactionsAdditionDialogFactory.addButtonTitle
+    private static let placeholder = Strings.AutoRedactionsAdditionDialogFactory.placeholder
+    private static let dialogTitle = Strings.AutoRedactionsAdditionDialogFactory.dialogTitle
 }

@@ -5,6 +5,7 @@ public enum Shortcuts {
         name: "Shortcuts",
         hasResources: true,
         dependencies: [
+            .target(Detections.target(sdk: .catalyst)),
             .target(Exporting.target),
             .target(Observations.target(sdk: .catalyst)),
             .target(Purchasing.target),

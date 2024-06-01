@@ -10,6 +10,7 @@ class AutoRedactionsTableViewCellIcon: UIImageView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setContentHuggingPriority(.required, for: .horizontal)
+        setContentCompressionResistancePriority(.required, for: .horizontal)
 
         updateImage()
     }

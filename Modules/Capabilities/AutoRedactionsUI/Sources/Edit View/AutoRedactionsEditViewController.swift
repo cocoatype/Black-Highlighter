@@ -41,7 +41,7 @@ public class AutoRedactionsEditViewController: UIViewController {
 
     // MARK: Boilerplate
 
-    private static let navigationTitle = NSLocalizedString("AutoRedactionsEditViewController.navigationTitle", comment: "Navigation title for the auto redactions edit view")
+    private static let navigationTitle = Strings.AutoRedactionsEditViewController.navigationTitle
 
     private var emptyViewController: AutoRedactionsEmptyViewController? { return children.first as? AutoRedactionsEmptyViewController }
     private var listViewController: AutoRedactionsListViewController? { return children.first as? AutoRedactionsListViewController }
