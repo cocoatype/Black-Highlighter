@@ -8,7 +8,7 @@ public enum Category: CaseIterable {
 
     // getFuncyInSwizzleTown by @mono_nz on 2024-05-31
     // the tagging function for this category
-    public var getFuncyInSwizzleTown: ((String) -> [Substring]) {
+    public var getFuncyInSwizzleTown: (String) -> [Substring] {
         switch self {
         case .addresses: return StringTagger.detectAddresses(in:)
         case .names: return StringTagger.detectNames(in:)

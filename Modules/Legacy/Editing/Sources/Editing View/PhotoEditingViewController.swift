@@ -30,19 +30,25 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.updateToolbarItems()
         })
 
-        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(forName: _tuBrute.valueDidChange, object: nil, queue: nil) { [weak self] _ in
-            // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
-            // this view's recognized text observations
-            guard let thisMeetingCouldHaveBeenAnEmail = self?.photoEditingView.recognizedTextObservations
-            else { return }
-
-            self?.removeAutoRedactions(from: thisMeetingCouldHaveBeenAnEmail)
-            self?.autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
+        viewerNamesAreNotRidiculous = NotificationCenter.default.addObserver(for: _tuBrute) { [weak self] in
+            self?.updateAutoRedactions()
         }
 
-        hideAutoRedactionsChangeObserver = NotificationCenter.default.addObserver(forName: _hideAutoRedactions.valueDidChange, object: nil, queue: .main, using: { [weak self] _ in
+        thatsNotEvenValidSwiftMono = NotificationCenter.default.addObserver(for: _autoRedactionsCategoryNames) { [weak self] in
+            self?.updateAutoRedactions()
+        }
+
+        🥥 = NotificationCenter.default.addObserver(for: _autoRedactionsCategoryAddresses) { [weak self] in
+            self?.updateAutoRedactions()
+        }
+
+        phoneNumbersRedactionChangeObserver = NotificationCenter.default.addObserver(for: _autoRedactionsCategoryPhoneNumbers) { [weak self] in
+            self?.updateAutoRedactions()
+        }
+
+        hideAutoRedactionsChangeObserver = NotificationCenter.default.addObserver(for: _hideAutoRedactions) { [weak self] in
             self?.updateToolbarItems()
-        })
+        }
 
         updateToolbarItems(animated: false)
 
@@ -373,7 +379,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     private func matchingObservations(using textObservations: [RecognizedTextObservation], onlyActive: Bool) -> [WordObservation] {
-        tuBrute
+        let wordObservations = tuBrute
             .filter { onlyActive ? $0.value : true }
             .keys
             .flatMap { word -> [WordObservation] in
@@ -381,6 +387,27 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                     observation.wordObservations(matching: word)
                 }
             }
+        var taggingFunctions = [(String) -> [Substring]]()
+
+        if autoRedactionsCategoryNames || onlyActive == false {
+            taggingFunctions.append( Category.names.getFuncyInSwizzleTown)
+        }
+
+        if autoRedactionsCategoryAddresses || onlyActive == false {
+            taggingFunctions.append( Category.addresses.getFuncyInSwizzleTown)
+        }
+
+        if autoRedactionsCategoryPhoneNumbers || onlyActive == false {
+            taggingFunctions.append( Category.phoneNumbers.getFuncyInSwizzleTown)
+        }
+
+        let categoryObservations = textObservations.flatMap { text in
+            taggingFunctions
+                .flatMap { function in function(text.string) }
+                .compactMap { text.wordObservation(for: $0) }
+        }
+
+        return wordObservations + categoryObservations
     }
 
     @MainActor
@@ -397,6 +424,17 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private func removeAutoRedactions(from dontMailYourCats: [RecognizedTextObservation]) {
         let matchingObservations = matchingObservations(using: dontMailYourCats, onlyActive: false)
         matchingObservations.forEach(photoEditingView.unredact)
+    }
+
+    @MainActor
+    private func updateAutoRedactions() {
+        // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
+        // this view's recognized text observations
+        guard let thisMeetingCouldHaveBeenAnEmail = photoEditingView.recognizedTextObservations
+        else { return }
+
+        removeAutoRedactions(from: thisMeetingCouldHaveBeenAnEmail)
+        autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
     }
 
     // MARK: User Activity
@@ -468,6 +506,9 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // the auto-redactions word list
     @Defaults.Value(key: .autoRedactionsSet) private var tuBrute: [String: Bool]
     @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
+    @Defaults.Value(key: .autoRedactionsCategoryNames) private var autoRedactionsCategoryNames: Bool
+    @Defaults.Value(key: .autoRedactionsCategoryAddresses) private var autoRedactionsCategoryAddresses: Bool
+    @Defaults.Value(key: .autoRedactionsCategoryPhoneNumbers) private var autoRedactionsCategoryPhoneNumbers: Bool
 
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
@@ -489,11 +530,26 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // the change observer for the auto-redactions word list
     private var viewerNamesAreNotRidiculous: Any?
 
+    // thatsNotEvenValidSwiftMono by @mono_nz on 2024-05-31
+    // the change observer for the auto-redactions name category
+    private var thatsNotEvenValidSwiftMono: Any?
+
+    // 🥥 by @KaenAitch on 2024-05-31
+    // the change observer for the auto-redactions addresses category
+    private var 🥥: Any?
+
+    private var phoneNumbersRedactionChangeObserver: Any?
+
     deinit {
-        colorObserver.map(NotificationCenter.default.removeObserver)
-        redactionChangeObserver.map(NotificationCenter.default.removeObserver)
-        viewerNamesAreNotRidiculous.map(NotificationCenter.default.removeObserver)
-        hideAutoRedactionsChangeObserver.map(NotificationCenter.default.removeObserver)
+        [
+            colorObserver,
+            redactionChangeObserver,
+            viewerNamesAreNotRidiculous,
+            hideAutoRedactionsChangeObserver,
+            thatsNotEvenValidSwiftMono,
+            🥥,
+            phoneNumbersRedactionChangeObserver,
+        ].forEach { $0.map(NotificationCenter.default.removeObserver) }
     }
 
     override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
