@@ -9,18 +9,18 @@ actor PhotoEditingObservationCalculator {
     private let detectedTextObservations: [RedactableObservation]
     private let recognizedTextObservations: [RedactableObservation]
     private let color: UIColor
-    private let finder: PhotoEditingIntersectionFinder
+    private let finder: any PhotoEditingIntersectionFinder = {
+        if #available(iOS 16.0, *) {
+            return PhotoEditingSystemIntersectionFinder()
+        } else {
+            return PhotoEditingLibraryIntersectionFinder()
+        }
+    }()
 
     init(detectedTextObservations: [RedactableObservation], recognizedTextObservations: [RedactableObservation], color: UIColor) {
         self.detectedTextObservations = detectedTextObservations
         self.recognizedTextObservations = recognizedTextObservations
         self.color = color
-
-        if #available(iOS 16.0, *) {
-            self.finder = PhotoEditingSystemIntersectionFinder()
-        } else {
-            self.finder = PhotoEditingLibraryIntersectionFinder()
-        }
     }
 
     var calculatedObservations: [CharacterObservation] {
