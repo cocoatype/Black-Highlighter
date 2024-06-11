@@ -42,13 +42,13 @@ open class TextDetector: NSObject {
     }
     #endif
 
-    private func detectRecognitions(with operation: TextRecognitionOperation) async -> [RecognizedText] {
+    private func detectRecognitions(with operation: TextRecognitionOperation) async -> [Observations.RecognizedText] {
         return await withCheckedContinuation { continuation in
             operation.completionBlock = { [weak operation] in
                 // Detect all text in image.
                 guard let operation = operation, let results = operation.recognizedTextResults else { return }
 
-                let candidates = results.compactMap { result -> RecognizedText? in
+                let candidates = results.compactMap { result -> Observations.RecognizedText? in
                     // For every observation, get the top candidate.
                     guard let topCandidate = result.topCandidates(1).first else {
                         assertionFailure("had zero top candidates")
@@ -64,14 +64,14 @@ open class TextDetector: NSObject {
         }
     }
 
-    private func detectText(with operation: TextRecognitionOperation) async -> [RecognizedTextObservation] {
+    private func detectText(with operation: TextRecognitionOperation) async -> [Observations.RecognizedTextObservation] {
         await detectRecognitions(with: operation)
             .compactMap {
                 RecognizedTextObservation($0, imageSize: operation.imageSize)
             }
     }
 
-    private func detectWords(with operation: TextRecognitionOperation) async -> [WordObservation] {
+    private func detectWords(with operation: TextRecognitionOperation) async -> [Observations.WordObservation] {
         return await detectText(with: operation)
             .flatMap(\.allWordObservations)
     }
@@ -99,12 +99,12 @@ open class TextDetector: NSObject {
         }
     }
 
-    open func detectText(in image: UIImage) async throws -> [RecognizedTextObservation] {
+    open func detectText(in image: UIImage) async throws -> [Observations.RecognizedTextObservation] {
         let recognitionOperation = try TextRecognitionOperation(image: image)
         return await detectText(with: recognitionOperation)
     }
 
-    public func detectText(in image: UIImage, completionHandler: @escaping (([RecognizedTextObservation]?) -> Void)) {
+    public func detectText(in image: UIImage, completionHandler: @escaping (([Observations.RecognizedTextObservation]?) -> Void)) {
         Task {
             await completionHandler(try? detectText(in: image))
         }

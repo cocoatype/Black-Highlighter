@@ -48,14 +48,22 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
     }
 
     func animateFullVisualization() {
-        guard cannons.count > 0 else { return }
-        removeAllRedactions()
-        add(cannons)
+        Task.detached { [weak self] in
+            guard let self else { return }
+            let redactions = await cannons
+            guard redactions.count > 0 else { return }
 
-        if UIAccessibility.isReduceMotionEnabled {
-            performReducedMotionVisualization()
-        } else {
-            performFullMotionVisualization()
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                removeAllRedactions()
+                add(redactions)
+
+                if UIAccessibility.isReduceMotionEnabled {
+                    performReducedMotionVisualization()
+                } else {
+                    performFullMotionVisualization()
+                }
+            }
         }
     }
 
@@ -134,66 +142,35 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
     // cannons by @eaglenaut on 4/30/21
     // preview redactions for all text, shown in the full visualization
     private var cannons: [Redaction] {
-        guard let textObservations, let recognizedTextObservations else { return [] }
+        get async {
+            guard let textObservations, let recognizedTextObservations else { return [] }
 
-        // get all character observations from recognized text
-        let recognizedCharacterObservations = recognizedTextObservations.flatMap(\.characterObservations).filter(\.bounds.isNotZero)
+            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textObservations, recognizedTextObservations: recognizedTextObservations, color: color)
+            let calculatedObservations = await calculator.calculatedObservations
 
-        // get all character observations from detected text
-        let detectedCharacterObservations = textObservations.flatMap(\.characterObservations).filter(\.bounds.isNotZero)
+            // reduce into dictionary by textObservationUUID
+            let observationsByUUID = calculatedObservations.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
+                var observationsByUUID: [CharacterObservation]
+                if let existing = dictionary[observation.textObservationUUID] {
+                    observationsByUUID = existing
+                } else {
+                    observationsByUUID = []
+                }
 
-        // do intersection detection to override detected with recognized text
-        let filteredDetectedObservations = detectedCharacterObservations.filter { detectedObservation in
-            let detectedCGPath = detectedObservation.bounds.path
-            let detectedPath = UIBezierPath(cgPath: detectedCGPath)
+                observationsByUUID.append(observation)
 
-            let hasIntersection = recognizedCharacterObservations.contains { recognizedObservation in
-                let recognizedCGPath = recognizedObservation.bounds.path
-                let recognizedPath = UIBezierPath(cgPath: recognizedCGPath)
-
-                let isEqual = detectedCGPath.isEqual(to: recognizedCGPath, accuracy: 0.01)
-                guard isEqual == false else { return true }
-
-                let isContained = detectedPath.contains(recognizedPath.currentPoint) || recognizedPath.contains(detectedPath.currentPoint)
-                guard isContained == false else { return true }
-
-                let intersections = detectedPath.intersection(with: recognizedPath)
-                guard intersections?.count ?? 0 == 0 else { return true }
-
-                let inverseIntersections = recognizedPath.intersection(with: detectedPath)
-                guard inverseIntersections?.count ?? 0 == 0 else { return true }
-
-                return false
+                var newDictionary = dictionary
+                newDictionary[observation.textObservationUUID] = observationsByUUID
+                return newDictionary
             }
 
-            return !hasIntersection
-        }
-
-        // unique by adding to set
-        let characterObservationSet = Set(filteredDetectedObservations + recognizedCharacterObservations)
-
-        // reduce into dictionary by textObservationUUID
-        let observationsByUUID = characterObservationSet.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
-            var observationsByUUID: [CharacterObservation]
-            if let existing = dictionary[observation.textObservationUUID] {
-                observationsByUUID = existing
-            } else {
-                observationsByUUID = []
+            // map dictionary keys into redactions
+            let redactions = observationsByUUID.compactMap { (_, value: [CharacterObservation]) in
+                return Redaction(value, color: color)
             }
 
-            observationsByUUID.append(observation)
-
-            var newDictionary = dictionary
-            newDictionary[observation.textObservationUUID] = observationsByUUID
-            return newDictionary
+            return redactions
         }
-
-        // map dictionary keys into redactions
-        let redactions = observationsByUUID.compactMap { (_, value: [CharacterObservation]) in
-            return Redaction(value, color: color)
-        }
-
-        return redactions
     }
 
     // MARK: Boilerplate
