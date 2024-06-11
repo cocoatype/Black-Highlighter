@@ -10,7 +10,9 @@ import GeometryMac
 import Geometry
 #endif
 
-public struct CharacterObservation: Hashable {
+public struct CharacterObservation: Hashable, RedactableObservation {
     public let bounds: Shape
     public let textObservationUUID: UUID
+
+    public var characterObservations: [CharacterObservation] { [self] }
 }

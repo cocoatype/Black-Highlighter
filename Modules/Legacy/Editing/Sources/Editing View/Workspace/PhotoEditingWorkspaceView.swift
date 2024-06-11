@@ -119,28 +119,11 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
         let wordObservations = recognizedTextObservations ?? []
         let textCharacterObservations = textObservations?.flatMap(\.characterObservations) ?? []
         Task.detached { [weak self] in
-            let filteredTextCharacterObservations = textCharacterObservations.filter { characterObservation in
-                let hasIntersection = wordObservations.contains { wordObservation in
-                    let wordCGPath = wordObservation.bounds.integral.path
-                    let textCGPath = characterObservation.bounds.integral.path
-
-                    let textPath = UIBezierPath(cgPath: textCGPath)
-                    let wordPath = UIBezierPath(cgPath: wordCGPath)
-
-                    let isContained = textPath.contains(wordPath.currentPoint) || wordPath.contains(textPath.currentPoint)
-                    guard isContained == false else { return true }
-
-                    let intersections = textPath.intersection(with: wordPath)
-                    guard intersections?.count ?? 0 == 0 else { return true }
-
-                    return false
-                }
-
-                return !hasIntersection
-            }
+            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textCharacterObservations, recognizedTextObservations: wordObservations)
+            let filteredTextCharacterObservations = await calculator.calculatedObservations
 
             await MainActor.run { [weak self] in
-                self?.redactableCharacterObservations = wordObservations.flatMap(\.characterObservations) + filteredTextCharacterObservations
+                self?.redactableCharacterObservations = filteredTextCharacterObservations
             }
         }
     }
