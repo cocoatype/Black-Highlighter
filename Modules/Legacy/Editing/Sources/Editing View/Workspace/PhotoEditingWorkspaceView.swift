@@ -118,9 +118,8 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
     private func updateRedactableObservations() {
         let wordObservations = recognizedTextObservations ?? []
         let textCharacterObservations = textObservations?.flatMap(\.characterObservations) ?? []
-        let color = self.color
         Task.detached { [weak self] in
-            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textCharacterObservations, recognizedTextObservations: wordObservations, color: color)
+            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textCharacterObservations, recognizedTextObservations: wordObservations)
             let filteredTextCharacterObservations = await calculator.calculatedObservations
 
             await MainActor.run { [weak self] in

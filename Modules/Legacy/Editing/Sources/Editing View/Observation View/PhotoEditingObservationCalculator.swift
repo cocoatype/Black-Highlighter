@@ -8,7 +8,6 @@ import Redactions
 actor PhotoEditingObservationCalculator {
     private let detectedTextObservations: [RedactableObservation]
     private let recognizedTextObservations: [RedactableObservation]
-    private let color: UIColor
     private let finder: any PhotoEditingIntersectionFinder = {
         if #available(iOS 16.0, *) {
             return PhotoEditingSystemIntersectionFinder()
@@ -17,10 +16,9 @@ actor PhotoEditingObservationCalculator {
         }
     }()
 
-    init(detectedTextObservations: [RedactableObservation], recognizedTextObservations: [RedactableObservation], color: UIColor) {
+    init(detectedTextObservations: [RedactableObservation], recognizedTextObservations: [RedactableObservation]) {
         self.detectedTextObservations = detectedTextObservations
         self.recognizedTextObservations = recognizedTextObservations
-        self.color = color
     }
 
     var calculatedObservations: [CharacterObservation] {

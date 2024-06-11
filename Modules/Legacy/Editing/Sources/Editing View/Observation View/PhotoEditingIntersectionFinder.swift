@@ -5,5 +5,4 @@ import Observations
 
 protocol PhotoEditingIntersectionFinder {
     func intersectionExists(between lhs: CGPath, and rhs: CGPath) -> Bool
-//    func intersectingObservations(in detectedObservations: [CharacterObservation], and recognizedObservations: [CharacterObservation]) -> [CharacterObservation]
 }

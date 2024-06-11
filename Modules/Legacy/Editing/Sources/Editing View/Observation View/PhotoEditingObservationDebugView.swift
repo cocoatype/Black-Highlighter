@@ -28,75 +28,54 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
     }
 
     private func updateDebugLayers() {
-        layer.sublayers = debugLayers
+        Task {
+            layer.sublayers = await debugLayers
+        }
     }
 
     private var debugLayers: [CAShapeLayer] {
-        guard FeatureFlag.shouldShowDebugOverlay, let textObservations, let recognizedTextObservations else { return [] }
+        get async {
+            guard FeatureFlag.shouldShowDebugOverlay, let textObservations, let recognizedTextObservations else { return [] }
 
-        // find words (new system)
-        let wordLayers = recognizedTextObservations.map { wordObservation in
-            let outlineLayer = CAShapeLayer()
-            outlineLayer.fillColor = UIColor.systemGreen.withAlphaComponent(0.3).cgColor
-            outlineLayer.frame = bounds
-            outlineLayer.path = wordObservation.path
-            return outlineLayer
-        }
-
-        // find text (old system)
-        let textLayers = textObservations.flatMap { textObservation -> [CAShapeLayer] in
-            let characterObservations = textObservation.characterObservations
-            let characterLayers = characterObservations.map { observation -> CAShapeLayer in
-                let layer = CAShapeLayer()
-                layer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3).cgColor
-                layer.frame = bounds
-                layer.path = observation.bounds.path
-                return layer
+            // find words (new system)
+            let wordLayers = recognizedTextObservations.map { wordObservation in
+                let outlineLayer = CAShapeLayer()
+                outlineLayer.fillColor = UIColor.systemGreen.withAlphaComponent(0.0).cgColor
+                outlineLayer.frame = bounds
+                outlineLayer.path = wordObservation.path
+                return outlineLayer
             }
 
-            let textLayer = CAShapeLayer()
-            textLayer.fillColor = UIColor.systemRed.withAlphaComponent(0.3).cgColor
-            textLayer.frame = bounds
-            textLayer.path = CGPath(rect: textObservation.bounds.boundingBox, transform: nil)
+            // find text (old system)
+            let textLayers = textObservations.flatMap { textObservation -> [CAShapeLayer] in
+                let characterObservations = textObservation.characterObservations
+                let characterLayers = characterObservations.map { observation -> CAShapeLayer in
+                    let layer = CAShapeLayer()
+                    layer.fillColor = UIColor.systemBlue.withAlphaComponent(0.3).cgColor
+                    layer.frame = bounds
+                    layer.path = observation.bounds.path
+                    return layer
+                }
 
-            return characterLayers + [textLayer]
-        }
+                let textLayer = CAShapeLayer()
+                textLayer.fillColor = UIColor.systemRed.withAlphaComponent(0.3).cgColor
+                textLayer.frame = bounds
+                textLayer.path = CGPath(rect: textObservation.bounds.boundingBox, transform: nil)
 
-        _ = textLayers.filter { textLayer in
-            guard let textCGPath = textLayer.path else { return false }
-            let textPath = UIBezierPath(cgPath: textCGPath)
-
-            let hasIntersection = wordLayers.contains { wordLayer in
-                guard let wordCGPath = wordLayer.path else { return false }
-                let wordPath = UIBezierPath(cgPath: wordCGPath)
-
-                let isEqual = textCGPath.isEqual(to: wordCGPath, accuracy: 0.01)
-                guard isEqual == false else { return true }
-
-                let isContained = textPath.contains(wordPath.currentPoint) || wordPath.contains(textPath.currentPoint)
-                guard isContained == false else { return true }
-
-                let intersections = textPath.intersection(with: wordPath)
-                guard intersections?.count ?? 0 == 0 else { return true }
-
-                let inverseIntersections = wordPath.intersection(with: textPath)
-                guard inverseIntersections?.count ?? 0 == 0 else { return true }
-
-                return false
+                return characterLayers + [textLayer]
             }
-            return !hasIntersection
-        }
 
-        let characterObservations = recognizedTextObservations.flatMap(\.characterObservations)
-        let characterObservationSet = Set(characterObservations)
-        let wordCharacterLayers = characterObservationSet.map { (characterObservation: CharacterObservation) -> CAShapeLayer in
-            let textLayer = CAShapeLayer()
-            textLayer.fillColor = UIColor.systemYellow.withAlphaComponent(0.3).cgColor
-            textLayer.frame = bounds
-            textLayer.path = characterObservation.bounds.path
-            return textLayer
-        }
+            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textObservations, recognizedTextObservations: recognizedTextObservations)
+            let characterObservations = await calculator.calculatedObservations
+            let wordCharacterLayers = characterObservations.map { (characterObservation: CharacterObservation) -> CAShapeLayer in
+                let textLayer = CAShapeLayer()
+                textLayer.fillColor = UIColor.systemYellow.withAlphaComponent(0.0).cgColor
+                textLayer.frame = bounds
+                textLayer.path = characterObservation.bounds.path
+                return textLayer
+            }
 
-        return textLayers + wordLayers + wordCharacterLayers
+            return textLayers + wordLayers + wordCharacterLayers
+        }
     }
 }

@@ -145,7 +145,7 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
         get async {
             guard let textObservations, let recognizedTextObservations else { return [] }
 
-            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textObservations, recognizedTextObservations: recognizedTextObservations, color: color)
+            let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textObservations, recognizedTextObservations: recognizedTextObservations)
             let calculatedObservations = await calculator.calculatedObservations
 
             // reduce into dictionary by textObservationUUID
