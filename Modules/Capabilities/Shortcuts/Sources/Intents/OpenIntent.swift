@@ -3,28 +3,32 @@
 
 import AppIntents
 import Redactions
+import Navigation
+import UIKit
 
 @available(iOS 16, *)
-struct OpenImageIntent: AppIntent, OpenIntent {
+struct OpenImageIntent: AppIntent {
+    @AppDependency private var navigator: Navigator
+
     static let title: LocalizedStringResource = "OpenImageIntent.title"
 
     static let description: IntentDescription = "OpenImageIntent.description"
 
+    static let openAppWhenRun: Bool = true
+
+    static var lastRedactions: [Redaction]?
+
     @Parameter(
         title: "OpenImageIntent.sourceImage.title",
         supportedTypeIdentifiers: ["public.image"],
-        inputConnectionBehavior: .connectToPreviousIntentResult
+        inputConnectionBehavior: .never
     )
     var sourceImage: IntentFile
 
-    let redactions: [Redaction]?
-
-    var target: some AppValue {
-        sourceImage
-    }
+    let redactions: [Redaction]
 
     init() {
-        self.redactions = nil
+        redactions = Self.lastRedactions ?? []
     }
 
     init(sourceImage: IntentFile, redactions: [Redaction]) {
@@ -37,7 +41,12 @@ struct OpenImageIntent: AppIntent, OpenIntent {
 //    }
 
     func perform() async throws -> some IntentResult {
-        // open file here ???
+        guard let image = UIImage(data: sourceImage.data) else { throw ShortcutsRedactorError.noImage(sourceImage.data) }
+
+        await MainActor.run {
+            navigator.navigate(to: .editor(image, redactions))
+        }
+
         return .result()
     }
 }

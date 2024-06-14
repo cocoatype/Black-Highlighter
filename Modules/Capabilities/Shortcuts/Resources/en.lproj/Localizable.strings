@@ -15,5 +15,5 @@
 "RedactImageIntent.sourceImages.title" = "Source Images";
 "RedactImageIntent.title" = "Redact Image";
 
-"ShortcutsRedactorError.noImage.localizedStringResource" = "No Image Provided";
+"ShortcutsRedactorError.noImage.localizedStringResource" = "No Image Provided: %@";
 "ShortcutsRedactorError.unpurchased.localizedStringResource" = "Requires Ultra Highlighter";

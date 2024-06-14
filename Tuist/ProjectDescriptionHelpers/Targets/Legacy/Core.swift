@@ -14,6 +14,7 @@ public enum Core {
             .target(DesignSystem.target),
             .target(Detections.target(sdk: .catalyst)),
             .target(Editing.target),
+            .target(Navigation.target),
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
             .target(Purchasing.doublesTarget),

@@ -1,9 +1,11 @@
 //  Created by Geoff Pado on 3/31/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import AppIntents
 import AppRatings
 import Editing
 import ErrorHandling
+import Navigation
 import Photos
 import PurchaseMarketing
 import Redactions
@@ -11,7 +13,7 @@ import UIKit
 import VisionKit
 import SwiftUI
 
-class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanningDelegate, DocumentScannerPresenting, SettingsPresenting {
+class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanningDelegate, DocumentScannerPresenting, SettingsPresenting, Navigator {
     init(permissionsRequester: PhotoPermissionsRequester = PhotoPermissionsRequester()) {
         self.permissionsRequester = permissionsRequester
         super.init(nibName: nil, bundle: nil)
@@ -20,6 +22,10 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
         view.backgroundColor = .clear
         overrideUserInterfaceStyle = .dark
         embed(preferredViewController)
+
+        if #available(iOS 16, *) {
+            AppDependencyManager.shared.add(dependency: (self as Navigator))
+        }
     }
 
     @objc func showPhotoLibrary() {
@@ -88,6 +94,19 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
     @objc func dismissSettingsViewController() {
         guard presentedViewController is SettingsHostingController else { return }
         dismiss(animated: true)
+    }
+
+    // MARK: Navigation
+
+    func navigate(to route: Route) {
+        if presentedViewController != nil {
+            dismiss(animated: false)
+        }
+
+        switch route {
+        case .editor(let image, let redactions):
+            presentPhotoEditingViewController(for: image, redactions: redactions)
+        }
     }
 
     // MARK: Status Bar

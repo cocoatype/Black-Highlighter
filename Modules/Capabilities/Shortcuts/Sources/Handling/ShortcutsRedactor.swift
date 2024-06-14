@@ -15,7 +15,7 @@ class ShortcutRedactor: NSObject {
     }
 
     func redact(_ input: IntentFile, words wordList: [String]) async throws -> RedactedFile {
-        guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
+        guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage(input.data) }
         let textObservations = try await detector.detectText(in: image)
         let matchingObservations = wordList.flatMap { word -> [WordObservation] in
             return textObservations.flatMap { observation -> [WordObservation] in
@@ -26,7 +26,7 @@ class ShortcutRedactor: NSObject {
     }
 
     func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> RedactedFile {
-        guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
+        guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage(input.data) }
 
         let texts = try await detector.detectText(in: image)
         let wordObservations = texts.flatMap { text -> [WordObservation] in

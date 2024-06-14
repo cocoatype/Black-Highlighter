@@ -29,7 +29,7 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
         // 🔥 by @Eskeminha on 2024-05-29
         // the result of redacting the detected kinds
         let 🔥 = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
-        guard let firstResult = 🔥.first else { throw ShortcutsRedactorError.noImage }
+        guard let firstResult = 🔥.first else { throw ShortcutsRedactorError.exportFailed }
 
         return .result(
             value: 🔥.map(\.redactedImage),
