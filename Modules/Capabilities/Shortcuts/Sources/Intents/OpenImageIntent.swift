@@ -8,20 +8,25 @@ import UIKit
 
 @available(iOS 16, *)
 struct OpenImageIntent: AppIntent {
-    @AppDependency private var navigator: Navigator
-
     static let title: LocalizedStringResource = "OpenImageIntent.title"
 
     static let description: IntentDescription = "OpenImageIntent.description"
 
-    static let openAppWhenRun: Bool = true
+    static let openAppWhenRun = true
 
+    static var parameterSummary: some ParameterSummary {
+        Summary("OpenImageIntent.parameterSummary\(\.$sourceImage)")
+    }
+
+    // this exists because we can't pass redactions between intents without redactions being a parameter
     static var lastRedactions: [Redaction]?
+
+    @AppDependency private var navigator: Navigator
 
     @Parameter(
         title: "OpenImageIntent.sourceImage.title",
         supportedTypeIdentifiers: ["public.image"],
-        inputConnectionBehavior: .never
+        inputConnectionBehavior: .default
     )
     var sourceImage: IntentFile
 
@@ -35,10 +40,6 @@ struct OpenImageIntent: AppIntent {
         self.redactions = redactions
         self.sourceImage = sourceImage
     }
-
-//    static var parameterSummary: some ParameterSummary {
-//        Summary("OpenIntent.parameterSummary\(\.sourceImages)")
-//    }
 
     func perform() async throws -> some IntentResult {
         guard let image = UIImage(data: sourceImage.data) else { throw ShortcutsRedactorError.noImage(sourceImage.data) }
