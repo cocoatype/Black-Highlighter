@@ -2,8 +2,8 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import AppIntents
+import AppNavigation
 import Redactions
-import Navigation
 import UIKit
 
 @available(iOS 16, *)

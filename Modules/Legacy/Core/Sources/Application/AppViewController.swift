@@ -2,10 +2,10 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import AppIntents
+import AppNavigation
 import AppRatings
 import Editing
 import ErrorHandling
-import Navigation
 import Photos
 import PurchaseMarketing
 import Redactions
