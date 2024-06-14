@@ -14,7 +14,7 @@ enum ShortcutsRedactorError: Error, CustomLocalizedStringResourceConvertible {
         case .exportFailed:
             LocalizedStringResource("ShortcutsRedactorError.exportFailed.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))
         case .noImage(let data):
-            LocalizedStringResource("ShortcutsRedactorError.noImage.localizedStringResource\(data.map { String(format: "%02x", $0) }.joined())", bundle: .forClass(ShortcutRedactor.self))
+            LocalizedStringResource("ShortcutsRedactorError.noImage.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))
         case .unpurchased:
             LocalizedStringResource("ShortcutsRedactorError.unpurchased.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))
         }

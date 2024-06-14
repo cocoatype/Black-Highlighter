@@ -31,6 +31,8 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
         let 🔥 = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
         guard let firstResult = 🔥.first else { throw ShortcutsRedactorError.exportFailed }
 
+        OpenImageIntent.lastRedactions = firstResult.redactions
+
         return .result(
             value: 🔥.map(\.redactedImage),
             opensIntent: OpenImageIntent(
