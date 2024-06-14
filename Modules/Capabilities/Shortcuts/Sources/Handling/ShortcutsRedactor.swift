@@ -14,7 +14,7 @@ class ShortcutRedactor: NSObject {
         self.exporter = exporter
     }
 
-    func redact(_ input: IntentFile, words wordList: [String]) async throws -> IntentFile {
+    func redact(_ input: IntentFile, words wordList: [String]) async throws -> RedactedFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
         let textObservations = try await detector.detectText(in: image)
         let matchingObservations = wordList.flatMap { word -> [WordObservation] in
@@ -25,7 +25,7 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: matchingObservations)
     }
 
-    func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> IntentFile {
+    func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> RedactedFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage }
 
         let texts = try await detector.detectText(in: image)
@@ -39,10 +39,14 @@ class ShortcutRedactor: NSObject {
         return try await redact(input, wordObservations: wordObservations)
     }
 
-    private func redact(_ input: IntentFile, wordObservations: [WordObservation]) async throws -> IntentFile {
+    private func redact(_ input: IntentFile, wordObservations: [WordObservation]) async throws -> RedactedFile {
         let redactions = wordObservations.map { Redaction($0, color: .black) }
 
-        return try await exporter.export(input, redactions: redactions)
+        return try await RedactedFile(
+            sourceImage: input,
+            redactedImage: exporter.export(input, redactions: redactions),
+            redactions: redactions
+        )
     }
 
     // MARK: Boilerplate
