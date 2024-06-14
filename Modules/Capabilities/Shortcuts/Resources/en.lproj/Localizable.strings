@@ -3,6 +3,11 @@
 "DetectionKind.phoneNumbers" = "Phone Numbers";
 "DetectionKind.typeDisplayRepresentation" = "Detectable Item";
 
+"OpenImageIntent.description" = "Open an image in Black Highlighter.";
+"OpenImageIntent.parameterSummary${sourceImage}" = "Open ${sourceImage} in Black Highlighter";
+"OpenImageIntent.sourceImage.title" = "Source Image";
+"OpenImageIntent.title" = "Open Image";
+
 "RedactDetectionsIntent.description" = "Redact detected items in an image.";
 "RedactDetectionsIntent.detectionKind.title" = "Items to Detect";
 "RedactDetectionsIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact detected ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
@@ -15,5 +20,6 @@
 "RedactImageIntent.sourceImages.title" = "Source Images";
 "RedactImageIntent.title" = "Redact Image";
 
+"ShortcutsRedactorError.exportFailed.localizedStringResource" = "Export Failed";
 "ShortcutsRedactorError.noImage.localizedStringResource" = "No Image Provided";
 "ShortcutsRedactorError.unpurchased.localizedStringResource" = "Requires Ultra Highlighter";

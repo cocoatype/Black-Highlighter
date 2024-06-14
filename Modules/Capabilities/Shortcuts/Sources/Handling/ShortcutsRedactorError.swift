@@ -5,12 +5,15 @@ import Foundation
 
 @available(iOS 16.0, *)
 enum ShortcutsRedactorError: Error, CustomLocalizedStringResourceConvertible {
-    case noImage
+    case exportFailed
+    case noImage(Data)
     case unpurchased
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .noImage:
+        case .exportFailed:
+            LocalizedStringResource("ShortcutsRedactorError.exportFailed.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))
+        case .noImage(let data):
             LocalizedStringResource("ShortcutsRedactorError.noImage.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))
         case .unpurchased:
             LocalizedStringResource("ShortcutsRedactorError.unpurchased.localizedStringResource", bundle: .forClass(ShortcutRedactor.self))

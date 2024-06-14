@@ -29,6 +29,7 @@ let project = Project(
         Geometry.target(sdk: .native),
         Logging.target(sdk: .catalyst),
         Logging.target(sdk: .native),
+        Navigation.target,
         Observations.target(sdk: .catalyst),
         Observations.target(sdk: .native),
         PurchaseMarketing.target,

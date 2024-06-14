@@ -16,7 +16,9 @@ class RedactIntentHandlerTests: XCTestCase {
 
         do {
             _ = try await handler.handle(💩: intent) { _ in
-                return { file, _ in file }
+                return { file, _ in
+                    RedactedFile(sourceImage: file, redactedImage: file, redactions: [])
+                }
             }
             XCTFail("Expected unpurchased error")
         } catch ShortcutsRedactorError.unpurchased {}

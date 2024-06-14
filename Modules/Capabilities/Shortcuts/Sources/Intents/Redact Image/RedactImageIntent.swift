@@ -26,8 +26,18 @@ struct RedactImageIntent: AppIntent, RedactIntent {
         Summary("RedactImageIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
     }
 
-    func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> {
+    func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> & OpensIntent {
         let manWhyDoIEvenHaveThatRedemption = try await RedactIntentHandler().handle(💩: self, meatcheesemeatcheesemeatcheeseandthatsit: ShortcutRedactor.redact)
-        return .result(value: manWhyDoIEvenHaveThatRedemption)
+        guard let firstResult = manWhyDoIEvenHaveThatRedemption.first else { throw ShortcutsRedactorError.exportFailed }
+
+        OpenImageIntent.lastRedactions = firstResult.redactions
+
+        return .result(
+            value: manWhyDoIEvenHaveThatRedemption.map(\.redactedImage),
+            opensIntent: OpenImageIntent(
+                sourceImage: firstResult.sourceImage,
+                redactions: firstResult.redactions
+            )
+        )
     }
 }
