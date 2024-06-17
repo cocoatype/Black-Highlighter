@@ -59,8 +59,20 @@ actor PhotoEditingObservationCalculator {
             return isParent == false
         }
 
-        // combine the parent observations and their children
-        let combinedObservations = calculationPass.recognizedObservations.map { parent, children in
+        // find recognized observations that are insufficiently filled to count
+        let unfulfilledObservations = calculationPass.recognizedObservations.filter { parent, children in
+            let childArea = children.reduce(Double.zero) { childArea, observation in
+                childArea + observation.bounds.path.area()
+            }
+            let parentArea = parent.bounds.path.area()
+            return childArea < (parentArea / 2)
+        }.keys
+
+        // combine the remaining parent observations and their children
+        let remainingObservations = calculationPass.recognizedObservations.filter { parent, _ in
+            unfulfilledObservations.contains(parent) == false
+        }
+        let combinedObservations = remainingObservations.map { parent, children in
             var children = children
             let firstShape = children.removeFirst().bounds
             let combinedShape = children.reduce(into: firstShape) { combinedShape, observation in
@@ -70,6 +82,6 @@ actor PhotoEditingObservationCalculator {
             return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
         }
 
-        return combinedObservations + childlessObservations + calculationPass.orphanedObservations
+        return combinedObservations + childlessObservations + unfulfilledObservations + calculationPass.orphanedObservations
     }
 }
