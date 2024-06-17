@@ -54,7 +54,7 @@ extension Defaults {
             return binding
         }
 
-        private let binding: SwiftUI.Binding<ValueType>//CurrentValueSubject<ValueType, Never>
+        private let binding: SwiftUI.Binding<ValueType>
 
         // MARK: Boilerplate
 
