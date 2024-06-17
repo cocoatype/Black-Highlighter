@@ -11,6 +11,7 @@ public enum Editing {
         dependencies: [
             .target(AutoRedactionsUI.target),
             .target(Brushes.target(sdk: .catalyst)),
+            .target(DebugOverlay.target),
             .target(Detections.target(sdk: .catalyst)),
             .target(ErrorHandling.target(sdk: .catalyst)),
             .target(Exporting.target),

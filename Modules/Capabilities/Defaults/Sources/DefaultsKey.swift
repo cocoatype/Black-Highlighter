@@ -6,7 +6,6 @@ import Foundation
 extension Defaults {
     public enum Key: String {
         case numberOfSaves = "Defaults.Keys.numberOfSaves2"
-//        case autoRedactionsWordList = "Defaults.Keys.autoRedactionsWordList"
         case autoRedactionsCategoryNames = "Defaults.Keys.autoRedactionsCategoryNames"
         case autoRedactionsCategoryAddresses = "Defaults.Keys.autoRedactionsCategoryAddresses"
         case autoRedactionsCategoryPhoneNumbers = "Defaults.Keys.autoRedactionsCategoryPhoneNumbers"
@@ -14,5 +13,11 @@ extension Defaults {
         case recentBookmarks = "Defaults.Keys.recentBookmarks"
         case hideDocumentScanner = "Defaults.Keys.hideDocumentScanner"
         case hideAutoRedactions = "Defaults.Keys.hideAutoRedactions"
+
+        // Debug Overlay
+        case showDetectedTextOverlay = "Defaults.Keys.showDetectedTextOverlay"
+        case showDetectedCharactersOverlay = "Defaults.Keys.showDetectedCharactersOverlay"
+        case showRecognizedTextOverlay = "Defaults.Keys.showRecognizedTextOverlay"
+        case showCalculatedOverlay = "Defaults.Keys.showCalculatedOverlay"
     }
 }

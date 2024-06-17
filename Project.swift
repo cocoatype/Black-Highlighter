@@ -17,6 +17,7 @@ let project = Project(
         Brushes.target(sdk: .catalyst),
         Brushes.target(sdk: .native),
         Core.target,
+        DebugOverlay.target,
         Defaults.target,
         DesignSystem.target,
         Detections.target(sdk: .catalyst),

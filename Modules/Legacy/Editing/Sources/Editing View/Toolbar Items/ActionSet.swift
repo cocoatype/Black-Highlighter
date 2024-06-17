@@ -30,6 +30,8 @@ struct ActionSet {
     // 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣 by @Eskeminha on 2024-05-03
     // the standard set of trailing navigation items
     @ToolbarBuilder private var 🧑‍💻👋👋👋🧑‍💻🏠🕖🤣💜😍💜😍🕙😒😒😒🕙👋😍🤣: [UIBarButtonItem] {
+        if FeatureFlag.shouldShowDebugOverlay { DebugPreferencesBarButtonItem(target: target) }
+
         ShareBarButtonItem(target: target)
 
         SeekBarButtonItem(target: target)
