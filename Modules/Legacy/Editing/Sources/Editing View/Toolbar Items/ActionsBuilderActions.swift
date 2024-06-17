@@ -10,4 +10,5 @@ import Foundation
     func showColorPicker(_ sender: Any)
     func showAutoRedactAccess(_ sender: Any)
     func startSeeking(_ sender: Any)
+    func showDebugPreferences(_ sender: Any)
 }

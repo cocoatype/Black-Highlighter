@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import AutoRedactionsUI
+import DebugOverlay
 import Defaults
 import Detections
 import Exporting
@@ -498,6 +499,11 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                 present(alert, animated: true)
             }
         }
+    }
+
+    @objc @MainActor public func showDebugPreferences(_ sender: Any) {
+        guard #available(iOS 15, *) else { return }
+        present(OverlayPreferencesHostingController(), animated: true)
     }
 
     // MARK: Boilerplate
