@@ -29,11 +29,11 @@ actor PhotoEditingObservationCalculator {
         // get all character observations from detected text
         let detectedCharacterObservations = detectedTextObservations.flatMap(\.characterObservations).filter(\.bounds.isNotZero)
 
-        // do intersection detection to override detected with recognized text
-        let calculatedObservations = recognizedCharacterObservations.reduce(into: [CharacterObservation]()) { calculatedObservations, recognizedObservation in
-            let recognizedPath = recognizedObservation.bounds.path
-            var intersectingObservations = detectedCharacterObservations.filter { detectedObservation in
-                let detectedPath = detectedObservation.bounds.path
+        // find where all detected observations belong
+        let calculationPass = detectedCharacterObservations.reduce(into: PhotoEditingObservationCalculationPass()) { currentPass, detectedObservation in
+            let detectedPath = detectedObservation.bounds.path
+            let intersectingObservation = recognizedCharacterObservations.first(where: { recognizedObservation in
+                let recognizedPath = recognizedObservation.bounds.path
 
                 let isEqual = detectedPath.isEqual(to: recognizedPath, accuracy: 0.01)
                 guard isEqual == false else {
@@ -41,18 +41,35 @@ actor PhotoEditingObservationCalculator {
                 }
 
                 return finder.intersectionExists(between: detectedPath, and: recognizedPath)
+            })
+
+            if let intersectingObservation {
+                var siblingObservations = currentPass.recognizedObservations[intersectingObservation] ?? []
+                siblingObservations.append(detectedObservation)
+                currentPass.recognizedObservations[intersectingObservation] = siblingObservations
+            } else {
+                currentPass.orphanedObservations.append(detectedObservation)
             }
+        }
 
-            guard intersectingObservations.count > 0 else { return }
+        // find recognized observations with no related detected observations
+        let parentObservations = calculationPass.recognizedObservations.keys
+        let childlessObservations = recognizedCharacterObservations.filter { recognizedObservation in
+            let isParent = parentObservations.contains(recognizedObservation)
+            return isParent == false
+        }
 
-            let firstShape = intersectingObservations.removeFirst().bounds
-            let intersectingObservationsShape = intersectingObservations.reduce(into: firstShape) { combinedShape, observation in
+        // combine the parent observations and their children
+        let combinedObservations = calculationPass.recognizedObservations.map { parent, children in
+            var children = children
+            let firstShape = children.removeFirst().bounds
+            let combinedShape = children.reduce(into: firstShape) { combinedShape, observation in
                 combinedShape = combinedShape.union(observation.bounds)
             }
 
-            calculatedObservations.append(CharacterObservation(bounds: intersectingObservationsShape, textObservationUUID: recognizedObservation.textObservationUUID))
+            return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
         }
 
-        return calculatedObservations
+        return combinedObservations + childlessObservations + calculationPass.orphanedObservations
     }
 }
