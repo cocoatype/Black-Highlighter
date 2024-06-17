@@ -29,6 +29,10 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
                 guard let characterShapeThing = try? visionText.boundingBox(for: characterRange) else { return nil }
                 let shape = Shape(characterShapeThing).scaled(to: imageSize)
                 return CharacterObservation(bounds: shape, textObservationUUID: recognizedText.uuid)
+            }.reduce(into: [CharacterObservation]()) { uniqueObservations, observation in
+                if !uniqueObservations.contains(where: { $0.bounds == observation.bounds }) {
+                    uniqueObservations.append(observation)
+                }
             }
     }
 

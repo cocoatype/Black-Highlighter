@@ -10,6 +10,10 @@ public struct Shape: Hashable {
     public let topLeft: CGPoint
     public let topRight: CGPoint
 
+    public init() {
+        self = .zero
+    }
+
     public init(bottomLeft: CGPoint, bottomRight: CGPoint, topLeft: CGPoint, topRight: CGPoint) {
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
@@ -68,30 +72,19 @@ public struct Shape: Hashable {
     }
 
     public func union(_ other: Shape) -> Shape {
-        let transform = CGAffineTransformMakeRotation(angle)
+        let allPoints = [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight]
 
-        let ourRotatedCenterLeft = centerLeft.applying(transform)
-        let otherRotatedCenterLeft = other.centerLeft.applying(transform)
-        let ourRotatedCenterRight = centerRight.applying(transform)
-        let otherRotatedCenterRight = other.centerRight.applying(transform)
+        let minX = allPoints.map { $0.x }.min() ?? 0
+        let minY = allPoints.map { $0.y }.min() ?? 0
+        let maxX = allPoints.map { $0.x }.max() ?? 0
+        let maxY = allPoints.map { $0.y }.max() ?? 0
 
-        // rightyTighty by @KaenAitch on 2/3/22
-        // the left-most shape
-        let rightyTighty: Shape
-        if ourRotatedCenterLeft.x < otherRotatedCenterLeft.x {
-            rightyTighty = self
-        } else {
-            rightyTighty = other
-        }
-
-        let rightMostShape: Shape
-        if ourRotatedCenterRight.x > otherRotatedCenterRight.x {
-            rightMostShape = self
-        } else {
-            rightMostShape = other
-        }
-
-        return Shape(bottomLeft: rightyTighty.bottomLeft, bottomRight: rightMostShape.bottomRight, topLeft: rightyTighty.topLeft, topRight: rightMostShape.topRight)
+        return Shape(
+            bottomLeft: CGPoint(x: minX, y: maxY),
+            bottomRight: CGPoint(x: maxX, y: maxY),
+            topLeft: CGPoint(x: minX, y: minY),
+            topRight: CGPoint(x: maxX, y: minY)
+        )
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

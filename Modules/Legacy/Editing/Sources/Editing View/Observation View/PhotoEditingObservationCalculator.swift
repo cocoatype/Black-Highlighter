@@ -2,6 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+import Geometry
 import Observations
 import Redactions
 
@@ -29,27 +30,29 @@ actor PhotoEditingObservationCalculator {
         let detectedCharacterObservations = detectedTextObservations.flatMap(\.characterObservations).filter(\.bounds.isNotZero)
 
         // do intersection detection to override detected with recognized text
-        let filteredDetectedObservations = detectedCharacterObservations.filter { detectedObservation in
-            let detectedCGPath = detectedObservation.bounds.path
+        let calculatedObservations = recognizedCharacterObservations.reduce(into: [CharacterObservation]()) { calculatedObservations, recognizedObservation in
+            let recognizedPath = recognizedObservation.bounds.path
+            var intersectingObservations = detectedCharacterObservations.filter { detectedObservation in
+                let detectedPath = detectedObservation.bounds.path
 
-            let hasIntersection = recognizedCharacterObservations.contains { recognizedObservation in
-                let recognizedCGPath = recognizedObservation.bounds.path
+                let isEqual = detectedPath.isEqual(to: recognizedPath, accuracy: 0.01)
+                guard isEqual == false else {
+                    return true
+                }
 
-                let isEqual = detectedCGPath.isEqual(to: recognizedCGPath, accuracy: 0.01)
-                guard isEqual == false else { return true }
-
-                let isContained = detectedCGPath.contains(recognizedCGPath.currentPoint) || recognizedCGPath.contains(detectedCGPath.currentPoint)
-                guard isContained == false else { return true }
-
-                return finder.intersectionExists(between: detectedCGPath, and: recognizedCGPath)
+                return finder.intersectionExists(between: detectedPath, and: recognizedPath)
             }
 
-            return !hasIntersection
+            guard intersectingObservations.count > 0 else { return }
+
+            let firstShape = intersectingObservations.removeFirst().bounds
+            let intersectingObservationsShape = intersectingObservations.reduce(into: firstShape) { combinedShape, observation in
+                combinedShape = combinedShape.union(observation.bounds)
+            }
+
+            calculatedObservations.append(CharacterObservation(bounds: intersectingObservationsShape, textObservationUUID: recognizedObservation.textObservationUUID))
         }
 
-        // unique by adding to set
-        let characterObservationSet = Set(filteredDetectedObservations + recognizedCharacterObservations)
-
-        return Array(characterObservationSet)
+        return calculatedObservations
     }
 }

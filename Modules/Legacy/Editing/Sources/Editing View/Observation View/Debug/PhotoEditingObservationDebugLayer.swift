@@ -4,6 +4,7 @@
 class PhotoEditingObservationDebugLayer: CAShapeLayer {
     init(fillColor: UIColor, frame: CGRect, path: CGPath) {
         super.init()
+        self.strokeColor = fillColor.cgColor
         self.fillColor = fillColor.withAlphaComponent(0.3).cgColor
         self.frame = frame
         self.path = path

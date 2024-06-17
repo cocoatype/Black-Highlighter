@@ -65,8 +65,8 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
             // find words (new system)
             let wordLayers: [PhotoEditingObservationDebugLayer]
             if isRecognizedTextOverlayEnabled {
-                wordLayers = recognizedTextObservations.map { wordObservation in
-                    PhotoEditingObservationDebugLayer(fillColor: .systemYellow, frame: bounds, path: wordObservation.path)
+                wordLayers = recognizedTextObservations.flatMap(\.characterObservations).map { observation in
+                    PhotoEditingObservationDebugLayer(fillColor: .systemYellow, frame: bounds, path: observation.bounds.path)
                 }
             } else { wordLayers = [] }
 
