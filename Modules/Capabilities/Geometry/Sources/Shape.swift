@@ -22,7 +22,6 @@ public struct Shape: Hashable {
     }
 
     public init(rect: CGRect, angle: Double) {
-        print(rect)
         let rotationTransform = CGAffineTransform(rotationAngle: angle)
         let translationTransform = CGAffineTransform(translationX: -rect.minX, y: -rect.maxY)
         let inverseTranslate = CGAffineTransform(translationX: rect.minX, y: rect.maxY)

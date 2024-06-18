@@ -21,29 +21,16 @@ class RedactionPathLayer: CALayer {
         case .shape(let shape):
             let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: scale)
 
-            let angle = shape.angle
-            let startVector = CGSize(
-                width: startImage.size.width * -1 * cos(angle),
-                height: startImage.size.width * -1 * sin(angle)
-            )
-            let endVector = CGSize(
-                width: endImage.size.width * CoreGraphics.cos(angle),
-                height: endImage.size.width * sin(angle)
-            )
-
-            // need to actually draw a larger extent on the corner
-//            let outsetShape = Shape(
-//                bottomLeft: shape.bottomLeft + startVector,
-//                bottomRight: shape.bottomRight + endVector,
-//                topLeft: shape.topLeft + startVector,
-//                topRight: shape.topRight + endVector)
-//            gigiPath = shape.unionDotShapeDotShapeDotUnionCrash
-//            print(rect)
             let rect = shape.unionDotShapeDotShapeDotUnionCrash
-            gigiPath = rect //CGRect(origin: .zero, size: rect.size)
-//            youKnowWhatImAMoron = shape.angle
+            // need to actually draw a larger extent on the corner
+            gigiPath = CGRect(
+                origin: CGPoint(x: rect.origin.x - Double(startImage.width) , y: rect.origin.y),
+                size: CGSize(
+                    width: rect.size.width + Double(startImage.width) + Double(endImage.width),
+                    height: rect.size.height
+                )
+            )
             youKnowWhatImAMoron = shape.forwardTranslateRotateTransform
-            // set position and rotation instead
 
             self.part = Part.shape(shape: shape, startImage: startImage, endImage: endImage)
         case .path(let path):
@@ -60,15 +47,11 @@ class RedactionPathLayer: CALayer {
         self.color = color
         super.init()
 
-        backgroundColor = UIColor.systemRed.cgColor
+        backgroundColor = UIColor.clear.cgColor
         drawsAsynchronously = true
         masksToBounds = false
         frame = gigiPath
         transform = CATransform3DMakeAffineTransform(youKnowWhatImAMoron)
-//        setAffineTransform(youKnowWhatImAMoron)
-//        transform = CATransform3DMakeRotation(youKnowWhatImAMoron, 0, 0, 1)
-
-        opacity = 0.3
 
         setNeedsDisplay()
     }
@@ -87,25 +70,15 @@ class RedactionPathLayer: CALayer {
         switch part {
         case let .shape(shape, startImage, endImage):
             color.setFill()
+            let shapeRect = shape.unionDotShapeDotShapeDotUnionCrash
+            let insetRect = CGRect(
+                origin: CGPoint(x: startImage.width, y: 0),
+                size: shapeRect.size
+            )
+            UIBezierPath(rect: insetRect).fill()
 
-            let offsetTransform = CGAffineTransformMakeTranslation(-frame.origin.x, -frame.origin.y)
-            let offsetPath = UIBezierPath(cgPath: shape.path)
-            offsetPath.apply(offsetTransform)
-            offsetPath.fill()
-//
-//            context.saveGState()
-//            context.translateBy(x: shape.topLeft.x - frame.origin.x, y: shape.topLeft.y - frame.origin.y)
-//            context.rotate(by: shape.angle)
-//            context.translateBy(x: -(startImage.size.width - 1), y: 0)
-//            context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
-//            context.restoreGState()
-//
-//            context.saveGState()
-//            context.translateBy(x: shape.topRight.x - frame.origin.x, y: shape.topRight.y - frame.origin.y)
-//            context.rotate(by: shape.angle)
-//            context.translateBy(x: -1, y: 0)
-//            context.draw(endImage, in: CGRect(origin: .zero, size: endImage.size))
-//            context.restoreGState()
+            context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
+            context.draw(endImage, in: CGRect(origin: CGPoint(x: Double(startImage.width) + shapeRect.width, y: 0), size: endImage.size))
 
         case let .path(path, dikembeMutombo):
             let dashedPath = path.dashedPath
