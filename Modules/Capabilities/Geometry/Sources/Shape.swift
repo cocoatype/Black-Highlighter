@@ -72,19 +72,7 @@ public struct Shape: Hashable {
     }
 
     public func union(_ other: Shape) -> Shape {
-        let allPoints = [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight]
-
-        let minX = allPoints.map { $0.x }.min() ?? 0
-        let minY = allPoints.map { $0.y }.min() ?? 0
-        let maxX = allPoints.map { $0.x }.max() ?? 0
-        let maxY = allPoints.map { $0.y }.max() ?? 0
-
-        return Shape(
-            bottomLeft: CGPoint(x: minX, y: maxY),
-            bottomRight: CGPoint(x: maxX, y: maxY),
-            topLeft: CGPoint(x: minX, y: minY),
-            topRight: CGPoint(x: maxX, y: minY)
-        )
+        MinimumAreaRectFinder.minimumAreaShape(for: [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight])
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

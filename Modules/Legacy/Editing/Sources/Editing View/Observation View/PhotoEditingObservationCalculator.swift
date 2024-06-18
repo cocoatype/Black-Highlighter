@@ -65,7 +65,7 @@ actor PhotoEditingObservationCalculator {
                 childArea + observation.bounds.path.area()
             }
             let parentArea = parent.bounds.path.area()
-            return childArea < (parentArea / 2)
+            return childArea < (parentArea * 0.35)
         }.keys
 
         // combine the remaining parent observations and their children

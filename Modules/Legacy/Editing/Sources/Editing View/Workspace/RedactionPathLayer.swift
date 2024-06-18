@@ -74,20 +74,20 @@ class RedactionPathLayer: CALayer {
             let offsetPath = UIBezierPath(cgPath: shape.path)
             offsetPath.apply(offsetTransform)
             offsetPath.fill()
-
-            context.saveGState()
-            context.translateBy(x: shape.topLeft.x - frame.origin.x, y: shape.topLeft.y - frame.origin.y)
-            context.rotate(by: shape.angle)
-            context.translateBy(x: -(startImage.size.width - 1), y: 0)
-            context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
-            context.restoreGState()
-
-            context.saveGState()
-            context.translateBy(x: shape.topRight.x - frame.origin.x, y: shape.topRight.y - frame.origin.y)
-            context.rotate(by: shape.angle)
-            context.translateBy(x: -1, y: 0)
-            context.draw(endImage, in: CGRect(origin: .zero, size: endImage.size))
-            context.restoreGState()
+//
+//            context.saveGState()
+//            context.translateBy(x: shape.topLeft.x - frame.origin.x, y: shape.topLeft.y - frame.origin.y)
+//            context.rotate(by: shape.angle)
+//            context.translateBy(x: -(startImage.size.width - 1), y: 0)
+//            context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
+//            context.restoreGState()
+//
+//            context.saveGState()
+//            context.translateBy(x: shape.topRight.x - frame.origin.x, y: shape.topRight.y - frame.origin.y)
+//            context.rotate(by: shape.angle)
+//            context.translateBy(x: -1, y: 0)
+//            context.draw(endImage, in: CGRect(origin: .zero, size: endImage.size))
+//            context.restoreGState()
 
         case let .path(path, dikembeMutombo):
             let dashedPath = path.dashedPath

@@ -38,7 +38,9 @@ extension Redaction {
             siblingObservations.append(characterObservation)
             result[textObservationUUID] = siblingObservations
         }.values.map { siblingObservations in
-            siblingObservations.reduce(siblingObservations[0].bounds, { currentRect, characterObservation in
+            var siblingObservations = siblingObservations
+            let firstObservation = siblingObservations.removeFirst()
+            return siblingObservations.reduce(firstObservation.bounds, { currentRect, characterObservation in
                 currentRect.union(characterObservation.bounds)
             })
         }.map(RedactionPart.shape)

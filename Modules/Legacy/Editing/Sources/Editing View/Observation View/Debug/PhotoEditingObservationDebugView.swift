@@ -66,7 +66,7 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
             let wordLayers: [PhotoEditingObservationDebugLayer]
             if isRecognizedTextOverlayEnabled {
                 wordLayers = recognizedTextObservations.flatMap(\.characterObservations).map { observation in
-                    PhotoEditingObservationDebugLayer(fillColor: .systemYellow, frame: bounds, path: observation.bounds.path)
+                    PhotoEditingObservationDebugLayer(fillColor: .systemYellow, frame: bounds, shape: observation.bounds)
                 }
             } else { wordLayers = [] }
 
@@ -76,12 +76,12 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
                 let characterLayers: [PhotoEditingObservationDebugLayer]
                 if isDetectedCharactersOverlayEnabled {
                     characterLayers = characterObservations.map { observation -> PhotoEditingObservationDebugLayer in
-                        PhotoEditingObservationDebugLayer(fillColor: .systemBlue, frame: bounds, path: observation.bounds.path)
+                        PhotoEditingObservationDebugLayer(fillColor: .systemBlue, frame: bounds, shape: observation.bounds)
                     }
                 } else { characterLayers = [] }
 
                 if Defaults.Value(key: .showDetectedTextOverlay).wrappedValue {
-                    let textLayer = PhotoEditingObservationDebugLayer(fillColor: .systemRed, frame: bounds, path: CGPath(rect: textObservation.bounds.boundingBox, transform: nil))
+                    let textLayer = PhotoEditingObservationDebugLayer(fillColor: .systemRed, frame: bounds, shape: textObservation.bounds)
 
                     return characterLayers + [textLayer]
                 } else { return characterLayers }
@@ -92,7 +92,7 @@ class PhotoEditingObservationDebugView: PhotoEditingRedactionView {
             let wordCharacterLayers: [PhotoEditingObservationDebugLayer]
             if isCalculatedOverlayEnabled {
                 wordCharacterLayers = calculatedObservations.map { (calculatedObservation: CharacterObservation) -> PhotoEditingObservationDebugLayer in
-                    PhotoEditingObservationDebugLayer(fillColor: .systemGreen, frame: bounds, path: calculatedObservation.bounds.path)
+                    PhotoEditingObservationDebugLayer(fillColor: .systemGreen, frame: bounds, shape: calculatedObservation.bounds)
                 }
             } else { wordCharacterLayers = [] }
 
