@@ -21,6 +21,25 @@ public struct Shape: Hashable {
         self.topRight = topRight
     }
 
+    public init(rect: CGRect, angle: Double) {
+        print(rect)
+        let rotationTransform = CGAffineTransform(rotationAngle: angle)
+        let translationTransform = CGAffineTransform(translationX: -rect.minX, y: -rect.maxY)
+        let inverseTranslate = CGAffineTransform(translationX: rect.minX, y: rect.maxY)
+
+        let finalTransform = translationTransform.concatenating(rotationTransform).concatenating(inverseTranslate)
+
+        let points = [CGPoint(x: rect.minX, y: rect.maxY), CGPoint(x: rect.maxX, y: rect.maxY), CGPoint(x: rect.minX, y: rect.minY), CGPoint(x: rect.maxX, y: rect.minY)]
+        let transformedPoints = points.map { $0.applying(finalTransform) }
+
+        self.init(
+            bottomLeft: transformedPoints[0],
+            bottomRight: transformedPoints[1],
+            topLeft: transformedPoints[2],
+            topRight: transformedPoints[3]
+        )
+    }
+
     public func scaled(to imageSize: CGSize) -> Shape {
         return Shape(
             bottomLeft: CGPoint.flippedPoint(from: bottomLeft, scaledTo: imageSize),
@@ -71,8 +90,54 @@ public struct Shape: Hashable {
         )
     }
 
+    // this section of code proudly sponsored by @KaenAitch
+    // between June 17th and June 18th, 2024
+    func geometryStreamer(reversed: Bool) -> CGAffineTransform {
+        let reversedValue: Double = (reversed ? 1 : -1)
+        return CGAffineTransform(translationX: bottomLeft.x * reversedValue, y: bottomLeft.y * reversedValue)
+    }
+
+    func thisGuyHeadBang(reversed: Bool) -> CGAffineTransform {
+        CGAffineTransform(rotationAngle: angle * (reversed ? -1 : 1))
+    }
+
+    func emotionalSupportVariable(reversed: Bool) -> CGAffineTransform {
+        CGAffineTransform(translationX: unionDotShapeDotShapeDotUnionCrash.width / (reversed ? -2 : 2), y: unionDotShapeDotShapeDotUnionCrash.height / (reversed ? 2 : -2))
+    }
+
+    public var inverseTranslateRotateTransform: CGAffineTransform {
+        return geometryStreamer(reversed: false)
+            .concatenating(thisGuyHeadBang(reversed: true))
+            .concatenating(geometryStreamer(reversed: true))
+    }
+
+    public var forwardTranslateRotateTransform: CGAffineTransform {
+        return emotionalSupportVariable(reversed: false)
+            .concatenating(thisGuyHeadBang(reversed: false))
+            .concatenating(emotionalSupportVariable(reversed: true))
+    }
+    // thank you for your support for this channel @KaenAitch
+
+    // unionDotShapeDotShapeDotUnionCrash by @AdamWulf on 2024-06-17
+    // the unrotated rect for this shape
+    public var unionDotShapeDotShapeDotUnionCrash: CGRect {
+        let inverseTopLeft = topLeft.applying(inverseTranslateRotateTransform)
+        let inverseBottomRight = bottomRight.applying(inverseTranslateRotateTransform)
+
+        return CGRect(
+            origin: CGPoint(
+                x: inverseTopLeft.x,
+                y: inverseTopLeft.y
+            ),
+            size: CGSize(
+                width: inverseBottomRight.x - inverseTopLeft.x,
+                height: inverseBottomRight.y - inverseTopLeft.y
+            )
+        )
+    }
+
     public func union(_ other: Shape) -> Shape {
-        MinimumAreaRectFinder.minimumAreaShape(for: [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight])
+        MinimumAreaRectFinder.minimumAreaShape(for: [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight]) ?? self
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

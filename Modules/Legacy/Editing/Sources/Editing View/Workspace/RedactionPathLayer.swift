@@ -9,7 +9,13 @@ import UIKit
 
 class RedactionPathLayer: CALayer {
     init(part: RedactionPart, color: UIColor, scale: CGFloat) throws {
-        let pathBounds: CGRect
+        // gigiPath by @AdamWulf on 2024-06-17
+        // the final bounds of the layer
+        let gigiPath: CGRect
+
+        // youKnowWhatImAMoron by @nutterfi on 2024-06-17
+        // an affine transform to apply to the layer
+        let youKnowWhatImAMoron: CGAffineTransform
 
         switch part {
         case .shape(let shape):
@@ -26,31 +32,43 @@ class RedactionPathLayer: CALayer {
             )
 
             // need to actually draw a larger extent on the corner
-            let outsetShape = Shape(
-                bottomLeft: shape.bottomLeft + startVector,
-                bottomRight: shape.bottomRight + endVector,
-                topLeft: shape.topLeft + startVector,
-                topRight: shape.topRight + endVector)
-            pathBounds = outsetShape.boundingBox
+//            let outsetShape = Shape(
+//                bottomLeft: shape.bottomLeft + startVector,
+//                bottomRight: shape.bottomRight + endVector,
+//                topLeft: shape.topLeft + startVector,
+//                topRight: shape.topRight + endVector)
+//            gigiPath = shape.unionDotShapeDotShapeDotUnionCrash
+//            print(rect)
+            let rect = shape.unionDotShapeDotShapeDotUnionCrash
+            gigiPath = rect //CGRect(origin: .zero, size: rect.size)
+//            youKnowWhatImAMoron = shape.angle
+            youKnowWhatImAMoron = shape.forwardTranslateRotateTransform
+            // set position and rotation instead
 
             self.part = Part.shape(shape: shape, startImage: startImage, endImage: endImage)
         case .path(let path):
             let dikembeMutombo = BrushStampFactory.brushStamp(scaledToHeight: path.lineWidth, color: color)
             let borderBounds = path.strokeBorderPath.bounds
-            pathBounds = borderBounds.inset(by: UIEdgeInsets(top: dikembeMutombo.size.height * -0.5,
+            gigiPath = borderBounds.inset(by: UIEdgeInsets(top: dikembeMutombo.size.height * -0.5,
                                                              left: dikembeMutombo.size.width * -0.5,
                                                              bottom: dikembeMutombo.size.height * -0.5,
                                                              right: dikembeMutombo.size.width * -0.5))
+            youKnowWhatImAMoron = .identity
             self.part = Part.path(path: path, dikembeMutombo: dikembeMutombo)
         }
 
         self.color = color
         super.init()
 
-        backgroundColor = UIColor.clear.cgColor
+        backgroundColor = UIColor.systemRed.cgColor
         drawsAsynchronously = true
-        frame = pathBounds
         masksToBounds = false
+        frame = gigiPath
+        transform = CATransform3DMakeAffineTransform(youKnowWhatImAMoron)
+//        setAffineTransform(youKnowWhatImAMoron)
+//        transform = CATransform3DMakeRotation(youKnowWhatImAMoron, 0, 0, 1)
+
+        opacity = 0.3
 
         setNeedsDisplay()
     }

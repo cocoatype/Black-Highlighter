@@ -5,18 +5,8 @@ import CoreGraphics
 import Foundation
 
 enum MinimumAreaRectFinder {
-    static func minimumAreaShape(for points: [CGPoint]) -> Shape {
-        let (rect, angle) = minimumAreaEnclosingRectangle(for: points)!
-        let rotationTransform = CGAffineTransform(rotationAngle: angle)
-        let translationTransform = CGAffineTransform(translationX: -rect.minX, y: -rect.maxY)
-        let inverseTranslate = CGAffineTransform(translationX: rect.minX, y: rect.maxY)
-
-        let finalTransform = translationTransform.concatenating(rotationTransform).concatenating(inverseTranslate)
-
-        let points = [CGPoint(x: rect.minX, y: rect.maxY), CGPoint(x: rect.maxX, y: rect.maxY), CGPoint(x: rect.minX, y: rect.minY), CGPoint(x: rect.maxX, y: rect.minY)]
-        let transformedPoints = points.map { $0.applying(finalTransform) }
-
-        return Shape(bottomLeft: transformedPoints[0], bottomRight: transformedPoints[1], topLeft: transformedPoints[2], topRight: transformedPoints[3])
+    static func minimumAreaShape(for points: [CGPoint]) -> Shape? {
+        minimumAreaEnclosingRectangle(for: points).map(Shape.init)
     }
 
     private static func minimumAreaEnclosingRectangle(for points: [CGPoint]) -> (CGRect, Double)? {
@@ -61,14 +51,16 @@ enum MinimumAreaRectFinder {
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 
-    // Helper function to find the orientation of the triplet (p, q, r)
-    // 0 -> p, q and r are collinear
-    // 1 -> Clockwise
-    // 2 -> Counterclockwise
-    private static func orientation(_ p: CGPoint, _ q: CGPoint, _ r: CGPoint) -> Int {
+    enum Orientation {
+        case collinear
+        case clockwise
+        case counterClockwise
+    }
+
+    private static func orientation(_ p: CGPoint, _ q: CGPoint, _ r: CGPoint) -> Orientation {
         let val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y)
-        if val == 0 { return 0 }
-        return (val > 0) ? 1 : 2
+        if val == 0 { return .collinear }
+        return (val > 0) ? .clockwise : .counterClockwise
     }
 
     // Helper function to find the square of the distance between two points
@@ -98,10 +90,10 @@ enum MinimumAreaRectFinder {
         let p0 = sortedPoints[0]
         sortedPoints = sortedPoints.sorted { (p1, p2) -> Bool in
             let o = orientation(p0, p1, p2)
-            if o == 0 {
+            if o == .collinear {
                 return distanceSquared(p0, p1) < distanceSquared(p0, p2)
             }
-            return o == 2
+            return o == .counterClockwise
         }
 
         // Create an empty stack and push the first three points to it
@@ -109,7 +101,7 @@ enum MinimumAreaRectFinder {
 
         // Process the remaining points
         for i in 3..<sortedPoints.count {
-            while stack.count > 1 && orientation(stack[stack.count - 2], stack.last!, sortedPoints[i]) != 2 {
+            while stack.count > 1 && orientation(stack[stack.count - 2], stack.last!, sortedPoints[i]) != .counterClockwise {
                 stack.removeLast()
             }
             stack.append(sortedPoints[i])
