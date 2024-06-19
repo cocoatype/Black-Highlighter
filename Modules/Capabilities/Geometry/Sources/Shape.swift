@@ -21,24 +21,6 @@ public struct Shape: Hashable {
         self.topRight = topRight
     }
 
-    public init(rect: CGRect, angle: Double) {
-        let rotationTransform = CGAffineTransform(rotationAngle: angle)
-        let translationTransform = CGAffineTransform(translationX: -rect.minX, y: -rect.maxY)
-        let inverseTranslate = CGAffineTransform(translationX: rect.minX, y: rect.maxY)
-
-        let finalTransform = translationTransform.concatenating(rotationTransform).concatenating(inverseTranslate)
-
-        let points = [CGPoint(x: rect.minX, y: rect.maxY), CGPoint(x: rect.maxX, y: rect.maxY), CGPoint(x: rect.minX, y: rect.minY), CGPoint(x: rect.maxX, y: rect.minY)]
-        let transformedPoints = points.map { $0.applying(finalTransform) }
-
-        self.init(
-            bottomLeft: transformedPoints[0],
-            bottomRight: transformedPoints[1],
-            topLeft: transformedPoints[2],
-            topRight: transformedPoints[3]
-        )
-    }
-
     public func scaled(to imageSize: CGSize) -> Shape {
         return Shape(
             bottomLeft: CGPoint.flippedPoint(from: bottomLeft, scaledTo: imageSize),
@@ -136,7 +118,7 @@ public struct Shape: Hashable {
     }
 
     public func union(_ other: Shape) -> Shape {
-        MinimumAreaRectFinder.minimumAreaShape(for: [self.bottomLeft, self.bottomRight, self.topLeft, self.topRight, other.bottomLeft, other.bottomRight, other.topLeft, other.topRight]) ?? self
+        MinimumAreaRectFinder.minimumAreaShape(for: [self, other])
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

@@ -53,4 +53,55 @@ final class ShapeTests: XCTestCase {
         let unionShape = firstShape.union(secondShape)
         XCTAssert(unionShape.path.isEqual(to: expectedShape.path, accuracy: 0.01))
     }
+
+    func testUnionOfFiveShapes() {
+        let shapes = [
+              Shape(
+                bottomLeft: CGPoint(x: 405.0, y: 1009.0000000000001),
+                bottomRight: CGPoint(x: 432.0, y: 1009.0000000000001),
+                topLeft: CGPoint(x: 405.0, y: 968.0000000000002),
+                topRight: CGPoint(x: 432.0, y: 968.0000000000002)
+              ),
+              Shape(
+                bottomLeft: CGPoint(x: 435.0, y: 1008.0),
+                bottomRight: CGPoint(x: 500.0, y: 1008.0),
+                topLeft: CGPoint(x: 435.0, y: 968.0000000000002),
+                topRight: CGPoint(x: 500.0, y: 968.0000000000002)
+              ),
+              Shape(
+                bottomLeft: CGPoint(x: 503.0, y: 1008.0),
+                bottomRight: CGPoint(x: 522.0, y: 1008.0),
+                topLeft: CGPoint(x: 503.0, y: 951.0),
+                topRight: CGPoint(x: 522.0, y: 951.0)
+              ),
+              Shape(
+                bottomLeft: CGPoint(x: 525.0, y: 1021.0000000000001),
+                bottomRight: CGPoint(x: 566.0, y: 1021.0000000000001),
+                topLeft: CGPoint(x: 525.0, y: 968.0000000000002),
+                topRight: CGPoint(x: 566.0, y: 968.0000000000002)
+              ),
+              Shape(
+                bottomLeft: CGPoint(x: 568.0, y: 1009.0000000000001),
+                bottomRight: CGPoint(x: 603.0, y: 1009.0000000000001),
+                topLeft: CGPoint(x: 568.0, y: 968.0000000000002),
+                topRight: CGPoint(x: 603.0, y: 968.0000000000002)
+              ),
+        ]
+
+        let expectedShape = Shape(
+            bottomLeft: CGPoint(x: 405.0, y: 1021.0),
+            bottomRight: CGPoint(x: 603.0, y: 1021.0),
+            topLeft: CGPoint(x: 405.0, y: 951.0),
+            topRight: CGPoint(x: 603.0, y: 951.0)
+        )
+
+        var remainingShapes = shapes
+        let firstShape = remainingShapes.removeFirst()
+
+        let unionShape = remainingShapes.reduce(firstShape) { combinedShape, newShape in
+            combinedShape.union(newShape)
+        }
+
+        XCTAssertEqual(unionShape, expectedShape, accuracy: 0.01)
+    }
 }

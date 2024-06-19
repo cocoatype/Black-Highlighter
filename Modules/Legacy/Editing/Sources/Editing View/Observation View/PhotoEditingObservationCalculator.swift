@@ -75,8 +75,8 @@ actor PhotoEditingObservationCalculator {
         let combinedObservations = remainingObservations.map { parent, children in
             var children = children
             let firstShape = children.removeFirst().bounds
-            let combinedShape = children.reduce(into: firstShape) { combinedShape, observation in
-                combinedShape = combinedShape.union(observation.bounds)
+            let combinedShape = children.reduce(firstShape) { combinedShape, observation in
+                combinedShape.union(observation.bounds)
             }
 
             return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
