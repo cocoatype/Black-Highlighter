@@ -25,6 +25,7 @@ extension Redaction {
 }
 
 #elseif canImport(UIKit)
+import Geometry
 import Observations
 import UIKit
 
@@ -38,11 +39,7 @@ extension Redaction {
             siblingObservations.append(characterObservation)
             result[textObservationUUID] = siblingObservations
         }.values.map { siblingObservations in
-            var siblingObservations = siblingObservations
-            let firstObservation = siblingObservations.removeFirst()
-            return siblingObservations.reduce(firstObservation.bounds, { currentRect, characterObservation in
-                currentRect.union(characterObservation.bounds)
-            })
+            MinimumAreaShapeFinder.minimumAreaShape(for: siblingObservations.map(\.bounds))
         }.map(RedactionPart.shape)
 
         self.init(color: color, parts: parts)

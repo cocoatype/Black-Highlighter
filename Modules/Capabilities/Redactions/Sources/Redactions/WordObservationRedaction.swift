@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 #if canImport(UIKit)
+import Geometry
 import Observations
 import UIKit
 
@@ -13,9 +14,7 @@ extension Redaction {
             siblingObservations.append(wordObservation)
             result[textObservationUUID] = siblingObservations
         }.values.map { siblingObservations in
-            siblingObservations.reduce(siblingObservations[0].bounds, { currentRect, wordObservation in
-                currentRect.union(wordObservation.bounds)
-            })
+            MinimumAreaShapeFinder.minimumAreaShape(for: siblingObservations.map(\.bounds))
         }.map(RedactionPart.shape)
 
         self.init(color: color, parts: parts)

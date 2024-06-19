@@ -4,12 +4,9 @@
 import CoreGraphics
 import Foundation
 
-enum MinimumAreaRectFinder {
-    static func minimumAreaShape(for shapes: [Shape]) -> Shape {
-        let points = shapes.flatMap { shape in
-            [shape.bottomLeft, shape.bottomRight, shape.topLeft, shape.topRight]
-        }
-        return minimumAreaShape(for: points)
+public enum MinimumAreaShapeFinder {
+    public static func minimumAreaShape(for shapes: [Shape]) -> Shape {
+        minimumAreaShape(for: shapes.flatMap(\.inverseTranslateRotateTransform))
     }
 
     private static func minimumAreaShape(for points: [CGPoint]) -> Shape {
@@ -60,19 +57,19 @@ enum MinimumAreaRectFinder {
 //        case clockwise
 //        case counterClockwise
 //    }
-
+//
 //    private static func orientation(_ p: CGPoint, _ q: CGPoint, _ r: CGPoint) -> Orientation {
 //        let val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y)
 //        if val == 0 { return .collinear }
 //        return (val > 0) ? .clockwise : .counterClockwise
 //    }
-
-    // Helper function to find the square of the distance between two points
+//
+//    // Helper function to find the square of the distance between two points
 //    private static func distanceSquared(_ p1: CGPoint, _ p2: CGPoint) -> CGFloat {
 //        return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)
 //    }
-
-    // Function to find the convex hull using Graham Scan algorithm
+//
+//    // Function to find the convex hull using Graham Scan algorithm
 //    static func convexHull(for points: [CGPoint]) -> [CGPoint] {
 //        guard points.count >= 3 else { return points }
 //

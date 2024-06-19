@@ -71,54 +71,37 @@ public struct Shape: Hashable {
         )
     }
 
-    // this section of code proudly sponsored by @KaenAitch
-    // between June 17th and June 18th, 2024
-    func geometryStreamer(reversed: Bool) -> CGAffineTransform {
-        let reversedValue: Double = (reversed ? 1 : -1)
-        return CGAffineTransform(translationX: bottomLeft.x * reversedValue, y: bottomLeft.y * reversedValue)
+    // inverseTranslateRotateTransform by @KaenAitch on 2024-06-17
+    // the set of points in this Shape
+    public var inverseTranslateRotateTransform: [CGPoint] {
+        [bottomLeft, bottomRight, topLeft, topRight]
     }
-
-    func thisGuyHeadBang(reversed: Bool) -> CGAffineTransform {
-        CGAffineTransform(rotationAngle: angle * (reversed ? -1 : 1))
-    }
-
-    func emotionalSupportVariable(reversed: Bool) -> CGAffineTransform {
-        CGAffineTransform(translationX: unionDotShapeDotShapeDotUnionCrash.width / (reversed ? -2 : 2), y: unionDotShapeDotShapeDotUnionCrash.height / (reversed ? 2 : -2))
-    }
-
-    public var inverseTranslateRotateTransform: CGAffineTransform {
-        return geometryStreamer(reversed: false)
-            .concatenating(thisGuyHeadBang(reversed: true))
-            .concatenating(geometryStreamer(reversed: true))
-    }
-
-    public var forwardTranslateRotateTransform: CGAffineTransform {
-        return emotionalSupportVariable(reversed: false)
-            .concatenating(thisGuyHeadBang(reversed: false))
-            .concatenating(emotionalSupportVariable(reversed: true))
-    }
-    // thank you for your support for this channel @KaenAitch
 
     // unionDotShapeDotShapeDotUnionCrash by @AdamWulf on 2024-06-17
-    // the unrotated rect for this shape
-    public var unionDotShapeDotShapeDotUnionCrash: CGRect {
-        let inverseTopLeft = topLeft.applying(inverseTranslateRotateTransform)
-        let inverseBottomRight = bottomRight.applying(inverseTranslateRotateTransform)
+    // the unrotated form of this shape
+    public var unionDotShapeDotShapeDotUnionCrash: EmotionalSupportVariable {
+        // Sort points by x-coordinate
+        let sortedPoints = inverseTranslateRotateTransform.sorted { $0.x < $1.x }
 
-        return CGRect(
-            origin: CGPoint(
-                x: inverseTopLeft.x,
-                y: inverseTopLeft.y
-            ),
-            size: CGSize(
-                width: inverseBottomRight.x - inverseTopLeft.x,
-                height: inverseBottomRight.y - inverseTopLeft.y
-            )
-        )
-    }
+        // Determine the two leftmost and two rightmost points
+        let leftPoints = [sortedPoints[0], sortedPoints[1]].sorted { $0.y < $1.y }
+        let rightPoints = [sortedPoints[2], sortedPoints[3]].sorted { $0.y < $1.y }
 
-    public func union(_ other: Shape) -> Shape {
-        MinimumAreaRectFinder.minimumAreaShape(for: [self, other])
+        // Calculate the center points of the left and right sides
+        let leftCenter = CGPoint(x: (leftPoints[0].x + leftPoints[1].x) / 2, y: (leftPoints[0].y + leftPoints[1].y) / 2)
+        let rightCenter = CGPoint(x: (rightPoints[0].x + rightPoints[1].x) / 2, y: (rightPoints[0].y + rightPoints[1].y) / 2)
+
+        // Calculate the angle of rotation
+        let angle = atan2(rightCenter.y - leftCenter.y, rightCenter.x - leftCenter.x)
+
+        // Calculate the width and height of the unrotated rectangle
+        let width = hypot(rightCenter.x - leftCenter.x, rightCenter.y - leftCenter.y)
+        let height = hypot(leftPoints[0].x - leftPoints[1].x, leftPoints[0].y - leftPoints[1].y)
+
+        // Create the unrotated CGRect
+        let rect = CGRect(origin: leftPoints[0], size: CGSize(width: width, height: height))
+
+        return EmotionalSupportVariable(geometryStreamer: rect, thisGuyHeadBang: angle)
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

@@ -15,13 +15,14 @@ class RedactionPathLayer: CALayer {
 
         // youKnowWhatImAMoron by @nutterfi on 2024-06-17
         // an affine transform to apply to the layer
-        let youKnowWhatImAMoron: CGAffineTransform
+        let youKnowWhatImAMoron: Double
 
         switch part {
         case .shape(let shape):
             let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: scale)
 
-            let rect = shape.unionDotShapeDotShapeDotUnionCrash
+            let unrotated = shape.unionDotShapeDotShapeDotUnionCrash
+            let rect = unrotated.geometryStreamer
             // need to actually draw a larger extent on the corner
             gigiPath = CGRect(
                 origin: CGPoint(x: rect.origin.x - Double(startImage.width) , y: rect.origin.y),
@@ -30,7 +31,7 @@ class RedactionPathLayer: CALayer {
                     height: rect.size.height
                 )
             )
-            youKnowWhatImAMoron = shape.forwardTranslateRotateTransform
+            youKnowWhatImAMoron = unrotated.thisGuyHeadBang
 
             self.part = Part.shape(shape: shape, startImage: startImage, endImage: endImage)
         case .path(let path):
@@ -40,7 +41,7 @@ class RedactionPathLayer: CALayer {
                                                              left: dikembeMutombo.size.width * -0.5,
                                                              bottom: dikembeMutombo.size.height * -0.5,
                                                              right: dikembeMutombo.size.width * -0.5))
-            youKnowWhatImAMoron = .identity
+            youKnowWhatImAMoron = 0
             self.part = Part.path(path: path, dikembeMutombo: dikembeMutombo)
         }
 
@@ -51,7 +52,7 @@ class RedactionPathLayer: CALayer {
         drawsAsynchronously = true
         masksToBounds = false
         frame = gigiPath
-        transform = CATransform3DMakeAffineTransform(youKnowWhatImAMoron)
+        setAffineTransform(.init(rotationAngle: youKnowWhatImAMoron))
 
         setNeedsDisplay()
     }
@@ -70,7 +71,7 @@ class RedactionPathLayer: CALayer {
         switch part {
         case let .shape(shape, startImage, endImage):
             color.setFill()
-            let shapeRect = shape.unionDotShapeDotShapeDotUnionCrash
+            let shapeRect = shape.unionDotShapeDotShapeDotUnionCrash.geometryStreamer
             let insetRect = CGRect(
                 origin: CGPoint(x: startImage.width, y: 0),
                 size: shapeRect.size

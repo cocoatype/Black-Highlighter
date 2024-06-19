@@ -11,6 +11,7 @@ public struct OverlayPreferencesView: View {
     @Defaults.Binding(key: .showDetectedCharactersOverlay) private var isDetectedCharactersOverlayEnabled: Bool
     @Defaults.Binding(key: .showRecognizedTextOverlay) private var isRecognizedTextOverlayEnabled: Bool
     @Defaults.Binding(key: .showCalculatedOverlay) private var isCalculatedOverlayEnabled: Bool
+    @Defaults.Binding(key: .showCombinedOverlay) private var isCombinedOverlayEnabled: Bool
 
     public var body: some View {
         List {
@@ -18,6 +19,7 @@ public struct OverlayPreferencesView: View {
             PreferencesCell(isOn: $isDetectedCharactersOverlayEnabled, title: "Detected Characters", color: .blue)
             PreferencesCell(isOn: $isRecognizedTextOverlayEnabled, title: "Recognized Text", color: .yellow)
             PreferencesCell(isOn: $isCalculatedOverlayEnabled, title: "Calculated Area", color: .green)
+            PreferencesCell(isOn: $isCombinedOverlayEnabled, title: "Combined Area", color: .purple)
         }
     }
 

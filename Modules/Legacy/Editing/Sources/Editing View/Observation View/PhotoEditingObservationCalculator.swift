@@ -73,15 +73,28 @@ actor PhotoEditingObservationCalculator {
             unfulfilledObservations.contains(parent) == false
         }
         let combinedObservations = remainingObservations.map { parent, children in
-            var children = children
-            let firstShape = children.removeFirst().bounds
-            let combinedShape = children.reduce(firstShape) { combinedShape, observation in
-                combinedShape.union(observation.bounds)
-            }
+            let combinedShape = MinimumAreaShapeFinder.minimumAreaShape(for: children.map(\.bounds))
 
             return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
         }
 
         return combinedObservations + childlessObservations + unfulfilledObservations + calculationPass.orphanedObservations
+    }
+
+    var calculatedObservationsByUUID: [UUID: [CharacterObservation]] {
+        return calculatedObservations.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
+            var observationsByUUID: [CharacterObservation]
+            if let existing = dictionary[observation.textObservationUUID] {
+                observationsByUUID = existing
+            } else {
+                observationsByUUID = []
+            }
+
+            observationsByUUID.append(observation)
+
+            var newDictionary = dictionary
+            newDictionary[observation.textObservationUUID] = observationsByUUID
+            return newDictionary
+        }
     }
 }

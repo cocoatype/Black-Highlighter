@@ -40,12 +40,11 @@ import ErrorHandling
 import Geometry
 import UIKit
 
-public class BrushStampFactory: NSObject {
+public enum BrushStampFactory {
     public static func brushImages(for shape: Shape, color: UIColor, scale: CGFloat) throws -> (CGImage, CGImage) {
-        let startHeight = shape.topLeft.distance(to: shape.bottomLeft)
-        let startImage = BrushStampFactory.brushStart(scaledToHeight: startHeight, color: color)
-        let endHeight = shape.topRight.distance(to: shape.bottomRight)
-        let endImage = BrushStampFactory.brushEnd(scaledToHeight: endHeight, color: color)
+        let height = shape.unionDotShapeDotShapeDotUnionCrash.geometryStreamer.height
+        let startImage = BrushStampFactory.brushStart(scaledToHeight: height, color: color)
+        let endImage = BrushStampFactory.brushEnd(scaledToHeight: height, color: color)
 
         guard let startCGImage = startImage.cgImage(scale: scale),
               let endCGImage = endImage.cgImage(scale: scale)
@@ -61,7 +60,7 @@ public class BrushStampFactory: NSObject {
     }
 
     private static func brushStart(scaledToHeight height: CGFloat, color: UIColor) -> UIImage {
-        guard let startImage = UIImage(named: "Brush Start", in: Bundle(for: BrushStampFactory.self), compatibleWith: nil)
+        guard let startImage = UIImage(named: "Brush Start", in: .module, compatibleWith: nil)
         else { ErrorHandler().crash("Unable to load brush start image") }
 
         let brushScale = height / startImage.size.height
@@ -79,7 +78,7 @@ public class BrushStampFactory: NSObject {
     }
 
     private static func brushEnd(scaledToHeight height: CGFloat, color: UIColor) -> UIImage {
-        guard let endImage = UIImage(named: "Brush End", in: Bundle(for: BrushStampFactory.self), compatibleWith: nil)
+        guard let endImage = UIImage(named: "Brush End", in: .module, compatibleWith: nil)
         else { ErrorHandler().crash("Unable to load brush end image") }
 
         let brushScale = height / endImage.size.height
