@@ -10,10 +10,6 @@ public struct Shape: Hashable {
     public let topLeft: CGPoint
     public let topRight: CGPoint
 
-    public init() {
-        self = .zero
-    }
-
     public init(bottomLeft: CGPoint, bottomRight: CGPoint, topLeft: CGPoint, topRight: CGPoint) {
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight

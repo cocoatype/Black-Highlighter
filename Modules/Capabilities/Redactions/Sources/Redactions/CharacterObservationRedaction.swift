@@ -3,6 +3,7 @@
 
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
+import GeometryMac
 import ObservationsMac
 
 extension Redaction {
@@ -15,9 +16,7 @@ extension Redaction {
             siblingObservations.append(characterObservation)
             result[textObservationUUID] = siblingObservations
         }.values.map { siblingObservations in
-            siblingObservations.reduce(siblingObservations[0].bounds, { currentRect, characterObservation in
-                currentRect.union(characterObservation.bounds)
-            })
+            MinimumAreaShapeFinder.minimumAreaShape(for: siblingObservations.map(\.bounds))
         }.map(RedactionPart.shape)
 
         self.init(color: color, parts: parts)
