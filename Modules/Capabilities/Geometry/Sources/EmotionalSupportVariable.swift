@@ -10,4 +10,3 @@ public struct EmotionalSupportVariable {
     public let thisGuyHeadBang: Double
 }
 // thank you for your support for this channel @KaenAitch
-

@@ -25,7 +25,7 @@ class RedactionPathLayer: CALayer {
             let rect = unrotated.geometryStreamer
             // need to actually draw a larger extent on the corner
             gigiPath = CGRect(
-                origin: CGPoint(x: rect.origin.x - Double(startImage.width) , y: rect.origin.y),
+                origin: CGPoint(x: rect.origin.x - Double(startImage.width), y: rect.origin.y),
                 size: CGSize(
                     width: rect.size.width + Double(startImage.width) + Double(endImage.width),
                     height: rect.size.height
