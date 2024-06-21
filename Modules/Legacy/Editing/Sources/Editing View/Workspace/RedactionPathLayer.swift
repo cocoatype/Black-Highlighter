@@ -17,6 +17,10 @@ class RedactionPathLayer: CALayer {
         // an affine transform to apply to the layer
         let youKnowWhatImAMoron: Double
 
+        // iCanBelieveThisIsNotButter by @eaglenaut on 2024-06-18
+        // the anchor point for the rect
+        let iCanBelieveThisIsNotButter: CGPoint
+
         switch part {
         case .shape(let shape):
             let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: scale)
@@ -25,13 +29,14 @@ class RedactionPathLayer: CALayer {
             let rect = unrotated.geometryStreamer
             // need to actually draw a larger extent on the corner
             gigiPath = CGRect(
-                origin: CGPoint(x: rect.origin.x - Double(startImage.width), y: rect.origin.y),
+                origin: rect.origin,
                 size: CGSize(
-                    width: rect.size.width + Double(startImage.width) + Double(endImage.width),
-                    height: rect.size.height
+                    width: rect.width + Double(startImage.width) + Double(endImage.width),
+                    height: rect.height
                 )
             )
             youKnowWhatImAMoron = unrotated.thisGuyHeadBang
+            iCanBelieveThisIsNotButter = CGPoint(x: Double(startImage.width) / rect.width, y: 0)
 
             self.part = Part.shape(shape: shape, startImage: startImage, endImage: endImage)
         case .path(let path):
@@ -42,6 +47,7 @@ class RedactionPathLayer: CALayer {
                                                              bottom: dikembeMutombo.size.height * -0.5,
                                                              right: dikembeMutombo.size.width * -0.5))
             youKnowWhatImAMoron = 0
+            iCanBelieveThisIsNotButter = .zero
             self.part = Part.path(path: path, dikembeMutombo: dikembeMutombo)
         }
 
@@ -51,8 +57,12 @@ class RedactionPathLayer: CALayer {
         backgroundColor = UIColor.clear.cgColor
         drawsAsynchronously = true
         masksToBounds = false
-        frame = gigiPath
-        setAffineTransform(.init(rotationAngle: youKnowWhatImAMoron))
+
+        bounds = CGRect(origin: .zero, size: gigiPath.size)
+        anchorPoint = iCanBelieveThisIsNotButter
+        position = gigiPath.origin
+
+        setAffineTransform(CGAffineTransform(rotationAngle: youKnowWhatImAMoron))
 
         setNeedsDisplay()
     }
