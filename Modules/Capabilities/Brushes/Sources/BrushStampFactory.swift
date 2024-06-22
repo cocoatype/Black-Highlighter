@@ -5,7 +5,6 @@
 import AppKit
 import ErrorHandlingMac
 import GeometryMac
-import OSLog
 
 public enum BrushStampFactory {
     public static func brushImages(for shape: Shape, color: NSColor, scale: CGFloat) throws -> (CGImage, CGImage) {
@@ -29,7 +28,6 @@ public enum BrushStampFactory {
     private static func scaledImage(from image: NSImage, toHeight height: CGFloat, color: NSColor) throws -> CGImage {
         let brushScale = height / image.size.height
         let scaledBrushSize = image.size * brushScale
-        os_log("scaling brush images from %{public}@ to %{public}@, scale: %{public}f", String(describing: image.size), String(describing: scaledBrushSize), brushScale)
 
         guard let imageRep = NSBitmapImageRep(
             bitmapDataPlanes: nil,
@@ -146,7 +144,7 @@ public enum BrushStampFactory {
         }
 
         guard let scaledCGImage = scaledBrushImage.cgImage else {
-            throw BrushStampFactoryError.cannotGenerateCGImage(color: color, scale: 1)
+            throw BrushStampFactoryError.cannotGenerateStampCGImage(color: color, scale: 1)
         }
 
         return scaledCGImage
@@ -155,6 +153,6 @@ public enum BrushStampFactory {
 
 enum BrushStampFactoryError: Error {
     case cannotGenerateCGImage(shape: Shape, color: UIColor, scale: CGFloat)
-    case cannotGenerateCGImage(color: UIColor, scale: CGFloat)
+    case cannotGenerateStampCGImage(color: UIColor, scale: CGFloat)
 }
 #endif
