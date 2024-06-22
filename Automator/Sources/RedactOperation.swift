@@ -2,11 +2,12 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import DetectionsMac
+import ExportingMac
 import Foundation
 import Redacting
 import RedactionsMac
 
-class RedactOperation: Operation {
+class RedactOperation: Operation, @unchecked Sendable {
     var result: Result<String, Error>?
     init(input: RedactActionInput, wordList: [String]) {
         self.input = input
@@ -27,8 +28,14 @@ class RedactOperation: Operation {
 
             let redactions = matchingObservations.map { Redaction($0, color: .black) }
 
-            RedactActionExporter.export(input, redactions: redactions) { [weak self] result in
-                self?.finish(with: result)
+            Task { [weak self] in
+                do {
+                    guard let inputImage = input.image else { throw RedactActionExportError.noImageForInput }
+                    let redactedImage = try await PhotoExportRenderer(image: inputImage, redactions: redactions).render()
+                    self?.finish(with: .success(""))
+                } catch {
+                    self?.finish(with: .failure(error))
+                }
             }
         }
     }

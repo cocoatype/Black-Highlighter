@@ -54,6 +54,7 @@ class RedactionPathLayer: CALayer {
         self.color = color
         super.init()
 
+        allowsEdgeAntialiasing = true
         backgroundColor = UIColor.clear.cgColor
         drawsAsynchronously = true
         masksToBounds = false

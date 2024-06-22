@@ -11,6 +11,7 @@ public enum AutomatorActions {
         resources: ["Automator/Resources/**"],
         dependencies: [
             .target(Detections.target(sdk: .native)),
+            .target(Exporting.target(sdk: .native)),
             .target(Redacting.target),
             .target(Redactions.target(sdk: .native)),
         ],
