@@ -16,6 +16,11 @@ public enum AutomatorActions {
             .target(Redactions.target(sdk: .native)),
         ],
         settings: .settings(base: [
+            "LD_RUNPATH_SEARCH_PATHS": [
+                "$(inherited)",
+                "@executable_path/../Frameworks",
+                "@loader_path/../Frameworks",
+            ],
             "WRAPPER_EXTENSION": "action",
             "OTHER_OSAFLAGS": "-x -t 0 -c 0",
         ])
