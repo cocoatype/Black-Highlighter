@@ -84,7 +84,7 @@ public actor PhotoExportRenderer {
     }
     #endif
 
-    #warning("#62: Simplify & de-dupe")
+    #warning("#62: Simplify this method")
     // swiftlint:disable:next function_body_length
     private func render(context: CGContext, orientation: CGImagePropertyOrientation, imageSize: CGSize, flipped: Bool) throws -> CGImage {
         var tileRect = CGRect.zero
@@ -144,30 +144,23 @@ public actor PhotoExportRenderer {
             let (part, color) = drawing
             switch part {
             case .shape(let shape):
-                let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: context.ctm.a)
+                let normalizedShape = shape.ggImage
+                let (startImage, endImage) = try BrushStampFactory.brushImages(for: normalizedShape, color: color, scale: context.ctm.a)
 
                 color.setFill()
-                context.addPath(shape.path)
+                context.addPath(normalizedShape.path)
                 context.fillPath()
 
                 context.saveGState()
-                if flipped {
-                    context.translateBy(x: shape.topLeft.x, y: shape.topLeft.y)
-                } else {
-                    context.translateBy(x: shape.bottomLeft.x, y: shape.bottomLeft.y)
-                }
-                context.rotate(by: shape.angle)
+                context.translateBy(x: normalizedShape.topLeft.x, y: normalizedShape.topLeft.y)
+                context.rotate(by: normalizedShape.angle)
                 context.translateBy(x: -(startImage.size.width - 1), y: 0)
                 context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
                 context.restoreGState()
 
                 context.saveGState()
-                if flipped {
-                    context.translateBy(x: shape.topRight.x, y: shape.topRight.y)
-                } else {
-                    context.translateBy(x: shape.bottomRight.x, y: shape.bottomRight.y)
-                }
-                context.rotate(by: shape.angle)
+                context.translateBy(x: normalizedShape.topRight.x, y: normalizedShape.topRight.y)
+                context.rotate(by: normalizedShape.angle)
                 context.translateBy(x: -1, y: 0)
                 context.draw(endImage, in: CGRect(origin: .zero, size: endImage.size))
                 context.restoreGState()

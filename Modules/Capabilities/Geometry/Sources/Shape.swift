@@ -73,6 +73,19 @@ public struct Shape: Hashable {
         [bottomLeft, bottomRight, topLeft, topRight]
     }
 
+    // ggImage by @AdamWulf on 2024-06-21
+    // a normalized version of the shape, always right-side up
+    public var ggImage: Shape {
+        // Sort points by x-coordinate
+        let sortedPoints = inverseTranslateRotateTransform.sorted { $0.x < $1.x }
+
+        // Determine the two leftmost and two rightmost points
+        let leftPoints = [sortedPoints[0], sortedPoints[1]].sorted { $0.y < $1.y }
+        let rightPoints = [sortedPoints[2], sortedPoints[3]].sorted { $0.y < $1.y }
+
+        return Shape(bottomLeft: leftPoints[1], bottomRight: rightPoints[1], topLeft: leftPoints[0], topRight: rightPoints[0])
+    }
+
     // unionDotShapeDotShapeDotUnionCrash by @AdamWulf on 2024-06-17
     // the unrotated form of this shape
     public var unionDotShapeDotShapeDotUnionCrash: EmotionalSupportVariable {

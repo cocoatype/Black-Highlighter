@@ -38,4 +38,22 @@ final class ShapeTests: XCTestCase {
 
         dump(shape.unionDotShapeDotShapeDotUnionCrash)
     }
+
+    func testNormalizedShape() {
+        let originalShape = Shape(
+            bottomLeft: CGPoint(x: 946.7962608595813, y: 1331.9914845573883),
+            bottomRight: CGPoint(x: 269.4029737073748, y: 1349.2245818822003),
+            topLeft: CGPoint(x: 948.5000076543305, y: 1398.961839335604),
+            topRight: CGPoint(x: 271.10672050212395, y: 1416.194936660416)
+        )
+
+        let expectedShape = Shape(
+            bottomLeft: originalShape.topRight,
+            bottomRight: originalShape.topLeft,
+            topLeft: originalShape.bottomRight,
+            topRight: originalShape.bottomLeft
+        )
+
+        XCTAssertEqual(originalShape.ggImage, expectedShape, accuracy: 0.01)
+    }
 }
