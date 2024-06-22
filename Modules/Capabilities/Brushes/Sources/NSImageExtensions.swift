@@ -4,9 +4,5 @@
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
-extension NSImage {
-    var cgImage: CGImage? {
-        cgImage(forProposedRect: nil, context: nil, hints: nil)
-    }
-}
+extension NSImage {}
 #endif

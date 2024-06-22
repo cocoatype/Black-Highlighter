@@ -5,70 +5,69 @@
 import AppKit
 import ErrorHandlingMac
 import GeometryMac
+import OSLog
 
 public enum BrushStampFactory {
     public static func brushImages(for shape: Shape, color: NSColor, scale: CGFloat) throws -> (CGImage, CGImage) {
         let height = shape.unionDotShapeDotShapeDotUnionCrash.geometryStreamer.height
-        let startImage = BrushStampFactory.brushStart(scaledToHeight: height, color: color)
-        let endImage = BrushStampFactory.brushEnd(scaledToHeight: height, color: color)
+        let startImage = try BrushStampFactory.brushStart(scaledToHeight: height, color: color)
+        let endImage = try BrushStampFactory.brushEnd(scaledToHeight: height, color: color)
 
-        guard let startCGImage = startImage.cgImage,
-              let endCGImage = endImage.cgImage
-        else {
-            throw BrushStampFactoryError.cannotGenerateCGImage(
-                shape: shape,
-                color: color,
-                scale: scale
-            )
-        }
-
-        return (startCGImage, endCGImage)
+        return (startImage, endImage)
     }
 
-    public static func brushStart(scaledToHeight height: CGFloat, color: NSColor) -> NSImage {
+    public static func brushStart(scaledToHeight height: CGFloat, color: NSColor) throws -> CGImage {
         guard let standardImage = Bundle.module.image(forResource: "Brush Start") else { ErrorHandler().crash("Unable to load brush start image") }
-        return scaledImage(from: standardImage, toHeight: height, color: color)
+        return try scaledImage(from: standardImage, toHeight: height, color: color)
     }
 
-    public static func brushEnd(scaledToHeight height: CGFloat, color: NSColor) -> NSImage {
+    public static func brushEnd(scaledToHeight height: CGFloat, color: NSColor) throws -> CGImage {
         guard let standardImage = Bundle.module.image(forResource: "Brush End") else { ErrorHandler().crash("Unable to load brush end image") }
-        return scaledImage(from: standardImage, toHeight: height, color: color)
+        return try scaledImage(from: standardImage, toHeight: height, color: color)
     }
 
-    private static func scaledImage(from image: NSImage, toHeight height: CGFloat, color: NSColor) -> NSImage {
+    private static func scaledImage(from image: NSImage, toHeight height: CGFloat, color: NSColor) throws -> CGImage {
         let brushScale = height / image.size.height
         let scaledBrushSize = image.size * brushScale
+        os_log("scaling brush images from %{public}@ to %{public}@, scale: %{public}f", String(describing: image.size), String(describing: scaledBrushSize), brushScale)
 
-        return NSImage(size: scaledBrushSize, flipped: false) { _ -> Bool in
-            color.setFill()
+        guard let imageRep = NSBitmapImageRep(
+            bitmapDataPlanes: nil,
+            pixelsWide: Int(scaledBrushSize.width),
+            pixelsHigh: Int(scaledBrushSize.height),
+            bitsPerSample: 8,
+            samplesPerPixel: 4,
+            hasAlpha: true,
+            isPlanar: false,
+            colorSpaceName: .deviceRGB,
+            bytesPerRow: Int(scaledBrushSize.width) * 4,
+            bitsPerPixel: 32
+        ),
+              let graphicsContext = NSGraphicsContext(bitmapImageRep: imageRep)
+        else { throw BrushStampFactoryError.cannotCreateImageContext }
+        NSGraphicsContext.current = graphicsContext
+        let context = graphicsContext.cgContext
+        context.setFillColor(color.cgColor)
+        context.beginPath()
+        context.addRect(CGRect(origin: .zero, size: scaledBrushSize))
+        context.fillPath()
+        context.scaleBy(x: brushScale, y: brushScale)
 
-            CGRect(origin: .zero, size: scaledBrushSize).fill()
-
-            guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            context.scaleBy(x: brushScale, y: brushScale)
-
-            image.draw(at: .zero, from: CGRect(origin: .zero, size: image.size), operation: .destinationIn, fraction: 1)
-
-            return true
-        }
+        image.draw(at: .zero, from: CGRect(origin: .zero, size: image.size), operation: .destinationIn, fraction: 1)
+        guard let cgImage = context.makeImage() else { throw BrushStampFactoryError.cannotGenerateCGImage(color: color, height: height) }
+        return cgImage
     }
 
     public static func brushStamp(scaledToHeight height: CGFloat, color: NSColor) throws -> CGImage {
         guard let stampImage = Bundle.module.image(forResource: "Brush") else { ErrorHandler().crash("Unable to load brush stamp image") }
 
-        let scaledImage = scaledImage(from: stampImage, toHeight: height, color: color)
-
-        guard let scaledCGImage = scaledImage.cgImage else {
-            throw BrushStampFactoryError.cannotGenerateCGImage(color: color, scale: 1)
-        }
-
-        return scaledCGImage
+        return try scaledImage(from: stampImage, toHeight: height, color: color)
     }
 }
 
 enum BrushStampFactoryError: Error {
-    case cannotGenerateCGImage(shape: Shape, color: NSColor, scale: CGFloat)
-    case cannotGenerateCGImage(color: NSColor, scale: CGFloat)
+    case cannotCreateImageContext
+    case cannotGenerateCGImage(color: NSColor, height: CGFloat)
 }
 #elseif canImport(UIKit)
 import ErrorHandling
@@ -130,13 +129,13 @@ public enum BrushStampFactory {
         }
     }
 
-    public static func brushStamp(scaledToHeight height: CGFloat, color: UIColor) -> UIImage {
+    public static func brushStamp(scaledToHeight height: CGFloat, color: UIColor) throws -> CGImage {
         guard let stampImage = UIImage(named: "Brush") else { ErrorHandler().crash("Unable to load brush stamp image") }
 
         let brushScale = height / stampImage.size.height
         let scaledBrushSize = stampImage.size * brushScale
 
-        return UIGraphicsImageRenderer(size: scaledBrushSize).image { context in
+        let scaledBrushImage = UIGraphicsImageRenderer(size: scaledBrushSize).image { context in
             color.setFill()
             context.fill(CGRect(origin: .zero, size: scaledBrushSize))
 
@@ -145,10 +144,17 @@ public enum BrushStampFactory {
 
             stampImage.draw(at: .zero, blendMode: .destinationIn, alpha: 1)
         }
+
+        guard let scaledCGImage = scaledBrushImage.cgImage else {
+            throw BrushStampFactoryError.cannotGenerateCGImage(color: color, scale: 1)
+        }
+
+        return scaledCGImage
     }
 }
 
 enum BrushStampFactoryError: Error {
     case cannotGenerateCGImage(shape: Shape, color: UIColor, scale: CGFloat)
+    case cannotGenerateCGImage(color: UIColor, scale: CGFloat)
 }
 #endif

@@ -4,8 +4,10 @@
 import DetectionsMac
 import ExportingMac
 import Foundation
+import OSLog
 import Redacting
 import RedactionsMac
+import AppKit
 
 class RedactOperation: Operation, @unchecked Sendable {
     var result: Result<String, Error>?
@@ -32,8 +34,23 @@ class RedactOperation: Operation, @unchecked Sendable {
                 do {
                     guard let inputImage = input.image else { throw RedactActionExportError.noImageForInput }
                     let redactedImage = try await PhotoExportRenderer(image: inputImage, redactions: redactions).render()
-                    self?.finish(with: .success(""))
+                    let writeURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString, conformingTo: input.fileType ?? .png)
+
+                    os_log("export representations: %{public}@", String(describing: redactedImage.representations))
+
+                    guard let cgImage = redactedImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
+                    else { throw RedactActionExportError.failedToGetBitmapRepresentation }
+
+                    let imageRep = NSBitmapImageRep(cgImage: cgImage)
+
+                    guard let data = imageRep.representation(using: input.imageType, properties: [:])
+                    else { throw RedactActionExportError.failedToGetData }
+
+                    try data.write(to: writeURL)
+
+                    self?.finish(with: .success(writeURL.path))
                 } catch {
+                    os_log("export error occured: %{public}@", String(describing: error))
                     self?.finish(with: .failure(error))
                 }
             }

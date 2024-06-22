@@ -2,6 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 #if canImport(UIKit)
+import ImageIO
 import UIKit
 
 extension UIImage {
@@ -29,6 +30,20 @@ extension UIImage.Orientation {
         case .leftMirrored: return .pi / 2
         case .rightMirrored: return -1 * .pi / 2
         @unknown default: return 0
+        }
+    }
+
+    public var cgImageOrientation: CGImagePropertyOrientation {
+        switch self {
+        case .up: .up
+        case .down: .down
+        case .left: .left
+        case .right: .right
+        case .upMirrored: .upMirrored
+        case .downMirrored: .downMirrored
+        case .leftMirrored: .leftMirrored
+        case .rightMirrored: .rightMirrored
+        @unknown default: .up
         }
     }
 }

@@ -9,6 +9,7 @@ import RedactionsMac
 #elseif canImport(UIKit)
 import Brushes
 import Geometry
+import ImageIO
 import Redactions
 import UIKit
 #endif
@@ -43,29 +44,49 @@ public actor PhotoExportRenderer {
         else { throw PhotoExportRenderError.noCurrentGraphicsContext }
         let context = graphicsContext.cgContext
 
-        let cgImage = try render(context: context, orientation: .up, imageSize: imageSize)
+        let cgImage = try render(
+            context: context,
+            orientation: .up,
+            imageSize: imageSize,
+            flipped: false
+        )
         return NSImage(cgImage: cgImage, size: imageSize)
     }
     #elseif canImport(UIKit)
+    private let orientation: CGImagePropertyOrientation
+    private let imageSize: CGSize
+    private let imageScale: Double
+
     public init(image: UIImage, redactions: [Redaction]) throws {
+        guard let sourceImage = image.cgImage
+        else { throw PhotoExportRenderError.noCGImage }
+
         self.redactions = redactions
-        self.sourceImage = image
+        self.sourceImage = sourceImage
+
+        self.imageSize = image.realSize
+        self.imageScale = image.scale
+        self.orientation = image.imageOrientation.cgImageOrientation
     }
 
     public func render() throws -> UIImage {
-        let imageSize = sourceImage.realSize * sourceImage.scale
-
-        UIGraphicsBeginImageContextWithOptions(sourceImage.size, false, sourceImage.scale)
+        UIGraphicsBeginImageContextWithOptions(sourceImage.size, false, imageScale)
         defer { UIGraphicsEndImageContext() }
         guard let context = UIGraphicsGetCurrentContext() else { throw PhotoExportRenderError.noCurrentGraphicsContext }
 
-        return try render(context: context, imageSize: imageSize)
+        let cgImage = try render(
+            context: context,
+            orientation: orientation,
+            imageSize: imageSize,
+            flipped: true
+        )
+        return UIImage(cgImage: cgImage)
     }
     #endif
 
     #warning("#62: Simplify & de-dupe")
     // swiftlint:disable:next function_body_length
-    private func render(context: CGContext, orientation: CGImagePropertyOrientation, imageSize: CGSize) throws -> CGImage {
+    private func render(context: CGContext, orientation: CGImagePropertyOrientation, imageSize: CGSize, flipped: Bool) throws -> CGImage {
         var tileRect = CGRect.zero
         tileRect.size.width = imageSize.width
         tileRect.size.height = floor(CGFloat(Self.tileTotalPixels) / CGFloat(imageSize.width))
@@ -88,8 +109,10 @@ public actor PhotoExportRenderer {
         let untranslateTransform = CGAffineTransform(translationX: imageSize.width / -2, y: imageSize.height / -2)
         context.concatenate(untranslateTransform)
 
-        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: imageSize.height * -1)
-        context.concatenate(transform)
+        if flipped {
+            let flipTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: imageSize.height * -1)
+            context.concatenate(flipTransform)
+        }
 
         for y in 0..<iterationCount {
             try autoreleasepool {
@@ -121,21 +144,29 @@ public actor PhotoExportRenderer {
             let (part, color) = drawing
             switch part {
             case .shape(let shape):
-                let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: 1)
+                let (startImage, endImage) = try BrushStampFactory.brushImages(for: shape, color: color, scale: context.ctm.a)
 
                 color.setFill()
                 context.addPath(shape.path)
                 context.fillPath()
 
                 context.saveGState()
-                context.translateBy(x: shape.topLeft.x, y: shape.topLeft.y)
+                if flipped {
+                    context.translateBy(x: shape.topLeft.x, y: shape.topLeft.y)
+                } else {
+                    context.translateBy(x: shape.bottomLeft.x, y: shape.bottomLeft.y)
+                }
                 context.rotate(by: shape.angle)
                 context.translateBy(x: -(startImage.size.width - 1), y: 0)
                 context.draw(startImage, in: CGRect(origin: .zero, size: startImage.size))
                 context.restoreGState()
 
                 context.saveGState()
-                context.translateBy(x: shape.topRight.x, y: shape.topRight.y)
+                if flipped {
+                    context.translateBy(x: shape.topRight.x, y: shape.topRight.y)
+                } else {
+                    context.translateBy(x: shape.bottomRight.x, y: shape.bottomRight.y)
+                }
                 context.rotate(by: shape.angle)
                 context.translateBy(x: -1, y: 0)
                 context.draw(endImage, in: CGRect(origin: .zero, size: endImage.size))

@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import Brushes
+import ErrorHandling
 import Geometry
 import Observations
 import Redactions
@@ -40,7 +41,7 @@ class RedactionPathLayer: CALayer {
 
             self.part = Part.shape(shape: shape, startImage: startImage, endImage: endImage)
         case .path(let path):
-            let dikembeMutombo = BrushStampFactory.brushStamp(scaledToHeight: path.lineWidth, color: color)
+            let dikembeMutombo = try BrushStampFactory.brushStamp(scaledToHeight: path.lineWidth, color: color)
             let borderBounds = path.strokeBorderPath.bounds
             gigiPath = borderBounds.inset(by: UIEdgeInsets(top: dikembeMutombo.size.height * -0.5,
                                                              left: dikembeMutombo.size.width * -0.5,
@@ -69,9 +70,13 @@ class RedactionPathLayer: CALayer {
     }
 
     override init(layer: Any) {
-        let pathLayer = layer as? RedactionPathLayer
-        self.color = pathLayer?.color ?? .black
-        self.part = pathLayer?.part ?? .path(path: UIBezierPath(), dikembeMutombo: UIImage())
+        guard let pathLayer = layer as? RedactionPathLayer else {
+            ErrorHandler().crash("Tried to copy something that was not a RedactionPathLayer")
+        }
+
+        self.color = pathLayer.color
+        self.part = pathLayer.part
+
         super.init(layer: layer)
     }
 
@@ -100,7 +105,7 @@ class RedactionPathLayer: CALayer {
                 defer { context.restoreGState() }
 
                 context.translateBy(x: dikembeMutombo.size.width * 0.5, y: dikembeMutombo.size.height * 0.5)
-                dikembeMutombo.draw(at: point)
+                context.draw(dikembeMutombo, in: CGRect(origin: point, size: dikembeMutombo.size))
             }
         }
     }
@@ -110,7 +115,7 @@ class RedactionPathLayer: CALayer {
 
         // dikembeMutombo by @KaenAitch on 8/1/22
         // the brush stamp image
-        case path(path: UIBezierPath, dikembeMutombo: UIImage)
+        case path(path: UIBezierPath, dikembeMutombo: CGImage)
     }
 
     private let part: RedactionPathLayer.Part
