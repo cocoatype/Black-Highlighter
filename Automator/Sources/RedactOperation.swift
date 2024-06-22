@@ -2,11 +2,14 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import DetectionsMac
+import ExportingMac
 import Foundation
+import OSLog
 import Redacting
 import RedactionsMac
+import AppKit
 
-class RedactOperation: Operation {
+class RedactOperation: Operation, @unchecked Sendable {
     var result: Result<String, Error>?
     init(input: RedactActionInput, wordList: [String]) {
         self.input = input
@@ -27,8 +30,29 @@ class RedactOperation: Operation {
 
             let redactions = matchingObservations.map { Redaction($0, color: .black) }
 
-            RedactActionExporter.export(input, redactions: redactions) { [weak self] result in
-                self?.finish(with: result)
+            Task { [weak self] in
+                do {
+                    guard let inputImage = input.image else { throw RedactActionExportError.noImageForInput }
+                    let redactedImage = try await PhotoExportRenderer(image: inputImage, redactions: redactions).render()
+                    let writeURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString, conformingTo: input.fileType ?? .png)
+
+                    os_log("export representations: %{public}@", String(describing: redactedImage.representations))
+
+                    guard let cgImage = redactedImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
+                    else { throw RedactActionExportError.failedToGetBitmapRepresentation }
+
+                    let imageRep = NSBitmapImageRep(cgImage: cgImage)
+
+                    guard let data = imageRep.representation(using: input.imageType, properties: [:])
+                    else { throw RedactActionExportError.failedToGetData }
+
+                    try data.write(to: writeURL)
+
+                    self?.finish(with: .success(writeURL.path))
+                } catch {
+                    os_log("export error occured: %{public}@", String(describing: error))
+                    self?.finish(with: .failure(error))
+                }
             }
         }
     }

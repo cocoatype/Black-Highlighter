@@ -89,7 +89,7 @@ open class TextDetector: NSObject {
         }
     }
 
-    public func detectText(in image: NSImage, completionHandler: @escaping (([RecognizedTextObservation]?) -> Void)) {
+    public func detectText(in image: NSImage, completionHandler: @escaping (([ObservationsMac.RecognizedTextObservation]?) -> Void)) {
         guard let recognitionOperation = try? TextRecognitionOperation(image: image) else { return completionHandler(nil) }
         Task {
             await completionHandler(detectText(with: recognitionOperation))

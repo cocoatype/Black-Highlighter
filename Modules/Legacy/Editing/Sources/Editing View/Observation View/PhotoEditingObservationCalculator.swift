@@ -2,6 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import Foundation
+import Geometry
 import Observations
 import Redactions
 
@@ -28,28 +29,72 @@ actor PhotoEditingObservationCalculator {
         // get all character observations from detected text
         let detectedCharacterObservations = detectedTextObservations.flatMap(\.characterObservations).filter(\.bounds.isNotZero)
 
-        // do intersection detection to override detected with recognized text
-        let filteredDetectedObservations = detectedCharacterObservations.filter { detectedObservation in
-            let detectedCGPath = detectedObservation.bounds.path
+        // find where all detected observations belong
+        let calculationPass = detectedCharacterObservations.reduce(into: PhotoEditingObservationCalculationPass()) { currentPass, detectedObservation in
+            let detectedPath = detectedObservation.bounds.path
+            let intersectingObservation = recognizedCharacterObservations.first(where: { recognizedObservation in
+                let recognizedPath = recognizedObservation.bounds.path
 
-            let hasIntersection = recognizedCharacterObservations.contains { recognizedObservation in
-                let recognizedCGPath = recognizedObservation.bounds.path
+                let isEqual = detectedPath.isEqual(to: recognizedPath, accuracy: 0.01)
+                guard isEqual == false else {
+                    return true
+                }
 
-                let isEqual = detectedCGPath.isEqual(to: recognizedCGPath, accuracy: 0.01)
-                guard isEqual == false else { return true }
+                return finder.intersectionExists(between: detectedPath, and: recognizedPath)
+            })
 
-                let isContained = detectedCGPath.contains(recognizedCGPath.currentPoint) || recognizedCGPath.contains(detectedCGPath.currentPoint)
-                guard isContained == false else { return true }
-
-                return finder.intersectionExists(between: detectedCGPath, and: recognizedCGPath)
+            if let intersectingObservation {
+                var siblingObservations = currentPass.recognizedObservations[intersectingObservation] ?? []
+                siblingObservations.append(detectedObservation)
+                currentPass.recognizedObservations[intersectingObservation] = siblingObservations
+            } else {
+                currentPass.orphanedObservations.append(detectedObservation)
             }
-
-            return !hasIntersection
         }
 
-        // unique by adding to set
-        let characterObservationSet = Set(filteredDetectedObservations + recognizedCharacterObservations)
+        // find recognized observations with no related detected observations
+        let parentObservations = calculationPass.recognizedObservations.keys
+        let childlessObservations = recognizedCharacterObservations.filter { recognizedObservation in
+            let isParent = parentObservations.contains(recognizedObservation)
+            return isParent == false
+        }
 
-        return Array(characterObservationSet)
+        // find recognized observations that are insufficiently filled to count
+        let unfulfilledObservations = calculationPass.recognizedObservations.filter { parent, children in
+            let childArea = children.reduce(Double.zero) { childArea, observation in
+                childArea + observation.bounds.path.area()
+            }
+            let parentArea = parent.bounds.path.area()
+            return childArea < (parentArea * 0.35)
+        }.keys
+
+        // combine the remaining parent observations and their children
+        let remainingObservations = calculationPass.recognizedObservations.filter { parent, _ in
+            unfulfilledObservations.contains(parent) == false
+        }
+        let combinedObservations = remainingObservations.map { parent, children in
+            let combinedShape = MinimumAreaShapeFinder.minimumAreaShape(for: children.map(\.bounds))
+
+            return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
+        }
+
+        return combinedObservations + childlessObservations + unfulfilledObservations + calculationPass.orphanedObservations
+    }
+
+    var calculatedObservationsByUUID: [UUID: [CharacterObservation]] {
+        return calculatedObservations.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
+            var observationsByUUID: [CharacterObservation]
+            if let existing = dictionary[observation.textObservationUUID] {
+                observationsByUUID = existing
+            } else {
+                observationsByUUID = []
+            }
+
+            observationsByUUID.append(observation)
+
+            var newDictionary = dictionary
+            newDictionary[observation.textObservationUUID] = observationsByUUID
+            return newDictionary
+        }
     }
 }

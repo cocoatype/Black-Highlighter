@@ -19,5 +19,6 @@ extension Defaults {
         case showDetectedCharactersOverlay = "Defaults.Keys.showDetectedCharactersOverlay"
         case showRecognizedTextOverlay = "Defaults.Keys.showRecognizedTextOverlay"
         case showCalculatedOverlay = "Defaults.Keys.showCalculatedOverlay"
+        case showCombinedOverlay = "Defaults.Keys.showCombinedOverlay"
     }
 }

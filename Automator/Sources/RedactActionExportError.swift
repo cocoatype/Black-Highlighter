@@ -4,6 +4,7 @@
 enum RedactActionExportError: Error {
     case failedToGenerateGraphicsContext
     case noImageForInput
-    case operationReturnedNoResult
     case writeError
+    case failedToGetBitmapRepresentation
+    case failedToGetData
 }

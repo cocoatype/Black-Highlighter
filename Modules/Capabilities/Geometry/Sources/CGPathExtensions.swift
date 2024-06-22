@@ -3,16 +3,39 @@
 
 import CoreGraphics
 
+struct PathElement {
+    let points: [CGPoint]
+    let type: CGPathElementType
+
+    init(elementPointer: UnsafePointer<CGPathElement>) {
+        let element = elementPointer.pointee
+        type = element.type
+        points = Array(UnsafeBufferPointer(start: element.points, count: type.pointCount))
+    }
+}
+
+extension CGPathElementType {
+    var pointCount: Int {
+        switch self {
+        case .closeSubpath: 0
+        case .moveToPoint, .addLineToPoint: 1
+        case .addQuadCurveToPoint: 2
+        case .addCurveToPoint: 3
+        @unknown default: 0
+        }
+    }
+}
+
 public extension CGPath {
     func isEqual(to otherPath: CGPath, accuracy: Double) -> Bool {
-        var ourPathElements = [CGPathElement]()
+        var ourPathElements = [PathElement]()
         applyWithBlock { elementPointer in
-            ourPathElements.append(elementPointer.pointee)
+            ourPathElements.append(PathElement(elementPointer: elementPointer))
         }
 
-        var otherPathElements = [CGPathElement]()
+        var otherPathElements = [PathElement]()
         otherPath.applyWithBlock { elementPointer in
-            otherPathElements.append(elementPointer.pointee)
+            otherPathElements.append(PathElement(elementPointer: elementPointer))
         }
 
         return ourPathElements.elementsEqual(otherPathElements) { ourElement, otherElement in
@@ -49,35 +72,32 @@ public extension CGPath {
         }
     }
 
-    func svg(color: String) -> String {
-        var string = ""
-        applyWithBlock { elementPointer in
-            let element = elementPointer.pointee
-            let elementType = element.type
-            switch elementType {
+    func area() -> CGFloat {
+        var area: CGFloat = 0.0
+        var firstPoint: CGPoint?
+        var previousPoint: CGPoint?
+
+        self.applyWithBlock { element in
+            let points = element.pointee.points
+            switch element.pointee.type {
             case .moveToPoint:
-                string.append("M ")
-                let elementPoint = element.points.pointee
-                string.append("\(elementPoint.x),\(elementPoint.y)")
-                string.append("\n")
+                firstPoint = points[0]
+                previousPoint = points[0]
             case .addLineToPoint:
-                string.append("L ")
-                let elementPoint = element.points.pointee
-                string.append("\(elementPoint.x),\(elementPoint.y)")
-                string.append("\n")
-            case .addCurveToPoint:
-                string.append("C ")
-                string.append("\n")
-                #warning("#60: Finish implementing this")
-            case .addQuadCurveToPoint:
-                string.append("Q ")
-                string.append("\n")
-                #warning("#60: Finish implementing this")
+                if let previous = previousPoint {
+                    area += (previous.x * points[0].y) - (points[0].x * previous.y)
+                }
+                previousPoint = points[0]
             case .closeSubpath:
-                string.append("Z\n")
-            @unknown default: break
+                if let first = firstPoint, let previous = previousPoint {
+                    area += (previous.x * first.y) - (first.x * previous.y)
+                }
+                previousPoint = firstPoint
+            default:
+                break
             }
         }
-        return "<path d=\"\(string)\" fill=\"\(color)\" fill-opacity=\"0.3\"/>"
+
+        return abs(area) / 2.0
     }
 }

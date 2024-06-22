@@ -146,23 +146,7 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
             guard let textObservations, let recognizedTextObservations else { return [] }
 
             let calculator = PhotoEditingObservationCalculator(detectedTextObservations: textObservations, recognizedTextObservations: recognizedTextObservations)
-            let calculatedObservations = await calculator.calculatedObservations
-
-            // reduce into dictionary by textObservationUUID
-            let observationsByUUID = calculatedObservations.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
-                var observationsByUUID: [CharacterObservation]
-                if let existing = dictionary[observation.textObservationUUID] {
-                    observationsByUUID = existing
-                } else {
-                    observationsByUUID = []
-                }
-
-                observationsByUUID.append(observation)
-
-                var newDictionary = dictionary
-                newDictionary[observation.textObservationUUID] = observationsByUUID
-                return newDictionary
-            }
+            let observationsByUUID = await calculator.calculatedObservationsByUUID
 
             // map dictionary keys into redactions
             let redactions = observationsByUUID.compactMap { (_, value: [CharacterObservation]) in

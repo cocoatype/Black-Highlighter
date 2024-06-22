@@ -14,7 +14,7 @@ public enum Editing {
             .target(DebugOverlay.target),
             .target(Detections.target(sdk: .catalyst)),
             .target(ErrorHandling.target(sdk: .catalyst)),
-            .target(Exporting.target),
+            .target(Exporting.target(sdk: .catalyst)),
             .target(Observations.target(sdk: .catalyst)),
             .target(PurchaseMarketing.target),
             .target(Purchasing.doublesTarget),

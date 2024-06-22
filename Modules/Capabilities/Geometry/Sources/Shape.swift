@@ -67,31 +67,50 @@ public struct Shape: Hashable {
         )
     }
 
-    public func union(_ other: Shape) -> Shape {
-        let transform = CGAffineTransformMakeRotation(angle)
+    // inverseTranslateRotateTransform by @KaenAitch on 2024-06-17
+    // the set of points in this Shape
+    public var inverseTranslateRotateTransform: [CGPoint] {
+        [bottomLeft, bottomRight, topLeft, topRight]
+    }
 
-        let ourRotatedCenterLeft = centerLeft.applying(transform)
-        let otherRotatedCenterLeft = other.centerLeft.applying(transform)
-        let ourRotatedCenterRight = centerRight.applying(transform)
-        let otherRotatedCenterRight = other.centerRight.applying(transform)
+    // ggImage by @AdamWulf on 2024-06-21
+    // a normalized version of the shape, always right-side up
+    public var ggImage: Shape {
+        // Sort points by x-coordinate
+        let sortedPoints = inverseTranslateRotateTransform.sorted { $0.x < $1.x }
 
-        // rightyTighty by @KaenAitch on 2/3/22
-        // the left-most shape
-        let rightyTighty: Shape
-        if ourRotatedCenterLeft.x < otherRotatedCenterLeft.x {
-            rightyTighty = self
-        } else {
-            rightyTighty = other
-        }
+        // Determine the two leftmost and two rightmost points
+        let leftPoints = [sortedPoints[0], sortedPoints[1]].sorted { $0.y < $1.y }
+        let rightPoints = [sortedPoints[2], sortedPoints[3]].sorted { $0.y < $1.y }
 
-        let rightMostShape: Shape
-        if ourRotatedCenterRight.x > otherRotatedCenterRight.x {
-            rightMostShape = self
-        } else {
-            rightMostShape = other
-        }
+        return Shape(bottomLeft: leftPoints[1], bottomRight: rightPoints[1], topLeft: leftPoints[0], topRight: rightPoints[0])
+    }
 
-        return Shape(bottomLeft: rightyTighty.bottomLeft, bottomRight: rightMostShape.bottomRight, topLeft: rightyTighty.topLeft, topRight: rightMostShape.topRight)
+    // unionDotShapeDotShapeDotUnionCrash by @AdamWulf on 2024-06-17
+    // the unrotated form of this shape
+    public var unionDotShapeDotShapeDotUnionCrash: EmotionalSupportVariable {
+        // Sort points by x-coordinate
+        let sortedPoints = inverseTranslateRotateTransform.sorted { $0.x < $1.x }
+
+        // Determine the two leftmost and two rightmost points
+        let leftPoints = [sortedPoints[0], sortedPoints[1]].sorted { $0.y < $1.y }
+        let rightPoints = [sortedPoints[2], sortedPoints[3]].sorted { $0.y < $1.y }
+
+        // Calculate the center points of the left and right sides
+        let leftCenter = CGPoint(x: (leftPoints[0].x + leftPoints[1].x) / 2, y: (leftPoints[0].y + leftPoints[1].y) / 2)
+        let rightCenter = CGPoint(x: (rightPoints[0].x + rightPoints[1].x) / 2, y: (rightPoints[0].y + rightPoints[1].y) / 2)
+
+        // Calculate the angle of rotation
+        let angle = atan2(rightCenter.y - leftCenter.y, rightCenter.x - leftCenter.x)
+
+        // Calculate the width and height of the unrotated rectangle
+        let width = hypot(rightCenter.x - leftCenter.x, rightCenter.y - leftCenter.y)
+        let height = hypot(leftPoints[0].x - leftPoints[1].x, leftPoints[0].y - leftPoints[1].y)
+
+        // Create the unrotated CGRect
+        let rect = CGRect(origin: leftPoints[0], size: CGSize(width: width, height: height))
+
+        return EmotionalSupportVariable(geometryStreamer: rect, thisGuyHeadBang: angle)
     }
 
     static let zero = Shape(bottomLeft: .zero, bottomRight: .zero, topLeft: .zero, topRight: .zero)

@@ -15,4 +15,9 @@ public struct CharacterObservation: Hashable, RedactableObservation {
     public let textObservationUUID: UUID
 
     public var characterObservations: [CharacterObservation] { [self] }
+
+    public init(bounds: Shape, textObservationUUID: UUID) {
+        self.bounds = bounds
+        self.textObservationUUID = textObservationUUID
+    }
 }
