@@ -5,6 +5,7 @@ import AutoRedactionsUI
 import DebugOverlay
 import Defaults
 import Detections
+import ErrorHandling
 import Exporting
 import Observations
 import Photos
@@ -361,21 +362,22 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     private func updateScrollView() {
         photoEditingView.image = image
 
-        guard let image = image else { return }
-        textRectangleDetector.detectTextRectangles(in: image) { [weak self] textObservations in
-            DispatchQueue.main.async { [weak self] in
-                self?.photoEditingView.textObservations = textObservations
-            }
+        guard let image else { return }
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let textObservations = try await textRectangleDetector.detectText(in: image)
+                photoEditingView.textObservations = textObservations
+            } catch { ErrorHandler().log(error) }
         }
 
-        textRectangleDetector.detectText(in: image) { [weak self] recognizedTextObservations in
-            guard let recognizedTextObservations else { return }
-            Task { [weak self] in
-                await MainActor.run { [weak self] in
-                    self?.updateRecognizedTextObservations(from: recognizedTextObservations)
-                    self?.autoRedact(using: recognizedTextObservations)
-                }
-            }
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let recognizedTextObservations = try await textRectangleDetector.recognizeText(in: image)
+                updateRecognizedTextObservations(from: recognizedTextObservations)
+                autoRedact(using: recognizedTextObservations)
+            } catch { ErrorHandler().log(error) }
         }
     }
 

@@ -14,6 +14,11 @@
 "RedactDetectionsIntent.sourceImages.title" = "Source Images";
 "RedactDetectionsIntent.title" = "Redact Detected Items";
 
+"RedactEverythingIntent.description" = "Redact all text in an image.";
+"RedactEverythingIntent.parameterSummary${timCookCanEatMySocks}" = "Redact all text in ${timCookCanEatMySocks}";
+"RedactEverythingIntent.sourceImages.title" = "Source Images";
+"RedactEverythingIntent.title" = "Redact All Text";
+
 "RedactImageIntent.description" = "Redact an image.";
 "RedactImageIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact occurrences of ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
 "RedactImageIntent.redactedWords.title" = "Redacted Words";

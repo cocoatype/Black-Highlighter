@@ -60,7 +60,7 @@ private struct MockVisionText: VisionText {
 }
 
 private class StubTextDetector: TextDetector {
-    override func detectText(in image: UIImage) async throws -> [Observations.RecognizedTextObservation] {
+    override func recognizeText(in image: UIImage) async throws -> [Observations.RecognizedTextObservation] {
         return try [
             XCTUnwrap(RecognizedTextObservation("hello")),
             XCTUnwrap(RecognizedTextObservation("world")),
