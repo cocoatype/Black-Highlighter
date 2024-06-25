@@ -77,7 +77,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
         redactionView.add(redactions)
     }
 
-    func redact<ObservationType: TextObservation>(_ observations: [ObservationType], joinSiblings: Bool) {
+    func redact(_ observations: [any TextObservation], joinSiblings: Bool) {
         if joinSiblings, let wordObservations = (observations as? [WordObservation]) {
             redactionView.add(Redaction(wordObservations, color: color))
         } else {

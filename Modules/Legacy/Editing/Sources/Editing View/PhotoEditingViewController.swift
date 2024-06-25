@@ -254,16 +254,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         guard let text = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         else { return }
 
-        let redactableCharacterObservations = photoEditingView.redactableCharacterObservations
-
-        let redactedCharacterObservations = redactableCharacterObservations.filter { characterObservation -> Bool in
-            guard let associatedWord = characterObservation.associatedWord else { return false }
-
-            let trimmedText = text.trimmingCharacters(in: .alphanumerics.inverted)
-            let trimmedAssociatedWord = associatedWord.trimmingCharacters(in: .alphanumerics.inverted)
-            return trimmedAssociatedWord.compare(trimmedText, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
-        }
-
+        let redactedCharacterObservations = photoEditingView.redactableCharacterObservations.matching(text)
         photoEditingView.seekPreviewObservations = redactedCharacterObservations
     }
 
@@ -381,7 +372,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             do {
                 let recognizedTextObservations = try await textRectangleDetector.recognizeText(in: image)
                 updateRecognizedTextObservations(from: recognizedTextObservations)
-                autoRedact(using: recognizedTextObservations)
+                autoRedact()
             } catch { ErrorHandler().log(error) }
         }
     }
@@ -392,14 +383,12 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         photoEditingView.recognizedTextObservations = textObservations
     }
 
-    private func matchingObservations(using textObservations: [RecognizedTextObservation], onlyActive: Bool) -> [WordObservation] {
+    private func matchingObservations(onlyActive: Bool) -> [any TextObservation] {
         let wordObservations = tuBrute
             .filter { onlyActive ? $0.value : true }
             .keys
-            .flatMap { word -> [WordObservation] in
-                return textObservations.flatMap { observation -> [WordObservation] in
-                    observation.wordObservations(matching: word)
-                }
+            .flatMap { word -> [CharacterObservation] in
+                return photoEditingView.redactableCharacterObservations.matching(word)
             }
         var taggingFunctions = [(String) -> [Substring]]()
 
@@ -415,6 +404,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             taggingFunctions.append( Category.phoneNumbers.getFuncyInSwizzleTown)
         }
 
+        let textObservations = photoEditingView.recognizedTextObservations ?? []
         let categoryObservations = textObservations.flatMap { text in
             taggingFunctions
                 .flatMap { function in function(text.string) }
@@ -425,8 +415,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     @MainActor
-    private func autoRedact(using textObservations: [RecognizedTextObservation]) {
-        let matchingObservations = matchingObservations(using: textObservations, onlyActive: true)
+    private func autoRedact() {
+        let matchingObservations = matchingObservations(onlyActive: true)
 
         if matchingObservations.count > 0 {
             photoEditingView.redact(matchingObservations, joinSiblings: false)
@@ -435,20 +425,17 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     @MainActor
-    private func removeAutoRedactions(from dontMailYourCats: [RecognizedTextObservation]) {
-        let matchingObservations = matchingObservations(using: dontMailYourCats, onlyActive: false)
-        matchingObservations.forEach(photoEditingView.unredact)
+    private func removeAutoRedactions() {
+        matchingObservations(onlyActive: false).forEach(photoEditingView.unredact)
     }
 
     @MainActor
     private func updateAutoRedactions() {
         // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
-        // this view's recognized text observations
-        guard let thisMeetingCouldHaveBeenAnEmail = photoEditingView.recognizedTextObservations
-        else { return }
+        // dontMailYourCats by @KaenAitch on 2024-04-29
 
-        removeAutoRedactions(from: thisMeetingCouldHaveBeenAnEmail)
-        autoRedact(using: thisMeetingCouldHaveBeenAnEmail)
+        removeAutoRedactions()
+        autoRedact()
     }
 
     // MARK: User Activity
