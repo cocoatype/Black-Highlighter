@@ -96,6 +96,12 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
+        guard let previousTraitCollection,
+              previousTraitCollection.horizontalSizeClass != traitCollection.horizontalSizeClass ||
+                previousTraitCollection.verticalSizeClass != traitCollection.verticalSizeClass
+        else { return }
+
         updateToolbarItems(animated: false)
         updateSeekPresentation()
     }
@@ -209,7 +215,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             let seekViewController = TabletSeekViewController()
             seekViewController.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
             seekViewController.popoverPresentationController?.delegate = self
-            present(seekViewController, animated: true, completion: nil)
+            present(seekViewController, animated: true)
         } else {
             seekBar.becomeFirstResponder()
         }
@@ -258,7 +264,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     open override var canResignFirstResponder: Bool { true }
 
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.cancelSeeking(presentationController)
+        cancelSeeking(presentationController)
     }
 
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {

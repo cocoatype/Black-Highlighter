@@ -29,6 +29,10 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
         (viewControllers.first as? PhotoEditingViewController)?.finishSeeking(sender)
     }
 
+    @objc public func seekBarDidChangeText(_ sender: UISearchTextField) {
+        (viewControllers.first as? PhotoEditingViewController)?.seekBarDidChangeText(sender)
+    }
+
     // MARK: Dismissal
 
     @objc func dismissPhotoEditingViewController(_ sender: UIBarButtonItem) {
