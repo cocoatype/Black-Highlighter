@@ -33,6 +33,7 @@ public enum App {
             debug: [
                 "PROVISIONING_PROFILE_SPECIFIER": "match Development com.cocoatype.Highlighter",
                 "PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]": "match Development com.cocoatype.Highlighter macos",
+                "ENABLE_DEBUG_DYLIB": false,
             ], release: [
                 "PROVISIONING_PROFILE_SPECIFIER": "match AppStore com.cocoatype.Highlighter",
                 "PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]": "match AppStore com.cocoatype.Highlighter macos",
