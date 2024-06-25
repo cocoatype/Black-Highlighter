@@ -115,9 +115,10 @@ class PhotoEditingObservationVisualizationView: PhotoEditingRedactionView {
 
     // MARK: Seek and Destroy
 
-    var seekPreviewObservations = [WordObservation]() {
+    var seekPreviewObservations = [CharacterObservation]() {
         didSet {
-            seekPreviewRedactions = seekPreviewObservations.map { Redaction([$0], color: color) }
+            seekPreviewRedactions = seekPreviewObservations
+                .compactMap { Redaction([$0], color: color) }
         }
     }
 

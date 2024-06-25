@@ -32,7 +32,7 @@ actor PhotoEditingObservationCalculator {
         // find where all detected observations belong
         let calculationPass = detectedCharacterObservations.reduce(into: PhotoEditingObservationCalculationPass()) { currentPass, detectedObservation in
             let detectedPath = detectedObservation.bounds.path
-            let intersectingObservation = recognizedCharacterObservations.first(where: { recognizedObservation in
+            let intersectingRecognizedObservation = recognizedCharacterObservations.first(where: { recognizedObservation in
                 let recognizedPath = recognizedObservation.bounds.path
 
                 let isEqual = detectedPath.isEqual(to: recognizedPath, accuracy: 0.01)
@@ -43,10 +43,10 @@ actor PhotoEditingObservationCalculator {
                 return finder.intersectionExists(between: detectedPath, and: recognizedPath)
             })
 
-            if let intersectingObservation {
-                var siblingObservations = currentPass.recognizedObservations[intersectingObservation] ?? []
+            if let intersectingRecognizedObservation {
+                var siblingObservations = currentPass.recognizedObservations[intersectingRecognizedObservation] ?? []
                 siblingObservations.append(detectedObservation)
-                currentPass.recognizedObservations[intersectingObservation] = siblingObservations
+                currentPass.recognizedObservations[intersectingRecognizedObservation] = siblingObservations
             } else {
                 currentPass.orphanedObservations.append(detectedObservation)
             }
@@ -75,7 +75,7 @@ actor PhotoEditingObservationCalculator {
         let combinedObservations = remainingObservations.map { parent, children in
             let combinedShape = MinimumAreaShapeFinder.minimumAreaShape(for: children.map(\.bounds))
 
-            return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID)
+            return CharacterObservation(bounds: combinedShape, textObservationUUID: parent.textObservationUUID, associatedString: parent.associatedString, range: parent.range)
         }
 
         return combinedObservations + childlessObservations + unfulfilledObservations + calculationPass.orphanedObservations

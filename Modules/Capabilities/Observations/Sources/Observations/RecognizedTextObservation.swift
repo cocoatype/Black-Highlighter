@@ -28,12 +28,21 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
                 let characterRange = Range<String.Index>(uncheckedBounds: (index, visionText.string.index(after: index)))
                 guard let characterShapeThing = try? visionText.boundingBox(for: characterRange) else { return nil }
                 let shape = Shape(characterShapeThing).scaled(to: imageSize)
-                return CharacterObservation(bounds: shape, textObservationUUID: recognizedText.uuid)
-            }.reduce(into: [CharacterObservation]()) { uniqueObservations, observation in
-                if !uniqueObservations.contains(where: { $0.bounds == observation.bounds }) {
-                    uniqueObservations.append(observation)
+                return CharacterObservation(bounds: shape, textObservationUUID: recognizedText.uuid, associatedString: visionText.string, range: characterRange)
+            }.reduce(into: [Shape: CharacterObservation]()) { uniqueObservations, observation in
+                if let existingObservation = uniqueObservations[observation.bounds] {
+                    let combiningObservations = [existingObservation, observation]
+                    guard let associatedString = existingObservation.associatedString,
+                          let startIndex = combiningObservations.compactMap(\.range?.lowerBound).min(),
+                          let endIndex = combiningObservations.compactMap(\.range?.upperBound).max()
+                    else { return }
+                    let range = startIndex..<endIndex
+                    let combinedObservation = CharacterObservation(bounds: observation.bounds, textObservationUUID: observation.textObservationUUID, associatedString: associatedString, range: range)
+                    uniqueObservations[observation.bounds] = combinedObservation
+                } else {
+                    uniqueObservations[observation.bounds] = observation
                 }
-            }
+            }.values.map { $0 }
     }
 
     public let bounds: Shape

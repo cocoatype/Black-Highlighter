@@ -10,14 +10,23 @@ import GeometryMac
 import Geometry
 #endif
 
-public struct CharacterObservation: Hashable, RedactableObservation {
+public struct CharacterObservation: TextObservation, Hashable, RedactableObservation {
     public let bounds: Shape
     public let textObservationUUID: UUID
+    public let associatedString: String?
+    public let range: Range<String.Index>?
 
     public var characterObservations: [CharacterObservation] { [self] }
 
-    public init(bounds: Shape, textObservationUUID: UUID) {
+    public init(bounds: Shape, textObservationUUID: UUID, associatedString: String? = nil, range: Range<String.Index>? = nil) {
         self.bounds = bounds
         self.textObservationUUID = textObservationUUID
+        self.associatedString = associatedString
+        self.range = range
+    }
+
+    public var associatedWord: String? {
+        guard let associatedString, let range else { return nil }
+        return String(associatedString[range])
     }
 }
