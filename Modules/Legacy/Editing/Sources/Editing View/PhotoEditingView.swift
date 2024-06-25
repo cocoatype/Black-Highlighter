@@ -63,12 +63,12 @@ public class PhotoEditingView: UIView, UIScrollViewDelegate {
         workspaceView.add(redactions)
     }
 
-    func redact<ObservationType: TextObservation>(_ observations: [ObservationType], joinSiblings: Bool) {
+    func redact(_ observations: [any TextObservation], joinSiblings: Bool) {
         workspaceView.redact(observations, joinSiblings: joinSiblings)
         updateAccessibilityElements()
     }
 
-    func unredact<ObservationType: TextObservation>(_ observation: ObservationType) {
+    func unredact(_ observation: any TextObservation) {
         workspaceView.unredact(observation)
         updateAccessibilityElements()
     }
