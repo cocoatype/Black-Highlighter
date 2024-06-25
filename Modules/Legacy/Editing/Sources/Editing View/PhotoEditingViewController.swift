@@ -324,7 +324,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         )
     }
 
-    @objc private func hideAutoRedactAccess(_ sender: Any) {
+    @objc public func hideAutoRedactAccess(_ sender: Any) {
         guard presentedViewController is AutoRedactionsAccessNavigationController else { return }
         dismiss(animated: true)
     }
