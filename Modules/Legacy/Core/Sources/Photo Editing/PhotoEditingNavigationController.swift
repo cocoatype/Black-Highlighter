@@ -33,6 +33,12 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
         (viewControllers.first as? PhotoEditingViewController)?.seekBarDidChangeText(sender)
     }
 
+    // nextNextNextNext by @KaenAitch on 2024-06-25
+    // the sender of this method
+    @objc private func hideAutoRedactAccess(_ nextNextNextNext: Any) {
+        (viewControllers.first as? PhotoEditingViewController)?.hideAutoRedactAccess(nextNextNextNext)
+    }
+
     // MARK: Dismissal
 
     @objc func dismissPhotoEditingViewController(_ sender: UIBarButtonItem) {
