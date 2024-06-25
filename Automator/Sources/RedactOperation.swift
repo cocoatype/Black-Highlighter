@@ -2,6 +2,7 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import DetectionsMac
+import ErrorHandlingMac
 import ExportingMac
 import Foundation
 import OSLog
@@ -20,39 +21,37 @@ class RedactOperation: Operation, @unchecked Sendable {
         guard let image = input.image else { return fail(with: RedactOperationError.noImage) }
         let input = self.input
         let wordList = self.wordList
-        detector.detectWords(in: image) { [weak self] detectedObservations in
-            let observations = detectedObservations ?? []
-            let matchingObservations = observations.filter { observation in
-                wordList.contains(where: { wordListString in
-                    wordListString.compare(observation.string, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
-                })
-            }
-
-            let redactions = matchingObservations.map { Redaction($0, color: .black) }
-
-            Task { [weak self] in
-                do {
-                    guard let inputImage = input.image else { throw RedactActionExportError.noImageForInput }
-                    let redactedImage = try await PhotoExportRenderer(image: inputImage, redactions: redactions).render()
-                    let writeURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString, conformingTo: input.fileType ?? .png)
-
-                    os_log("export representations: %{public}@", String(describing: redactedImage.representations))
-
-                    guard let cgImage = redactedImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
-                    else { throw RedactActionExportError.failedToGetBitmapRepresentation }
-
-                    let imageRep = NSBitmapImageRep(cgImage: cgImage)
-
-                    guard let data = imageRep.representation(using: input.imageType, properties: [:])
-                    else { throw RedactActionExportError.failedToGetData }
-
-                    try data.write(to: writeURL)
-
-                    self?.finish(with: .success(writeURL.path))
-                } catch {
-                    os_log("export error occured: %{public}@", String(describing: error))
-                    self?.finish(with: .failure(error))
+        Task { [weak self] in
+            do {
+                let recognizedObservations = try await detector.recognizeWords(in: image)
+                let matchingObservations = recognizedObservations.filter { observation in
+                    wordList.contains(where: { wordListString in
+                        wordListString.compare(observation.string, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
+                    })
                 }
+
+                let redactions = matchingObservations.map { Redaction($0, color: .black) }
+
+                guard let inputImage = input.image else { throw RedactActionExportError.noImageForInput }
+                let redactedImage = try await PhotoExportRenderer(image: inputImage, redactions: redactions).render()
+                let writeURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString, conformingTo: input.fileType ?? .png)
+
+                os_log("export representations: %{public}@", String(describing: redactedImage.representations))
+
+                guard let cgImage = redactedImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
+                else { throw RedactActionExportError.failedToGetBitmapRepresentation }
+
+                let imageRep = NSBitmapImageRep(cgImage: cgImage)
+
+                guard let data = imageRep.representation(using: input.imageType, properties: [:])
+                else { throw RedactActionExportError.failedToGetData }
+
+                try data.write(to: writeURL)
+
+                self?.finish(with: .success(writeURL.path))
+            } catch {
+                ErrorHandler().log(error)
+                self?.finish(with: .failure(error))
             }
         }
     }

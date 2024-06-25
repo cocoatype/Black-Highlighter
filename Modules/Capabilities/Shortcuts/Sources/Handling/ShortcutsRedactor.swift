@@ -16,7 +16,7 @@ class ShortcutRedactor: NSObject {
 
     func redact(_ input: IntentFile, words wordList: [String]) async throws -> RedactedFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage(input.data) }
-        let textObservations = try await detector.detectText(in: image)
+        let textObservations = try await detector.recognizeText(in: image)
         let matchingObservations = wordList.flatMap { word -> [WordObservation] in
             return textObservations.flatMap { observation -> [WordObservation] in
                 observation.wordObservations(matching: word)
@@ -28,7 +28,7 @@ class ShortcutRedactor: NSObject {
     func redact(_ input: IntentFile, detections: [DetectionKind]) async throws -> RedactedFile {
         guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage(input.data) }
 
-        let texts = try await detector.detectText(in: image)
+        let texts = try await detector.recognizeText(in: image)
         let wordObservations = texts.flatMap { text -> [WordObservation] in
             print("checking \(text.string)")
             return detections.flatMap { detection in detection.taggingFunction(text.string)
@@ -37,6 +37,18 @@ class ShortcutRedactor: NSObject {
             }
         }
         return try await redact(input, wordObservations: wordObservations)
+    }
+
+    func redact(_ input: IntentFile, special: SpecialRedactable) async throws -> RedactedFile {
+        guard let image = UIImage(data: input.data) else { throw ShortcutsRedactorError.noImage(input.data) }
+
+        let texts = try await detector.detectText(in: image)
+        let redactions = texts.map { Redaction($0, color: .black) }
+        return try await RedactedFile(
+            sourceImage: input,
+            redactedImage: exporter.export(input, redactions: redactions),
+            redactions: redactions
+        )
     }
 
     private func redact(_ input: IntentFile, wordObservations: [WordObservation]) async throws -> RedactedFile {
