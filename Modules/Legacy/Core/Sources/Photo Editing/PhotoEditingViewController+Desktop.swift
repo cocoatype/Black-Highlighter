@@ -4,6 +4,7 @@
 import AppRatings
 import Defaults
 import Editing
+import ErrorHandling
 import UIKit
 import UniformTypeIdentifiers
 
@@ -45,7 +46,9 @@ extension PhotoEditingViewController {
                 DispatchQueue.main.async { [weak self] in
                     AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
                 }
-            } catch {}
+            } catch {
+                ErrorHandler().log(error)
+            }
         }
     }
 
@@ -87,7 +90,9 @@ extension PhotoEditingViewController {
                     }
                     self?.present(saveViewController, animated: true, completion: nil)
                 }
-            } catch {}
+            } catch {
+                ErrorHandler().log(error)
+            }
         }
     }
 
