@@ -531,7 +531,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     private let asset: PHAsset?
     private var colorObserver: Any?
-    private let imageCache = RestorationImageCache()
     private let imageManager = PHImageManager()
     private let textRectangleDetector = TextDetector()
     private let photoEditingView = PhotoEditingView()

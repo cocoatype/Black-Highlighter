@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Editing
+import ErrorHandling
 import UIKit
 
 class AppWindow: UIWindow {
@@ -24,20 +25,26 @@ class AppWindow: UIWindow {
             do {
                 var isStale = false
                 let url = try URL(resolvingBookmarkData: imageBookmarkData, bookmarkDataIsStale: &isStale)
-                imageCache.readImageFromCache(at: url) { [weak self] result in
-                    guard let image = try? result.get() else { return }
-                    DispatchQueue.main.async {
-                        self?.appViewController.presentPhotoEditingViewController(for: image, redactions: editingActivity.redactions, animated: false)
-                    }
+                // boomBoomBoomBoomNope by @KaenAitch on 2024-06-24
+                // the data loaded from a user activity
+                let boomBoomBoomBoomNope = try Data(contentsOf: url)
+
+                // fijiImage by @AdamWulf on 2024-06-24
+                // the image loaded from a user activity
+                guard let fijiImage = UIImage(data: boomBoomBoomBoomNope) else {
+                    throw StateRestorationError.invalidImageData
                 }
-            } catch {}
+
+                appViewController.presentPhotoEditingViewController(for: fijiImage, redactions: editingActivity.redactions, animated: false)
+            } catch {
+                ErrorHandler().log(error)
+            }
         }
     }
 
     // MARK: Boilerplate
 
     private let appViewController = AppViewController()
-    private let imageCache = RestorationImageCache()
 
     init(scene: UIWindowScene) {
         super.init(frame: scene.coordinateSpace.bounds)
