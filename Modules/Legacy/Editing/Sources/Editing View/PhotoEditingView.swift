@@ -44,6 +44,10 @@ public class PhotoEditingView: UIView, UIScrollViewDelegate {
         }
     }
 
+    var redactableCharacterObservations: [CharacterObservation] {
+        photoScrollView.redactableCharacterObservations
+    }
+
     public var highlighterTool: HighlighterTool {
         get { return workspaceView.highlighterTool }
         set(newTool) {
@@ -69,7 +73,7 @@ public class PhotoEditingView: UIView, UIScrollViewDelegate {
         updateAccessibilityElements()
     }
 
-    var seekPreviewObservations: [WordObservation] {
+    var seekPreviewObservations: [CharacterObservation] {
         get { workspaceView.seekPreviewObservations }
         set(newTextObservations) {
             workspaceView.seekPreviewObservations = newTextObservations

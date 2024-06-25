@@ -51,6 +51,10 @@ class PhotoEditingScrollView: UIScrollView {
         }
     }
 
+    var redactableCharacterObservations: [CharacterObservation] {
+        workspaceView.redactableCharacterObservations
+    }
+
     // MARK: View Lifecycle
 
     override func layoutSubviews() {

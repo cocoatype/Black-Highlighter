@@ -134,7 +134,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
 
     // MARK: Seek and Destroy
 
-    var seekPreviewObservations: [WordObservation] {
+    var seekPreviewObservations: [CharacterObservation] {
         get { return visualizationView.seekPreviewObservations }
         set(newTextObservations) {
             visualizationView.seekPreviewObservations = newTextObservations
