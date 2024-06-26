@@ -7,6 +7,7 @@ import Defaults
 import Detections
 import ErrorHandling
 import Exporting
+import Geometry
 import Observations
 import Photos
 import PurchaseMarketing
@@ -404,12 +405,20 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             taggingFunctions.append( Category.phoneNumbers.getFuncyInSwizzleTown)
         }
 
-        let textObservations = photoEditingView.recognizedTextObservations ?? []
-        let categoryObservations = textObservations.flatMap { text in
-            taggingFunctions
-                .flatMap { function in function(text.string) }
-                .compactMap { text.wordObservation(for: $0) }
-        }
+        let combinedObservations = photoEditingView.redactableCharacterObservations.byUUID
+
+        let categoryObservations = combinedObservations
+            .values
+            .compactMap(CombinedCharacterObservation.init)
+            .flatMap { combinedObservation in
+                taggingFunctions
+                    .map { function in function(combinedObservation.associatedString) }
+                    .map {
+                        let matchingObservations = combinedObservation.characterObservations(with: $0)
+                        let combinedShape = MinimumAreaShapeFinder.minimumAreaShape(for: matchingObservations.map(\.bounds))
+                        return CharacterObservation(bounds: combinedShape, textObservationUUID: combinedObservation.textObservationUUID)
+                    }
+            }
 
         return wordObservations + categoryObservations
     }

@@ -29,4 +29,16 @@ public struct CharacterObservation: TextObservation, Hashable, RedactableObserva
         guard let associatedString, let range else { return nil }
         return String(associatedString[range])
     }
+
+    public func union(with other: CharacterObservation) -> CharacterObservation {
+        let combiningObservations = [self, other]
+        guard let associatedString,
+              let startIndex = combiningObservations.compactMap(\.range?.lowerBound).min(),
+              let endIndex = combiningObservations.compactMap(\.range?.upperBound).max(),
+              textObservationUUID == other.textObservationUUID
+        else { return self }
+
+        let range = startIndex..<endIndex
+        return CharacterObservation(bounds: bounds, textObservationUUID: textObservationUUID, associatedString: associatedString, range: range)
+    }
 }
