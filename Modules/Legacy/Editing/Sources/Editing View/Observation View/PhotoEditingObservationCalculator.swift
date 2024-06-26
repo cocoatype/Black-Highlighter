@@ -82,19 +82,6 @@ actor PhotoEditingObservationCalculator {
     }
 
     var calculatedObservationsByUUID: [UUID: [CharacterObservation]] {
-        return calculatedObservations.reduce([UUID: [CharacterObservation]]()) { dictionary, observation in
-            var observationsByUUID: [CharacterObservation]
-            if let existing = dictionary[observation.textObservationUUID] {
-                observationsByUUID = existing
-            } else {
-                observationsByUUID = []
-            }
-
-            observationsByUUID.append(observation)
-
-            var newDictionary = dictionary
-            newDictionary[observation.textObservationUUID] = observationsByUUID
-            return newDictionary
-        }
+        return calculatedObservations.byUUID
     }
 }

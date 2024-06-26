@@ -31,14 +31,7 @@ public struct RecognizedTextObservation: TextObservation, RedactableObservation 
                 return CharacterObservation(bounds: shape, textObservationUUID: recognizedText.uuid, associatedString: visionText.string, range: characterRange)
             }.reduce(into: [Shape: CharacterObservation]()) { uniqueObservations, observation in
                 if let existingObservation = uniqueObservations[observation.bounds] {
-                    let combiningObservations = [existingObservation, observation]
-                    guard let associatedString = existingObservation.associatedString,
-                          let startIndex = combiningObservations.compactMap(\.range?.lowerBound).min(),
-                          let endIndex = combiningObservations.compactMap(\.range?.upperBound).max()
-                    else { return }
-                    let range = startIndex..<endIndex
-                    let combinedObservation = CharacterObservation(bounds: observation.bounds, textObservationUUID: observation.textObservationUUID, associatedString: associatedString, range: range)
-                    uniqueObservations[observation.bounds] = combinedObservation
+                    uniqueObservations[observation.bounds] = existingObservation.union(with: observation)
                 } else {
                     uniqueObservations[observation.bounds] = observation
                 }
