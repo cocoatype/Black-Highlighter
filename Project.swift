@@ -39,6 +39,7 @@ let project = Project(
         Redacting.target,
         Redactions.target(sdk: .catalyst),
         Redactions.target(sdk: .native),
+        SettingsUI.target,
         Shortcuts.target,
         Unpurchased.target,
         // doubles

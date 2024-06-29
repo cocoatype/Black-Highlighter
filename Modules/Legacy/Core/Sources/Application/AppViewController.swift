@@ -11,6 +11,7 @@ import PurchaseMarketing
 import Redactions
 import UIKit
 import VisionKit
+import SettingsUI
 import SwiftUI
 
 class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanningDelegate, DocumentScannerPresenting, SettingsPresenting, Navigator {

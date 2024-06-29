@@ -2,7 +2,6 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 import Defaults
-import Editing
 import Purchasing
 import SwiftUI
 import Unpurchased

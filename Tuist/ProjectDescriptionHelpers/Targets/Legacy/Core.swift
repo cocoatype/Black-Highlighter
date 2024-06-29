@@ -18,6 +18,7 @@ public enum Core {
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
             .target(Purchasing.doublesTarget),
+            .target(SettingsUI.target),
             .target(Unpurchased.target),
         ],
         settings: .settings(

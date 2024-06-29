@@ -21,9 +21,9 @@ struct OtherAppButton: View {
     }
 
     var body: some View {
-        Button(action: {
+        Button {
             UIApplication.shared.open(url)
-        }, label: {
+        } label: {
             HStack(spacing: 12) {
                 Image(decorative: name)
                     .continuousCornerRadius(5.6)
@@ -32,11 +32,11 @@ struct OtherAppButton: View {
                     OtherAppSubtitleText(subtitle)
                 }
             }
-        }).settingsCell()
+        }.settingsCell()
     }
 }
 
-struct OtherAppButton_Previews: PreviewProvider {
+enum OtherAppButton_Previews: PreviewProvider {
     static var previews: some View {
         OtherAppButton(name: "Kineo", subtitle: "Create flipbook-style animations", id: "286948844").preferredColorScheme(.dark).previewLayout(.sizeThatFits)
     }
