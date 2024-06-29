@@ -27,7 +27,7 @@ struct PurchaseMarketingItem: View {
     private let imageName: String
 }
 
-struct PurchaseMarketingItemPreviews: PreviewProvider {
+enum PurchaseMarketingItemPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             PurchaseMarketingItem(header: "PurchaseMarketingView.supportDevelopmentHeader", text: "PurchaseMarketingView.supportDevelopmentText", imageName: "Support")

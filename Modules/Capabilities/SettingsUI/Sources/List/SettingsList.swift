@@ -20,22 +20,9 @@ struct SettingsList<Content>: View where Content: View {
     }
 }
 
-struct SettingsListPreviews: PreviewProvider {
+enum SettingsListPreviews: PreviewProvider {
     static var previews: some View {
         SettingsList(dismissAction: {}, content: {})
             .preferredColorScheme(.dark)
-    }
-}
-
-struct DoneButton: View {
-    private let action: (() -> Void)
-    init(action: @escaping (() -> Void)) {
-        self.action = action
-    }
-
-    var body: some View {
-        Button("DoneButton.label", action: action)
-            .foregroundColor(.white)
-            .font(Font.navigationBarButtonFont)
     }
 }

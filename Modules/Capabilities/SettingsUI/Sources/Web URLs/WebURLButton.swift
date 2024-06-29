@@ -1,9 +1,10 @@
 //  Created by Geoff Pado on 5/30/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import ErrorHandling
 import SwiftUI
 
-struct WebURLButton: View {
+public struct WebURLButton: View {
     @State private var selected = false
     init(_ titleKey: LocalizedStringKey, _ subtitle: String? = nil, path: String) {
         self.titleKey = titleKey
@@ -11,7 +12,7 @@ struct WebURLButton: View {
         self.url = Self.url(forPath: path)
     }
 
-    var body: some View {
+    public var body: some View {
         Button {
             selected = true
         } label: {
@@ -27,11 +28,13 @@ struct WebURLButton: View {
     }
 
     static let baseURL: URL = {
-        guard let url = URL(string: "https://blackhighlighter.app/") else { fatalError("Invalid base URL for settings") }
+        guard let url = URL(string: "https://blackhighlighter.app/") else {
+            ErrorHandler().crash("Invalid base URL for settings")
+        }
         return url
     }()
 
-    static func url(forPath path: String) -> URL {
+    public static func url(forPath path: String) -> URL {
         Self.baseURL.appendingPathComponent(path)
     }
 
@@ -68,7 +71,7 @@ struct WebURLSubtitleText: View {
     }
 }
 
-struct WebURLButtonPreviews: PreviewProvider {
+enum WebURLButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             WebURLButton("Hello", path: "world")

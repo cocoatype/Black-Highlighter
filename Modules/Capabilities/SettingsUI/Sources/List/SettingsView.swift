@@ -1,13 +1,12 @@
 //  Created by Geoff Pado on 5/17/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
-import Editing
 import Introspect
 import Purchasing
 import StoreKit
 import SwiftUI
 
-struct SettingsView: View {
+public struct SettingsView: View {
     private let purchaseRepository: PurchaseRepository
     @State private var purchaseState: PurchaseState
     private let dismissAction: () -> Void
@@ -24,7 +23,7 @@ struct SettingsView: View {
         self.purchaseRepository = purchaseRepository
     }
 
-    var body: some View {
+    public var body: some View {
         SettingsNavigationView {
             SettingsList(dismissAction: dismissAction) {
                 SettingsContent(state: purchaseState)

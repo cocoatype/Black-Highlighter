@@ -4,17 +4,17 @@
 import SwiftUI
 import UIKit
 
-class DesktopSettingsViewController: UIHostingController<DesktopSettingsView> {
-    init() {
+public class DesktopSettingsViewController: UIHostingController<DesktopSettingsView> {
+    public init() {
         super.init(rootView: DesktopSettingsView())
     }
 
-    override func viewLayoutMarginsDidChange() {
+    public override func viewLayoutMarginsDidChange() {
         super.viewLayoutMarginsDidChange()
         updateReadableWidth()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateReadableWidth()
     }

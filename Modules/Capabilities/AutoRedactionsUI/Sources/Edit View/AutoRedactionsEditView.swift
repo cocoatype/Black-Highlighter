@@ -28,7 +28,7 @@ public struct AutoRedactionsEditView: UIViewControllerRepresentable {
     }
 }
 
-struct AutoRedactionsEditViewPreviews: PreviewProvider {
+enum AutoRedactionsEditViewPreviews: PreviewProvider {
     static var previews: some View {
         AutoRedactionsEditView()
             .background(Color.appPrimary.edgesIgnoringSafeArea(.all))

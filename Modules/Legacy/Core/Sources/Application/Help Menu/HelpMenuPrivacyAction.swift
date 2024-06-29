@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/17/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import SettingsUI
 import UIKit
 
 #if targetEnvironment(macCatalyst)

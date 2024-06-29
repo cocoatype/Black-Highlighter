@@ -72,7 +72,7 @@ struct PurchaseButtonSeparator: View {
     }
 }
 
-struct PurchaseMarketingTopBarPreviews: PreviewProvider {
+enum PurchaseMarketingTopBarPreviews: PreviewProvider {
     static var previews: some View {
         PurchaseMarketingTopBarRegular().previewLayout(.sizeThatFits)
     }

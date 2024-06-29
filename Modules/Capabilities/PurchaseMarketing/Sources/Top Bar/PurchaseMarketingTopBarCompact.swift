@@ -20,7 +20,7 @@ struct PurchaseMarketingTopBarCompact: View {
     }
 }
 
-struct PurchaseMarketingTopBarCompactPreviews: PreviewProvider {
+enum PurchaseMarketingTopBarCompactPreviews: PreviewProvider {
     static var previews: some View {
         ScrollView {
             PurchaseMarketingTopBarCompact()

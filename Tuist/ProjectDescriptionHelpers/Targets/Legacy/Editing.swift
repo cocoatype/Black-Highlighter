@@ -21,7 +21,6 @@ public enum Editing {
             .target(Redactions.target(sdk: .catalyst)),
             .target(Unpurchased.target),
             .external(name: "ClippingBezier"),
-            .external(name: "Introspect"),
         ],
         settings: .settings(
             base: [

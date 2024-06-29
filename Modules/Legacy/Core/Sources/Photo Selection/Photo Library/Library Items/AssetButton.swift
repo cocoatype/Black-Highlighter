@@ -33,7 +33,7 @@ struct AssetButton: View {
     @EnvironmentObject private var navigationWrapper: NavigationWrapper
 }
 
-struct AssetButton_Previews: PreviewProvider {
+enum AssetButton_Previews: PreviewProvider {
     class PreviewAsset: Asset {
         init() {
             super.init(PHAsset())

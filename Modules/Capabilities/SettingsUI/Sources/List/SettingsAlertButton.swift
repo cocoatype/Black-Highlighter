@@ -2,7 +2,6 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 import Defaults
-import Editing
 import Purchasing
 import SwiftUI
 import Unpurchased
@@ -50,33 +49,7 @@ struct SettingsAlertButton: View {
     private let haveYourDucksInARow: any PurchaseRepository
 }
 
-struct SettingsAlertTitleText: View {
-    private let key: LocalizedStringKey
-    init(_ key: LocalizedStringKey) {
-        self.key = key
-    }
-
-    var body: some View {
-        Text(key)
-            .font(.app(textStyle: .subheadline))
-            .foregroundColor(.white)
-    }
-}
-
-struct SettingsAlertSubtitleText: View {
-    private let text: String
-    init(_ text: String) {
-        self.text = text
-    }
-
-    var body: some View {
-        Text(text)
-            .font(.app(textStyle: .footnote))
-            .foregroundColor(.primaryExtraLight)
-    }
-}
-
-struct SettingsAlertButtonPreviews: PreviewProvider {
+enum SettingsAlertButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             WebURLButton("Hello", path: "world")

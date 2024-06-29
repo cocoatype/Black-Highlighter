@@ -15,7 +15,7 @@ struct SettingsButton: View {
     }
 }
 
-struct SettingsButton_Previews: PreviewProvider {
+enum SettingsButton_Previews: PreviewProvider {
     static var previews: some View {
         SettingsButton()
             .preferredColorScheme(.dark)

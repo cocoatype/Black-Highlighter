@@ -37,7 +37,7 @@ struct PhotoSelection: View {
     private let collectionsData: [CollectionSection]
 }
 
-struct PhotoSelection_Previews: PreviewProvider {
+enum PhotoSelection_Previews: PreviewProvider {
     static var previews: some View {
         PhotoSelection(data: AlbumsList_Previews.fakeData)
             .previewDevice("iPad Pro (9.7-inch)").preferredColorScheme(.dark)

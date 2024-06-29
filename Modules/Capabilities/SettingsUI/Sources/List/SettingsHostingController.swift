@@ -4,14 +4,14 @@
 import SwiftUI
 import UIKit
 
-class SettingsHostingController: UIHostingController<SettingsView> {
-    init() {
+public class SettingsHostingController: UIHostingController<SettingsView> {
+    public init() {
         super.init(rootView: SettingsView(dismissAction: {}))
         modalPresentationStyle = .formSheet
         preferredContentSize = CGSize(width: 640, height: 640)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         let readableWidth = view.readableContentGuide.layoutFrame.width
         rootView = SettingsView(readableWidth: readableWidth, dismissAction: { [weak self] in
             self?.dismissSettings()
@@ -19,7 +19,7 @@ class SettingsHostingController: UIHostingController<SettingsView> {
     }
 
     private func dismissSettings() {
-        UIApplication.shared.sendAction(#selector(AppViewController.dismissSettingsViewController), to: nil, from: self, for: nil)
+        UIApplication.shared.sendAction(#selector(SettingsHostingControllerActions.dismissSettingsViewController), to: nil, from: self, for: nil)
     }
 
     @available(*, unavailable)
@@ -27,4 +27,8 @@ class SettingsHostingController: UIHostingController<SettingsView> {
         let typeName = NSStringFromClass(type(of: self))
         fatalError("\(typeName) does not implement init(coder:)")
     }
+}
+
+@objc protocol SettingsHostingControllerActions {
+    func dismissSettingsViewController(_ sender: Any)
 }
