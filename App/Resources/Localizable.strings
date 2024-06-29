@@ -120,19 +120,6 @@
 
 "RedactedWordObservationRotor.name" = "Redacted Words";
 
-"SettingsContentProvider.Item.about" = "About Black Highlighter";
-"SettingsContentProvider.Item.acknowledgements" = "Acknowledgements";
-"SettingsContentProvider.Item.autoRedactions" = "Auto-Hidden Words";
-"SettingsContentProvider.Item.contact" = "Contact the Developer";
-"SettingsContentProvider.Item.new" = "What’s New";
-"SettingsContentProvider.Item.privacy" = "Privacy Policy";
-
-"SettingsContentProvider.Section.purchasedFeatures.header" = "Ultra Highlighter Features";
-"SettingsContentProvider.Section.otherApps.header" = "Other Apps by Cocoatype";
-"SettingsContentProvider.Section.webURLs.header" = "Important Information";
-
-"SettingsViewController.navigationTitle" = "Settings";
-
 "ShareItem.label" = "Share";
 
 "ToolPickerItem.itemLabel" = "Tools";

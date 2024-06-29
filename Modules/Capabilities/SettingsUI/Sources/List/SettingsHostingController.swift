@@ -30,5 +30,5 @@ public class SettingsHostingController: UIHostingController<SettingsView> {
 }
 
 @objc protocol SettingsHostingControllerActions {
-    func dismissSettingsViewController(_ sender: Any)
+    func dismissSettingsViewController()
 }

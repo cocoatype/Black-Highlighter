@@ -5,14 +5,14 @@ import SwiftUI
 
 struct SettingsNavigationLink<Destination: View>: View {
     private let destination: Destination
-    private let titleKey: LocalizedStringKey
-    init(_ titleKey: LocalizedStringKey, destination: Destination) {
-        self.titleKey = titleKey
+    private let title: String
+    init(_ title: String, destination: Destination) {
+        self.title = title
         self.destination = destination
     }
 
     var body: some View {
-        NavigationLink(titleKey, destination: destination).settingsCell()
+        NavigationLink(title, destination: destination).settingsCell()
     }
 }
 

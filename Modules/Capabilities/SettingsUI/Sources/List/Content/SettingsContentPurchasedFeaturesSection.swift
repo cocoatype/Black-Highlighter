@@ -22,11 +22,11 @@ struct SettingsContentPurchasedFeaturesSection: View {
             }
 
             if purchaseState != .purchased && hideAutoRedactions == false {
-                SettingsAlertButton("SettingsContentProvider.Item.autoRedactions")
+                SettingsAlertButton(SettingsUIStrings.SettingsContentProvider.Item.autoRedactions)
             }
 
             if purchaseState == .purchased {
-                SettingsNavigationLink("SettingsContentProvider.Item.autoRedactions", destination: AutoRedactionsEditView().background(Color.appPrimary.edgesIgnoringSafeArea(.all)))
+                SettingsNavigationLink(SettingsUIStrings.SettingsContentProvider.Item.autoRedactions, destination: AutoRedactionsEditView().background(Color.appPrimary.edgesIgnoringSafeArea(.all)))
             }
         }
     }

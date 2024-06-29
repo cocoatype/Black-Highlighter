@@ -27,7 +27,9 @@ public struct SettingsView: View {
         SettingsNavigationView {
             SettingsList(dismissAction: dismissAction) {
                 SettingsContent(state: purchaseState)
-            }.navigationBarTitle("SettingsViewController.navigationTitle", displayMode: .inline)
+            }
+            .navigationTitle(SettingsUIStrings.SettingsViewController.navigationTitle)
+            .navigationBarTitleDisplayMode(.inline)
         }
         .environment(\.readableWidth, readableWidth)
         .onReceive(purchaseRepository.purchaseStates.eraseToAnyPublisher()) { newState in

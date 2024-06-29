@@ -6,8 +6,8 @@ import SwiftUI
 
 public struct WebURLButton: View {
     @State private var selected = false
-    init(_ titleKey: LocalizedStringKey, _ subtitle: String? = nil, path: String) {
-        self.titleKey = titleKey
+    init(_ title: String, _ subtitle: String? = nil, path: String) {
+        self.title = title
         self.subtitle = subtitle
         self.url = Self.url(forPath: path)
     }
@@ -17,7 +17,7 @@ public struct WebURLButton: View {
             selected = true
         } label: {
             VStack(alignment: .leading) {
-                WebURLTitleText(titleKey)
+                WebURLTitleText(title)
                 if let subtitle = subtitle {
                     WebURLSubtitleText(subtitle)
                 }
@@ -40,19 +40,19 @@ public struct WebURLButton: View {
 
     // MARK: Boilerplate
 
-    private let titleKey: LocalizedStringKey
+    private let title: String
     private let subtitle: String?
     private let url: URL
 }
 
 struct WebURLTitleText: View {
-    private let key: LocalizedStringKey
-    init(_ key: LocalizedStringKey) {
-        self.key = key
+    private let title: String
+    init(_ title: String) {
+        self.title = title
     }
 
     var body: some View {
-        Text(key)
+        Text(title)
             .font(.app(textStyle: .subheadline))
             .foregroundColor(.white)
     }

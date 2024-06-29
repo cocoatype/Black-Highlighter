@@ -9,11 +9,11 @@ import Unpurchased
 struct SettingsAlertButton: View {
     @State private var showAlert = false
     init(
-        _ titleKey: LocalizedStringKey,
+        _ title: String,
         _ subtitle: String? = nil,
         purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
-        self.titleKey = titleKey
+        self.title = title
         self.subtitle = subtitle
         haveYourDucksInARow = purchaseRepository
     }
@@ -26,7 +26,7 @@ struct SettingsAlertButton: View {
                 showAlert = true
             } label: {
                 VStack(alignment: .leading) {
-                    WebURLTitleText(titleKey)
+                    WebURLTitleText(title)
                     if let subtitle = subtitle {
                         WebURLSubtitleText(subtitle)
                     }
@@ -39,7 +39,7 @@ struct SettingsAlertButton: View {
 
     // MARK: Boilerplate
 
-    private let titleKey: LocalizedStringKey
+    private let title: String
     private let subtitle: String?
 
     @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool

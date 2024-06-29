@@ -10,12 +10,12 @@ struct SettingsContentInformationSection: View {
     }
 
     var body: some View {
-        Section(header: SettingsSectionHeader("SettingsContentProvider.Section.webURLs.header")) {
-            WebURLButton("SettingsContentProvider.Item.new", SettingsUIStrings.SettingsContentGenerator.versionStringFormat(versionString), path: "releases")
-            WebURLButton("SettingsContentProvider.Item.about", path: "about")
-            WebURLButton("SettingsContentProvider.Item.privacy", path: "privacy")
-            WebURLButton("SettingsContentProvider.Item.acknowledgements", path: "acknowledgements")
-            WebURLButton("SettingsContentProvider.Item.contact", path: "contact")
+        Section(header: SettingsSectionHeader(SettingsUIStrings.SettingsContentProvider.Section.WebURLs.header)) {
+            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.new, SettingsUIStrings.SettingsContentGenerator.versionStringFormat(versionString), path: "releases")
+            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.about, path: "about")
+            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.privacy, path: "privacy")
+            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.acknowledgements, path: "acknowledgements")
+            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.contact, path: "contact")
         }
     }
 
