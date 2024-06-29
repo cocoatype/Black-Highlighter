@@ -26,16 +26,3 @@ struct SettingsListPreviews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
-
-struct DoneButton: View {
-    private let action: (() -> Void)
-    init(action: @escaping (() -> Void)) {
-        self.action = action
-    }
-
-    var body: some View {
-        Button("DoneButton.label", action: action)
-            .foregroundColor(.white)
-            .font(Font.navigationBarButtonFont)
-    }
-}

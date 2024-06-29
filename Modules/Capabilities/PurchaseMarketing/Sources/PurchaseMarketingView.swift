@@ -73,25 +73,6 @@ public struct PurchaseMarketingView: View {
     }
 }
 
-struct PurchaseMarketingCloseButton: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    var body: some View {
-        #if targetEnvironment(macCatalyst)
-        EmptyView()
-        #else
-        Button {
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Image(systemName: "xmark")
-                .font(.app(textStyle: .headline))
-                .foregroundColor(.white)
-                .padding(20)
-        }
-        #endif
-    }
-}
-
 struct PurchaseMarketingView_Previews: PreviewProvider {
     static var previews: some View {
         PurchaseMarketingView()
