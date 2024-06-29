@@ -5,7 +5,7 @@ import PurchaseMarketing
 import Purchasing
 import SwiftUI
 
-struct DesktopSettingsView: View {
+public struct DesktopSettingsView: View {
     @State private var purchaseState: PurchaseState
     private let readableWidth: CGFloat
     private let purchaseRepository: any PurchaseRepository
@@ -19,7 +19,7 @@ struct DesktopSettingsView: View {
         self.purchaseRepository = purchaseRepository
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             if purchaseState == .purchased {
                 DesktopAutoRedactionsListViewControllerRepresentable()
