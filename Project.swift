@@ -64,6 +64,7 @@ let project = Project(
         PurchaseMarketing.testTarget,
         Purchasing.testTarget,
         Redactions.testTarget,
+        SettingsUI.testTarget,
         Shortcuts.testTarget,
         Unpurchased.testTarget,
     ],

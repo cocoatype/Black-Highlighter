@@ -24,5 +24,6 @@ let package = Package(
         .package(url: "git@github.com:adamwulf/ClippingBezier.git", from: "1.2.0"),
         .package(url: "https://github.com/siteline/SwiftUI-Introspect.git", from: "0.1.3"),
         .package(url: "git@github.com:TelemetryDeck/SwiftClient.git", from: "1.0.0"),
+        .package(url: "git@github.com:nalexn/ViewInspector.git", from: "0.9.11"),
     ]
 )

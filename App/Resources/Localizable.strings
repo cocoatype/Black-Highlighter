@@ -131,8 +131,6 @@
 "SettingsContentProvider.Section.otherApps.header" = "Other Apps by Cocoatype";
 "SettingsContentProvider.Section.webURLs.header" = "Important Information";
 
-"SettingsContentGenerator.versionStringFormat" = "Version %@";
-
 "SettingsViewController.navigationTitle" = "Settings";
 
 "ShareItem.label" = "Share";

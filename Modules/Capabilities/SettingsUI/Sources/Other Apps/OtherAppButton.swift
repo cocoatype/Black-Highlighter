@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/19/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import ErrorHandling
 import SwiftUI
 
 struct OtherAppButton: View {
@@ -16,7 +17,7 @@ struct OtherAppButton: View {
 
     private var url: URL {
         let urlString = "https://apps.apple.com/us/app/cocoatype/id\(id)?uo=4"
-        guard let url = URL(string: urlString) else { fatalError("Invalid App Store URL: \(urlString)") }
+        guard let url = URL(string: urlString) else { ErrorHandler().crash("Invalid App Store URL: \(urlString)") }
         return url
     }
 
