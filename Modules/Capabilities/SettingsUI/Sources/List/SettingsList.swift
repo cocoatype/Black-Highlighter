@@ -20,7 +20,7 @@ struct SettingsList<Content>: View where Content: View {
     }
 }
 
-struct SettingsListPreviews: PreviewProvider {
+enum SettingsListPreviews: PreviewProvider {
     static var previews: some View {
         SettingsList(dismissAction: {}, content: {})
             .preferredColorScheme(.dark)

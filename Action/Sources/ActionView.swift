@@ -18,7 +18,7 @@ struct ActionView: View {
     }
 }
 
-struct ActionViewPreviews: PreviewProvider {
+enum ActionViewPreviews: PreviewProvider {
     static var previews: some View {
         ActionView().preferredColorScheme(.dark)
     }

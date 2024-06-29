@@ -11,7 +11,7 @@ struct PurchaseTitle: View {
     }
 }
 
-struct PurchaseTitlePreviews: PreviewProvider {
+enum PurchaseTitlePreviews: PreviewProvider {
     static var previews: some View {
         PurchaseTitle().preferredColorScheme(.dark)
     }

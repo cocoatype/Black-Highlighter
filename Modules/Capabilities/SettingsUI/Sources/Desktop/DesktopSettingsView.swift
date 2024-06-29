@@ -36,7 +36,7 @@ struct DesktopSettingsView: View {
 
 #if DEBUG
 import PurchasingDoubles
-struct DesktopSettingsViewPreviews: PreviewProvider {
+enum DesktopSettingsViewPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             DesktopSettingsView(readableWidth: 288, purchaseRepository: PreviewRepository(purchaseState: .loading))

@@ -49,7 +49,7 @@ struct SettingsAlertButton: View {
     private let haveYourDucksInARow: any PurchaseRepository
 }
 
-struct SettingsAlertButtonPreviews: PreviewProvider {
+enum SettingsAlertButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             WebURLButton("Hello", path: "world")

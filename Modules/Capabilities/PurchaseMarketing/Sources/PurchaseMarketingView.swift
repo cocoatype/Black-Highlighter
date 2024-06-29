@@ -73,7 +73,7 @@ public struct PurchaseMarketingView: View {
     }
 }
 
-struct PurchaseMarketingView_Previews: PreviewProvider {
+enum PurchaseMarketingView_Previews: PreviewProvider {
     static var previews: some View {
         PurchaseMarketingView()
             .preferredColorScheme(.dark)

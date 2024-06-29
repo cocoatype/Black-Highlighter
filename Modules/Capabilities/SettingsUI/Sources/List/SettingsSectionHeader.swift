@@ -17,7 +17,7 @@ struct SettingsSectionHeader: View {
     }
 }
 
-struct SettingsSectionHeader_Previews: PreviewProvider {
+enum SettingsSectionHeader_Previews: PreviewProvider {
     static var previews: some View {
         SettingsSectionHeader("Hello, world!").preferredColorScheme(.dark)
     }

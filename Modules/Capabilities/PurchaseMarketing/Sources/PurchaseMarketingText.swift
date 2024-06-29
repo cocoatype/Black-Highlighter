@@ -25,7 +25,7 @@ struct PurchaseMarketingText: View {
     }()
 }
 
-struct PurchaseMarketingTextPreviews: PreviewProvider {
+enum PurchaseMarketingTextPreviews: PreviewProvider {
     static var previews: some View {
         PurchaseMarketingText("PurchaseMarketingView.supportDevelopmentText")
             .preferredColorScheme(.dark)

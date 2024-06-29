@@ -33,7 +33,7 @@ struct PurchaseSubtitle: View {
 
 #if DEBUG
 import PurchasingDoubles
-struct PurchaseSubtitlePreviews: PreviewProvider {
+enum PurchaseSubtitlePreviews: PreviewProvider {
     static var previews: some View {
         VStack {
             PurchaseSubtitle(state: .loading).preferredColorScheme(.dark)

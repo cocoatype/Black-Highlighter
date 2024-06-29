@@ -68,7 +68,7 @@ struct WebURLSubtitleText: View {
     }
 }
 
-struct WebURLButtonPreviews: PreviewProvider {
+enum WebURLButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
             WebURLButton("Hello", path: "world")

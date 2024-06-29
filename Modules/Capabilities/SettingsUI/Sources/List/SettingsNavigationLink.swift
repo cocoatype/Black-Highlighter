@@ -16,7 +16,7 @@ struct SettingsNavigationLink<Destination: View>: View {
     }
 }
 
-struct SettingsNavigationLinkPreviews: PreviewProvider {
+enum SettingsNavigationLinkPreviews: PreviewProvider {
     static var previews: some View {
         SettingsNavigationLink("Hello, world!", destination: Text?.none).preferredColorScheme(.dark)
     }

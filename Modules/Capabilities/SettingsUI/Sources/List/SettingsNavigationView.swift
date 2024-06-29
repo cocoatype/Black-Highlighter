@@ -17,7 +17,7 @@ struct SettingsNavigationView<Content: View>: View {
     }
 }
 
-struct SettingsNavigationViewPreviews: PreviewProvider {
+enum SettingsNavigationViewPreviews: PreviewProvider {
     static var previews: some View {
         SettingsNavigationView {}
             .preferredColorScheme(.dark)

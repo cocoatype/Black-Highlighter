@@ -29,7 +29,7 @@ struct AlbumsList: View {
     }
 }
 
-struct AlbumsList_Previews: PreviewProvider {
+enum AlbumsList_Previews: PreviewProvider {
     static let fakeData = [
         CollectionSection(title: "Smart Collections", collections: [
             DummyCollection(title: "Recent Photos", iconName: "clock"),
