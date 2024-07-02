@@ -4,16 +4,16 @@
 import ErrorHandling
 import UIKit
 
-class CollectionsDataSource: NSObject {
-    lazy var smartCollections: [Collection] = {
-        return allCollections(types: [CollectionType.library, .screenshots, .favorites])
+public class PhotoCollectionsDataSource: NSObject {
+    lazy var smartCollections: [PhotoCollection] = {
+        return allCollections(types: [PhotoCollectionType.library, .screenshots, .favorites])
     }()
 
-    lazy var userCollections: [Collection] = {
-        return allCollections(types: [CollectionType.userAlbum])
+    lazy var userCollections: [PhotoCollection] = {
+        return allCollections(types: [PhotoCollectionType.userAlbum])
     }()
 
-    private func allCollections(types: [CollectionType]) -> [Collection] {
+    private func allCollections(types: [PhotoCollectionType]) -> [PhotoCollection] {
         return types
           .map { $0.fetchResult }
           .flatMap { $0.objects(at: IndexSet(integersIn: 0..<$0.count)) }
@@ -22,7 +22,7 @@ class CollectionsDataSource: NSObject {
 
     // MARK: Data Access
 
-    private func collections(forSection section: Int) -> [Collection] {
+    private func collections(forSection section: Int) -> [PhotoCollection] {
         switch section {
         case 0: return smartCollections
         case 1: return userCollections
@@ -30,15 +30,15 @@ class CollectionsDataSource: NSObject {
         }
     }
 
-    func collection(at indexPath: IndexPath) -> Collection {
+    func collection(at indexPath: IndexPath) -> PhotoCollection {
         return collections(forSection: indexPath.section)[indexPath.row]
     }
 
     // MARK: SwiftUI Data Source
 
-    var collectionsData: [CollectionSection] {[
-        CollectionSection(title: Self.smartAlbumsHeader, collections: smartCollections),
-        CollectionSection(title: Self.userAlbumsHeader, collections: userCollections),
+    public var collectionsData: [PhotoCollectionSection] {[
+        PhotoCollectionSection(title: Self.smartAlbumsHeader, collections: smartCollections),
+        PhotoCollectionSection(title: Self.userAlbumsHeader, collections: userCollections),
     ]}
 
     // MARK: Localizable Strings

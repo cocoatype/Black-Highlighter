@@ -1,18 +1,20 @@
 //  Created by Geoff Pado on 7/15/20.
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
+import AppNavigation
 import SwiftUI
 
-struct AlbumsList: View {
+public struct AlbumsList: View {
     @State private var selectedCollectionIdentifier: String?
     var navigationWrapper = NavigationWrapper.empty
-    let data: [CollectionSection]
-    init(data: [CollectionSection], selectedCollectionIdentifier: String? = CollectionType.library.defaultCollection.identifier) {
+    let data: [PhotoCollectionSection]
+    init(data: [PhotoCollectionSection], selectedCollectionIdentifier: String? = PhotoCollectionType.library.defaultCollection.identifier) {
         self.data = data
         self.selectedCollectionIdentifier = selectedCollectionIdentifier
     }
 
-    var body: some View {
+    public var body: some View {
         return List(selection: $selectedCollectionIdentifier) {
             ForEach(data, id: \.title) { section in
                 Section(header: AlbumsSectionHeader(section.title)) {
@@ -31,12 +33,12 @@ struct AlbumsList: View {
 
 enum AlbumsList_Previews: PreviewProvider {
     static let fakeData = [
-        CollectionSection(title: "Smart Collections", collections: [
+        PhotoCollectionSection(title: "Smart Collections", collections: [
             DummyCollection(title: "Recent Photos", iconName: "clock"),
             DummyCollection(title: "Screenshots", iconName: "camera.viewfinder"),
             DummyCollection(title: "Favorites", iconName: "suit.heart"),
         ]),
-        CollectionSection(title: "User Collections", collections: []),
+        PhotoCollectionSection(title: "User Collections", collections: []),
     ]
 
     static var previews: some View {
@@ -45,7 +47,7 @@ enum AlbumsList_Previews: PreviewProvider {
     }
 }
 
-struct DummyCollection: Collection {
+struct DummyCollection: PhotoCollection {
     let title: String?
     let icon: String
     let identifier: String

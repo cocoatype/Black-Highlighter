@@ -1,13 +1,14 @@
 //  Created by Geoff Pado on 5/31/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
 import ErrorHandling
 import Photos
 import UIKit
 
 class PhotoLibraryDataSourceAssetsProvider: NSObject {
     var photosCount: Int { allPhotos.count }
-    init(collection: Collection) {
+    init(collection: PhotoCollection) {
         self.collection = collection
     }
 
@@ -37,5 +38,5 @@ class PhotoLibraryDataSourceAssetsProvider: NSObject {
         return collection.assets
     }
 
-    private let collection: Collection
+    private let collection: PhotoCollection
 }

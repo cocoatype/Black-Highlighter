@@ -1,12 +1,15 @@
 //  Created by Geoff Pado on 5/18/22.
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
+import AlbumsUI
+import AppNavigation
 import Editing
 import Photos
 import PhotosUI
 import UIKit
 
-class LibrarySplitViewController: SplitViewController, CollectionPresenting, LimitedLibraryPresenting {
+class LibrarySplitViewController: SplitViewController, PhotoCollectionPresenting, LimitedLibraryPresenting {
     init() {
         let albumsNavigationController = NavigationController(rootViewController: AlbumsViewController())
         let photoLibraryNavigationController = NavigationController(rootViewController: PhotoLibraryViewController())
@@ -22,7 +25,7 @@ class LibrarySplitViewController: SplitViewController, CollectionPresenting, Lim
         return photoLibraryViewController
     }
 
-    func present(_ collection: Collection) {
+    func present(_ collection: PhotoCollection) {
         photoLibraryViewController?.collection = collection
         show(.secondary)
     }
