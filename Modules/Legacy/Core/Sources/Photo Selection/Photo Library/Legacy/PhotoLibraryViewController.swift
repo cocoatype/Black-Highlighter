@@ -1,13 +1,14 @@
 //  Created by Geoff Pado on 4/8/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
 import Defaults
 import Editing
 import Photos
 import UIKit
 
 class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate, PHPhotoLibraryChangeObserver {
-    init(collection: Collection = CollectionType.library.defaultCollection) {
+    init(collection: PhotoCollection = PhotoCollectionType.library.defaultCollection) {
         self.dataSource = PhotoLibraryDataSource(collection)
         super.init(nibName: nil, bundle: nil)
 
@@ -51,7 +52,7 @@ class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UI
         libraryView.reloadData()
     }
 
-    var collection: Collection {
+    var collection: PhotoCollection {
         get { return dataSource.collection }
         set(newCollection) {
             let newDataSource = PhotoLibraryDataSource(newCollection)

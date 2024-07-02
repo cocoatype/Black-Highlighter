@@ -3,12 +3,12 @@
 
 import UIKit
 
-protocol DocumentScannerPresenting {
+public protocol DocumentScannerPresenting {
     func presentDocumentCameraViewController()
 }
 
 extension UIResponder {
-    var documentScannerPresenter: DocumentScannerPresenting? {
+    public var documentScannerPresenter: DocumentScannerPresenting? {
         if let presenter = (self as? DocumentScannerPresenting) {
             return presenter
         }

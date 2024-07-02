@@ -12,6 +12,9 @@ let project = Project(
         AutomatorActions.target,
         Photo.target,
         // modules
+        AlbumsData.target,
+        AlbumsUI.target,
+        AppNavigation.target,
         AppRatings.target,
         AutoRedactionsUI.target,
         Brushes.target(sdk: .catalyst),
@@ -31,7 +34,6 @@ let project = Project(
         Geometry.target(sdk: .native),
         Logging.target(sdk: .catalyst),
         Logging.target(sdk: .native),
-        Navigation.target,
         Observations.target(sdk: .catalyst),
         Observations.target(sdk: .native),
         PurchaseMarketing.target,
@@ -50,6 +52,8 @@ let project = Project(
         TestHelpers.target,
         TestHelpers.interfaceTarget,
         // tests
+        AlbumsData.testTarget,
+        AlbumsUI.testTarget,
         AppRatings.testTarget,
         AutoRedactionsUI.testTarget,
         Brushes.testTarget,

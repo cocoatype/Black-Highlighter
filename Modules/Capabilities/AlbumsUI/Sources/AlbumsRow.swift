@@ -1,12 +1,14 @@
 //  Created by Geoff Pado on 8/30/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
+import AppNavigation
 import SwiftUI
 
 struct AlbumsRow: View {
     @Binding var selection: String?
-    private let collection: Collection
-    init(_ collection: Collection, selection: Binding<String?>) {
+    private let collection: PhotoCollection
+    init(_ collection: PhotoCollection, selection: Binding<String?>) {
         self.collection = collection
         self._selection = selection
     }
