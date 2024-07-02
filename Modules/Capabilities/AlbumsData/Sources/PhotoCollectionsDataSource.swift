@@ -23,17 +23,12 @@ public class PhotoCollectionsDataSource: NSObject, ObservableObject, PHPhotoLibr
         }
     }
 
-    // MARK: Localizable Strings
-
-    private static let smartAlbumsHeader = NSLocalizedString("CollectionsDataSource.smartAlbumsHeader", comment: "Header for the smart albums section in the albums list")
-    private static let userAlbumsHeader = NSLocalizedString("CollectionsDataSource.userAlbumsHeader", comment: "Header for the user albums section in the albums list")
-
     // MARK: Boilerplate
 
     private static func allSections() -> [PhotoCollectionSection] {
         return [
-            Self.section(title: Self.smartAlbumsHeader, types: [.library, .screenshots, .favorites]),
-            Self.section(title: Self.userAlbumsHeader, types: [.userAlbum]),
+            Self.section(title: AlbumsDataStrings.PhotoCollectionsDataSource.smartAlbumsHeader, types: [.library, .screenshots, .favorites]),
+            Self.section(title: AlbumsDataStrings.PhotoCollectionsDataSource.userAlbumsHeader, types: [.userAlbum]),
         ]
     }
 

@@ -30,4 +30,3 @@ public struct AssetCollection: PhotoCollection {
 
     private let assetCollection: PHAssetCollection
 }
-

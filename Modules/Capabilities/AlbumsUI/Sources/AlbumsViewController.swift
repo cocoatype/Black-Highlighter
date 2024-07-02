@@ -15,7 +15,7 @@ public class AlbumsViewController: UIHostingController<AlbumsList>, NavigationWr
         view.tintColor = .primaryDark
 
         if let navigationObject {
-            navigationItem.title = Self.navigationTitle
+            navigationItem.title = AlbumsUIStrings.AlbumsViewController.navigationTitle
             albumsList.navigationWrapper = NavigationWrapper(navigationObject: navigationObject)
             self.rootView = albumsList
         }
@@ -48,8 +48,6 @@ public class AlbumsViewController: UIHostingController<AlbumsList>, NavigationWr
     }
 
     // MARK: Boilerplate
-
-    private static let navigationTitle = NSLocalizedString("AlbumsViewController.navigationTitle", comment: "Navigation title for the albums list")
 
     @available(*, unavailable)
     required init(coder: NSCoder) {
