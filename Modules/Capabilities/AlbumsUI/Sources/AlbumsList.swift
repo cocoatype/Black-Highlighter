@@ -7,16 +7,16 @@ import SwiftUI
 
 public struct AlbumsList: View {
     @State private var selectedCollectionIdentifier: String?
+    @StateObject private var dataSource = PhotoCollectionsDataSource()
+
     var navigationWrapper = NavigationWrapper.empty
-    let data: [PhotoCollectionSection]
-    init(data: [PhotoCollectionSection], selectedCollectionIdentifier: String? = PhotoCollectionType.library.defaultCollection.identifier) {
-        self.data = data
+    init(selectedCollectionIdentifier: String? = PhotoCollectionType.library.defaultCollection.identifier) {
         self.selectedCollectionIdentifier = selectedCollectionIdentifier
     }
 
     public var body: some View {
-        return List(selection: $selectedCollectionIdentifier) {
-            ForEach(data, id: \.title) { section in
+        List(selection: $selectedCollectionIdentifier) {
+            ForEach(dataSource.collectionsData, id: \.title) { section in
                 Section(header: AlbumsSectionHeader(section.title)) {
                     ForEach(section.collections, id: \.identifier) { collection in
                         AlbumsRow(collection, selection: $selectedCollectionIdentifier)
@@ -42,7 +42,7 @@ enum AlbumsList_Previews: PreviewProvider {
     ]
 
     static var previews: some View {
-        AlbumsList(data: fakeData, selectedCollectionIdentifier: nil)
+        AlbumsList(selectedCollectionIdentifier: nil)
             .preferredColorScheme(.dark)
     }
 }

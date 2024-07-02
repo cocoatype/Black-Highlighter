@@ -9,15 +9,12 @@ import SwiftUI
 
 public class AlbumsViewController: UIHostingController<AlbumsList>, NavigationWrapper.NavigationObject {
     public init() {
-        let albumsDataSource = PhotoCollectionsDataSource()
-        self.albumsDataSource = albumsDataSource
-
-        var albumsList = AlbumsList(data: albumsDataSource.collectionsData)
+        var albumsList = AlbumsList()
         super.init(rootView: albumsList)
 
         view.tintColor = .primaryDark
 
-        if let navigationObject = navigationObject {
+        if let navigationObject {
             navigationItem.title = Self.navigationTitle
             albumsList.navigationWrapper = NavigationWrapper(navigationObject: navigationObject)
             self.rootView = albumsList
@@ -53,8 +50,6 @@ public class AlbumsViewController: UIHostingController<AlbumsList>, NavigationWr
     // MARK: Boilerplate
 
     private static let navigationTitle = NSLocalizedString("AlbumsViewController.navigationTitle", comment: "Navigation title for the albums list")
-
-    private let albumsDataSource: PhotoCollectionsDataSource
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

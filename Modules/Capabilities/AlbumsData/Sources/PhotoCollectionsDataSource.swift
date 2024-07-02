@@ -2,47 +2,48 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import ErrorHandling
+import Photos
 import UIKit
 
-public class PhotoCollectionsDataSource: NSObject {
-    lazy var smartCollections: [PhotoCollection] = {
-        return allCollections(types: [PhotoCollectionType.library, .screenshots, .favorites])
-    }()
+public class PhotoCollectionsDataSource: NSObject, ObservableObject, PHPhotoLibraryChangeObserver {
+    @Published public var collectionsData: [PhotoCollectionSection]
 
-    lazy var userCollections: [PhotoCollection] = {
-        return allCollections(types: [PhotoCollectionType.userAlbum])
-    }()
+    public override init() {
+        collectionsData = Self.allSections()
+        super.init()
 
-    private func allCollections(types: [PhotoCollectionType]) -> [PhotoCollection] {
-        return types
-          .map { $0.fetchResult }
-          .flatMap { $0.objects(at: IndexSet(integersIn: 0..<$0.count)) }
-          .map(AssetCollection.init)
+        PHPhotoLibrary.shared().register(self)
     }
 
-    // MARK: Data Access
+    // MARK: Change Observer
 
-    private func collections(forSection section: Int) -> [PhotoCollection] {
-        switch section {
-        case 0: return smartCollections
-        case 1: return userCollections
-        default: return []
+    public func photoLibraryDidChange(_ changeInstance: PHChange) {
+        Task { @MainActor in
+            collectionsData = Self.allSections()
         }
     }
-
-    func collection(at indexPath: IndexPath) -> PhotoCollection {
-        return collections(forSection: indexPath.section)[indexPath.row]
-    }
-
-    // MARK: SwiftUI Data Source
-
-    public var collectionsData: [PhotoCollectionSection] {[
-        PhotoCollectionSection(title: Self.smartAlbumsHeader, collections: smartCollections),
-        PhotoCollectionSection(title: Self.userAlbumsHeader, collections: userCollections),
-    ]}
 
     // MARK: Localizable Strings
 
     private static let smartAlbumsHeader = NSLocalizedString("CollectionsDataSource.smartAlbumsHeader", comment: "Header for the smart albums section in the albums list")
     private static let userAlbumsHeader = NSLocalizedString("CollectionsDataSource.userAlbumsHeader", comment: "Header for the user albums section in the albums list")
+
+    // MARK: Boilerplate
+
+    private static func allSections() -> [PhotoCollectionSection] {
+        return [
+            Self.section(title: Self.smartAlbumsHeader, types: [.library, .screenshots, .favorites]),
+            Self.section(title: Self.userAlbumsHeader, types: [.userAlbum]),
+        ]
+    }
+
+    private static func section(title: String, types: [PhotoCollectionType]) -> PhotoCollectionSection {
+        PhotoCollectionSection(
+            title: title,
+            collections: types
+                .map { $0.fetchResult }
+                .flatMap { $0.objects(at: IndexSet(integersIn: 0..<$0.count)) }
+                .map(AssetCollection.init)
+        )
+    }
 }
