@@ -12,6 +12,7 @@ import Observations
 import Photos
 import PurchaseMarketing
 import Redactions
+import Rendering
 import UIKit
 
 #warning("#61: Simplify this class")
@@ -119,13 +120,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     public func clearHasMadeEdits() {
         hasMadeEdits = false
-    }
-
-    // MARK: Sharing
-
-    public func exportImage() async throws -> UIImage {
-        guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
-        return try await PhotoExporter.export(image, redactions: photoEditingView.redactions)
     }
 
     // MARK: Highlighters
@@ -466,43 +460,21 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     // MARK: Sharing
+    public func exportImage() async throws -> UIImage {
+        guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
+        return try await PhotoExporter.export(image, redactions: photoEditingView.redactions)
+    }
+
     @objc @MainActor public func sharePhoto(_ sender: Any) {
-        let imageType = image?.type
-        Task {
+        Task { @MainActor [weak self] in
+            guard let self, let shareBarButtonItem else { return }
             do {
-                let exportedImage = try await exportImage()
-
-                let representedURLName = "\(Self.defaultImageName).\(imageType?.preferredFilenameExtension ?? "png")"
-                let temporaryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                    .appendingPathComponent(representedURLName)
-
-                let data: Data?
-
-                switch imageType {
-                case .jpeg?:
-                    data = exportedImage.jpegData(compressionQuality: 0.9)
-                default:
-                    data = exportedImage.pngData()
-                }
-
-                let activityItems: [Any]
-                if let data = data, (try? data.write(to: temporaryURL)) != nil {
-                    activityItems = [temporaryURL]
-                } else {
-                    activityItems = [exportedImage]
-                }
-
-                let activityController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                activityController.completionWithItemsHandler = { [weak self] _, _, _, _ in
-                    self?.hasMadeEdits = false
-                    Defaults.numberOfSaves = Defaults.numberOfSaves + 1
-                    DispatchQueue.main.async { [weak self] in
-                        self?.chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
-                    }
-                }
-
-                activityController.popoverPresentationController?.barButtonItem = shareBarButtonItem
-                present(activityController, animated: true)
+                guard let image else { throw PhotoEditingError.noEditingImage }
+                let exporter = PhotoEditingExporter(image: image, redactions: photoEditingView.redactions)
+                try await exporter.presentActivityController(from: self, barButtonItem: shareBarButtonItem)
+                hasMadeEdits = false
+                Defaults.numberOfSaves = Defaults.numberOfSaves + 1
+                chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
             } catch {
                 let alert = PhotoExportErrorAlertFactory.alert(for: error)
                 present(alert, animated: true)
@@ -528,7 +500,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
 
-    public static let defaultImageName = NSLocalizedString("PhotoEditingViewController.defaultImageName", comment: "Default name when saving the image on macOS")
     private static let redoKeyCommandDiscoverabilityTitle = NSLocalizedString("BasePhotoEditingViewController.redoKeyCommandDiscoverabilityTitle", comment: "Discovery title for the redo key command")
     private static let undoKeyCommandDiscoverabilityTitle = NSLocalizedString("BasePhotoEditingViewController.undoKeyCommandDiscoverabilityTitle", comment: "Discovery title for the undo key command")
 

@@ -7,10 +7,10 @@ public enum Shortcuts {
         dependencies: [
             .target(AppNavigation.target),
             .target(Detections.target(sdk: .catalyst)),
-            .target(Exporting.target(sdk: .catalyst)),
             .target(Observations.target(sdk: .catalyst)),
             .target(Purchasing.target),
             .target(Redactions.target(sdk: .catalyst)),
+            .target(Rendering.target(sdk: .catalyst)),
         ]
     )
 
