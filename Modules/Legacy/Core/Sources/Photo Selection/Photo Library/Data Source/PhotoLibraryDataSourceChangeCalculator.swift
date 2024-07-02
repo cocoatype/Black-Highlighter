@@ -5,10 +5,7 @@ import Photos
 
 class PhotoLibraryDataSourceChangeCalculator: NSObject {
     init(collection: Collection) {
-        self.fetchResult = {
-            guard let collection = collection as? AssetCollection else { return PHFetchResult() }
-            return collection.assets
-        }()
+        self.fetchResult = (collection as? AssetCollection)?.assets ?? PHFetchResult()
     }
 
     private func details(for change: PHChange) -> PHFetchResultChangeDetails<PHAsset>? {
@@ -17,8 +14,7 @@ class PhotoLibraryDataSourceChangeCalculator: NSObject {
 
     func changedResult(for change: PHChange) -> PHFetchResult<PHAsset> {
         guard let changeDetails = details(for: change) else { return fetchResult }
-        fetchResult = changeDetails.fetchResultAfterChanges
-        return fetchResult
+        return changeDetails.fetchResultAfterChanges
     }
 
     func update(_ libraryView: PhotoLibraryView, from change: PHChange) {
@@ -27,6 +23,8 @@ class PhotoLibraryDataSourceChangeCalculator: NSObject {
         guard changeDetails.hasIncrementalChanges else {
             return libraryView.reloadData()
         }
+
+        fetchResult = changedResult(for: change)
 
         libraryView.performBatchUpdates({ [unowned libraryView, changeDetails] in
             if let removed = changeDetails.removedIndexes {
@@ -43,7 +41,7 @@ class PhotoLibraryDataSourceChangeCalculator: NSObject {
                 libraryView.moveItem(at: IndexPath(item: fromIndex, section: 0),
                                      to: IndexPath(item: toIndex, section: 0))
             }
-        }, completion: nil)
+        })
     }
 
     private(set) var fetchResult: PHFetchResult<PHAsset>
