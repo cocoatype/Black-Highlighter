@@ -2,9 +2,9 @@
 //  Copyright © 2020 Cocoatype, LLC. All rights reserved.
 
 import AppIntents
-import Exporting
 import OSLog
 import Redactions
+import Rendering
 import UIKit
 import UniformTypeIdentifiers
 

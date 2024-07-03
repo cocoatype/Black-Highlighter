@@ -5,6 +5,7 @@ import AppRatings
 import Defaults
 import Editing
 import ErrorHandling
+import Exporting
 import UIKit
 import UniformTypeIdentifiers
 
@@ -55,7 +56,7 @@ extension PhotoEditingViewController {
     @objc func saveAs(_ sender: Any) {
         guard let imageType = imageType else { return present(.missingImageType) }
 
-        let representedURLName = fileURLProvider?.representedFileURL?.lastPathComponent ?? "\(Self.defaultImageName).\(imageType.preferredFilenameExtension ?? "png")"
+        let representedURLName = fileURLProvider?.representedFileURL?.lastPathComponent ?? "\(ExportingStrings.PhotoEditingExporter.defaultImageName).\(imageType.preferredFilenameExtension ?? "png")"
         let temporaryURL = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(representedURLName)
 

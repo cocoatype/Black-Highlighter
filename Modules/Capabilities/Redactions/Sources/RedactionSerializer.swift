@@ -4,7 +4,7 @@
 #if canImport(UIKit)
 import UIKit
 
-public class RedactionSerializer: NSObject {
+public enum RedactionSerializer {
     public static func dataRepresentation(of redaction: Redaction) -> Data {
         do {
             let redactionData = try PropertyListEncoder().encode(redaction)

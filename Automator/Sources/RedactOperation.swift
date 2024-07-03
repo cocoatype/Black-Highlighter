@@ -3,11 +3,11 @@
 
 import DetectionsMac
 import ErrorHandlingMac
-import ExportingMac
 import Foundation
 import OSLog
 import Redacting
 import RedactionsMac
+import RenderingMac
 import AppKit
 
 class RedactOperation: Operation, @unchecked Sendable {
