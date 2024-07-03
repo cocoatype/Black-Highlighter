@@ -35,7 +35,7 @@ class SaveActivity: UIActivity {
     override func perform() {
         guard let activityURL else { return ErrorHandler().log(SaveActivityError.noActivityURL) }
 
-        asset.requestContentEditingInput(with: nil) { [weak self] contentEditingInput, dict in
+        asset.requestContentEditingInput(with: nil) { [weak self] contentEditingInput, _ in
             Task { [weak self] in
                 do {
                     guard let asset = self?.asset,

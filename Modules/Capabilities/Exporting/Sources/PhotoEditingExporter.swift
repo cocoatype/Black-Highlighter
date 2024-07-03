@@ -24,7 +24,7 @@ public class PhotoEditingExporter {
         let representedURLName = "\(ExportingStrings.PhotoEditingExporter.defaultImageName).\(imageType.preferredFilenameExtension ?? "png")"
         let temporaryURL = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(representedURLName)
-        
+
         let data: Data?
 
         switch imageType {

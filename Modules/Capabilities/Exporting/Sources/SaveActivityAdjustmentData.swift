@@ -7,7 +7,7 @@ import Redactions
 
 struct SaveActivityAdjustmentData: Encodable {
     static let formatIdentifier = "com.cocoatype.Highlighter.redactionsAdjustments"
-    let redactions: [Redaction]
+    private let redactions: [Redaction]
     init(redactions: [Redaction]) {
         self.redactions = redactions
     }
