@@ -6,13 +6,15 @@ import UIKit
 
 public enum PhotoExportErrorAlertFactory {
     public static func alert(for error: Error) -> UIAlertController {
-        let alert = UIAlertController(title: Self.title, message: String(format: messageFormat, error.localizedDescription), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: Self.dismissButtonTitle, style: .default))
+        let alert = UIAlertController(
+            title: ExportingStrings.PhotoExportErrorAlertFactory.title,
+            message: ExportingStrings.PhotoExportErrorAlertFactory.messageFormat(error.localizedDescription),
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: ExportingStrings.PhotoExportErrorAlertFactory.dismissButtonTitle, style: .default)
+        )
         alert.view.tintColor = .controlTint
         return alert
     }
-
-    private static let title = NSLocalizedString("PhotoExportErrorAlertFactory.title", comment: "Title for the alert when exporting fails")
-    private static let messageFormat = NSLocalizedString("PhotoExportErrorAlertFactory.messageFormat", comment: "Message for the alert when exporting fails")
-    private static let dismissButtonTitle = NSLocalizedString("PhotoExportErrorAlertFactory.dismissButtonTitle", comment: "Dismiss button title for the alert when exporting fails")
 }

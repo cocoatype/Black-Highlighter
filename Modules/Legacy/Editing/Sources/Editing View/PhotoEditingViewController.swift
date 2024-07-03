@@ -470,7 +470,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             guard let self, let shareBarButtonItem else { return }
             do {
                 guard let image else { throw PhotoEditingError.noEditingImage }
-                let exporter = PhotoEditingExporter(image: image, redactions: photoEditingView.redactions)
+                let exporter = PhotoEditingExporter(image: image, asset: asset, redactions: photoEditingView.redactions)
                 try await exporter.presentActivityController(from: self, barButtonItem: shareBarButtonItem)
                 hasMadeEdits = false
                 Defaults.numberOfSaves = Defaults.numberOfSaves + 1
