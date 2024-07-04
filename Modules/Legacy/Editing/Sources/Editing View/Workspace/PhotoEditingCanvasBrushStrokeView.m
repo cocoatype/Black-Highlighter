@@ -48,6 +48,12 @@
     [self.canvasView updateToolWithCurrentZoomScale:currentZoomScale];
 }
 
+#pragma mark Undo/Redo
+
+- (NSUndoManager *)undoManager {
+    return nil;
+}
+
 #pragma mark PKCanvasViewDelegate
 
 - (void)canvasViewDrawingDidChange:(PKCanvasView *)canvasView {

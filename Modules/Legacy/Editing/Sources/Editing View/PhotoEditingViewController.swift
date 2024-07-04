@@ -288,6 +288,9 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     // MARK: Undo/Redo
 
+    private let localUndoManager = UndoManager()
+    public override var undoManager: UndoManager? { localUndoManager }
+
     @objc private func undo(_ sender: Any) {
         undoManager?.undo()
         updateToolbarItems()
