@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Highlighter
+
+  Created by Geoff Pado on 7/1/24.
+  Copyright © 2024 Cocoatype, LLC. All rights reserved.
+*/
+
+// Header for the user albums section in the albums list
+"PhotoCollectionsDataSource.userAlbumsHeader" = "Albums";
+
+// Header for the smart albums section in the albums list
+"PhotoCollectionsDataSource.smartAlbumsHeader" = "Library";

@@ -3,12 +3,12 @@
 
 import UIKit
 
-protocol SettingsPresenting {
+public protocol SettingsPresenting {
     func presentSettingsViewController()
 }
 
 extension UIResponder {
-    var settingsPresenter: SettingsPresenting? {
+    public var settingsPresenter: SettingsPresenting? {
         if let settingsPresenter = (self as? SettingsPresenting) {
             return settingsPresenter
         }

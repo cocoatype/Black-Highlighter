@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 4/8/19.
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
 import Combine
 import ErrorHandling
 import Photos
@@ -9,8 +10,8 @@ import UIKit
 import VisionKit
 
 class PhotoLibraryDataSource: NSObject, LibraryDataSource, UICollectionViewDataSource {
-    let collection: Collection
-    init(_ collection: Collection) {
+    let collection: PhotoCollection
+    init(_ collection: PhotoCollection) {
         self.collection = collection
         self.assetsProvider = PhotoLibraryDataSourceAssetsProvider(collection: collection)
         self.changeCalculator = PhotoLibraryDataSourceChangeCalculator(collection: collection)

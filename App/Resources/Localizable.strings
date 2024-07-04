@@ -8,8 +8,6 @@
 
 "AlbumsBarButtonItem.standardAccessibilityLabel" = "Albums";
 
-"AlbumsViewController.navigationTitle" = "Albums";
-
 "AppDelegate.preferencesMenuTitle" = "Preferences";
 "AppDelegate.preferencesMenuItemTitle" = "Preferences…";
 "AppDelegate.saveMenuTitle" = "Save";
@@ -19,9 +17,6 @@
 
 "BasePhotoEditingViewController.undoKeyCommandDiscoverabilityTitle" = "Undo Redaction";
 "BasePhotoEditingViewController.redoKeyCommandDiscoverabilityTitle" = "Redo Redaction";
-
-"CollectionsDataSource.userAlbumsHeader" = "Albums";
-"CollectionsDataSource.smartAlbumsHeader" = "Library";
 
 "ColorPickerBarButtonItem.accessibilityLabel" = "Color Picker";
 

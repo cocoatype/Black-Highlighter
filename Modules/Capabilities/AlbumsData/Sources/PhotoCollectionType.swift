@@ -3,7 +3,7 @@
 
 import Photos
 
-enum CollectionType {
+public enum PhotoCollectionType {
     case favorites
     case library
     case recents
@@ -31,7 +31,7 @@ enum CollectionType {
         return PHAssetCollection.fetchAssetCollections(with: assetCollectionType, subtype: assetCollectionSubtype, options: nil)
     }
 
-    var defaultCollection: Collection {
+    public var defaultCollection: PhotoCollection {
         guard let defaultCollection = fetchResult.firstObject else {
             assertionFailure("Did not return a default collection for type: \(self)")
             return AssetCollection(PHAssetCollection())

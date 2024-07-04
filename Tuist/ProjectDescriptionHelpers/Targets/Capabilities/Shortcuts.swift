@@ -5,12 +5,12 @@ public enum Shortcuts {
         name: "Shortcuts",
         hasResources: true,
         dependencies: [
+            .target(AppNavigation.target),
             .target(Detections.target(sdk: .catalyst)),
-            .target(Exporting.target(sdk: .catalyst)),
-            .target(Navigation.target),
             .target(Observations.target(sdk: .catalyst)),
             .target(Purchasing.target),
             .target(Redactions.target(sdk: .catalyst)),
+            .target(Rendering.target(sdk: .catalyst)),
         ]
     )
 

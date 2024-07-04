@@ -1,34 +1,35 @@
 //  Created by Geoff Pado on 5/22/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
+import AlbumsData
 import Photos
 import UIKit
 
-class NavigationWrapper: NSObject, ObservableObject {
-    typealias NavigationObject = (SettingsPresenting & PhotoEditorPresenting & DocumentScannerPresenting & CollectionPresenting & LimitedLibraryPresenting)
-    init(navigationObject: NavigationObject) {
+public class NavigationWrapper: NSObject, ObservableObject {
+    public typealias NavigationObject = (SettingsPresenting & PhotoEditorPresenting & DocumentScannerPresenting & PhotoCollectionPresenting & LimitedLibraryPresenting)
+    public init(navigationObject: NavigationObject) {
         self.navigationObject = navigationObject
     }
 
-    static let empty = NavigationWrapper()
+    public static let empty = NavigationWrapper()
 
     private override init() {
         self.navigationObject = nil
     }
 
-    func presentSettings() {
+    public func presentSettings() {
         navigationObject?.presentSettingsViewController()
     }
 
-    func presentEditor(for asset: PHAsset) {
+    public func presentEditor(for asset: PHAsset) {
         navigationObject?.presentPhotoEditingViewController(for: asset, redactions: nil, animated: true)
     }
 
-    func presentDocumentScanner() {
+    public func presentDocumentScanner() {
         navigationObject?.presentDocumentCameraViewController()
     }
 
-    func present(_ collection: Collection) {
+    public func present(_ collection: PhotoCollection) {
         navigationObject?.present(collection)
     }
 
@@ -40,7 +41,7 @@ class NavigationWrapper: NSObject, ObservableObject {
 }
 
 extension UIResponder {
-    var navigationObject: NavigationWrapper.NavigationObject? {
+    public var navigationObject: NavigationWrapper.NavigationObject? {
         if let navigationObject = (self as? NavigationWrapper.NavigationObject) {
             return navigationObject
         }
