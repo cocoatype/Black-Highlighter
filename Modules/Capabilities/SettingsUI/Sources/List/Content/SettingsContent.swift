@@ -16,6 +16,7 @@ struct SettingsContent: View {
         Group {
             SettingsContentPurchasedFeaturesSection(state: purchaseState)
             SettingsContentInformationSection()
+            SettingsContentContactSection()
             SettingsContentOtherAppsSection()
         }
     }

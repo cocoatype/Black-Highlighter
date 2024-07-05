@@ -25,12 +25,7 @@ struct SettingsAlertButton: View {
             Button {
                 showAlert = true
             } label: {
-                VStack(alignment: .leading) {
-                    WebURLTitleText(title)
-                    if let subtitle = subtitle {
-                        WebURLSubtitleText(subtitle)
-                    }
-                }
+                ButtonLabel(title: title, subtitle: subtitle)
             }
             .unpurchasedAlert(for: .autoRedactions(), isPresented: $showAlert)
             .settingsCell()
@@ -52,8 +47,7 @@ struct SettingsAlertButton: View {
 enum SettingsAlertButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
-            WebURLButton("Hello", path: "world")
-            WebURLButton("Hello", "world!", path: "world")
+            SettingsAlertButton("Hello")
         }.preferredColorScheme(.dark).previewLayout(.sizeThatFits)
     }
 }

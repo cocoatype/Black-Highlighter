@@ -10,12 +10,15 @@ struct SettingsContentInformationSection: View {
     }
 
     var body: some View {
-        Section(header: SettingsSectionHeader(SettingsUIStrings.SettingsContentProvider.Section.WebURLs.header)) {
-            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.new, SettingsUIStrings.SettingsContentGenerator.versionStringFormat(versionString), path: "releases")
-            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.about, path: "about")
-            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.privacy, path: "privacy")
-            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.acknowledgements, path: "acknowledgements")
-            WebURLButton(SettingsUIStrings.SettingsContentProvider.Item.contact, path: "contact")
+        Section(header: SettingsSectionHeader(Strings.header)) {
+            WebURLButton(
+                title: Strings.releaseNotesTitle,
+                subtitle: Strings.versionStringFormat(versionString),
+                path: "releases"
+            )
+            WebURLButton(title: Strings.aboutTitle, path: "about")
+            WebURLButton(title: Strings.privacyTitle, path: "privacy")
+            WebURLButton(title: Strings.acknowledgementsTitle, path: "acknowledgements")
         }
     }
 
@@ -23,4 +26,6 @@ struct SettingsContentInformationSection: View {
         let versionString = infoDictionary?["CFBundleShortVersionString"] as? String
         return versionString ?? "???"
     }
+
+    private typealias Strings = SettingsUIStrings.SettingsContentInformationSection
 }

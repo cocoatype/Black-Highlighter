@@ -22,12 +22,14 @@ struct SettingsContentPurchasedFeaturesSection: View {
             }
 
             if purchaseState != .purchased && hideAutoRedactions == false {
-                SettingsAlertButton(SettingsUIStrings.SettingsContentProvider.Item.autoRedactions)
+                SettingsAlertButton(Strings.autoRedactionsTitle)
             }
 
             if purchaseState == .purchased {
-                SettingsNavigationLink(SettingsUIStrings.SettingsContentProvider.Item.autoRedactions, destination: AutoRedactionsEditView().background(Color.appPrimary.edgesIgnoringSafeArea(.all)))
+                SettingsNavigationLink(Strings.autoRedactionsTitle, destination: AutoRedactionsEditView().background(Color.appPrimary.edgesIgnoringSafeArea(.all)))
             }
         }
     }
+
+    private typealias Strings = SettingsUIStrings.SettingsContentPurchasedFeaturesSection
 }

@@ -5,77 +5,39 @@ import ErrorHandling
 import SwiftUI
 
 public struct WebURLButton: View {
-    @State private var selected = false
-    init(_ title: String, _ subtitle: String? = nil, path: String) {
+    private let title: String
+    private let subtitle: String?
+    private let imageName: String?
+    private let url: URL
+
+    init(title: String, subtitle: String? = nil, imageName: String? = nil, url: URL) {
         self.title = title
         self.subtitle = subtitle
-        self.url = Self.url(forPath: path)
+        self.imageName = imageName
+        self.url = url
     }
 
+    init(title: String, subtitle: String? = nil, path: StaticString) {
+        self.init(title: title, subtitle: subtitle, imageName: nil, url: URL(websitePath: path))
+    }
+
+    @State private var selected = false
     public var body: some View {
         Button {
             selected = true
         } label: {
-            VStack(alignment: .leading) {
-                WebURLTitleText(title)
-                if let subtitle = subtitle {
-                    WebURLSubtitleText(subtitle)
-                }
-            }
+            ButtonLabel(title: title, subtitle: subtitle, imageName: imageName)
         }.sheet(isPresented: $selected) {
             WebView(url: url)
         }.settingsCell()
-    }
-
-    static let baseURL: URL = {
-        guard let url = URL(string: "https://blackhighlighter.app/") else {
-            ErrorHandler().crash("Invalid base URL for settings")
-        }
-        return url
-    }()
-
-    public static func url(forPath path: String) -> URL {
-        Self.baseURL.appendingPathComponent(path)
-    }
-
-    // MARK: Boilerplate
-
-    private let title: String
-    private let subtitle: String?
-    private let url: URL
-}
-
-struct WebURLTitleText: View {
-    private let title: String
-    init(_ title: String) {
-        self.title = title
-    }
-
-    var body: some View {
-        Text(title)
-            .font(.app(textStyle: .subheadline))
-            .foregroundColor(.white)
-    }
-}
-
-struct WebURLSubtitleText: View {
-    private let text: String
-    init(_ text: String) {
-        self.text = text
-    }
-
-    var body: some View {
-        Text(text)
-            .font(.app(textStyle: .footnote))
-            .foregroundColor(.primaryExtraLight)
     }
 }
 
 enum WebURLButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
-            WebURLButton("Hello", path: "world")
-            WebURLButton("Hello", "world!", path: "world")
+            WebURLButton(title: "Hello", path: "world")
+            WebURLButton(title: "Hello", subtitle: "world!", path: "world")
         }.preferredColorScheme(.dark).previewLayout(.sizeThatFits)
     }
 }

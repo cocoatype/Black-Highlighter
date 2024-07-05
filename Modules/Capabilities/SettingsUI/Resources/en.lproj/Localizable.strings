@@ -6,17 +6,26 @@
   Copyright © 2024 Cocoatype, LLC. All rights reserved.
 */
 
-"SettingsContentGenerator.versionStringFormat" = "Version %@";
+"SettingsContentContactSection.appStoreTitle" = "App Store";
+"SettingsContentContactSection.appStoreSubtitle" = "Write a Review";
+"SettingsContentContactSection.emailTitle" = "E-mail";
+"SettingsContentContactSection.emailSubtitle" = "hello@cocoatype.com";
+"SettingsContentContactSection.header" = "Contact the Developer";
+"SettingsContentContactSection.threadsTitle" = "Threads";
+"SettingsContentContactSection.threadsSubtitle" = "@blackhighlighterapp";
+"SettingsContentContactSection.twitterTitle" = "X";
+"SettingsContentContactSection.twitterSubtitle" = "@BlkHighlighter";
 
-"SettingsContentProvider.Item.about" = "About Black Highlighter";
-"SettingsContentProvider.Item.acknowledgements" = "Acknowledgements";
-"SettingsContentProvider.Item.autoRedactions" = "Auto-Hidden Words";
-"SettingsContentProvider.Item.contact" = "Contact the Developer";
-"SettingsContentProvider.Item.new" = "What’s New";
-"SettingsContentProvider.Item.privacy" = "Privacy Policy";
+"SettingsContentInformationSection.aboutTitle" = "About Black Highlighter";
+"SettingsContentInformationSection.acknowledgementsTitle" = "Acknowledgements";
+"SettingsContentInformationSection.header" = "Important Information";
+"SettingsContentInformationSection.privacyTitle" = "Privacy Policy";
+"SettingsContentInformationSection.releaseNotesTitle" = "What’s New";
+"SettingsContentInformationSection.versionStringFormat" = "Version %@";
 
-"SettingsContentProvider.Section.purchasedFeatures.header" = "Ultra Highlighter Features";
-"SettingsContentProvider.Section.otherApps.header" = "Other Apps by Cocoatype";
-"SettingsContentProvider.Section.webURLs.header" = "Important Information";
+"SettingsContentOtherAppsSection.header" = "Other Apps by Cocoatype";
+
+"SettingsContentPurchasedFeaturesSection.header" = "Ultra Highlighter Features";
+"SettingsContentPurchasedFeaturesSection.autoRedactionsTitle" = "Auto-Hidden Words";
 
 "SettingsViewController.navigationTitle" = "Settings";

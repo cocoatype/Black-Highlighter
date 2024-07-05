@@ -25,14 +25,7 @@ struct OtherAppButton: View {
         Button {
             UIApplication.shared.open(url)
         } label: {
-            HStack(spacing: 12) {
-                Image(decorative: name)
-                    .continuousCornerRadius(5.6)
-                VStack(alignment: .leading) {
-                    OtherAppNameText(name)
-                    OtherAppSubtitleText(subtitle)
-                }
-            }
+            ButtonLabel(title: name, subtitle: subtitle, imageName: name)
         }.settingsCell()
     }
 }
