@@ -29,6 +29,7 @@ public struct WebURLButton: View {
             ButtonLabel(title: title, subtitle: subtitle, imageName: imageName)
         }.sheet(isPresented: $selected) {
             WebView(url: url)
+                .ignoresSafeArea()
         }.settingsCell()
     }
 }
