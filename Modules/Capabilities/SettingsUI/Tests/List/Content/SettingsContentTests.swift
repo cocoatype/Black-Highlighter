@@ -10,11 +10,12 @@ import XCTest
 class SettingsContentTests: XCTestCase {
     func testSettingsContentContainsAppropriateSections() throws {
         let content = try SettingsContent(state: .loading).inspect().find(SettingsContent.self).find(ViewType.TupleView.self)
+        dump(content)
         XCTAssertEqual(content.count, 4)
 
-        try XCTAssertNoThrow(content[0].find(SettingsContentPurchasedFeaturesSection.self))
-        try XCTAssertNoThrow(content[1].find(SettingsContentInformationSection.self))
-        try XCTAssertNoThrow(content[2].find(SettingsContentContactSection.self))
-        try XCTAssertNoThrow(content[3].find(SettingsContentOtherAppsSection.self))
+        try XCTAssertNoThrow(content[0].find(SettingsContentPurchasedFeaturesSection.self), "Did not find purchased features section")
+        try XCTAssertNoThrow(content[1].find(SettingsContentInformationSection.self), "Did not find information section")
+        try XCTAssertNoThrow(content[2].find(SettingsContentContactSection.self), "Did not find contact section")
+        try XCTAssertNoThrow(content[3].find(SettingsContentOtherAppsSection.self), "Did not find other apps section")
     }
 }
