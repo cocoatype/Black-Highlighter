@@ -4,6 +4,7 @@
 import AlbumsData
 import AppNavigation
 import SwiftUI
+import SwiftUIIntrospect
 
 struct AlbumsRow: View {
     @Binding var selection: String?
@@ -30,7 +31,9 @@ struct AlbumsRow: View {
             .tag(collection.identifier)
         }
         .selected(selection == collection.identifier)
-        .introspectTableViewCell { $0.selectionStyle = .none }
+        .introspect(.listCell, on: .iOS(.v13, .v14, .v15)) {
+            $0.selectionStyle = .none
+        }
     }
 
     @EnvironmentObject private var navigationWrapper: NavigationWrapper

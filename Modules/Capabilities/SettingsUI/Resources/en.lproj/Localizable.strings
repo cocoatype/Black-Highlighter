@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  Highlighter
+
+  Created by Geoff Pado on 6/29/24.
+  Copyright © 2024 Cocoatype, LLC. All rights reserved.
+*/
+
+"SettingsContentContactSection.appStoreTitle" = "App Store";
+"SettingsContentContactSection.appStoreSubtitle" = "Write a Review";
+"SettingsContentContactSection.emailTitle" = "E-mail";
+"SettingsContentContactSection.emailSubtitle" = "hello@cocoatype.com";
+"SettingsContentContactSection.header" = "Contact the Developer";
+"SettingsContentContactSection.threadsTitle" = "Threads";
+"SettingsContentContactSection.threadsSubtitle" = "@blackhighlighterapp";
+"SettingsContentContactSection.twitterTitle" = "X";
+"SettingsContentContactSection.twitterSubtitle" = "@BlkHighlighter";
+
+"SettingsContentInformationSection.aboutTitle" = "About Black Highlighter";
+"SettingsContentInformationSection.acknowledgementsTitle" = "Acknowledgements";
+"SettingsContentInformationSection.header" = "Important Information";
+"SettingsContentInformationSection.privacyTitle" = "Privacy Policy";
+"SettingsContentInformationSection.releaseNotesTitle" = "What’s New";
+"SettingsContentInformationSection.versionStringFormat" = "Version %@";
+
+"SettingsContentOtherAppsSection.header" = "Other Apps by Cocoatype";
+
+"SettingsContentPurchasedFeaturesSection.header" = "Ultra Highlighter Features";
+"SettingsContentPurchasedFeaturesSection.autoRedactionsTitle" = "Auto-Hidden Words";
+
+"SettingsViewController.navigationTitle" = "Settings";

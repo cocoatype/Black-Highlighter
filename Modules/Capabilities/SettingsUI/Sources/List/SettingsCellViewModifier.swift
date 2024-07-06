@@ -1,8 +1,8 @@
 //  Created by Geoff Pado on 5/19/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
-import Introspect
 import SwiftUI
+import SwiftUIIntrospect
 
 struct SettingsCellViewModifier: ViewModifier {
     func body(content: Content) -> some View {
@@ -10,7 +10,7 @@ struct SettingsCellViewModifier: ViewModifier {
             .font(.app(textStyle: .subheadline))
             .foregroundColor(.white)
             .listRowBackground(Color(.tableViewCellBackground))
-            .introspectTableViewCell { cell in
+            .introspect(.listCell, on: .iOS(.v13, .v14, .v15)) { cell in
                 cell.selectedBackgroundView = {
                     let view = UIView()
                     view.backgroundColor = .tableViewCellBackgroundHighlighted

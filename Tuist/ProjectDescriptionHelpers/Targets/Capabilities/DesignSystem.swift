@@ -6,6 +6,7 @@ public enum DesignSystem {
         hasResources: true,
         dependencies: [
             .target(ErrorHandling.target(sdk: .catalyst)),
+            .external(name: "SwiftUIIntrospect-Dynamic"),
         ]
     )
 

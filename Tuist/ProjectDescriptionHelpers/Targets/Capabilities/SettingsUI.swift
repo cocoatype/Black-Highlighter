@@ -3,6 +3,7 @@ import ProjectDescription
 public enum SettingsUI {
     public static let target = Target.capabilitiesTarget(
         name: "SettingsUI",
+        hasResources: true,
         dependencies: [
             .target(AutoRedactionsUI.target),
             .target(Defaults.target),
@@ -10,8 +11,14 @@ public enum SettingsUI {
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
             .target(Unpurchased.target),
+            .external(name: "SwiftUIIntrospect-Dynamic"),
         ]
     )
 
-    public static let testTarget = Target.capabilitiesTestTarget(name: "SettingsUI")
+    public static let testTarget = Target.capabilitiesTestTarget(
+        name: "SettingsUI",
+        dependencies: [
+            .external(name: "ViewInspector"),
+        ]
+    )
 }

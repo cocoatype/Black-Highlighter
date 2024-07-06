@@ -8,13 +8,13 @@ import UIKit
 class HelpMenuAcknowledgementsAction: UIAction {
     convenience init(void: Void = ()) {
         self.init(title: Self.menuItemTitle) { _ in
-            UIApplication.shared.open(WebURLButton.url(forPath: "acknowledgements"), options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(websitePath: "acknowledgements"), options: [:], completionHandler: nil)
         }
     }
 
     // MARK: Boilerplate
 
-    private static let menuItemTitle = NSLocalizedString("SettingsContentProvider.Item.acknowledgements", comment: "Acknowledgements menu item title")
+    private static let menuItemTitle = SettingsUIStrings.SettingsContentInformationSection.acknowledgementsTitle
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

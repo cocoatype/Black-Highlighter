@@ -9,11 +9,11 @@ import Unpurchased
 struct SettingsAlertButton: View {
     @State private var showAlert = false
     init(
-        _ titleKey: LocalizedStringKey,
+        _ title: String,
         _ subtitle: String? = nil,
         purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
-        self.titleKey = titleKey
+        self.title = title
         self.subtitle = subtitle
         haveYourDucksInARow = purchaseRepository
     }
@@ -25,12 +25,7 @@ struct SettingsAlertButton: View {
             Button {
                 showAlert = true
             } label: {
-                VStack(alignment: .leading) {
-                    WebURLTitleText(titleKey)
-                    if let subtitle = subtitle {
-                        WebURLSubtitleText(subtitle)
-                    }
-                }
+                ButtonLabel(title: title, subtitle: subtitle)
             }
             .unpurchasedAlert(for: .autoRedactions(), isPresented: $showAlert)
             .settingsCell()
@@ -39,7 +34,7 @@ struct SettingsAlertButton: View {
 
     // MARK: Boilerplate
 
-    private let titleKey: LocalizedStringKey
+    private let title: String
     private let subtitle: String?
 
     @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
@@ -52,8 +47,7 @@ struct SettingsAlertButton: View {
 enum SettingsAlertButtonPreviews: PreviewProvider {
     static var previews: some View {
         Group {
-            WebURLButton("Hello", path: "world")
-            WebURLButton("Hello", "world!", path: "world")
+            SettingsAlertButton("Hello")
         }.preferredColorScheme(.dark).previewLayout(.sizeThatFits)
     }
 }

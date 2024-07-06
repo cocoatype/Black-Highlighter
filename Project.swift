@@ -70,6 +70,7 @@ let project = Project(
         Purchasing.testTarget,
         Redactions.testTarget,
         Rendering.testTarget,
+        SettingsUI.testTarget,
         Shortcuts.testTarget,
         Unpurchased.testTarget,
     ],

@@ -1,7 +1,6 @@
 //  Created by Geoff Pado on 5/17/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
-import Introspect
 import Purchasing
 import StoreKit
 import SwiftUI
@@ -27,7 +26,9 @@ public struct SettingsView: View {
         SettingsNavigationView {
             SettingsList(dismissAction: dismissAction) {
                 SettingsContent(state: purchaseState)
-            }.navigationBarTitle("SettingsViewController.navigationTitle", displayMode: .inline)
+            }
+            .navigationTitle(SettingsUIStrings.SettingsViewController.navigationTitle)
+            .navigationBarTitleDisplayMode(.inline)
         }
         .environment(\.readableWidth, readableWidth)
         .onReceive(purchaseRepository.purchaseStates.eraseToAnyPublisher()) { newState in
