@@ -22,16 +22,16 @@ class PhotoEditingProtectionAlertController: UIAlertController {
         }
     }
 
-    private lazy var shareAction = UIAlertAction(title: Self.shareButtonTitle, style: .default) { [weak self] _ in
+    private lazy var shareAction = UIAlertAction(title: Strings.shareButtonTitle, style: .default) { [weak self] _ in
         self?.delegate?.presentShareDialogInPhotoEditingViewController()
     }
-    private lazy var saveAction = UIAlertAction(title: Self.saveButtonTitle, style: .default, handler: { [weak self] _ in
+    private lazy var saveAction = UIAlertAction(title: Strings.saveButtonTitle, style: .default, handler: { [weak self] _ in
         self?.delegate?.dismissPhotoEditingViewControllerAfterSaving()
     })
-    private lazy var deleteAction = UIAlertAction(title: Self.deleteButtonTitle, style: .destructive, handler: { [weak self] _ in
+    private lazy var deleteAction = UIAlertAction(title: Strings.deleteButtonTitle, style: .destructive, handler: { [weak self] _ in
         self?.delegate?.destructivelyDismissPhotoEditingViewController()
     })
-    private lazy var cancelAction = UIAlertAction(title: Self.cancelButtonTitle, style: .cancel, handler: nil)
+    private lazy var cancelAction = UIAlertAction(title: Strings.cancelButtonTitle, style: .cancel, handler: nil)
 
     // MARK: Boilerplate
 
@@ -44,16 +44,13 @@ class PhotoEditingProtectionAlertController: UIAlertController {
     }
     weak var delegate: PhotoEditingProtectionAlertDelegate?
 
-    private static let cancelButtonTitle = NSLocalizedString("PhotoEditingProtectionAlertController.cancelButtonTitle", comment: "Title for the cancel button on the photo save protection alert")
-    private static let deleteButtonTitle = NSLocalizedString("PhotoEditingProtectionAlertController.deleteButtonTitle", comment: "Title for the delete button on the photo save protection alert")
-    private static let saveButtonTitle = NSLocalizedString("PhotoEditingProtectionAlertController.saveButtonTitle", comment: "Title for the save button on the photo save protection alert")
-    private static let shareButtonTitle = NSLocalizedString("PhotoEditingProtectionAlertController.shareButtonTitle", comment: "Title for the share button on the photo save protection alert")
-
     @available(*, unavailable)
     required init(coder: NSCoder) {
         let className = String(describing: type(of: self))
         fatalError("\(className) does not implement init(coder:)")
     }
+
+    private typealias Strings = CoreStrings.PhotoEditingProtectionAlertController
 }
 
 protocol PhotoEditingProtectionAlertDelegate: AnyObject {

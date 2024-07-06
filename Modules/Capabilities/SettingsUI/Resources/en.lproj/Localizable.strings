@@ -1,10 +1,16 @@
-/* 
-  Localizable.strings
-  Highlighter
+// Label for the word list in settings
+"DesktopSettingsView.wordListLabel" = "Auto-Hidden Words";
 
-  Created by Geoff Pado on 6/29/24.
-  Copyright © 2024 Cocoatype, LLC. All rights reserved.
-*/
+// Title for the settings done button
+"DoneButton.label" = "Done";
+
+// Title for the entry button to Purchase Marketing
+"PurchaseItem.title" = "Ultra Highlighter";
+
+// Subtitle for the purchase settings content item without space for the product price
+"PurchaseSubtitle.withoutProduct" = "More Highlighting Power";
+// Subtitle for the purchase settings content item with space for the product price
+"PurchaseSubtitle.withProduct" = "Ultimate Highlight Power — %@";
 
 "SettingsContentContactSection.appStoreTitle" = "App Store";
 "SettingsContentContactSection.appStoreSubtitle" = "Write a Review";

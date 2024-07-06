@@ -4,17 +4,17 @@
 import SwiftUI
 
 struct PurchaseMarketingItem: View {
-    init(header: LocalizedStringKey, text: LocalizedStringKey, imageName: String) {
-        self.headerKey = header
-        self.textKey = text
+    init(header: String, text: String, imageName: String) {
+        self.header = header
+        self.text = text
         self.imageName = imageName
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
-                PurchaseMarketingHeader(headerKey)
-                PurchaseMarketingText(textKey)
+                PurchaseMarketingHeader(header)
+                PurchaseMarketingText(text)
             }.padding(EdgeInsets(top: 16, leading: 20, bottom: 0, trailing: 20))
             Image(imageName).resizable().aspectRatio(290.0/166.0, contentMode: .fit)
         }
@@ -22,8 +22,8 @@ struct PurchaseMarketingItem: View {
         .cornerRadius(21)
     }
 
-    private let headerKey: LocalizedStringKey
-    private let textKey: LocalizedStringKey
+    private let header: String
+    private let text: String
     private let imageName: String
 }
 

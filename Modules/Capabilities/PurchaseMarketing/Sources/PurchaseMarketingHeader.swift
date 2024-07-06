@@ -4,13 +4,13 @@
 import SwiftUI
 
 struct PurchaseMarketingHeader: View {
-    private let titleKey: LocalizedStringKey
-    init(_ titleKey: LocalizedStringKey) {
-        self.titleKey = titleKey
+    private let title: String
+    init(_ title: String) {
+        self.title = title
     }
 
     var body: some View {
-        Text(titleKey)
+        Text(title)
             .font(.app(textStyle: .headline))
             .foregroundColor(.white)
             .lineLimit(nil)

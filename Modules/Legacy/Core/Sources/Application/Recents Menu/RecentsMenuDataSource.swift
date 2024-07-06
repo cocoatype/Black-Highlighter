@@ -18,7 +18,7 @@ class RecentsMenuDataSource: NSObject {
     }
 
     var recentsMenu: UIMenu {
-        UIMenu(title: Self.menuTitle, identifier: nil, children: menuItems + [clearMenu])
+        UIMenu(title: Strings.menuTitle, identifier: nil, children: menuItems + [clearMenu])
     }
 
     private var menuItems: [UIMenuElement] {
@@ -27,9 +27,8 @@ class RecentsMenuDataSource: NSObject {
         }
     }
 
-    private static let clearMenuItemTitle = NSLocalizedString("RecentsMenuDataSource.clearMenuItemTitle", comment: "Title for the clear recents menu item")
     private let clearMenu = UIMenu(options: .displayInline, children: [
-        UICommand(title: RecentsMenuDataSource.clearMenuItemTitle, action: #selector(AppDelegate.clearRecents))
+        UICommand(title: Strings.clearMenuItemTitle, action: #selector(AppDelegate.clearRecents))
     ])
 
     private func icon(for url: URL) -> UIImage? {
@@ -42,6 +41,6 @@ class RecentsMenuDataSource: NSObject {
         return Defaults.recentBookmarks.compactMap { try? URL(resolvingBookmarkData: $0, relativeTo: nil, bookmarkDataIsStale: &bool) }
     }
 
-    private static let menuTitle = NSLocalizedString("RecentsMenuDataSource.menuTitle", comment: "Title for the Open Recents menu")
+    private typealias Strings = CoreStrings.RecentsMenuDataSource
 }
 #endif

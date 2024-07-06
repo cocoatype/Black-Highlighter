@@ -14,7 +14,7 @@ class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UI
 
         PHPhotoLibrary.shared().register(self)
 
-        navigationItem.title = Self.navigationItemTitle
+        navigationItem.title = CoreStrings.PhotoLibraryViewController.navigationItemTitle
         navigationItem.rightBarButtonItem = SettingsBarButtonItem.standard
 
         hideDocumentScannerObserver = NotificationCenter.default.addObserver(forName: _hideDocumentScanner.valueDidChange, object: nil, queue: nil) { [weak self] _ in
@@ -118,8 +118,6 @@ class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UI
     }
 
     // MARK: Boilerplate
-
-    private static let navigationItemTitle = NSLocalizedString("PhotoSelectionViewController.navigationItemTitle", comment: "Navigation title for the photo selector")
 
     @Defaults.Value(key: .hideDocumentScanner) private var hideDocumentScanner: Bool
     private var dataSource: PhotoLibraryDataSource {

@@ -5,7 +5,7 @@ import UIKit
 
 class RedactedWordObservationRotor: UIAccessibilityCustomRotor {
     init(accessibilityElements: [WordObservationAccessibilityElement]?) {
-        super.init(name: Self.name) { predicate in
+        super.init(name: EditingStrings.RedactedWordObservationRotor.name) { predicate in
             guard let accessibilityElements = accessibilityElements,
                   let currentItem = Result(result: predicate.currentItem),
                   let currentItemIndex = accessibilityElements.firstIndex(of: currentItem.element)
@@ -43,6 +43,4 @@ class RedactedWordObservationRotor: UIAccessibilityCustomRotor {
             self.init(element: element)
         }
     }
-
-    private static let name = NSLocalizedString("RedactedWordObservationRotor.name", comment: "Name for the redacted words custom accessibility rotor")
 }

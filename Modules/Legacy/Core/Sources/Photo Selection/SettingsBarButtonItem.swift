@@ -7,11 +7,9 @@ import UIKit
 class SettingsBarButtonItem: UIBarButtonItem {
     static var standard: SettingsBarButtonItem {
         let standard = SettingsBarButtonItem(image: Icons.help, style: .plain, target: nil, action: #selector(AppViewController.presentSettingsViewController))
-        standard.accessibilityLabel = Self.settingsButtonAccessibilityLabel
+        standard.accessibilityLabel = CoreStrings.SettingsBarButtonItem.accessibilityLabel
         return standard
     }
-
-    private static let settingsButtonAccessibilityLabel = NSLocalizedString("PhotoSelectionViewController.settingsButtonAccessibilityLabel", comment: "Accessibility label for the button to get to settings")
 
     // MARK: Boilerplate
 

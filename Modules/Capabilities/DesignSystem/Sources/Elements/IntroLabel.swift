@@ -4,13 +4,13 @@
 import SwiftUI
 
 public struct IntroLabel: View {
-    private let textKey: LocalizedStringKey
-    public init(_ textKey: LocalizedStringKey) {
-        self.textKey = textKey
+    private let text: String
+    public init(_ text: String) {
+        self.text = text
     }
 
     public var body: some View {
-        Text(textKey)
+        Text(text)
             .foregroundColor(.primaryExtraLight)
             .font(.app(textStyle: .body))
     }

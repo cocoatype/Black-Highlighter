@@ -64,14 +64,6 @@ struct PurchaseMarketingTopBarRegular: View {
     }
 }
 
-struct PurchaseButtonSeparator: View {
-    var body: some View {
-        Text("PurchaseButtonSeparator.text")
-            .font(.app(textStyle: .headline))
-            .foregroundColor(.white)
-    }
-}
-
 enum PurchaseMarketingTopBarPreviews: PreviewProvider {
     static var previews: some View {
         PurchaseMarketingTopBarRegular().previewLayout(.sizeThatFits)

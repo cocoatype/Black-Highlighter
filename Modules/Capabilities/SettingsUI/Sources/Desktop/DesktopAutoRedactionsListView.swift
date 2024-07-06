@@ -56,7 +56,7 @@ class DesktopAutoRedactionsListView: UIView, UITableViewDataSource {
 
     // MARK: Boilerplate
 
-    private static let wordListLabelText = NSLocalizedString("DesktopSettingsView.wordListLabel", comment: "Label for the word list in settings")
+    private static let wordListLabelText = SettingsUIStrings.DesktopSettingsView.wordListLabel
 
     private let addRemoveControl = DesktopSettingsAddRemoveControl()
     private let wordListLabel: UILabel = {

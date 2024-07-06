@@ -7,11 +7,9 @@ class DismissBarButtonItem: UIBarButtonItem {
     override init() {
         super.init()
         self.style = .done
-        self.title = Self.title
+        self.title = EditingStrings.DismissBarButtonItem.title
         self.action = #selector(PhotoEditingActions.dismissPhotoEditingViewController)
     }
-
-    private static let title = NSLocalizedString("DismissBarButtonItem.title", comment: "Title for the dismiss button")
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

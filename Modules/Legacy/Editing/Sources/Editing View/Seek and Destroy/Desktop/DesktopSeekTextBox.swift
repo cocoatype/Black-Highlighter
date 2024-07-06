@@ -21,7 +21,5 @@ class DesktopSeekTextBox: DesktopSeekBox {
 
     // MARK: Boilerplate
 
-    private static let boxTitle = NSLocalizedString("DesktopSeekTextBox.boxTitle", comment: "Title for the text box in the quick redact view")
-
     private let textField = DesktopSeekTextField()
 }

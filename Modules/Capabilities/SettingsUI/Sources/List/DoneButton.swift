@@ -10,7 +10,7 @@ struct DoneButton: View {
     }
 
     var body: some View {
-        Button("DoneButton.label", action: action)
+        Button(SettingsUIStrings.DoneButton.label, action: action)
             .foregroundColor(.white)
             .font(Font.navigationBarButtonFont)
     }

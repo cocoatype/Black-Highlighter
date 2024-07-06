@@ -2,7 +2,6 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 #if targetEnvironment(macCatalyst)
-
 import Editing
 import UIKit
 
@@ -11,8 +10,8 @@ enum MenuBuilder {
         guard builder.system == .main else { return }
 
         let documentChildren = [
-            UIKeyCommand(title: Self.saveMenuItemTitle, action: #selector(PhotoEditingViewController.save(_:)), input: "S", modifierFlags: [.command]),
-            UIKeyCommand(title: Self.saveAsMenuItemTitle, action: #selector(PhotoEditingViewController.saveAs(_:)), input: "S", modifierFlags: [.command, .shift]),
+            UIKeyCommand(title: Strings.saveMenuItemTitle, action: #selector(PhotoEditingViewController.save(_:)), input: "S", modifierFlags: [.command]),
+            UIKeyCommand(title: Strings.saveAsMenuItemTitle, action: #selector(PhotoEditingViewController.saveAs(_:)), input: "S", modifierFlags: [.command, .shift]),
         ]
 
         if #available(macCatalyst 16.0, *) {
@@ -31,7 +30,7 @@ enum MenuBuilder {
         builder.replace(menu: .openRecent, with: recentsMenuDataSource.recentsMenu)
 
         let findMenu = UIMenu(options: .displayInline, children: [
-            UIKeyCommand(title: Self.findMenuItemTitle, action: #selector(PhotoEditingViewController.startSeeking(_:)), input: "F", modifierFlags: [.command])
+            UIKeyCommand(title: Strings.findMenuItemTitle, action: #selector(PhotoEditingViewController.startSeeking(_:)), input: "F", modifierFlags: [.command])
         ])
         builder.insertSibling(findMenu, beforeMenu: .spelling)
 
@@ -41,18 +40,12 @@ enum MenuBuilder {
         }
 
         let preferencesMenu = UIMenu(options: .displayInline, children: [
-            UIKeyCommand(title: Self.preferencesMenuItemTitle, action: #selector(AppDelegate.displayPreferences), input: ",", modifierFlags: [.command])
+            UIKeyCommand(title: Strings.preferencesMenuItemTitle, action: #selector(AppDelegate.displayPreferences), input: ",", modifierFlags: [.command])
         ])
         builder.insertSibling(preferencesMenu, afterMenu: .about)
     }
 
-    private static let saveMenuItemTitle = NSLocalizedString("AppDelegate.saveMenuTitle", comment: "Save menu title")
-    private static let saveAsMenuItemTitle = NSLocalizedString("AppDelegate.saveAsMenuTitle", comment: "Save As menu title")
-
-    private static let preferencesMenuTitle = NSLocalizedString("AppDelegate.preferencesMenuTitle", comment: "Preferences menu title")
-    private static let preferencesMenuItemTitle = NSLocalizedString("AppDelegate.preferencesMenuItemTitle", comment: "Preferences menu item title")
-
-    private static let findMenuItemTitle = NSLocalizedString("MenuBuilder.findMenuItemTitle", comment: "Find menu item title")
+    private typealias Strings = CoreStrings.MenuBuilder
 }
 
 #endif
