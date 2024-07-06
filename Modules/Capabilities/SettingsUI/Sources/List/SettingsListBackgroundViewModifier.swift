@@ -2,11 +2,12 @@
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
 import SwiftUI
+import SwiftUIIntrospect
 
 struct SettingsListBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         backgroundColored(content)
-            .introspectScrollView {
+            .introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17, .v18)) {
                 $0.indicatorStyle = .white
             }
     }
@@ -19,7 +20,7 @@ struct SettingsListBackgroundViewModifier: ViewModifier {
                 .background(Color.appPrimary)
         } else {
             content
-                .introspectTableView {
+                .introspect(.list, on: .iOS(.v13, .v14, .v15)) {
                     $0.backgroundColor = .primary
                 }
         }

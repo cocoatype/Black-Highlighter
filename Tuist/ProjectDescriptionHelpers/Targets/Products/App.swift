@@ -25,7 +25,6 @@ public enum App {
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
             .target(Shortcuts.target),
-            .external(name: "Introspect"),
         ],
         settings: .settings(
             base: [

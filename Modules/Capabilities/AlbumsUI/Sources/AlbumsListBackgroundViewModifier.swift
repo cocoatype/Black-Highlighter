@@ -2,6 +2,7 @@
 //  Copyright © 2022 Cocoatype, LLC. All rights reserved.
 
 import SwiftUI
+import SwiftUIIntrospect
 
 struct AlbumsListBackgroundViewModifier: ViewModifier {
     func body(content: Content) -> some View {
@@ -11,7 +12,9 @@ struct AlbumsListBackgroundViewModifier: ViewModifier {
                 .background(Color.appPrimary)
         } else {
             content
-                .introspectTableView { $0.backgroundColor = .primary }
+                .introspect(.list, on: .iOS(.v13, .v14, .v15)) {
+                    $0.backgroundColor = .primary
+                }
         }
     }
 }
