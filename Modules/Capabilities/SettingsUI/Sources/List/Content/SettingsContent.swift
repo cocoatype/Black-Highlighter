@@ -13,11 +13,9 @@ struct SettingsContent: View {
     }
 
     var body: some View {
-        Group {
-            SettingsContentPurchasedFeaturesSection(state: purchaseState)
-            SettingsContentInformationSection()
-            SettingsContentContactSection()
-            SettingsContentOtherAppsSection()
-        }
+        SettingsContentPurchasedFeaturesSection(state: purchaseState)
+        SettingsContentInformationSection()
+        SettingsContentContactSection()
+        SettingsContentOtherAppsSection()
     }
 }

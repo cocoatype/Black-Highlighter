@@ -9,12 +9,12 @@ import XCTest
 
 class SettingsContentTests: XCTestCase {
     func testSettingsContentContainsAppropriateSections() throws {
-        let content = try SettingsContent(state: .loading).inspect().anyView()
-        try XCTAssertEqual(content.group().count, 4)
+        let content = try SettingsContent(state: .loading).inspect().find(SettingsContent.self).find(ViewType.TupleView.self)
+        XCTAssertEqual(content.count, 4)
 
-        try XCTAssertNoThrow(content.group()[0].find(SettingsContentPurchasedFeaturesSection.self))
-        try XCTAssertNoThrow(content.group()[1].find(SettingsContentInformationSection.self))
-        try XCTAssertNoThrow(content.group()[2].find(SettingsContentContactSection.self))
-        try XCTAssertNoThrow(content.group()[3].find(SettingsContentOtherAppsSection.self))
+        try XCTAssertNoThrow(content[0].find(SettingsContentPurchasedFeaturesSection.self))
+        try XCTAssertNoThrow(content[1].find(SettingsContentInformationSection.self))
+        try XCTAssertNoThrow(content[2].find(SettingsContentContactSection.self))
+        try XCTAssertNoThrow(content[3].find(SettingsContentOtherAppsSection.self))
     }
 }

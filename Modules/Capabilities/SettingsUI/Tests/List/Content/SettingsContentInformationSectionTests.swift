@@ -12,16 +12,17 @@ class SettingsContentInformationSectionTests: XCTestCase {
             infoDictionary: [
                 "CFBundleShortVersionString": "89.0",
             ]
-        ).inspect().anyView()
-        let button = try section.section()[0].view(WebURLButton.self)
+        ).inspect().find(SettingsContentInformationSection.self)
+
+        let button = section.findAll(WebURLButton.self)[0]
         XCTAssertNoThrow(try button.find(text: "Version 89.0"))
     }
 
     func testVersionInformationFallback() throws {
         let section = try SettingsContentInformationSection(
             infoDictionary: [:]
-        ).inspect().anyView()
-        let button = try section.section()[0].view(WebURLButton.self)
+        ).inspect().find(SettingsContentInformationSection.self)
+        let button = section.findAll(WebURLButton.self)[0]
         XCTAssertNoThrow(try button.find(text: "Version ???"))
     }
 }

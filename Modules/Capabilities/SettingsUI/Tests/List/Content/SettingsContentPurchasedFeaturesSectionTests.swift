@@ -10,25 +10,25 @@ import XCTest
 
 class SettingsContentPurchasedFeaturesSectionTests: XCTestCase {
     func testContainsPurchaseNavigationLinkIfNotPurchased() throws {
-        let section = try SettingsContentPurchasedFeaturesSection(state: .loading).inspect().anyView()
+        let section = try SettingsContentPurchasedFeaturesSection(state: .loading).inspect().find(SettingsContentPurchasedFeaturesSection.self)
 
         XCTAssertNoThrow(try section.find(PurchaseNavigationLink<PurchaseMarketingView>.self))
     }
 
     func testDoesNotContainSettingsNavigationLinkIfNotPurchased() throws {
-        let section = try SettingsContentPurchasedFeaturesSection(state: .loading).inspect().anyView()
+        let section = try SettingsContentPurchasedFeaturesSection(state: .loading).inspect().find(SettingsContentPurchasedFeaturesSection.self)
 
         XCTAssertThrowsError(try section.find(SettingsNavigationLink<AutoRedactionsEditView>.self))
     }
 
     func testDoesNotContainPurchaseNavigationLinkIfPurchased() throws {
-        let section = try SettingsContentPurchasedFeaturesSection(state: .purchased).inspect().anyView()
+        let section = try SettingsContentPurchasedFeaturesSection(state: .purchased).inspect().find(SettingsContentPurchasedFeaturesSection.self)
 
         XCTAssertThrowsError(try section.find(PurchaseNavigationLink<PurchaseMarketingView>.self))
     }
 
     func testContainsSettingsNavigationLinkIfPurchased() throws {
-        let section = try SettingsContentPurchasedFeaturesSection(state: .purchased).inspect().anyView()
+        let section = try SettingsContentPurchasedFeaturesSection(state: .purchased).inspect().find(SettingsContentPurchasedFeaturesSection.self)
 
         XCTAssertNoThrow(try section.find(SettingsNavigationLink<AutoRedactionsEditView>.self))
     }
