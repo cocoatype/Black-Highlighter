@@ -12,8 +12,7 @@ struct SettingsContentContactSection: View {
     var body: some View {
         Section(header: SettingsSectionHeader(Strings.header)) {
             MailButton()
-            #warning("Use SKStoreReviewController")
-            WebURLButton(title: Strings.appStoreTitle, subtitle: Strings.appStoreSubtitle, imageName: "App Store", url: URL(staticString: "mailto:hello@cocoatype.com"))
+            ReviewButton()
             WebURLButton(title: Strings.threadsTitle, subtitle: Strings.threadsSubtitle, imageName: "Threads", url: URL(staticString: "https://threads.net/@blackhighlighterapp"))
             WebURLButton(title: Strings.twitterTitle, subtitle: Strings.twitterSubtitle, imageName: "X", url: URL(staticString: "https://x.com/BlkHighlighter"))
         }
