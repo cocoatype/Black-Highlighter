@@ -4,7 +4,7 @@
 import ErrorHandling
 import Foundation
 
-extension URL {
+public extension URL {
     init(websitePath: StaticString) {
         self = URL.websiteBaseURL.appendingPathComponent(String(websitePath))
     }

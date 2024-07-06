@@ -8,13 +8,13 @@ import UIKit
 class HelpMenuAboutAction: UIAction {
     convenience init(void: Void = ()) {
         self.init(title: Self.menuItemTitle) { _ in
-            UIApplication.shared.open(WebURLButton.url(forPath: "about"), options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(websitePath: "about"), options: [:], completionHandler: nil)
         }
     }
 
     // MARK: Boilerplate
 
-    private static let menuItemTitle = NSLocalizedString("SettingsContentProvider.Item.about", comment: "About menu item title")
+    private static let menuItemTitle = SettingsUIStrings.SettingsContentInformationSection.aboutTitle
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

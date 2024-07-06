@@ -8,13 +8,13 @@ import UIKit
 class HelpMenuPrivacyAction: UIAction {
     convenience init(void: Void = ()) {
         self.init(title: Self.menuItemTitle) { _ in
-            UIApplication.shared.open(WebURLButton.url(forPath: "privacy"), options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(websitePath: "privacy"), options: [:], completionHandler: nil)
         }
     }
 
     // MARK: Boilerplate
 
-    private static let menuItemTitle = NSLocalizedString("SettingsContentProvider.Item.privacy", comment: "Privacy menu item title")
+    private static let menuItemTitle = SettingsUIStrings.SettingsContentInformationSection.privacyTitle
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

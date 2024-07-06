@@ -8,13 +8,13 @@ import UIKit
 class HelpMenuContactAction: UIAction {
     convenience init(void: Void = ()) {
         self.init(title: Self.menuItemTitle) { _ in
-            UIApplication.shared.open(WebURLButton.url(forPath: "contact"), options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(websitePath: "contact"), options: [:], completionHandler: nil)
         }
     }
 
     // MARK: Boilerplate
 
-    private static let menuItemTitle = NSLocalizedString("SettingsContentProvider.Item.contact", comment: "Contact menu item title")
+    private static let menuItemTitle = SettingsUIStrings.SettingsContentContactSection.header
 
     @available(*, unavailable)
     required init(coder: NSCoder) {
