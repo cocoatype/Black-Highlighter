@@ -55,6 +55,10 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.photography</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>mailto</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

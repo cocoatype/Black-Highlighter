@@ -11,8 +11,7 @@ struct SettingsContentContactSection: View {
 
     var body: some View {
         Section(header: SettingsSectionHeader(Strings.header)) {
-            #warning("Make this attempt to send email instead!")
-            WebURLButton(title: Strings.emailTitle, subtitle: Strings.emailSubtitle, imageName: "Mail", url: URL(staticString: "mailto:hello@cocoatype.com"))
+            MailButton()
             #warning("Use SKStoreReviewController")
             WebURLButton(title: Strings.appStoreTitle, subtitle: Strings.appStoreSubtitle, imageName: "App Store", url: URL(staticString: "mailto:hello@cocoatype.com"))
             WebURLButton(title: Strings.threadsTitle, subtitle: Strings.threadsSubtitle, imageName: "Threads", url: URL(staticString: "https://threads.net/@blackhighlighterapp"))
