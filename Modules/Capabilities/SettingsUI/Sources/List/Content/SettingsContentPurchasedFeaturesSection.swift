@@ -14,7 +14,7 @@ struct SettingsContentPurchasedFeaturesSection: View {
     }
 
     @Defaults.Value(key: .hideAutoRedactions) private var hideAutoRedactions: Bool
-    
+
     var body: some View {
         Section {
             if purchaseState != .purchased {
