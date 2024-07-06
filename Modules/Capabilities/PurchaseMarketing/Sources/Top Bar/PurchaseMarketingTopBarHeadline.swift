@@ -5,7 +5,7 @@ import SwiftUI
 
 struct PurchaseMarketingTopBarHeadline: View {
     var body: some View {
-        Text("PurchaseMarketingTopBarHeadlineLabel.text")
+        Text(PurchaseMarketingStrings.PurchaseMarketingTopBarHeadlineLabel.text)
             .foregroundColor(.white)
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)

@@ -1,0 +1,30 @@
+// Title for the purchase button on the purchase marketing view
+"PurchaseButton.loadingTitle" = "Purchase";
+// Title for the purchase button on the purchase marketing view
+"PurchaseButton.readyTitle" = "Purchase for %@";
+// Title for the purchase button on the purchase marketing view
+"PurchaseButton.purchasingTitle" = "Purchasing…";
+// Title for the purchase button on the purchase marketing view
+"PurchaseButton.purchasedTitle" = "Thank You!";
+
+// Text separating the two purchase buttons
+"PurchaseButtonSeparator.text" = "or";
+
+// Text for the headline in purchase marketing
+"PurchaseMarketingTopBarHeadlineLabel.text" = "Ultra Highlighter";
+
+// Text for the subheadline in purchase marketing
+"PurchaseMarketingTopBarSubheadlineLabel.text" = "Unlock these powerful new abilities for Black Highlighter.";
+
+"PurchaseMarketingView.autoRedactionsHeader" = "Seek and destroy.";
+"PurchaseMarketingView.autoRedactionsText" = "Choose things you never want to see, and Black Highlighter will find them for you.";
+"PurchaseMarketingView.crossPlatformHeader" = "Always ready when you are.";
+"PurchaseMarketingView.crossPlatformText" = "Black Highlighter is right at home on iOS, iPadOS, and macOS.";
+"PurchaseMarketingView.documentScanningHeader" = "Not digital? Not a problem.";
+"PurchaseMarketingView.documentScanningText" = "Scan documents with your phone’s camera and redact them with Black Highlighter.";
+"PurchaseMarketingView.shortcutsHeader" = "Plays well with others.";
+"PurchaseMarketingView.shortcutsText" = "Build workflows in Shortcuts to combine Black Highlighter with other apps.";
+"PurchaseMarketingView.supportDevelopmentHeader" = "Help keep the (high)lights on.";
+"PurchaseMarketingView.supportDevelopmentText" = "Your support helps keep updates to Black Highlighter coming!";
+
+"PurchaseRestoreButton.title" = "Restore";

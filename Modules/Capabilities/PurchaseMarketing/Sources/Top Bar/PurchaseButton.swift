@@ -41,15 +41,15 @@ struct PurchaseButton: View {
     private var title: String {
         switch purchaseState {
         case .loading:
-            return Self.purchaseButtonTitleLoading
+            return Strings.loadingTitle
         case .purchasing, .restoring:
-            return Self.purchaseButtonTitlePurchasing
+            return Strings.purchasingTitle
         case .readyForPurchase(let product):
-            return String(format: Self.purchaseButtonTitleReady, product.displayPrice)
+            return Strings.readyTitle(product.displayPrice)
         case .unavailable:
-            return Self.purchaseButtonTitleLoading
+            return Strings.loadingTitle
         case .purchased:
-            return Self.purchaseButtonTitlePurchased
+            return Strings.purchasedTitle
         }
     }
 
@@ -60,12 +60,7 @@ struct PurchaseButton: View {
         }
     }
 
-    // MARK: Localized Strings
-
-    private static let purchaseButtonTitleLoading = NSLocalizedString("PurchaseButton.purchaseButtonTitleLoading", comment: "Title for the purchase button on the purchase marketing view")
-    private static let purchaseButtonTitleReady = NSLocalizedString("PurchaseButton.purchaseButtonTitleReady", comment: "Title for the purchase button on the purchase marketing view")
-    private static let purchaseButtonTitlePurchasing = NSLocalizedString("PurchaseButton.purchaseButtonTitlePurchasing", comment: "Title for the purchase button on the purchase marketing view")
-    private static let purchaseButtonTitlePurchased = NSLocalizedString("PurchaseButton.purchaseButtonTitlePurchased", comment: "Title for the purchase button on the purchase marketing view")
+    private typealias Strings = PurchaseMarketingStrings.PurchaseButton
 }
 
 #if DEBUG

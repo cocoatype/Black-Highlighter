@@ -22,7 +22,7 @@ struct PurchaseRestoreButton: View {
                 purchaseState = await purchaseRepository.restore()
             }
         } label: {
-            Text("PurchaseMarketingViewController.restoreButtonTitle")
+            Text(PurchaseMarketingStrings.PurchaseRestoreButton.title)
                 .underline()
                 .font(.app(textStyle: .headline))
                 .foregroundColor(disabled ? .primaryExtraLight : .white)

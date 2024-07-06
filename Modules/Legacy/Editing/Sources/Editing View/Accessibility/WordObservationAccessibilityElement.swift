@@ -15,7 +15,7 @@ class WordObservationAccessibilityElement: UIAccessibilityElement {
         accessibilityLabel = wordObservation.string
         accessibilityFrameInContainerSpace = wordObservation.bounds.boundingBox
         accessibilityTraits = .button
-        accessibilityValue = isRedacted ? Self.redactedValue : nil
+        accessibilityValue = isRedacted ? EditingStrings.WordObservationAccessibilityElement.redactedValue : nil
     }
 
     private let onActivate: (WordObservation, Bool) -> Bool
@@ -25,8 +25,6 @@ class WordObservationAccessibilityElement: UIAccessibilityElement {
 
     private let wordObservation: WordObservation
     private var workspaceView: PhotoEditingWorkspaceView? { return accessibilityContainer as? PhotoEditingWorkspaceView }
-
-    private static let redactedValue = NSLocalizedString("WordObservationAccessibilityElement.redactedValue", comment: "Redacted accessibility value")
 
     var isRedacted: Bool {
         guard let workspaceView = workspaceView

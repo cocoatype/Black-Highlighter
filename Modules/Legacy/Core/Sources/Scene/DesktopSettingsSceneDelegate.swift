@@ -14,7 +14,7 @@ class DesktopSettingsSceneDelegate: NSObject, UIWindowSceneDelegate {
         scene.sizeRestrictions?.maximumSize = CGSize(width: 640, height: Double.greatestFiniteMagnitude)
         scene.sizeRestrictions?.minimumSize = CGSize(width: 640, height: 320)
 
-        scene.title = Self.windowTitle
+        scene.title = CoreStrings.DesktopSettingsSceneDelegate.windowTitle
 
         let window = AppWindow(scene: scene)
         let settingsViewController = DesktopSettingsViewController()
@@ -27,7 +27,5 @@ class DesktopSettingsSceneDelegate: NSObject, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         DesktopSceneDelegate.activateSessions(for: URLContexts)
     }
-
-    private static let windowTitle = NSLocalizedString("DesktopSettingsSceneDelegate.windowTitle", comment: "Title for the desktop settings window")
 }
 #endif

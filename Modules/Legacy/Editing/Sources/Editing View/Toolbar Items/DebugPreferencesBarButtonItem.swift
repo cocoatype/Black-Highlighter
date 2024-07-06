@@ -6,6 +6,6 @@ import UIKit
 class DebugPreferencesBarButtonItem: UIBarButtonItem {
     convenience init(target: AnyObject?) {
         self.init(image: UIImage(systemName: "ladybug"), style: .plain, target: target, action: #selector(ActionsBuilderActions.showDebugPreferences(_:)))
-        accessibilityLabel = NSLocalizedString("DebugPreferencesBarButtonItem.accessibilityLabel", comment: "Accessibility label for the debug preferences toolbar item")
+        accessibilityLabel = EditingStrings.DebugPreferencesBarButtonItem.accessibilityLabel
     }
 }

@@ -32,7 +32,7 @@ class AssetPhotoLibraryViewCell: UICollectionViewCell {
             if let date = asset.creationDate {
                 dateString = Self.dateFormatter.string(from: date)
             } else { dateString = "" }
-            accessibilityLabel = String(format: Self.accessibilityLabelFormat, dateString)
+            accessibilityLabel = CoreStrings.AssetPhotoLibraryViewCell.accessibilityLabelFormat(dateString)
             accessibilityTraits = .button
         }
     }
@@ -61,7 +61,6 @@ class AssetPhotoLibraryViewCell: UICollectionViewCell {
 
     // MARK: Boilerplate
 
-    private static let accessibilityLabelFormat = NSLocalizedString("AssetPhotoLibraryViewCell.accessibilityLabelFormat%@", comment: "Accessiblity label format for asset cells")
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .none

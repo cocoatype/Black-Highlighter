@@ -20,15 +20,12 @@ struct PurchaseSubtitle: View {
     }
 
     private var text: String {
-        guard let product = purchaseState.product else { return Self.subtitleWithoutProduct }
+        guard let product = purchaseState.product else { return Strings.withoutProduct }
 
-        return String(format: Self.subtitleWithProduct, product.displayPrice)
+        return Strings.withProduct(product.displayPrice)
     }
 
-    // MARK: Localized Strings
-
-    private static let subtitleWithoutProduct = NSLocalizedString("PurchaseItem.subtitleWithoutProduct", comment: "Subtitle for the purchase settings content item without space for the product price")
-    private static let subtitleWithProduct = NSLocalizedString("PurchaseItem.subtitleWithProduct", comment: "Subtitle for the purchase settings content item with space for the product price")
+    private typealias Strings = SettingsUIStrings.PurchaseSubtitle
 }
 
 #if DEBUG

@@ -25,9 +25,9 @@ class HighlighterToolBarButtonItem: UIBarButtonItem {
 
     private static func title(for tool: HighlighterTool) -> String {
         switch tool {
-        case .magic: return NSLocalizedString("ToolPickerItem.magicToolItem", comment: "Menu item for the magic highlighter tool")
-        case .manual: return NSLocalizedString("ToolPickerItem.manualToolItem", comment: "Menu item for the manual highlighter tool")
-        case .eraser: return NSLocalizedString("ToolPickerItem.eraserToolItem", comment: "Menu item for the eraser tool")
+        case .magic: return Strings.magicToolItem
+        case .manual: return Strings.manualToolItem
+        case .eraser: return Strings.eraserToolItem
         }
     }
 
@@ -39,5 +39,7 @@ class HighlighterToolBarButtonItem: UIBarButtonItem {
         }
     }
 
-    private static let buttonTitle = NSLocalizedString("HighlighterToolBarButtonItem.buttonTitle", comment: "Title for the tool button")
+    private static let buttonTitle = Strings.buttonTitle
+
+    private typealias Strings = EditingStrings.HighlighterToolBarButtonItem
 }

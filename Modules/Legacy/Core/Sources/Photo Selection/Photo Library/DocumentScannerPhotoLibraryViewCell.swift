@@ -19,7 +19,7 @@ class DocumentScannerPhotoLibraryViewCell: UICollectionViewCell {
         ])
 
         isAccessibilityElement = true
-        accessibilityLabel = DocumentScannerPhotoLibraryViewCell.defaultAccessibilityLabel
+        accessibilityLabel = CoreStrings.DocumentScannerPhotoLibraryViewCell.defaultAccessibilityLabel
         accessibilityTraits = .button
         backgroundColor = .primary
     }
@@ -36,8 +36,6 @@ class DocumentScannerPhotoLibraryViewCell: UICollectionViewCell {
     }
 
     // MARK: Boilerplate
-
-    private static let defaultAccessibilityLabel = NSLocalizedString("PhotoLibraryViewDocumentScannerCell.defaultAccessibilityLabel", comment: "Accessibility label for the document scanner cell")
 
     private let iconView: DocumentScannerPhotoLibraryViewCellIconView
 

@@ -107,47 +107,4 @@ extension PhotoEditingViewController {
         return [UTType.png, .jpeg].contains(imageType)
     }
 }
-
-class DesktopSaveViewController: UIDocumentPickerViewController, UIDocumentPickerDelegate {
-    private var onSave: (([URL]) -> Void)?
-    convenience init(url: URL, onSave: @escaping (([URL]) -> Void)) {
-        self.init(forExporting: [url], asCopy: true)
-        self.onSave = onSave
-        delegate = self
-    }
-
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let onSave = self.onSave else { return }
-        DispatchQueue.main.async {
-            onSave(urls)
-        }
-    }
-}
-
-enum DesktopSaveError: Error {
-    case missingRepresentedURL
-    case missingImageType
-    case noImageData
-
-    var alertTitle: String {
-        switch self {
-        case .missingRepresentedURL: return NSLocalizedString("DesktopSaveError.missingRepresentedURL.alertTitle", comment: "Title for the missing represented URL alert")
-        case .missingImageType: return NSLocalizedString("DesktopSaveError.missingImageType.alertTitle", comment: "Title for the missing image type alert")
-        case .noImageData: return NSLocalizedString("DesktopSaveError.noImageData.alertTitle", comment: "Title for the no export data alert")
-        }
-    }
-
-    var alertMessage: String {
-        return NSLocalizedString("DesktopSaveError.alertMessage", comment: "Message for the missing represented URL alert")
-    }
-}
-
-class DesktopSaveAlertController: UIAlertController {
-    convenience init(error: DesktopSaveError) {
-        self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
-        addAction(UIAlertAction(title: Self.dismissButtonTitle, style: .default, handler: nil))
-    }
-
-    private static let dismissButtonTitle = NSLocalizedString("DesktopSaveAlertController.dismissButtonTitle", comment: "Dismiss button for the save error alert")
-}
 #endif

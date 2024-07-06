@@ -322,8 +322,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     #if targetEnvironment(macCatalyst)
     #else
-    private let undoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.undo), input: "z", modifierFlags: .command, discoverabilityTitle: PhotoEditingViewController.undoKeyCommandDiscoverabilityTitle)
-    private let redoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.redo), input: "z", modifierFlags: [.command, .shift], discoverabilityTitle: PhotoEditingViewController.redoKeyCommandDiscoverabilityTitle)
+    private let undoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.undo), input: "z", modifierFlags: .command, discoverabilityTitle: Strings.undoKeyCommandDiscoverabilityTitle)
+    private let redoKeyCommand = UIKeyCommand(action: #selector(PhotoEditingViewController.redo), input: "z", modifierFlags: [.command, .shift], discoverabilityTitle: Strings.redoKeyCommandDiscoverabilityTitle)
 
     open override var keyCommands: [UIKeyCommand]? {
         return [undoKeyCommand, redoKeyCommand]
@@ -503,9 +503,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     public let completionHandler: ((UIImage) -> Void)?
     public var redactions: [Redaction] { return photoEditingView.redactions }
 
-    private static let redoKeyCommandDiscoverabilityTitle = NSLocalizedString("BasePhotoEditingViewController.redoKeyCommandDiscoverabilityTitle", comment: "Discovery title for the redo key command")
-    private static let undoKeyCommandDiscoverabilityTitle = NSLocalizedString("BasePhotoEditingViewController.undoKeyCommandDiscoverabilityTitle", comment: "Discovery title for the undo key command")
-
     private let asset: PHAsset?
     private var colorObserver: Any?
     private let imageManager = PHImageManager()
@@ -548,6 +545,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         let className = String(describing: type(of: self))
         fatalError("\(className) does not implement init(coder:)")
     }
+
+    private typealias Strings = EditingStrings.PhotoEditingViewController
 }
 
 @objc protocol PhotoEditingActions: NSObjectProtocol {
