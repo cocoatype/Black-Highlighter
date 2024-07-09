@@ -5,7 +5,7 @@ import DesignSystem
 import SwiftUI
 
 struct PencilMenu: View {
-    private static let outerDiameter: Double = 398
+    private static let outerDiameter: Double = 298
     private static let itemDiameter: Double = PencilMenuItem.diameter
     private static let padding: Double = 8
     private static let itemCount: Int = HighlighterTool.allCases.count
@@ -20,19 +20,26 @@ struct PencilMenu: View {
         return requiredLength / outerCircumference
     }
 
+    @Binding private var isMenuShowing: Bool
+    init(isMenuShowing: Binding<Bool>) {
+        _isMenuShowing = isMenuShowing
+    }
+
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .trim(from: 0, to: Self.maxTrim)
-                    .stroke(Color.primaryDark, style: StrokeStyle(lineWidth: Self.lineWidth, lineCap: .round))
-                    .frame(width: Self.outerDiameter, height: Self.outerDiameter)
-                ForEach(Self.indexedTools, id: \.0) { (tool, index) in
-                    PencilMenuItem(tool: tool)
-                        .transformEffect(itemTransform(index: index))
-                }
+        ZStack {
+            Circle()
+                .trim(from: 0, to: Self.maxTrim)
+                .stroke(Color.primaryDark, style: StrokeStyle(lineWidth: Self.lineWidth, lineCap: .round))
+                .frame(width: Self.outerDiameter, height: Self.outerDiameter)
+            ForEach(Self.indexedTools, id: \.0) { (tool, index) in
+                PencilMenuItem(tool: tool)
+                    .transformEffect(itemTransform(index: index))
             }
         }
+        .scaleEffect(isMenuShowing ? 1.0 : 0.5)
+        .opacity(isMenuShowing ? 1 : 0)
+        .animation(.bouncy(duration: 0.3, extraBounce: 0.1))
+        .disabled(isMenuShowing == false)
     }
 
     private static let indexedTools = zip(HighlighterTool.allCases, HighlighterTool.allCases.indices)
@@ -59,7 +66,23 @@ struct PencilMenu: View {
 }
 
 enum PencilMenuPreviews: PreviewProvider {
+    struct PreviewWrapper: View {
+        @State private var isMenuShowing = false
+        var body: some View {
+            ZStack {
+                Button {
+                    withAnimation {
+                        isMenuShowing.toggle()
+                    }
+                } label: {
+                    Text("Toggle Menu \(isMenuShowing)")
+                }
+                PencilMenu(isMenuShowing: $isMenuShowing)
+            }
+        }
+    }
+
     static var previews: some View {
-        PencilMenu()
+        PreviewWrapper()
     }
 }
