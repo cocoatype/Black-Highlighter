@@ -151,6 +151,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         updateToolbarItems()
     }
 
+    @objc public func refreshToolbarItems() { updateToolbarItems() }
+
     private func updateToolbarItems(animated: Bool = true) {
         let actionSet = ActionSet(for: self, undoManager: undoManager, selectedTool: photoEditingView.highlighterTool, sizeClass: traitCollection.horizontalSizeClass, currentColor: photoEditingView.color)
 
@@ -270,13 +272,28 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 
     // MARK: Color Picker
 
+    @objc public func toggleColorPicker(_ sender: Any) {
+        if let presentedViewController, presentedViewController is ColorPickerViewController {
+            dismiss(animated: true)
+        } else {
+            showColorPicker(sender)
+        }
+    }
+
     @objc public func showColorPicker(_ sender: Any) {
         if traitCollection.userInterfaceIdiom == .mac {
             ColorPanel.shared.makeKeyAndOrderFront(sender)
-        } else if let barButtonItem = sender as? UIBarButtonItem {
+        } else {
+            let colorPickerItem: UIBarButtonItem
+            if let barButtonItem = sender as? UIBarButtonItem {
+                colorPickerItem = barButtonItem
+            } else if let barButtonItem = findBarButtonItem({ $0 is ColorPickerBarButtonItem }) {
+                colorPickerItem = barButtonItem
+            } else { return }
+
             let picker = ColorPickerViewController()
             picker.delegate = self
-            picker.popoverPresentationController?.barButtonItem = barButtonItem
+            picker.popoverPresentationController?.barButtonItem = colorPickerItem
             present(picker, animated: true)
         }
     }
