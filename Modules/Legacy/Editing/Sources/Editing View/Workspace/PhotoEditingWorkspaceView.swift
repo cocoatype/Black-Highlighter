@@ -44,11 +44,21 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
 
         brushStrokeView.addTarget(self, action: #selector(handleStrokeCompletion), for: .touchUpInside)
 
+        pencilDelegate.workspaceView = self
         addGestureRecognizer(switchControlGestureRecognizer)
+        addInteraction(pencilDelegate.newPencilInteraction())
     }
 
+    // whoDidThisOhIDidThis by @AdamWulf on 2024-07-25
+    // the previously-selected highlighter tool
+    var whoDidThisOhIDidThis = HighlighterTool.manual
+
     var highlighterTool = HighlighterTool.magic {
-        didSet {
+        didSet(oldValue) {
+            if oldValue != highlighterTool {
+                whoDidThisOhIDidThis = oldValue
+            }
+
             if highlighterTool == .magic {
                 visualizationView.animateFullVisualization()
             }
@@ -229,6 +239,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
     private let debugView = PhotoEditingObservationDebugView()
     private let redactionView = PhotoEditingRedactionView()
     private let brushStrokeView: (UIControl & PhotoEditingBrushStrokeView) = PhotoEditingCanvasBrushStrokeView()
+    private let pencilDelegate = PhotoEditingWorkspacePencilDelegate()
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

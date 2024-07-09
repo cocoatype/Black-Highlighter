@@ -15,4 +15,9 @@ public enum HighlighterTool: CaseIterable {
         case .eraser: return UIImage(named: "highlighter.eraser")
         }
     }
+
+    public var next: HighlighterTool {
+        let index = HighlighterTool.allCases.firstIndex(of: self) ?? 0
+        return HighlighterTool.allCases[(index + 1) % HighlighterTool.allCases.count]
+    }
 }
