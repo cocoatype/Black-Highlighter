@@ -3,6 +3,7 @@
 
 import Observations
 import Redactions
+import Tools
 import UIKit
 
 public class PhotoEditingView: UIView, UIScrollViewDelegate {

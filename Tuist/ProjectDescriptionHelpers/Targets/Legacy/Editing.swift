@@ -21,6 +21,7 @@ public enum Editing {
             .target(Purchasing.doublesTarget),
             .target(Redactions.target(sdk: .catalyst)),
             .target(Rendering.target(sdk: .catalyst)),
+            .target(Tools.target),
             .target(Unpurchased.target),
             .external(name: "ClippingBezier"),
         ],

@@ -4,6 +4,7 @@
 #if targetEnvironment(macCatalyst)
 import AppKit
 import Editing
+import Tools
 import UIKit
 
 class ToolPickerItem: NSMenuToolbarItem {
@@ -20,17 +21,17 @@ class ToolPickerItem: NSMenuToolbarItem {
 
     private var currentMenu: UIMenu {
         UIMenu(title: Strings.menuTitle, children: [
-            UICommand(title: Strings.magicToolItem, image: UIImage(named: "highlighter.magic"), action: #selector(PhotoEditingViewController.selectMagicHighlighter), state: (delegate.highlighterTool == .magic ? .on : .off)),
-            UICommand(title: Strings.manualToolItem, image: UIImage(systemName: "highlighter"), action: #selector(PhotoEditingViewController.selectManualHighlighter), state: (delegate.highlighterTool == .manual ? .on : .off)),
-            UICommand(title: Strings.eraserToolItem, image: UIImage(named: "highlighter.eraser"), action: #selector(PhotoEditingViewController.selectEraser), state: (delegate.highlighterTool == .eraser ? .on : .off)),
+            UICommand(title: Strings.magicToolItem, image: HighlighterTool.magic.image, action: #selector(PhotoEditingViewController.selectMagicHighlighter), state: (delegate.highlighterTool == .magic ? .on : .off)),
+            UICommand(title: Strings.manualToolItem, image: HighlighterTool.manual.image, action: #selector(PhotoEditingViewController.selectManualHighlighter), state: (delegate.highlighterTool == .manual ? .on : .off)),
+            UICommand(title: Strings.eraserToolItem, image: HighlighterTool.eraser.image, action: #selector(PhotoEditingViewController.selectEraser), state: (delegate.highlighterTool == .eraser ? .on : .off)),
         ])
     }
 
     private var selectedToolImage: UIImage? {
         switch delegate.highlighterTool {
-        case .magic: return UIImage(named: "highlighter.magic")?.applyingSymbolConfiguration(.init(scale: .large))
-        case .manual: return UIImage(named: "highlighter.manual")?.applyingSymbolConfiguration(.init(scale: .large))
-        case .eraser: return UIImage(named: "highlighter.eraser")?.applyingSymbolConfiguration(.init(scale: .large))
+        case .magic: return HighlighterTool.magic.image?.applyingSymbolConfiguration(.init(scale: .large))
+        case .manual: return HighlighterTool.manual.image?.applyingSymbolConfiguration(.init(scale: .large))
+        case .eraser: return HighlighterTool.eraser.image?.applyingSymbolConfiguration(.init(scale: .large))
         }
     }
 

@@ -3,9 +3,12 @@
     "author" : "xcode",
     "version" : 1
   },
+  "properties" : {
+    "symbol-rendering-intent" : "template"
+  },
   "symbols" : [
     {
-      "filename" : "Magic Highlighter.svg",
+      "filename" : "highlighter.svg",
       "idiom" : "universal"
     }
   ]

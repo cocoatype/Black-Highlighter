@@ -8,13 +8,15 @@ public enum HighlighterTool: CaseIterable {
     case manual
     case eraser
 
-    public var image: UIImage? {
+    public var toolsImage: ToolsImages {
         switch self {
-        case .magic: return UIImage(named: "highlighter.magic")
-        case .manual: return UIImage(named: "highlighter.manual")
-        case .eraser: return UIImage(named: "highlighter.eraser")
+        case .magic: return ToolsAsset.highlighterMagic
+        case .manual: return ToolsAsset.highlighterManual
+        case .eraser: return ToolsAsset.highlighterEraser
         }
     }
+
+    public var image: UIImage { toolsImage.image }
 
     public var next: HighlighterTool {
         let index = HighlighterTool.allCases.firstIndex(of: self) ?? 0

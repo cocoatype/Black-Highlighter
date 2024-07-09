@@ -44,6 +44,7 @@ let project = Project(
         Rendering.target(sdk: .native),
         SettingsUI.target,
         Shortcuts.target,
+        Tools.target,
         Unpurchased.target,
         // doubles
         DesignSystem.doublesTarget,
@@ -72,6 +73,7 @@ let project = Project(
         Rendering.testTarget,
         SettingsUI.testTarget,
         Shortcuts.testTarget,
+        Tools.testTarget,
         Unpurchased.testTarget,
     ],
     schemes: [

@@ -21,6 +21,7 @@ public enum Core {
             .target(Purchasing.target),
             .target(Purchasing.doublesTarget),
             .target(SettingsUI.target),
+            .target(Tools.target),
             .target(Unpurchased.target),
         ],
         settings: .settings(

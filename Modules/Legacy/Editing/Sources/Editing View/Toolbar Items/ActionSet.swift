@@ -3,6 +3,7 @@
 
 import Defaults
 import Purchasing
+import Tools
 import UIKit
 
 struct ActionSet {

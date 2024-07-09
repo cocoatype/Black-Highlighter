@@ -13,6 +13,7 @@ import Photos
 import PurchaseMarketing
 import Redactions
 import Rendering
+import Tools
 import UIKit
 
 #warning("#61: Simplify this class")
