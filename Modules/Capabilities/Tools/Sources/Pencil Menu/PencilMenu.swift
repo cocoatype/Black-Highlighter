@@ -4,7 +4,7 @@
 import DesignSystem
 import SwiftUI
 
-struct PencilMenu: View {
+public struct PencilMenu: View {
     private static let outerDiameter: Double = 298
     private static let itemDiameter: Double = PencilMenuItem.diameter
     private static let padding: Double = 8
@@ -21,11 +21,11 @@ struct PencilMenu: View {
     }
 
     @Binding private var isMenuShowing: Bool
-    init(isMenuShowing: Binding<Bool>) {
+    public init(isMenuShowing: Binding<Bool>) {
         _isMenuShowing = isMenuShowing
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             Circle()
                 .trim(from: 0, to: Self.maxTrim)

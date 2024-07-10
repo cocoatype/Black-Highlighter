@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/27/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Tools
 import UIKit
 
 class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDelegate {
@@ -29,7 +30,9 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
             switchPrevious()
         case .showColorPalette:
             showColorPalette()
-        case .ignore, .showInkAttributes, .showContextualPalette, .runSystemShortcut:
+        case .showContextualPalette:
+            showContextualPalette()
+        case .ignore, .showInkAttributes, .runSystemShortcut:
             break
         @unknown default: break
         }
@@ -55,6 +58,10 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     private func showColorPalette() {
         UIApplication.shared.sendAction(#selector(PhotoEditingViewController.toggleColorPicker(_:)), to: nil, from: self, for: nil)
+    }
+
+    private func showContextualPalette() {
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.togglePencilMenu(_:)), to: nil, from: self, for: nil)
     }
 
     // MARK: Delegate Methods

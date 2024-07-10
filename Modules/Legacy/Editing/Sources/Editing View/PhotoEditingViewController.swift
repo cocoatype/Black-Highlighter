@@ -66,6 +66,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.photoEditingView.color = colorPanel.color
         })
         #endif
+
+        embed(pencilMenuViewController)
     }
 
     open override func loadView() {
@@ -506,6 +508,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc @MainActor public func showDebugPreferences(_ sender: Any) {
         guard #available(iOS 15, *) else { return }
         present(OverlayPreferencesHostingController(), animated: true)
+    }
+
+    // MARK: Pencil Menu
+
+    private let pencilMenuViewController = PhotoEditingPencilMenuViewController()
+    @objc func togglePencilMenu(_ sender: Any) {
+        pencilMenuViewController.toggleMenu()
     }
 
     // MARK: Boilerplate
