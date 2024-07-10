@@ -42,8 +42,10 @@ public struct PencilMenu: View {
         .disabled(isMenuShowing == false)
     }
 
-    private static let indexedTools = zip(HighlighterTool.allCases, HighlighterTool.allCases.indices)
-            .map(\.self)
+    private static let indexedTools: [(HighlighterTool, Int)] = {
+        zip(HighlighterTool.allCases, HighlighterTool.allCases.indices)
+            .map { $0 }
+    }()
 
     private static var outerCircumference: Double {
         return Double.pi * outerDiameter
