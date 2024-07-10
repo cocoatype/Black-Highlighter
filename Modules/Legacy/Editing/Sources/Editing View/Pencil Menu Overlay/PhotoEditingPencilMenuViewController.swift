@@ -5,15 +5,20 @@ import SwiftUI
 import UIKit
 
 class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
+    private var isMenuShowing: Bool = false {
+        didSet {
+            rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing)
+        }
+    }
+
     init() {
-        super.init(rootView: PhotoEditingPencilMenuOverlay(menuDisplay: menuDisplay))
+        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing))
         view.isOpaque = false
         view.backgroundColor = .clear
     }
 
-    let menuDisplay = MenuDisplay()
     func toggleMenu() {
-        menuDisplay.isMenuShowing.toggle()
+        isMenuShowing.toggle()
     }
 
     // MARK: Boilerplate
@@ -22,9 +27,5 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
     required init(coder: NSCoder) {
         let typeName = NSStringFromClass(type(of: self))
         fatalError("\(typeName) does not implement init(coder:)")
-    }
-
-    class MenuDisplay: NSObject, ObservableObject {
-        @Published var isMenuShowing = false
     }
 }

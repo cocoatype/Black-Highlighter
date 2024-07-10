@@ -5,22 +5,15 @@ import SwiftUI
 import Tools
 
 struct PhotoEditingPencilMenuOverlay: View {
-    @State private var isMenuShowing: Bool
-    private let menuDisplay: PhotoEditingPencilMenuViewController.MenuDisplay
+    private let isMenuShowing: Bool
 
-    init(menuDisplay: PhotoEditingPencilMenuViewController.MenuDisplay) {
-        self.menuDisplay = menuDisplay
-        _isMenuShowing = State(initialValue: menuDisplay.isMenuShowing)
+    init(isMenuShowing: Bool) {
+        self.isMenuShowing = isMenuShowing
     }
 
     var body: some View {
         ZStack {
-            PencilMenu(isMenuShowing: $isMenuShowing)
-        }
-        .onReceive(menuDisplay.$isMenuShowing) { newValue in
-            withAnimation {
-                isMenuShowing = newValue
-            }
+            PencilMenu(isMenuShowing: isMenuShowing)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()

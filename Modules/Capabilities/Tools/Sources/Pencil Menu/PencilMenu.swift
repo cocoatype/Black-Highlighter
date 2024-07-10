@@ -20,9 +20,9 @@ public struct PencilMenu: View {
         return requiredLength / outerCircumference
     }
 
-    @Binding private var isMenuShowing: Bool
-    public init(isMenuShowing: Binding<Bool>) {
-        _isMenuShowing = isMenuShowing
+    private let isMenuShowing: Bool
+    public init(isMenuShowing: Bool) {
+        self.isMenuShowing = isMenuShowing
     }
 
     public var body: some View {
@@ -77,7 +77,7 @@ enum PencilMenuPreviews: PreviewProvider {
                 } label: {
                     Text("Toggle Menu \(isMenuShowing)")
                 }
-                PencilMenu(isMenuShowing: $isMenuShowing)
+                PencilMenu(isMenuShowing: isMenuShowing)
             }
         }
     }
