@@ -38,7 +38,7 @@ public struct PencilMenu: View {
         }
         .scaleEffect(isMenuShowing ? 1.0 : 0.5)
         .opacity(isMenuShowing ? 1 : 0)
-        .animation(.bouncy(duration: 0.3, extraBounce: 0.1))
+        .animation(.bouncy(duration: 0.3, extraBounce: 0.1), value: isMenuShowing)
         .disabled(isMenuShowing == false)
     }
 

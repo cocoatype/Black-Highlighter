@@ -5,20 +5,30 @@ import SwiftUI
 import UIKit
 
 class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
-    private var isMenuShowing: Bool = false {
-        didSet {
-            rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing)
-        }
-    }
+    private var isMenuShowing: Bool = false
+    private var position: CGPoint = .zero
 
     init() {
-        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing))
+        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position))
         view.isOpaque = false
         view.backgroundColor = .clear
+        view.isUserInteractionEnabled = false
     }
 
-    func toggleMenu() {
+    func toggleMenu(at position: CGPoint?) {
+        if let position, isMenuShowing == false {
+            self.position = position
+            updateRootView()
+        }
+
+        CATransaction.flush()
+
         isMenuShowing.toggle()
+        updateRootView()
+    }
+
+    private func updateRootView() {
+        rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position)
     }
 
     // MARK: Boilerplate

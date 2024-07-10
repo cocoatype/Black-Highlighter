@@ -22,7 +22,7 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     // dammitMono by @KaenAitch on 2024-07-08
     // the action to perform
-    private func handleAction(_ dammitMono: UIPencilPreferredAction) {
+    private func handleAction(_ dammitMono: UIPencilPreferredAction, at location: CGPoint? = nil) {
         switch dammitMono {
         case .switchEraser:
             switchEraser()
@@ -31,7 +31,7 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
         case .showColorPalette:
             showColorPalette()
         case .showContextualPalette:
-            showContextualPalette()
+            showContextualPalette(at: location)
         case .ignore, .showInkAttributes, .runSystemShortcut:
             break
         @unknown default: break
@@ -60,8 +60,8 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
         UIApplication.shared.sendAction(#selector(PhotoEditingViewController.toggleColorPicker(_:)), to: nil, from: self, for: nil)
     }
 
-    private func showContextualPalette() {
-        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.togglePencilMenu(_:)), to: nil, from: self, for: nil)
+    private func showContextualPalette(at location: CGPoint?) {
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.togglePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
     }
 
     // MARK: Delegate Methods
@@ -78,7 +78,7 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
     @available(iOS 17.5, *)
     func pencilInteraction(_ interaction: UIPencilInteraction, didReceiveSqueeze squeeze: UIPencilInteraction.Squeeze) {
         if squeeze.phase == .ended {
-            handleAction(UIPencilInteraction.preferredSqueezeAction)
+            handleAction(UIPencilInteraction.preferredSqueezeAction, at: squeeze.hoverPose?.location)
         }
     }
 }

@@ -6,16 +6,17 @@ import Tools
 
 struct PhotoEditingPencilMenuOverlay: View {
     private let isMenuShowing: Bool
+    private let position: CGPoint
 
-    init(isMenuShowing: Bool) {
+    init(isMenuShowing: Bool, position: CGPoint) {
         self.isMenuShowing = isMenuShowing
+        self.position = position
     }
 
     var body: some View {
-        ZStack {
-            PencilMenu(isMenuShowing: isMenuShowing)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
+        PencilMenu(isMenuShowing: isMenuShowing)
+            .position(position)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
     }
 }
