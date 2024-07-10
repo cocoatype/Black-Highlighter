@@ -29,9 +29,9 @@ class ToolPickerItem: NSMenuToolbarItem {
 
     private var selectedToolImage: UIImage? {
         switch delegate.highlighterTool {
-        case .magic: return HighlighterTool.magic.image?.applyingSymbolConfiguration(.init(scale: .large))
-        case .manual: return HighlighterTool.manual.image?.applyingSymbolConfiguration(.init(scale: .large))
-        case .eraser: return HighlighterTool.eraser.image?.applyingSymbolConfiguration(.init(scale: .large))
+        case .magic: return HighlighterTool.magic.image.applyingSymbolConfiguration(.init(scale: .large))
+        case .manual: return HighlighterTool.manual.image.applyingSymbolConfiguration(.init(scale: .large))
+        case .eraser: return HighlighterTool.eraser.image.applyingSymbolConfiguration(.init(scale: .large))
         }
     }
 

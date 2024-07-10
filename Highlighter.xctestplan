@@ -162,6 +162,13 @@
         "identifier" : "77D525B0D7498E1676A96CC5",
         "name" : "UnpurchasedTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Highlighter.xcodeproj",
+        "identifier" : "C4AABEDBC85179F534B47EDC",
+        "name" : "ToolsTests"
+      }
     }
   ],
   "version" : 1
