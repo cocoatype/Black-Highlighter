@@ -22,7 +22,7 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     // dammitMono by @KaenAitch on 2024-07-08
     // the action to perform
-    private func handleAction(_ dammitMono: UIPencilPreferredAction, at location: CGPoint? = nil) {
+    private func handleAction(_ dammitMono: UIPencilPreferredAction) {
         switch dammitMono {
         case .switchEraser:
             switchEraser()
@@ -30,11 +30,26 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
             switchPrevious()
         case .showColorPalette:
             showColorPalette()
-        case .showContextualPalette:
-            showContextualPalette(at: location)
-        case .ignore, .showInkAttributes, .runSystemShortcut:
+        case .ignore, .showInkAttributes, .showContextualPalette, .runSystemShortcut:
             break
         @unknown default: break
+        }
+    }
+
+    @available(iOS 17.5, *)
+    private func handlePaletteSqueeze(_ squeeze: UIPencilInteraction.Squeeze) {
+        switch squeeze.phase {
+        case .began:
+            showContextualPalette(at: squeeze.hoverPose?.location)
+        case .changed: break
+            // determine if button selected
+        case .ended:
+            // handle selected button
+            fallthrough
+        case .cancelled:
+            showContextualPalette(at: nil)
+        @unknown default:
+            break
         }
     }
 
@@ -77,8 +92,14 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     @available(iOS 17.5, *)
     func pencilInteraction(_ interaction: UIPencilInteraction, didReceiveSqueeze squeeze: UIPencilInteraction.Squeeze) {
-        if squeeze.phase == .ended {
-            handleAction(UIPencilInteraction.preferredSqueezeAction, at: squeeze.hoverPose?.location)
+        guard UIPencilInteraction.preferredSqueezeAction == .showContextualPalette else {
+            if squeeze.phase == .ended {
+                handleAction(UIPencilInteraction.preferredSqueezeAction)
+            }
+
+            return
         }
+
+        handlePaletteSqueeze(squeeze)
     }
 }
