@@ -6,6 +6,7 @@ import Foundation
 import MobileCoreServices
 import Photos
 import PhotosUI
+import Redactions
 
 class PhotoExtensionViewController: UIViewController, PHContentEditingController {
     init() {

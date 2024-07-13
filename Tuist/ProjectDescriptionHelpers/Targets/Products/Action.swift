@@ -19,6 +19,10 @@ public enum Action {
             "Action/Resources/**",
         ] + Shared.resources),
         entitlements: "Action/Action.entitlements",
+        dependencies: [
+            .target(Editing.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
+        ],
         settings: .settings(
             base: [
                 "ASSETCATALOG_COMPILER_APPICON_NAME": "ActionIcon",

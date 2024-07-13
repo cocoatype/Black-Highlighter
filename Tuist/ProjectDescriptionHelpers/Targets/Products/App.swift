@@ -22,8 +22,10 @@ public enum App {
         ] + Shared.resources),
         entitlements: "App/Highlighter.entitlements",
         dependencies: [
+            .target(Action.target, condition: .when([.ios])),
             .target(AutomatorActions.target, condition: .when([.catalyst])),
             .target(Core.target),
+            .target(Photo.target, condition: .when([.ios])),
             .target(Shortcuts.target),
         ],
         settings: .settings(

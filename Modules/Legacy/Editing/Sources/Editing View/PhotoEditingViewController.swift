@@ -154,7 +154,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc public func refreshToolbarItems() { updateToolbarItems() }
 
     private func updateToolbarItems(animated: Bool = true) {
-        let actionSet = ActionSet(for: self, undoManager: undoManager, selectedTool: photoEditingView.highlighterTool, sizeClass: traitCollection.horizontalSizeClass, currentColor: photoEditingView.color)
+        let actionSet = ActionSet(for: self, undoManager: undoManager, selectedTool: photoEditingView.highlighterTool, sizeClass: traitCollection.horizontalSizeClass, currentColor: photoEditingView.color, asset: asset)
 
         if #available(iOS 16, *) {
             navigationItem.style = .editor
@@ -492,7 +492,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                 guard let image else { throw PhotoEditingError.noEditingImage }
                 let exporter = PhotoEditingExporter(image: image, asset: asset, redactions: photoEditingView.redactions)
                 try await exporter.presentActivityController(from: self, barButtonItem: shareBarButtonItem)
-                hasMadeEdits = false
+                clearHasMadeEdits()
                 Defaults.numberOfSaves = Defaults.numberOfSaves + 1
                 chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
             } catch {
@@ -567,6 +567,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 }
 
 @objc protocol PhotoEditingActions: NSObjectProtocol {
-    func dismissPhotoEditingViewController(_ sender: UIBarButtonItem)
+    func dismissPhotoEditingViewController(_ sender: UIBarButtonItem, event: DismissEvent)
     func displayAppRatingsPrompt(_ sender: Any)
 }
