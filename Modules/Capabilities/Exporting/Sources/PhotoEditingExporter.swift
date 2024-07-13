@@ -7,18 +7,17 @@ import Rendering
 import UIKit
 import UniformTypeIdentifiers
 
-public class PhotoEditingExporter {
+public class PhotoEditingActivityController: UIActivityViewController {
     private let image: UIImage
     private let asset: PHAsset?
     private let redactions: [Redaction]
 
-    public init(image: UIImage, asset: PHAsset?, redactions: [Redaction]) {
+    public init(image: UIImage, asset: PHAsset?, redactions: [Redaction]) async throws {
         self.image = image
         self.asset = asset
         self.redactions = redactions
-    }
 
-    @MainActor public func presentActivityController(from hostViewController: UIViewController, barButtonItem: UIBarButtonItem) async throws {
+        let imageType = Self.imageType(for: asset, image: image)
         let exportedImage = try await PhotoExporter.export(image, redactions: redactions)
 
         let representedURLName = "\(ExportingStrings.PhotoEditingExporter.defaultImageName).\(imageType.preferredFilenameExtension ?? "png")"
@@ -41,17 +40,11 @@ public class PhotoEditingExporter {
             activityItems = [exportedImage]
         }
 
-        return await withCheckedContinuation { continuation in
-            let activityController = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-            activityController.excludedActivityTypes = [.saveToCameraRoll]
-            activityController.completionWithItemsHandler = { _, _, _, _ in continuation.resume() }
-
-            activityController.popoverPresentationController?.barButtonItem = barButtonItem
-            hostViewController.present(activityController, animated: true)
-        }
+        super.init(activityItems: activityItems, applicationActivities: Self.applicationActivities(asset: asset, redactions: redactions))
+        excludedActivityTypes = [.saveToCameraRoll]
     }
 
-    var applicationActivities: [UIActivity] {
+    static func applicationActivities(asset: PHAsset?, redactions: [Redaction]) -> [UIActivity] {
         if let asset {
             [SaveActivity(asset: asset, redactions: redactions), SaveCopyActivity()]
         } else {
@@ -59,7 +52,7 @@ public class PhotoEditingExporter {
         }
     }
 
-    var imageType: UTType {
+    static func imageType(for asset: PHAsset?, image: UIImage) -> UTType {
         asset?.imageType ?? image.imageType ?? .png
     }
 }
