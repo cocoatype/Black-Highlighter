@@ -1,9 +1,10 @@
 //  Created by Geoff Pado on 7/1/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
-enum SaveActivityError: Error {
+enum ExportingError: Error {
     case missingBundleVersion
     case noActivityURL
+    case noDataGenerated
     case noInputProvided
     case failedImageDecode
     case failedImageEncode

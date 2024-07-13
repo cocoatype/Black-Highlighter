@@ -68,11 +68,9 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
     func dismissPhotoEditingViewControllerAfterSaving() {
         Task {
             do {
-                let image = try await photoEditingViewController.exportImage()
+                let preparedURL = try await photoEditingViewController.preparedURL
+                try await CopyExporter(preparedURL: preparedURL).export()
 
-                try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: image)
-                })
                 dismiss(animated: true)
                 chain(selector: #selector(AppViewController.displayAppRatingsPrompt))
             } catch {
@@ -85,11 +83,9 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
     func dismissPhotoEditingViewControllerAfterSavingInPlace(asset: PHAsset) {
         Task {
             do {
-                let image = try await photoEditingViewController.exportImage()
+                let preparedURL = try await photoEditingViewController.preparedURL
+                try await InPlaceExporter(preparedURL: preparedURL, asset: asset, redactions: photoEditingViewController.redactions).export()
 
-                try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: image)
-                })
                 dismiss(animated: true)
                 chain(selector: #selector(AppViewController.displayAppRatingsPrompt))
             } catch {

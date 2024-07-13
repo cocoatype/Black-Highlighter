@@ -20,7 +20,10 @@ public enum Photo {
         ] + Shared.resources),
         dependencies: [
             .target(Editing.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
+            .target(Exporting.target),
             .target(Redactions.target(sdk: .catalyst)),
+            .sdk(name: "PhotosUI", type: .framework),
         ],
         settings: .settings(
             base: [

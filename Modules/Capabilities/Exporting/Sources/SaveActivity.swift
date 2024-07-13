@@ -33,52 +33,16 @@ class SaveActivity: UIActivity {
     }
 
     override func perform() {
-        guard let activityURL else { return ErrorHandler().log(SaveActivityError.noActivityURL) }
+        guard let activityURL else { return ErrorHandler().log(ExportingError.noActivityURL) }
 
-        asset.requestContentEditingInput(with: nil) { [weak self] contentEditingInput, _ in
-            Task { [weak self] in
-                do {
-                    guard let asset = self?.asset,
-                          let redactions = self?.redactions,
-                          let input = contentEditingInput
-                    else { throw SaveActivityError.noInputProvided }
-
-                    let output = PHContentEditingOutput(contentEditingInput: input)
-                    guard let formatVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { throw SaveActivityError.missingBundleVersion }
-                    let data = try JSONEncoder().encode(SaveActivityAdjustmentData(redactions: redactions))
-                    output.adjustmentData = PHAdjustmentData(formatIdentifier: SaveActivityAdjustmentData.formatIdentifier, formatVersion: formatVersion, data: data)
-                    let (renderedContentURL, renderType) = output.renderingInformation
-
-                    guard let image = UIImage(contentsOfFile: activityURL.path) else { throw SaveActivityError.failedImageDecode }
-                    guard let data = image.encoded(as: renderType) else { throw SaveActivityError.failedImageEncode }
-
-                    try data.write(to: renderedContentURL)
-
-                    try await PHPhotoLibrary.shared().performChanges {
-                        let changeRequest = PHAssetChangeRequest(for: asset)
-                        changeRequest.contentEditingOutput = output
-                        print("Change request created with contentEditingOutput: \(output)")
-                    }
-
-                    print("Changes successfully committed to the photo library.")
-                    self?.activityDidFinish(true)
-                } catch {
-                    ErrorHandler().log(error)
-                    print("Error during performChanges: \(error)")
-                    self?.activityDidFinish(false)
-                }
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                try await InPlaceExporter(preparedURL: activityURL, asset: asset, redactions: redactions).export()
+                activityDidFinish(true)
+            } catch {
+                activityDidFinish(false)
             }
         }
-    }
-}
-
-extension PHContentEditingOutput {
-    var renderingInformation: (URL, UTType) {
-        guard #available(iOS 17, *),
-              let type = defaultRenderedContentType,
-              let typeURL = try? renderedContentURL(for: type)
-        else { return (renderedContentURL, .jpeg) }
-
-        return (typeURL, type)
     }
 }

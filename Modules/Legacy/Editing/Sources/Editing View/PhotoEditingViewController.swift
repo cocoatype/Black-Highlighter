@@ -480,9 +480,11 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     // MARK: Sharing
-    public func exportImage() async throws -> UIImage {
-        guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
-        return try await PhotoExporter.export(image, redactions: photoEditingView.redactions)
+    public var preparedURL: URL {
+        get async throws {
+            guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
+            return try await ExportingPreparer(image: image, asset: asset, redactions: redactions).preparedURL
+        }
     }
 
     @objc @MainActor public func sharePhoto(_ sender: Any) {
@@ -490,7 +492,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             guard let self else { return }
             do {
                 guard let image else { throw PhotoEditingError.noEditingImage }
-                let activityController = try await PhotoEditingActivityController(image: image, asset: asset, redactions: photoEditingView.redactions)
+                let activityController = try await ExportingActivityController(image: image, asset: asset, redactions: photoEditingView.redactions)
                 activityController.popoverPresentationController?.barButtonItem = shareBarButtonItem
                 activityController.completionWithItemsHandler = { [weak self] _, _, _, _ in
                     self?.clearHasMadeEdits()
