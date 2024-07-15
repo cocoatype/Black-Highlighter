@@ -20,7 +20,7 @@ public actor PhotoRenderer {
     #if canImport(AppKit) && !targetEnvironment(macCatalyst)
     public init(image: NSImage, redactions: [Redaction]) throws {
         guard let sourceImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        else { throw PhotoExportRenderError.noCGImage }
+        else { throw PhotoRenderError.noCGImage }
 
         self.sourceImage = sourceImage
         self.redactions = redactions
@@ -41,7 +41,7 @@ public actor PhotoRenderer {
             bitsPerPixel: 32
         ),
               let graphicsContext = NSGraphicsContext(bitmapImageRep: imageRep)
-        else { throw PhotoExportRenderError.noCurrentGraphicsContext }
+        else { throw PhotoRenderError.noCurrentGraphicsContext }
         let context = graphicsContext.cgContext
 
         let cgImage = try render(
