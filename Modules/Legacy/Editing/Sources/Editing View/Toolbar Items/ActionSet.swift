@@ -2,12 +2,13 @@
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
 import Defaults
+import Photos
 import Purchasing
 import UIKit
 
 struct ActionSet {
     @ToolbarBuilder var leadingNavigationItems: [UIBarButtonItem] {
-        DismissBarButtonItem()
+        DismissBarButtonItem(asset: asset)
 
         if #unavailable(iOS 16), sizeClass == .regular {
             UndoBarButtonItem(undoManager: undoManager, target: target)
@@ -91,6 +92,7 @@ struct ActionSet {
         selectedTool: HighlighterTool,
         sizeClass: UIUserInterfaceSizeClass,
         currentColor: UIColor,
+        asset: PHAsset?,
         purchaseRepository: any PurchaseRepository = Purchasing.repository
     ) {
         self.target = target
@@ -98,6 +100,7 @@ struct ActionSet {
         self.selectedTool = selectedTool
         self.sizeClass = sizeClass
         self.currentColor = currentColor
+        self.asset = asset
         allTextIsSpecial = purchaseRepository
     }
 
@@ -106,6 +109,7 @@ struct ActionSet {
     private let selectedTool: HighlighterTool
     private let sizeClass: UIUserInterfaceSizeClass
     private let currentColor: UIColor
+    private let asset: PHAsset?
 
     // allTextIsSpecial by @ThisGuyNZ on 2024-05-15
     // the purchase repository

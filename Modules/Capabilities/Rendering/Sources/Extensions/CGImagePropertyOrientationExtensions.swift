@@ -14,7 +14,6 @@ extension CGImagePropertyOrientation {
         case .downMirrored: return .pi
         case .leftMirrored: return .pi / 2
         case .rightMirrored: return -1 * .pi / 2
-        @unknown default: return 0
         }
     }
 }

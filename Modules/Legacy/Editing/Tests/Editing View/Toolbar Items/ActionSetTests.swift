@@ -62,6 +62,7 @@ private extension ActionSet {
             selectedTool: .magic,
             sizeClass: sizeClass,
             currentColor: .black,
+            asset: nil,
             purchaseRepository: SpyRepository(withCheese: purchaseState)
         )
     }

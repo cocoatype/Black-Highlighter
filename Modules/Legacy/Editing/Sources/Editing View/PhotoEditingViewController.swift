@@ -154,7 +154,7 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc public func refreshToolbarItems() { updateToolbarItems() }
 
     private func updateToolbarItems(animated: Bool = true) {
-        let actionSet = ActionSet(for: self, undoManager: undoManager, selectedTool: photoEditingView.highlighterTool, sizeClass: traitCollection.horizontalSizeClass, currentColor: photoEditingView.color)
+        let actionSet = ActionSet(for: self, undoManager: undoManager, selectedTool: photoEditingView.highlighterTool, sizeClass: traitCollection.horizontalSizeClass, currentColor: photoEditingView.color, asset: asset)
 
         if #available(iOS 16, *) {
             navigationItem.style = .editor
@@ -480,21 +480,26 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     }
 
     // MARK: Sharing
-    public func exportImage() async throws -> UIImage {
-        guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
-        return try await PhotoExporter.export(image, redactions: photoEditingView.redactions)
+    public var preparedURL: URL {
+        get async throws {
+            guard let image = photoEditingView.image else { throw PhotoEditingError.noEditingImage }
+            return try await ExportingPreparer(image: image, asset: asset, redactions: redactions).preparedURL
+        }
     }
 
     @objc @MainActor public func sharePhoto(_ sender: Any) {
-        Task { @MainActor [weak self] in
-            guard let self, let shareBarButtonItem else { return }
+        Task { [weak self] in
+            guard let self else { return }
             do {
                 guard let image else { throw PhotoEditingError.noEditingImage }
-                let exporter = PhotoEditingExporter(image: image, asset: asset, redactions: photoEditingView.redactions)
-                try await exporter.presentActivityController(from: self, barButtonItem: shareBarButtonItem)
-                hasMadeEdits = false
-                Defaults.numberOfSaves = Defaults.numberOfSaves + 1
-                chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
+                let activityController = try await ExportingActivityController(image: image, asset: asset, redactions: photoEditingView.redactions)
+                activityController.popoverPresentationController?.barButtonItem = shareBarButtonItem
+                activityController.completionWithItemsHandler = { [weak self] _, _, _, _ in
+                    self?.clearHasMadeEdits()
+                    Defaults.numberOfSaves = Defaults.numberOfSaves + 1
+                    self?.chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
+                }
+                present(activityController, animated: true)
             } catch {
                 let alert = PhotoExportErrorAlertFactory.alert(for: error)
                 present(alert, animated: true)
@@ -567,6 +572,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
 }
 
 @objc protocol PhotoEditingActions: NSObjectProtocol {
-    func dismissPhotoEditingViewController(_ sender: UIBarButtonItem)
+    func dismissPhotoEditingViewController(_ sender: UIBarButtonItem, event: DismissEvent)
     func displayAppRatingsPrompt(_ sender: Any)
 }

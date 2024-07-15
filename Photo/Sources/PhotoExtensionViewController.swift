@@ -2,10 +2,13 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import Editing
+import ErrorHandling
+import Exporting
 import Foundation
 import MobileCoreServices
 import Photos
 import PhotosUI
+import Redactions
 
 class PhotoExtensionViewController: UIViewController, PHContentEditingController {
     init() {
@@ -25,23 +28,17 @@ class PhotoExtensionViewController: UIViewController, PHContentEditingController
 
     func finishContentEditing(completionHandler: @escaping (PHContentEditingOutput?) -> Void) {
         Task { [weak self] in
-            guard let input = self?.input,
-                  let editingViewController = self?.editingViewController,
-                  let outputImage = try? await editingViewController.exportImage(),
-                  let outputData = self?.imageOutputData(from: outputImage, typeIdentifier: input.uniformTypeIdentifier)
+            do {
+            guard let preparedURL = try await self?.editingViewController?.preparedURL,
+                  let redactions = self?.editingViewController?.redactions,
+                    let input = self?.input
             else { return completionHandler(nil) }
 
-            do {
-                let output = PHContentEditingOutput(contentEditingInput: input)
-
-                let redactions = self?.editingViewController?.redactions ?? []
-                let serializedRedactions = redactions.map(RedactionSerializer.dataRepresentation(of:))
-                let adjustmentData = try JSONEncoder().encode(serializedRedactions)
-
-                output.adjustmentData = PHAdjustmentData(formatIdentifier: Self.formatIdentifier, formatVersion: "2", data: adjustmentData)
-                try outputData.write(to: output.renderedContentURL)
+            let factory = OutputFactory(preparedURL: preparedURL, redactions: redactions)
+            let output = try factory.output(from: input)
                 completionHandler(output)
             } catch {
+                ErrorHandler().log(error)
                 completionHandler(nil)
             }
         }
@@ -51,16 +48,6 @@ class PhotoExtensionViewController: UIViewController, PHContentEditingController
 
     var shouldShowCancelConfirmation: Bool { return editingViewController?.hasMadeEdits ?? false }
 
-    // MARK: Image Output
-
-    private func imageOutputData(from image: UIImage, typeIdentifier: String?) -> Data? {
-        if let typeIdentifier = typeIdentifier, typeIdentifier == (kUTTypePNG as String) {
-            return image.pngData()
-        } else {
-            return image.jpegData(compressionQuality: 0.9)
-        }
-    }
-
     // MARK: Boilerplate
 
     private static let formatIdentifier = "com.cocoatype.Highlighter.redactionsFormat"
@@ -68,76 +55,6 @@ class PhotoExtensionViewController: UIViewController, PHContentEditingController
     private var editingViewController: PhotoEditingViewController? { return children.compactMap { $0 as? PhotoNavigationController }.first?.viewControllers.first as? PhotoEditingViewController }
 
     private var input: PHContentEditingInput?
-
-    @available(*, unavailable)
-    required init(coder: NSCoder) {
-        let className = String(describing: type(of: self))
-        fatalError("\(className) does not implement init(coder:)")
-    }
-}
-
-class PhotoNavigationController: NavigationController {
-    init(image: UIImage) {
-        super.init(rootViewController: PhotoEditingViewController(image: image))
-        isToolbarHidden = false
-        setNavigationBarHidden(true, animated: false)
-    }
-
-    // MARK: Boilerplate
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init(coder: NSCoder) {
-        let className = String(describing: type(of: self))
-        fatalError("\(className) does not implement init(coder:)")
-    }
-}
-
-class PhotoLoadingViewController: UIViewController {
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    override func loadView() {
-        view = PhotoLoadingView()
-    }
-
-    // MARK: Boilerplate
-
-    @available(*, unavailable)
-    required init(coder: NSCoder) {
-        let className = String(describing: type(of: self))
-        fatalError("\(className) does not implement init(coder:)")
-    }
-}
-
-class PhotoLoadingView: UIView {
-    init() {
-        super.init(frame: .zero)
-        backgroundColor = .primary
-        addSubview(spinner)
-
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-        ])
-    }
-
-    override func didMoveToSuperview() {
-        spinner.startAnimating()
-    }
-
-    // MARK: Boilerplate
-
-    private let spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.color = .primaryExtraLight
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        return spinner
-    }()
 
     @available(*, unavailable)
     required init(coder: NSCoder) {

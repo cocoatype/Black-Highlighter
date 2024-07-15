@@ -14,13 +14,13 @@ import Redactions
 import UIKit
 #endif
 
-public actor PhotoExportRenderer {
+public actor PhotoRenderer {
     private let redactions: [Redaction]
     private let sourceImage: CGImage
     #if canImport(AppKit) && !targetEnvironment(macCatalyst)
     public init(image: NSImage, redactions: [Redaction]) throws {
         guard let sourceImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        else { throw PhotoExportRenderError.noCGImage }
+        else { throw PhotoRenderError.noCGImage }
 
         self.sourceImage = sourceImage
         self.redactions = redactions
@@ -41,7 +41,7 @@ public actor PhotoExportRenderer {
             bitsPerPixel: 32
         ),
               let graphicsContext = NSGraphicsContext(bitmapImageRep: imageRep)
-        else { throw PhotoExportRenderError.noCurrentGraphicsContext }
+        else { throw PhotoRenderError.noCurrentGraphicsContext }
         let context = graphicsContext.cgContext
 
         let cgImage = try render(
@@ -53,13 +53,17 @@ public actor PhotoExportRenderer {
         return NSImage(cgImage: cgImage, size: imageSize)
     }
     #elseif canImport(UIKit)
+    public static func render(_ image: UIImage, redactions: [Redaction]) async throws -> UIImage {
+        return try await PhotoRenderer(image: image, redactions: redactions).render()
+    }
+
     private let orientation: CGImagePropertyOrientation
     private let imageSize: CGSize
     private let imageScale: Double
 
     public init(image: UIImage, redactions: [Redaction]) throws {
         guard let sourceImage = image.cgImage
-        else { throw PhotoExportRenderError.noCGImage }
+        else { throw PhotoRenderError.noCGImage }
 
         self.redactions = redactions
         self.sourceImage = sourceImage
@@ -72,7 +76,7 @@ public actor PhotoExportRenderer {
     public func render() throws -> UIImage {
         UIGraphicsBeginImageContextWithOptions(sourceImage.size, false, imageScale)
         defer { UIGraphicsEndImageContext() }
-        guard let context = UIGraphicsGetCurrentContext() else { throw PhotoExportRenderError.noCurrentGraphicsContext }
+        guard let context = UIGraphicsGetCurrentContext() else { throw PhotoRenderError.noCurrentGraphicsContext }
 
         let cgImage = try render(
             context: context,
@@ -125,7 +129,7 @@ public actor PhotoExportRenderer {
                 }
 
                 guard let imageRef = sourceImage.cropping(to: currentTileRect) else {
-                    throw PhotoExportRenderError.noCGImage
+                    throw PhotoRenderError.noCGImage
                 }
 
                 context.draw(imageRef, in: currentTileRect)
@@ -177,7 +181,7 @@ public actor PhotoExportRenderer {
             }
         }
 
-        guard let image = context.makeImage() else { throw PhotoExportRenderError.noResultImage }
+        guard let image = context.makeImage() else { throw PhotoRenderError.noResultImage }
         return image
     }
 
