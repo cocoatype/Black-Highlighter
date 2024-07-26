@@ -5,7 +5,7 @@ import UIKit
 
 public enum URLParseResult {
     case callbackAction(CallbackAction)
-    case image(UIImage)
+    case image(URL)
     case website(URL)
     case invalid
 }

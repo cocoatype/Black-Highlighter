@@ -40,10 +40,10 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         return switch URLParser().parse(url) {
         case .callbackAction(let action):
             handleCallbackAction(action)
-        case .image(let image):
-            open(image)
+        case .image(let imageURL):
+            openImage(at: imageURL)
         case .website(let webURL):
-            open(webURL)
+            openWebPage(webURL)
         case .invalid:
             false
         }
@@ -72,14 +72,17 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         return true
     }
 
-    private func open(_ image: UIImage) -> Bool {
-        guard let appViewController else { return false }
+    private func openImage(at imageURL: URL) -> Bool {
+        guard let appViewController,
+              let imageData = try? Data(contentsOf: imageURL),
+              let image = UIImage(data: imageData)
+        else { return false }
 
         appViewController.presentPhotoEditingViewController(for: image, animated: false)
         return true
     }
 
-    private func open(_ webURL: URL) -> Bool {
+    private func openWebPage(_ webURL: URL) -> Bool {
         guard let appViewController else { return false }
         appViewController.presentWebView(for: webURL)
         return true

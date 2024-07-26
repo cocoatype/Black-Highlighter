@@ -13,7 +13,10 @@ class URLParsingTests: XCTestCase {
     }
 
     func testParsingImageURL() throws {
-        try XCTAssert(URLParser().parse(imageURL).isImage)
+        let result = try URLParser().parse(imageURL)
+        let actualURL = try XCTUnwrap(result.imageURL)
+
+        try XCTAssertEqual(actualURL, imageURL)
     }
 
     func testParsingWebURL() throws {

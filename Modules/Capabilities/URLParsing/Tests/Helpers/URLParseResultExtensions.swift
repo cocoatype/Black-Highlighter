@@ -5,10 +5,10 @@ import Foundation
 import URLParsing
 
 extension URLParseResult {
-    var isImage: Bool {
+    var imageURL: URL? {
         switch self {
-        case .image: true
-        case .callbackAction, .website, .invalid: false
+        case .image(let imageURL): imageURL
+        case .callbackAction, .website, .invalid: nil
         }
     }
 

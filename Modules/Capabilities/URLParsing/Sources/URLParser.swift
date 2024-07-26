@@ -9,21 +9,13 @@ public struct URLParser {
     public func parse(_ url: URL) -> URLParseResult {
         if let action = CallbackAction(url: url) {
             return .callbackAction(action)
-        } else if let image = loadImage(at: url) {
-            return .image(image)
+        } else if url.isFileURL, FileManager.default.fileExists(atPath: url.path) {
+            return .image(url)
         } else if let webURL = webURL(from: url) {
             return .website(webURL)
         } else {
             return .invalid
         }
-    }
-
-    func loadImage(at url: URL) -> UIImage? {
-        guard let imageData = try? Data(contentsOf: url),
-              let image = UIImage(data: imageData)
-        else { return nil }
-
-        return image
     }
 
     func webURL(from url: URL) -> URL? {
