@@ -3,8 +3,8 @@
 
 import SafariServices
 
-class WebViewController: SFSafariViewController {
-    init(url: URL) {
+public class WebViewController: SFSafariViewController {
+    public init(url: URL) {
         let configuration = SFSafariViewController.Configuration()
         super.init(url: url, configuration: configuration)
 

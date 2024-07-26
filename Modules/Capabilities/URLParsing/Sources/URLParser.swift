@@ -11,6 +11,8 @@ public struct URLParser {
             return .callbackAction(action)
         } else if let image = loadImage(at: url) {
             return .image(image)
+        } else if let webURL = webURL(from: url) {
+            return .website(webURL)
         } else {
             return .invalid
         }
@@ -22,5 +24,15 @@ public struct URLParser {
         else { return nil }
 
         return image
+    }
+
+    func webURL(from url: URL) -> URL? {
+        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              components.host == "blackhighlighter.app"
+        else { return nil }
+
+        components.scheme = "https"
+
+        return components.url
     }
 }

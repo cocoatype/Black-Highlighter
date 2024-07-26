@@ -43,14 +43,14 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         case .image(let image):
             open(image)
         case .website(let webURL):
-            false
+            open(webURL)
         case .invalid:
             false
         }
     }
 
     private func handleCallbackAction(_ action: CallbackAction) -> Bool {
-        guard let appViewController = appViewController else { return false }
+        guard let appViewController else { return false }
         switch action {
         case .open(let image):
             appViewController.presentPhotoEditingViewController(for: image, animated: false)
@@ -76,6 +76,12 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         guard let appViewController else { return false }
 
         appViewController.presentPhotoEditingViewController(for: image, animated: false)
+        return true
+    }
+
+    private func open(_ webURL: URL) -> Bool {
+        guard let appViewController else { return false }
+        appViewController.presentWebView(for: webURL)
         return true
     }
 

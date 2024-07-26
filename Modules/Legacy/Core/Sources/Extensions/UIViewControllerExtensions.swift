@@ -8,4 +8,9 @@ extension UIViewController {
     var shouldOverrideInterfaceStyle: Bool {
         return self is UIImagePickerController || self is PHPickerViewController
     }
+
+    var topPresentedViewController: UIViewController {
+        guard let presentedViewController else { return self }
+        return presentedViewController.topPresentedViewController
+    }
 }

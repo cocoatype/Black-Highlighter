@@ -16,6 +16,14 @@ class URLParsingTests: XCTestCase {
         try XCTAssert(URLParser().parse(imageURL).isImage)
     }
 
+    func testParsingWebURL() throws {
+        let url = try XCTUnwrap(URL(string: "highlighter://blackhighlighter.app/releases"))
+        let expectedWebURL = try XCTUnwrap(URL(string: "https://blackhighlighter.app/releases"))
+        let actualWebURL = try XCTUnwrap(URLParser().parse(url).webURL)
+
+        XCTAssertEqual(actualWebURL, expectedWebURL)
+    }
+
     func testParsingInvalidFileURL() throws {
         let url = URL(fileURLWithPath: "bad-url.pdf")
         let result = URLParser().parse(url)
