@@ -5,6 +5,7 @@ extension Target {
         name: String,
         sdk: SDK = .catalyst,
         hasResources: Bool = false,
+        usesMaxSwiftVersion: Bool = false,
         dependencies: [TargetDependency] = []
     ) -> Target {
         Target.target(
@@ -18,6 +19,7 @@ extension Target {
             settings: .settings(
                 base: [
                     "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
+                    "SWIFT_VERSION": (usesMaxSwiftVersion ? "$(SWIFT_MAX_VERSION)" : "$(inherited)")
                 ],
                 defaultSettings: .recommended(excluding: [
                     "CODE_SIGN_IDENTITY",
@@ -29,12 +31,14 @@ extension Target {
     static func capabilitiesTestTarget(
         name: String,
         sdk: SDK = .catalyst,
+        hasResources: Bool = false,
         dependencies: [TargetDependency] = []
     ) -> Target {
         moduleTestTarget(
             name: name,
             sdk: sdk,
             type: "Capabilities",
+            hasResources: hasResources,
             dependencies: dependencies
         )
     }
@@ -43,6 +47,7 @@ extension Target {
         name: String,
         sdk: SDK,
         type: String,
+        hasResources: Bool = false,
         dependencies: [TargetDependency] = []
     ) -> Target {
         return Target.target(
@@ -51,6 +56,7 @@ extension Target {
             product: .unitTests,
             bundleId: "com.cocoatype.Highlighter.\(name + sdk.nameSuffix)Tests",
             sources: ["Modules/\(type)/\(name)/Tests/**"],
+            resources: hasResources ? ["Modules/\(type)/\(name)/TestResources/**"] : nil,
             dependencies: [.target(name: name + sdk.nameSuffix)] + dependencies
         )
     }

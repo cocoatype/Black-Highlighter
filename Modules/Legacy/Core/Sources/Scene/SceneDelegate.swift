@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import UIKit
+import URLParsing
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: AppWindow?
@@ -36,10 +37,15 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
     @discardableResult
     private func handle(_ urlContexts: Set<UIOpenURLContext>) -> Bool {
         guard let url = urlContexts.first?.url else { return false }
-        if let action = CallbackAction(url: url) {
-            return handleCallbackAction(action)
-        } else {
-            return openImage(at: url)
+        return switch URLParser().parse(url) {
+        case .callbackAction(let action):
+            handleCallbackAction(action)
+        case .image(let image):
+            open(image)
+        case .website(let webURL):
+            false
+        case .invalid:
+            false
         }
     }
 
@@ -66,11 +72,8 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         return true
     }
 
-    private func openImage(at url: URL) -> Bool {
-        guard let appViewController = appViewController,
-              let imageData = try? Data(contentsOf: url),
-              let image = UIImage(data: imageData)
-        else { return false }
+    private func open(_ image: UIImage) -> Bool {
+        guard let appViewController else { return false }
 
         appViewController.presentPhotoEditingViewController(for: image, animated: false)
         return true

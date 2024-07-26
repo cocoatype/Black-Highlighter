@@ -22,6 +22,7 @@ public enum Core {
             .target(Purchasing.doublesTarget),
             .target(SettingsUI.target),
             .target(Unpurchased.target),
+            .target(URLParsing.target),
         ],
         settings: .settings(
             defaultSettings: .recommended(excluding: [
