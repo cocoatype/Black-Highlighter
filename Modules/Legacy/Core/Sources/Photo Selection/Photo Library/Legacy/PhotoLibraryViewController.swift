@@ -6,6 +6,7 @@ import Defaults
 import Editing
 import Photos
 import UIKit
+import UserActivities
 
 class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate, PHPhotoLibraryChangeObserver {
     init(collection: PhotoCollection = PhotoCollectionType.library.defaultCollection) {

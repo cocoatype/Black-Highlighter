@@ -58,6 +58,19 @@ public class EditingUserActivity: NSUserActivity {
         }
     }
 
+    // MARK: URL
+
+    public var representedURL: URL? {
+        var isStale = false
+        guard let bookmarkData = imageBookmarkData,
+              let url = try? URL(resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale),
+              FileManager.default.fileExists(atPath: url.path),
+              let cachesDirectory = try? FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false),
+              cachesDirectory.isParent(of: url) == false
+        else { return nil }
+        return url
+    }
+
     // MARK: Boilerplate
 
     public static let assetLocalIdentifierKey = "EditingUserActivity.assetLocalIdentifierKey"

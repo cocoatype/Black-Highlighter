@@ -14,6 +14,7 @@ import PurchaseMarketing
 import Redactions
 import Rendering
 import UIKit
+import UserActivities
 
 #warning("#61: Simplify this class")
 // swiftlint:disable file_length
