@@ -16,6 +16,9 @@ public enum Shared {
         "MARKETING_VERSION": "999",
         "OTHER_CODE_SIGN_FLAGS": "--deep",
         "SWIFT_VERSION": "5.0",
+        "SWIFT_MAX_VERSION_1500": "5.0",
+        "SWIFT_MAX_VERSION_1600": "6.0",
+        "SWIFT_MAX_VERSION": "$(SWIFT_MAX_VERSION_$(XCODE_VERSION_MAJOR))",
         "TARGETED_DEVICE_FAMILY": "1,2,6",
     ], debug: [
         "CODE_SIGN_IDENTITY": "Apple Development: Buddy Build (D47V8Y25W5)",

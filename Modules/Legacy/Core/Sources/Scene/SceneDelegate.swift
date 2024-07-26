@@ -2,6 +2,7 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 import UIKit
+import URLParsing
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     var window: AppWindow?
@@ -36,15 +37,20 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
     @discardableResult
     private func handle(_ urlContexts: Set<UIOpenURLContext>) -> Bool {
         guard let url = urlContexts.first?.url else { return false }
-        if let action = CallbackAction(url: url) {
-            return handleCallbackAction(action)
-        } else {
-            return openImage(at: url)
+        return switch URLParser().parse(url) {
+        case .callbackAction(let action):
+            handleCallbackAction(action)
+        case .image(let imageURL):
+            openImage(at: imageURL)
+        case .website(let webURL):
+            openWebPage(webURL)
+        case .invalid:
+            false
         }
     }
 
     private func handleCallbackAction(_ action: CallbackAction) -> Bool {
-        guard let appViewController = appViewController else { return false }
+        guard let appViewController else { return false }
         switch action {
         case .open(let image):
             appViewController.presentPhotoEditingViewController(for: image, animated: false)
@@ -66,13 +72,19 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         return true
     }
 
-    private func openImage(at url: URL) -> Bool {
-        guard let appViewController = appViewController,
-              let imageData = try? Data(contentsOf: url),
+    private func openImage(at imageURL: URL) -> Bool {
+        guard let appViewController,
+              let imageData = try? Data(contentsOf: imageURL),
               let image = UIImage(data: imageData)
         else { return false }
 
         appViewController.presentPhotoEditingViewController(for: image, animated: false)
+        return true
+    }
+
+    private func openWebPage(_ webURL: URL) -> Bool {
+        guard let appViewController else { return false }
+        appViewController.presentWebView(for: webURL)
         return true
     }
 
