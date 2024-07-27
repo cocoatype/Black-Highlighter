@@ -106,6 +106,12 @@
 					<key>UISceneDelegateClassName</key>
 					<string>Core.DesktopSceneDelegate</string>
 				</dict>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Open</string>
+					<key>UISceneDelegateClassName</key>
+					<string>Core.DesktopOpenSceneDelegate</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>
