@@ -3,7 +3,6 @@
 
 import Foundation
 
-#if targetEnvironment(macCatalyst)
 public class LaunchActivity: NSUserActivity {
     public init(_ fileURL: URL) {
         super.init(activityType: Self.activityType)
@@ -34,4 +33,3 @@ public class LaunchActivity: NSUserActivity {
     static let launchActivityURLKey = "DesktopSceneDelegate.launchActivityURLKey"
 
 }
-#endif

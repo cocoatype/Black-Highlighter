@@ -24,7 +24,7 @@ class DesktopOpenSceneDelegate: NSObject, UIWindowSceneDelegate, UIDocumentBrows
     private let urlHandler = DesktopSceneURLHandler()
     func scene(_ scene: UIScene, openURLContexts urlContexts: Set<UIOpenURLContext>) {
         let results = urlContexts.map(urlHandler.handle(_:))
-        if results.contains(where: \.self) {
+        if results.contains(where: { $0 }) {
             UIApplication.shared.requestSceneSessionDestruction(scene.session, options: nil)
         }
     }

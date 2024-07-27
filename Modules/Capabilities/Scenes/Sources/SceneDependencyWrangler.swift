@@ -7,7 +7,7 @@ import UIKit
 @MainActor
 public struct SceneDependencyWrangler {
     public init() {}
-    
+
     public func dependencies(from session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) -> SceneDependencies? {
         if let stateRestorationActivity = session.stateRestorationActivity,
            let activity = EditingUserActivity(userActivity: stateRestorationActivity) {
