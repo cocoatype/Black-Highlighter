@@ -8,5 +8,6 @@ Black Highlighter is available [on the App Store](https://itunes.apple.com/us/ap
 
 ## About the GitHub Repository
 
-If you're seeing this on GitHub, you should know that this version of the repo is **not the canonical source** for this project. It is updated rarely, when I remember to push updates at each release. If you would like to see a more up-to-date version of the code, as well as issues, progress, etc., please view it instead on my [personal GitLab instance](https://git.pado.name/highlighter/app).
+Black Highlighter exists on GitHub as a way to share the source of the app and ongoing roadmap publicly. It is **not** intended as a collaborative project. I do not, as a general rule, accept contributions or pull requests.
 
+That said, issues are an exception to that. Feature requests or bug reports can be opened as GitHub Issues. Voting or commenting on existing issues is also highly encouraged; it can help prioritize what to fix or implement. If you'd prefer to report something pseudononymously, or send me test cases that you don't want published publicly, you can instead send me an e-mail at [hello@cocoatype.com](mailto:hello@cocoatype.com).
