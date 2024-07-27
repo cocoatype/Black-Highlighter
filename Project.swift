@@ -46,6 +46,7 @@ let project = Project(
         Shortcuts.target,
         Tools.target,
         Unpurchased.target,
+        URLParsing.target,
         // doubles
         DesignSystem.doublesTarget,
         Logging.doublesTarget,
@@ -75,6 +76,7 @@ let project = Project(
         Shortcuts.testTarget,
         Tools.testTarget,
         Unpurchased.testTarget,
+        URLParsing.testTarget,
     ],
     schemes: [
         .scheme(

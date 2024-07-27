@@ -18,6 +18,13 @@ public enum Photo {
         resources: .resources([
             "Photo/Resources/**",
         ] + Shared.resources),
+        dependencies: [
+            .target(Editing.target),
+            .target(ErrorHandling.target(sdk: .catalyst)),
+            .target(Exporting.target),
+            .target(Redactions.target(sdk: .catalyst)),
+            .sdk(name: "PhotosUI", type: .framework),
+        ],
         settings: .settings(
             base: [
                 "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",

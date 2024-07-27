@@ -24,13 +24,11 @@ class SaveCopyActivity: UIActivity {
     }
 
     override func perform() {
-        guard let activityURL else { return ErrorHandler().log(SaveActivityError.noActivityURL) }
+        guard let activityURL else { return ErrorHandler().log(ExportingError.noActivityURL) }
 
         Task {
             do {
-                try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: activityURL)
-                })
+                try await CopyExporter(preparedURL: activityURL).export()
             } catch {
                 ErrorHandler().log(error)
             }

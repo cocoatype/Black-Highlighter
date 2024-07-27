@@ -103,8 +103,8 @@ class DesktopSceneDelegate: NSObject, UIWindowSceneDelegate, NSToolbarDelegate, 
 
     var canExportImage: Bool { return editingViewController != nil }
 
-    func exportImage() async -> UIImage? {
-        return try? await editingViewController?.exportImage()
+    func exportedURL() async throws -> URL? {
+        return try await editingViewController?.preparedURL
     }
 
     func didExportImage() {

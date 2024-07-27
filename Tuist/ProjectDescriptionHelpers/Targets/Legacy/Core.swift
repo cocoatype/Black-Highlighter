@@ -23,6 +23,7 @@ public enum Core {
             .target(SettingsUI.target),
             .target(Tools.target),
             .target(Unpurchased.target),
+            .target(URLParsing.target),
         ],
         settings: .settings(
             defaultSettings: .recommended(excluding: [

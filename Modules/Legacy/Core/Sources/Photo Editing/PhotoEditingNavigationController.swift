@@ -41,7 +41,7 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
 
     // MARK: Dismissal
 
-    @objc func dismissPhotoEditingViewController(_ sender: UIBarButtonItem) {
+    @objc func dismissPhotoEditingViewController(_ sender: UIBarButtonItem, event: DismissEvent) {
         guard photoEditingViewController.hasMadeEdits else {
             if let image = photoEditingViewController.image {
                 photoEditingViewController.completionHandler?(image)
@@ -51,7 +51,7 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
             return
         }
 
-        let alertController = PhotoEditingProtectionAlertController(delegate: self)
+        let alertController = PhotoEditingProtectionAlertController(asset: event.asset, delegate: self)
         #if !targetEnvironment(macCatalyst)
         alertController.barButtonItem = sender
         #endif
@@ -68,11 +68,24 @@ class PhotoEditingNavigationController: NavigationController, PhotoEditingProtec
     func dismissPhotoEditingViewControllerAfterSaving() {
         Task {
             do {
-                let image = try await photoEditingViewController.exportImage()
+                let preparedURL = try await photoEditingViewController.preparedURL
+                try await CopyExporter(preparedURL: preparedURL).export()
 
-                try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: image)
-                })
+                dismiss(animated: true)
+                chain(selector: #selector(AppViewController.displayAppRatingsPrompt))
+            } catch {
+                presentSaveErrorAlert(for: error)
+                dismiss(animated: true)
+            }
+        }
+    }
+
+    func dismissPhotoEditingViewControllerAfterSavingInPlace(asset: PHAsset) {
+        Task {
+            do {
+                let preparedURL = try await photoEditingViewController.preparedURL
+                try await InPlaceExporter(preparedURL: preparedURL, asset: asset, redactions: photoEditingViewController.redactions).export()
+
                 dismiss(animated: true)
                 chain(selector: #selector(AppViewController.displayAppRatingsPrompt))
             } catch {

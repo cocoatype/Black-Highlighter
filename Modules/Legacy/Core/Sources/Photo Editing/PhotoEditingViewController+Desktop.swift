@@ -20,33 +20,16 @@ extension PhotoEditingViewController {
 
     @objc func save(_ sender: Any) {
         guard let exportURL = fileURLProvider?.representedFileURL else { return saveAs(sender) }
-        guard let imageType = imageType else { return present(.missingImageType) }
 
-        Task { [weak self] in
-            let image = try? await exportImage()
-            let data: Data?
+        Task { @MainActor [weak self] in
+            guard let self else { return }
 
-            switch imageType {
-            case .jpeg:
-                data = image?.jpegData(compressionQuality: 0.9)
-            default:
-                data = image?.pngData()
-            }
-
-            guard let exportData = data else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.present(.noImageData)
-                }
-                return
-            }
             do {
-                try exportData.write(to: exportURL)
-                self?.clearHasMadeEdits()
+                try await FileManager.default.copyItem(at: preparedURL, to: exportURL)
+                clearHasMadeEdits()
 
                 Defaults.numberOfSaves += 1
-                DispatchQueue.main.async { [weak self] in
-                    AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
-                }
+                AppRatingsPrompter().displayRatingsPrompt(in: view.window?.windowScene)
             } catch {
                 ErrorHandler().log(error)
             }
@@ -54,43 +37,20 @@ extension PhotoEditingViewController {
     }
 
     @objc func saveAs(_ sender: Any) {
-        guard let imageType = imageType else { return present(.missingImageType) }
-
-        let representedURLName = fileURLProvider?.representedFileURL?.lastPathComponent ?? "\(ExportingStrings.PhotoEditingExporter.defaultImageName).\(imageType.preferredFilenameExtension ?? "png")"
-        let temporaryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent(representedURLName)
-
-        Task { [weak self] in
-            let image = try? await exportImage()
-            let data: Data?
-
-            switch imageType {
-            case .jpeg:
-                data = image?.jpegData(compressionQuality: 0.9)
-            default:
-                data = image?.pngData()
-            }
-
-            guard let exportData = data else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.present(.noImageData)
-                }
-                return
-            }
+        Task { @MainActor [weak self] in
             do {
-                try exportData.write(to: temporaryURL)
                 self?.clearHasMadeEdits()
 
                 Defaults.numberOfSaves += 1
-                DispatchQueue.main.async { [weak self] in
-                    let saveViewController = DesktopSaveViewController(url: temporaryURL) { [weak self] urls in
-                        AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
-                        if let exportURL = urls.first {
-                            self?.fileURLProvider?.updateRepresentedFileURL(to: exportURL)
-                        }
+                guard let self else { return }
+                let temporaryURL = try await preparedURL
+                let saveViewController = DesktopSaveViewController(url: temporaryURL) { [weak self] urls in
+                    AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
+                    if let exportURL = urls.first {
+                        self?.fileURLProvider?.updateRepresentedFileURL(to: exportURL)
                     }
-                    self?.present(saveViewController, animated: true, completion: nil)
                 }
+                present(saveViewController, animated: true)
             } catch {
                 ErrorHandler().log(error)
             }

@@ -25,14 +25,18 @@ class ShareItem: NSSharingServicePickerToolbarItem, UIActivityItemsConfiguration
         guard let delegate = delegate, delegate.canExportImage else { return [] }
 
         let itemProvider = NSItemProvider()
-        itemProvider.registerDataRepresentation(forTypeIdentifier: UTType.png.identifier, visibility: .all, loadHandler: { [weak self] loadHandler -> Progress? in
+        itemProvider.registerFileRepresentation(forTypeIdentifier: UTType.png.identifier, visibility: .all) { [weak self] loadHandler -> Progress? in
             Task { [weak self] in
-                let image = await self?.delegate?.exportImage()
-                loadHandler(image?.pngData(), nil)
-                self?.delegate?.didExportImage()
+                do {
+                    let url = try await self?.delegate?.exportedURL()
+                    loadHandler(url, false, nil)
+                    self?.delegate?.didExportImage()
+                } catch {
+                    loadHandler(nil, false, error)
+                }
             }
             return nil
-        })
+        }
 
         return [itemProvider]
     }
@@ -40,7 +44,7 @@ class ShareItem: NSSharingServicePickerToolbarItem, UIActivityItemsConfiguration
 
 protocol ShareItemDelegate: AnyObject {
     var canExportImage: Bool { get }
-    func exportImage() async -> UIImage?
+    func exportedURL() async throws -> URL?
     func didExportImage()
 }
 #endif

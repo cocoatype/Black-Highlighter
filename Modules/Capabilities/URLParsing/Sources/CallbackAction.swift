@@ -3,10 +3,10 @@
 
 import UIKit
 
-enum CallbackAction {
+public enum CallbackAction {
     case edit(UIImage, URL?), open(UIImage)
 
-    var image: UIImage {
+    public var image: UIImage {
         switch self {
         case .edit(let image, _): return image
         case .open(let image): return image

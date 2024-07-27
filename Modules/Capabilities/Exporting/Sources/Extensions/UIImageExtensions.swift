@@ -20,11 +20,11 @@ extension UIImage {
             if #available(iOS 17, *) {
                 return heicData()
             } else {
-                ErrorHandler().log(SaveActivityError.unexpectedHEIC)
+                ErrorHandler().log(ExportingError.unexpectedHEIC)
                 return jpegData(compressionQuality: 0.75)
             }
         default:
-            ErrorHandler().log(SaveActivityError.unexpectedEncodeType(type.identifier))
+            ErrorHandler().log(ExportingError.unexpectedEncodeType(type.identifier))
             return jpegData(compressionQuality: 0.75)
         }
     }

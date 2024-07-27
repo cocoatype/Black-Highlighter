@@ -97,6 +97,10 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
         dismiss(animated: true)
     }
 
+    func presentWebView(for url: URL) {
+        topPresentedViewController.present(WebViewController(url: url), animated: true)
+    }
+
     // MARK: Navigation
 
     func navigate(to route: Route) {
