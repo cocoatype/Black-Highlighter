@@ -2,7 +2,6 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import UIKit
-import UserActivities
 
 #if targetEnvironment(macCatalyst)
 class DesktopOpenSceneDelegate: NSObject, UIWindowSceneDelegate, UIDocumentBrowserViewControllerDelegate {
@@ -11,11 +10,7 @@ class DesktopOpenSceneDelegate: NSObject, UIWindowSceneDelegate, UIDocumentBrows
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
-        let window = UIWindow(windowScene: scene)
-        let browserViewController = DesktopDocumentBrowserViewController()
-        browserViewController.delegate = self
-        window.isOpaque = false
-        window.rootViewController = browserViewController
+        let window = DesktopOpenWindow(windowScene: scene)
         window.makeKeyAndVisible()
 
         self.window = window
@@ -27,14 +22,6 @@ class DesktopOpenSceneDelegate: NSObject, UIWindowSceneDelegate, UIDocumentBrows
         if results.contains(where: { $0 }) {
             UIApplication.shared.requestSceneSessionDestruction(scene.session, options: nil)
         }
-    }
-
-    // MARK: Document Browser Delegate
-
-    func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {
-        guard let documentURL = documentURLs.first else { return }
-        let activity = LaunchActivity(documentURL)
-        UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil, errorHandler: nil)
     }
 }
 #endif
