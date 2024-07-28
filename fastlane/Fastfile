@@ -35,6 +35,27 @@ platform :ios do
       skip_waiting_for_build_processing: true)
   end
 
+  desc "Submit a new beta build to the public TestFlight beta"
+  lane :public do
+    yesterday = (Date.today - 1).strftime("%Y-%m-%d")
+    today = Date.today.strftime("%Y-%m-%d")
+
+    git_log_command = "git log --since=\"#{yesterday}\" --until=\"#{today}\" --pretty=format:\"%s\" --no-merges"
+    logs = sh git_log_command
+
+    unless logs.empty?
+      upload_to_testflight(
+        app_platform: "ios",
+        distribute_only: true,
+        distribute_external: true,
+        changelog: logs,
+        groups: [
+          "Public Testers"
+        ]
+      )
+    end
+  end
+
   desc "Set up developer environment"
   lane :dev do
     sync_code_signing
@@ -95,6 +116,27 @@ platform :mac do
       skip_app_version_update: true,
       skip_metadata: true,
       skip_screenshots: true)
+  end
+
+  desc "Submit a new beta build to the public TestFlight beta"
+  lane :public do
+    yesterday = (Date.today - 1).strftime("%Y-%m-%d")
+    today = Date.today.strftime("%Y-%m-%d")
+
+    git_log_command = "git log --since=\"#{yesterday}\" --until=\"#{today}\" --pretty=format:\"%s\" --no-merges"
+    logs = sh git_log_command
+
+    unless logs.empty?
+      upload_to_testflight(
+        app_platform: "osx",
+        distribute_only: true,
+        distribute_external: true,
+        changelog: logs,
+        groups: [
+          "Public Testers"
+        ]
+      )
+    end
   end
 
   desc "Set up developer environment"
