@@ -5,6 +5,7 @@ import DesignSystem
 import UIKit
 import UserActivities
 
+#if targetEnvironment(macCatalyst)
 class DesktopOpenWindow: UIWindow {
     override init(windowScene: UIWindowScene) {
         super.init(windowScene: windowScene)
@@ -33,3 +34,4 @@ class DesktopOpenBrowserDelegate: NSObject, UIDocumentBrowserViewControllerDeleg
         UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil, errorHandler: nil)
     }
 }
+#endif
