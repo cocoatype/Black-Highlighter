@@ -31,6 +31,14 @@ Runs all the tests
 
 Submit a new beta build to Apple TestFlight
 
+### ios public
+
+```sh
+[bundle exec] fastlane ios public
+```
+
+Submit a new beta build to the public TestFlight beta
+
 ### ios dev
 
 ```sh
@@ -59,6 +67,14 @@ Runs all the tests
 ```
 
 Submit a new beta build to Apple TestFlight
+
+### mac public
+
+```sh
+[bundle exec] fastlane mac public
+```
+
+Submit a new beta build to the public TestFlight beta
 
 ### mac dev
 
