@@ -24,8 +24,11 @@ class DesktopSettingsSceneDelegate: NSObject, UIWindowSceneDelegate {
         self.window = window
     }
 
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        DesktopSceneDelegate.activateSessions(for: URLContexts)
+    private let urlHandler = DesktopSceneURLHandler()
+    func scene(_ scene: UIScene, openURLContexts urlContexts: Set<UIOpenURLContext>) {
+        for context in urlContexts {
+            urlHandler.handle(context)
+        }
     }
 }
 #endif

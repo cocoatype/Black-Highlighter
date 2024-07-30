@@ -8,8 +8,10 @@ import ErrorHandling
 import Logging
 import Intents
 import Purchasing
+import Scenes
 import UniformTypeIdentifiers
 import UIKit
+import UserActivities
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,18 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        if options.userActivities.contains(where: { $0.activityType == "com.cocoatype.Highlighter.settings"}) {
-            let settingsConfiguration = UISceneConfiguration(name: "Settings", sessionRole: .windowApplication)
-            return settingsConfiguration
-        } else {
-            #if targetEnvironment(macCatalyst)
-            return UISceneConfiguration(name: "Desktop", sessionRole: .windowApplication)
-            #else
-            let appConfiguration = UISceneConfiguration(name: "Highlighter", sessionRole: .windowApplication)
-            return appConfiguration
-            #endif
-        }
+    func application(_ application: UIApplication, configurationForConnecting session: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        return SceneProvider().sceneConfiguration(session: session, options: options)
     }
 
     // MARK: URL Handling
@@ -110,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     @objc func displayPreferences() {
-        let activity = NSUserActivity(activityType: "com.cocoatype.Highlighter.settings")
+        let activity = DesktopSettingsActivity()
         let existingScene = UIApplication.shared.openSessions.first(where: { $0.configuration.delegateClass == DesktopSettingsSceneDelegate.self })
         UIApplication.shared.requestSceneSessionActivation(existingScene, userActivity: activity, options: nil, errorHandler: nil)
     }

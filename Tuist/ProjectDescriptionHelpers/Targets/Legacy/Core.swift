@@ -20,10 +20,12 @@ public enum Core {
             .target(PurchaseMarketing.target),
             .target(Purchasing.target),
             .target(Purchasing.doublesTarget),
+            .target(Scenes.target),
             .target(SettingsUI.target),
             .target(Tools.target),
             .target(Unpurchased.target),
             .target(URLParsing.target),
+            .target(UserActivities.target),
         ],
         settings: .settings(
             defaultSettings: .recommended(excluding: [

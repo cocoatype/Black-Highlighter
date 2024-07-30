@@ -42,11 +42,13 @@ let project = Project(
         Redactions.target(sdk: .native),
         Rendering.target(sdk: .catalyst),
         Rendering.target(sdk: .native),
+        Scenes.target,
         SettingsUI.target,
         Shortcuts.target,
         Tools.target,
         Unpurchased.target,
         URLParsing.target,
+        UserActivities.target,
         // doubles
         DesignSystem.doublesTarget,
         Logging.doublesTarget,
@@ -72,11 +74,13 @@ let project = Project(
         Purchasing.testTarget,
         Redactions.testTarget,
         Rendering.testTarget,
+        Scenes.testTarget,
         SettingsUI.testTarget,
         Shortcuts.testTarget,
         Tools.testTarget,
         Unpurchased.testTarget,
         URLParsing.testTarget,
+        UserActivities.testTarget,
     ],
     schemes: [
         .scheme(

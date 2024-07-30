@@ -4,6 +4,7 @@
 import Editing
 import ErrorHandling
 import UIKit
+import UserActivities
 
 class AppWindow: UIWindow {
     init() {

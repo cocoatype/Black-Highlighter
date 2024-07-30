@@ -4,16 +4,17 @@
 import Editing
 import ErrorHandling
 import Redactions
+import Scenes
 import UIKit
 
 #if targetEnvironment(macCatalyst)
 class DesktopViewController: UIViewController, FileURLProvider {
     var editingViewController: PhotoEditingViewController? { children.first as? PhotoEditingViewController }
 
-    init(representedURL: URL?, image: UIImage?, redactions: [Redaction]?) {
-        self.initialRedactions = redactions
-        self.representedURL = representedURL
-        self.image = image
+    init(dependencies: SceneDependencies) {
+        self.initialRedactions = dependencies.redactions
+        self.representedURL = dependencies.representedURL
+        self.image = dependencies.image
         super.init(nibName: nil, bundle: nil)
     }
 

@@ -23,6 +23,7 @@ public enum Editing {
             .target(Rendering.target(sdk: .catalyst)),
             .target(Tools.target),
             .target(Unpurchased.target),
+            .target(UserActivities.target),
             .external(name: "ClippingBezier"),
         ],
         settings: .settings(
