@@ -25,32 +25,17 @@ public struct PencilMenu: View {
     public var body: some View {
         ZStack {
             PencilMenuBackground()
-            if let adjustedPosition {
-                Circle()
-                    .foregroundColor(.red)
-                    .position(adjustedPosition)
-                    .frame(width: 5, height: 5)
-            }
-
             ForEach(Self.indexedTools, id: \.0) { (tool, index) in
                 PencilMenuItem(tool: tool)
-                    .transformEffect(itemTransform(index: index, isOffset: true))
                     .scaleEffect(scale(at: index))
-                    .border(Color.green)
+                    .transformEffect(itemTransform(index: index, isOffset: true))
+                    .animation(.easeInOut(duration: 0.1), value: scale(at: index))
             }
         }
-        .border(Color.red)
         .scaleEffect(isMenuShowing ? 1.0 : 0.5)
         .opacity(isMenuShowing ? 1 : 0)
         .animation(.bouncy(duration: 0.3, extraBounce: 0.1), value: isMenuShowing)
         .disabled(isMenuShowing == false)
-        .overlay {
-            Canvas { context, size in
-                context.fill(path(at: 0), with: .color(.red.opacity(0.4)))
-                context.fill(path(at: 1), with: .color(.green.opacity(0.4)))
-                context.fill(path(at: 2), with: .color(.blue.opacity(0.4)))
-            }
-        }
     }
 
     private var adjustedPosition: CGPoint? {
@@ -66,30 +51,20 @@ public struct PencilMenu: View {
     }
 
     private func path(at index: Int) -> Path {
-        Path(ellipseIn: Self.buttonRect)
+        let buttonRect = CGRect(origin: .zero, size: CGSize(dimension: PencilMenuItem.diameter))
+        return Path(ellipseIn: buttonRect)
             .applying(itemTransform(index: index, isOffset: false))
-            .applying(CGAffineTransform(translationX: Self.outerDiameter / 2, y: Self.outerDiameter / 2))
-//            .applying(itemTransform(index: index))
+            .applying(CGAffineTransform(translationX: (Self.outerDiameter - PencilMenuItem.diameter) / 2, y: (Self.outerDiameter - PencilMenuItem.diameter) / 2))
     }
 
     private func scale(at index: Int) -> CGSize {
-        let regularScale = CGSize(width: 1.0, height: 1.0)
-        let expandedScale = CGSize(width: 1.2, height: 1.2)
+        let regularScale = CGSize(dimension: 1.0)
+        let expandedScale = CGSize(dimension: 1.4)
         guard let adjustedPosition else { return regularScale }
         let shouldScale = path(at: index).contains(adjustedPosition)
 
         return shouldScale ? expandedScale : regularScale
     }
-
-    private static let buttonRect = CGRect(
-        origin: CGPoint(
-            x: -18, //Self.outerDiameter / 2 - 18,
-            y: -18 //Self.outerDiameter / 2 - 18
-        ), size: CGSize(
-            width: 36,
-            height: 36
-        )
-    )
 
     private static let indexedTools: [(HighlighterTool, Int)] = {
         zip(HighlighterTool.allCases, HighlighterTool.allCases.indices)
@@ -106,9 +81,9 @@ public struct PencilMenu: View {
         let rotateTransform = CGAffineTransform(rotationAngle: rotation)
         let centerResetTransform = CGAffineTransform(translationX: PencilMenuItem.diameter / 2, y: PencilMenuItem.diameter / 2)
         return translateTransform
-            .concatenating(isOffset ? centerOffsetTransform : .identity)
+            .concatenating(centerOffsetTransform)
             .concatenating(rotateTransform)
-            .concatenating(isOffset ? centerResetTransform : .identity)
+            .concatenating(centerResetTransform)
     }
 }
 
