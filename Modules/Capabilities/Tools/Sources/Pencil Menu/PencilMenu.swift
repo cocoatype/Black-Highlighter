@@ -4,69 +4,115 @@
 import DesignSystem
 import SwiftUI
 
+@available(iOS 15.0, *)
 public struct PencilMenu: View {
-    private static let outerDiameter: Double = 298
-    private static let itemDiameter: Double = PencilMenuItem.diameter
-    private static let padding: Double = 8
-    private static let itemCount: Int = HighlighterTool.allCases.count
-    private static var lineWidth: Double {
-        itemDiameter + padding
-    }
+    static let outerDiameter: Double = 298
+    static let padding: Double = 8
 
-    private static var maxTrim: Double {
-        let itemLength = itemDiameter * itemCount
-        let paddingLength = padding * itemCount
-        let requiredLength = itemLength + paddingLength - lineWidth
-        return requiredLength / outerCircumference
+    static var outerCircumference: Double {
+        return Double.pi * PencilMenu.outerDiameter
     }
 
     private let isMenuShowing: Bool
-    public init(isMenuShowing: Bool) {
+    private let menuPosition: CGPoint
+    private let hoverPosition: CGPoint?
+    public init(isMenuShowing: Bool, menuPosition: CGPoint, hoverPosition: CGPoint?) {
         self.isMenuShowing = isMenuShowing
+        self.menuPosition = menuPosition
+        self.hoverPosition = hoverPosition
     }
 
     public var body: some View {
         ZStack {
-            Circle()
-                .trim(from: 0, to: Self.maxTrim)
-                .stroke(Color.primaryDark, style: StrokeStyle(lineWidth: Self.lineWidth, lineCap: .round))
-                .frame(width: Self.outerDiameter, height: Self.outerDiameter)
+            PencilMenuBackground()
+            if let adjustedPosition {
+                Circle()
+                    .foregroundColor(.red)
+                    .position(adjustedPosition)
+                    .frame(width: 5, height: 5)
+            }
+
             ForEach(Self.indexedTools, id: \.0) { (tool, index) in
                 PencilMenuItem(tool: tool)
-                    .transformEffect(itemTransform(index: index))
+                    .transformEffect(itemTransform(index: index, isOffset: true))
+                    .scaleEffect(scale(at: index))
+                    .border(Color.green)
             }
         }
+        .border(Color.red)
         .scaleEffect(isMenuShowing ? 1.0 : 0.5)
         .opacity(isMenuShowing ? 1 : 0)
         .animation(.bouncy(duration: 0.3, extraBounce: 0.1), value: isMenuShowing)
         .disabled(isMenuShowing == false)
+        .overlay {
+            Canvas { context, size in
+                context.fill(path(at: 0), with: .color(.red.opacity(0.4)))
+                context.fill(path(at: 1), with: .color(.green.opacity(0.4)))
+                context.fill(path(at: 2), with: .color(.blue.opacity(0.4)))
+            }
+        }
     }
+
+    private var adjustedPosition: CGPoint? {
+        guard let hoverPosition else { return nil }
+        let menuOrigin = CGPoint(
+            x: menuPosition.x - (Self.outerDiameter / 2),
+            y: menuPosition.y - (Self.outerDiameter / 2)
+        )
+
+        return CGPoint(
+            x: hoverPosition.x - menuOrigin.x,
+            y: hoverPosition.y - menuOrigin.y)
+    }
+
+    private func path(at index: Int) -> Path {
+        Path(ellipseIn: Self.buttonRect)
+            .applying(itemTransform(index: index, isOffset: false))
+            .applying(CGAffineTransform(translationX: Self.outerDiameter / 2, y: Self.outerDiameter / 2))
+//            .applying(itemTransform(index: index))
+    }
+
+    private func scale(at index: Int) -> CGSize {
+        let regularScale = CGSize(width: 1.0, height: 1.0)
+        let expandedScale = CGSize(width: 1.2, height: 1.2)
+        guard let adjustedPosition else { return regularScale }
+        let shouldScale = path(at: index).contains(adjustedPosition)
+
+        return shouldScale ? expandedScale : regularScale
+    }
+
+    private static let buttonRect = CGRect(
+        origin: CGPoint(
+            x: -18, //Self.outerDiameter / 2 - 18,
+            y: -18 //Self.outerDiameter / 2 - 18
+        ), size: CGSize(
+            width: 36,
+            height: 36
+        )
+    )
 
     private static let indexedTools: [(HighlighterTool, Int)] = {
         zip(HighlighterTool.allCases, HighlighterTool.allCases.indices)
             .map { $0 }
     }()
 
-    private static var outerCircumference: Double {
-        return Double.pi * outerDiameter
-    }
-
-    private func itemTransform(index: Int) -> CGAffineTransform {
-        let offset = (Self.padding + Self.itemDiameter) * index
+    private func itemTransform(index: Int, isOffset: Bool) -> CGAffineTransform {
+        let offset = (Self.padding + PencilMenuItem.diameter) * index
         let offsetPercent = offset / Self.outerCircumference
         let rotation = offsetPercent * (Double.pi * 2)
 
         let translateTransform = CGAffineTransform(translationX: Self.outerDiameter / 2, y: 0)
-        let centerOffsetTransform = CGAffineTransform(translationX: Self.itemDiameter / -2, y: Self.itemDiameter / -2)
+        let centerOffsetTransform = CGAffineTransform(translationX: PencilMenuItem.diameter / -2, y: PencilMenuItem.diameter / -2)
         let rotateTransform = CGAffineTransform(rotationAngle: rotation)
-        let centerResetTransform = CGAffineTransform(translationX: Self.itemDiameter / 2, y: Self.itemDiameter / 2)
+        let centerResetTransform = CGAffineTransform(translationX: PencilMenuItem.diameter / 2, y: PencilMenuItem.diameter / 2)
         return translateTransform
-            .concatenating(centerOffsetTransform)
+            .concatenating(isOffset ? centerOffsetTransform : .identity)
             .concatenating(rotateTransform)
-            .concatenating(centerResetTransform)
+            .concatenating(isOffset ? centerResetTransform : .identity)
     }
 }
 
+@available(iOS 15.0, *)
 enum PencilMenuPreviews: PreviewProvider {
     struct PreviewWrapper: View {
         @State private var isMenuShowing = false
@@ -79,7 +125,7 @@ enum PencilMenuPreviews: PreviewProvider {
                 } label: {
                     Text("Toggle Menu \(isMenuShowing)")
                 }
-                PencilMenu(isMenuShowing: isMenuShowing)
+                PencilMenu(isMenuShowing: isMenuShowing, menuPosition: .zero, hoverPosition: nil)
             }
         }
     }

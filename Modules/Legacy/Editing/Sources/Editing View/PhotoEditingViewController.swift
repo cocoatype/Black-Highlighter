@@ -528,6 +528,12 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         pencilMenuViewController.toggleMenu(at: location)
     }
 
+    @objc func updatePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
+        guard let eventLocation = event.location else { return }
+        let location = view.convert(eventLocation, from: sender)
+        pencilMenuViewController.updateMenu(at: location)
+    }
+
     // MARK: Boilerplate
 
     // tuBrute by @AdamWulf on 2024-04-29

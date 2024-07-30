@@ -5,18 +5,24 @@ import SwiftUI
 import Tools
 
 struct PhotoEditingPencilMenuOverlay: View {
+    @ObservedObject private var hoverPositionHolder: PhotoEditingPencilMenuHoverPositionHolder
     private let isMenuShowing: Bool
-    private let position: CGPoint
+    private let menuPosition: CGPoint
 
-    init(isMenuShowing: Bool, position: CGPoint) {
+    init(isMenuShowing: Bool, position: CGPoint, hoverPositionHolder: PhotoEditingPencilMenuHoverPositionHolder) {
         self.isMenuShowing = isMenuShowing
-        self.position = position
+        self.menuPosition = position
+        self.hoverPositionHolder = hoverPositionHolder
     }
 
     var body: some View {
-        PencilMenu(isMenuShowing: isMenuShowing)
-            .position(position)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea()
+        if #available(iOS 15, *) {
+            PencilMenu(
+                isMenuShowing: isMenuShowing,
+                menuPosition: menuPosition,
+                hoverPosition: hoverPositionHolder.hoverPosition
+            )
+            .position(menuPosition)
+        }
     }
 }

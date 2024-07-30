@@ -41,8 +41,11 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
         switch squeeze.phase {
         case .began:
             showContextualPalette(at: squeeze.hoverPose?.location)
-        case .changed: break
-            // determine if button selected
+        case .changed:
+            // thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat by @haiiux on 2024-07-29
+            // the hover pose, if it exists
+            guard let thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat = squeeze.hoverPose else { return }
+            updateContextualPalette(at: thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat.location)
         case .ended:
             // handle selected button
             fallthrough
@@ -77,6 +80,10 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     private func showContextualPalette(at location: CGPoint?) {
         UIApplication.shared.sendAction(#selector(PhotoEditingViewController.togglePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
+    }
+
+    private func updateContextualPalette(at location: CGPoint) {
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.updatePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
     }
 
     // MARK: Delegate Methods

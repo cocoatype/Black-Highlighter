@@ -7,9 +7,10 @@ import UIKit
 class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
     private var isMenuShowing: Bool = false
     private var position: CGPoint = .zero
+    private let positionHolder = PhotoEditingPencilMenuHoverPositionHolder()
 
     init() {
-        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position))
+        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position, hoverPositionHolder: positionHolder))
         view.isOpaque = false
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
@@ -27,8 +28,13 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
         updateRootView()
     }
 
+    func updateMenu(at position: CGPoint) {
+        positionHolder.hoverPosition = position
+//        rootView.updateHoverPosition(to: position)
+    }
+
     private func updateRootView() {
-        rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position)
+        rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position, hoverPositionHolder: positionHolder)
     }
 
     // MARK: Boilerplate
@@ -38,4 +44,8 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
         let typeName = NSStringFromClass(type(of: self))
         fatalError("\(typeName) does not implement init(coder:)")
     }
+}
+
+class PhotoEditingPencilMenuHoverPositionHolder: NSObject, ObservableObject {
+    @Published var hoverPosition: CGPoint?
 }
