@@ -534,6 +534,10 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         pencilMenuViewController.updateMenu(at: location)
     }
 
+    @objc func completePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
+        pencilMenuViewController.completeMenu(isCancelled: event.isCancelled ?? false)
+    }
+
     // MARK: Boilerplate
 
     // tuBrute by @AdamWulf on 2024-04-29

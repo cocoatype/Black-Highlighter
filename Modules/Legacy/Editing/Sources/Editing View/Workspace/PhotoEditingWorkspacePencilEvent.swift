@@ -3,8 +3,10 @@
 
 class PhotoEditingWorkspacePencilEvent: UIEvent {
     let location: CGPoint?
+    let isCancelled: Bool?
 
-    init(location: CGPoint?) {
+    init(location: CGPoint? = nil, isCancelled: Bool? = nil) {
         self.location = location
+        self.isCancelled = isCancelled
     }
 }

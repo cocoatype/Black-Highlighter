@@ -4,7 +4,6 @@
 import DesignSystem
 import SwiftUI
 
-@available(iOS 15.0, *)
 public struct PencilMenu: View {
     static let outerDiameter: Double = 298
     static let padding: Double = 8
@@ -13,13 +12,23 @@ public struct PencilMenu: View {
         return Double.pi * PencilMenu.outerDiameter
     }
 
+    private static let regularScale = CGSize(dimension: 1.0)
+    private static let expandedScale = CGSize(dimension: 1.4)
+
     private let isMenuShowing: Bool
     private let menuPosition: CGPoint
     private let hoverPosition: CGPoint?
-    public init(isMenuShowing: Bool, menuPosition: CGPoint, hoverPosition: CGPoint?) {
+    @Binding private var selectedTool: HighlighterTool?
+    public init(
+        isMenuShowing: Bool,
+        menuPosition: CGPoint,
+        hoverPosition: CGPoint?,
+        selectedTool: Binding<HighlighterTool?>
+    ) {
         self.isMenuShowing = isMenuShowing
         self.menuPosition = menuPosition
         self.hoverPosition = hoverPosition
+        _selectedTool = selectedTool
     }
 
     public var body: some View {
@@ -27,15 +36,23 @@ public struct PencilMenu: View {
             PencilMenuBackground()
             ForEach(Self.indexedTools, id: \.0) { (tool, index) in
                 PencilMenuItem(tool: tool)
-                    .scaleEffect(scale(at: index))
-                    .transformEffect(itemTransform(index: index, isOffset: true))
-                    .animation(.easeInOut(duration: 0.1), value: scale(at: index))
+                    .scaleEffect(selectedTool == tool ? Self.expandedScale : Self.regularScale)
+                    .transformEffect(itemTransform(index: index))
+                    .animation(.easeInOut(duration: 0.1), value: selectedTool)
             }
+        }
+        .onChange(of: hoverPosition) { _ in
+            let selectedIndexedTool = Self.indexedTools.first(where: { (tool, index) in
+                guard let adjustedPosition else { return false }
+                return path(at: index).contains(adjustedPosition)
+            })
+            selectedTool = selectedIndexedTool?.0
         }
         .scaleEffect(isMenuShowing ? 1.0 : 0.5)
         .opacity(isMenuShowing ? 1 : 0)
         .animation(.bouncy(duration: 0.3, extraBounce: 0.1), value: isMenuShowing)
         .disabled(isMenuShowing == false)
+        .position(menuPosition)
     }
 
     private var adjustedPosition: CGPoint? {
@@ -53,17 +70,8 @@ public struct PencilMenu: View {
     private func path(at index: Int) -> Path {
         let buttonRect = CGRect(origin: .zero, size: CGSize(dimension: PencilMenuItem.diameter))
         return Path(ellipseIn: buttonRect)
-            .applying(itemTransform(index: index, isOffset: false))
+            .applying(itemTransform(index: index))
             .applying(CGAffineTransform(translationX: (Self.outerDiameter - PencilMenuItem.diameter) / 2, y: (Self.outerDiameter - PencilMenuItem.diameter) / 2))
-    }
-
-    private func scale(at index: Int) -> CGSize {
-        let regularScale = CGSize(dimension: 1.0)
-        let expandedScale = CGSize(dimension: 1.4)
-        guard let adjustedPosition else { return regularScale }
-        let shouldScale = path(at: index).contains(adjustedPosition)
-
-        return shouldScale ? expandedScale : regularScale
     }
 
     private static let indexedTools: [(HighlighterTool, Int)] = {
@@ -71,7 +79,7 @@ public struct PencilMenu: View {
             .map { $0 }
     }()
 
-    private func itemTransform(index: Int, isOffset: Bool) -> CGAffineTransform {
+    private func itemTransform(index: Int) -> CGAffineTransform {
         let offset = (Self.padding + PencilMenuItem.diameter) * index
         let offsetPercent = offset / Self.outerCircumference
         let rotation = offsetPercent * (Double.pi * 2)
@@ -84,6 +92,15 @@ public struct PencilMenu: View {
             .concatenating(centerOffsetTransform)
             .concatenating(rotateTransform)
             .concatenating(centerResetTransform)
+    }
+}
+
+struct PositionModifier: ViewModifier {
+    let menuPosition: CGPoint
+
+    func body(content: Content) -> some View {
+        content.position(menuPosition)
+            .animation(nil)
     }
 }
 
@@ -100,7 +117,7 @@ enum PencilMenuPreviews: PreviewProvider {
                 } label: {
                     Text("Toggle Menu \(isMenuShowing)")
                 }
-                PencilMenu(isMenuShowing: isMenuShowing, menuPosition: .zero, hoverPosition: nil)
+                PencilMenu(isMenuShowing: isMenuShowing, menuPosition: .zero, hoverPosition: nil, selectedTool: .constant(nil))
             }
         }
     }

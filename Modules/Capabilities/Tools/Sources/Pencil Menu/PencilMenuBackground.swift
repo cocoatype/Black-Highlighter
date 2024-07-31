@@ -3,7 +3,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct PencilMenuBackground: View {
     private static let itemCount: Int = HighlighterTool.allCases.count
     private static var lineWidth: Double {

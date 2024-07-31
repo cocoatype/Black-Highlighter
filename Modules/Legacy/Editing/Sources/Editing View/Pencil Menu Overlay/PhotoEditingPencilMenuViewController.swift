@@ -5,36 +5,40 @@ import SwiftUI
 import UIKit
 
 class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
-    private var isMenuShowing: Bool = false
-    private var position: CGPoint = .zero
-    private let positionHolder = PhotoEditingPencilMenuHoverPositionHolder()
+    private let liaison = PhotoEditingPencilMenuLiaison()
 
     init() {
-        super.init(rootView: PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position, hoverPositionHolder: positionHolder))
+        super.init(rootView: PhotoEditingPencilMenuOverlay(liaison: liaison))
         view.isOpaque = false
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
     }
 
     func toggleMenu(at position: CGPoint?) {
-        if let position, isMenuShowing == false {
-            self.position = position
-            updateRootView()
+        if let position {
+            liaison.menuPosition = position
+            CATransaction.flush()
         }
-
-        CATransaction.flush()
-
-        isMenuShowing.toggle()
-        updateRootView()
+        liaison.isMenuShowing.toggle()
     }
 
     func updateMenu(at position: CGPoint) {
-        positionHolder.hoverPosition = position
-//        rootView.updateHoverPosition(to: position)
+        liaison.hoverPosition = position
     }
 
-    private func updateRootView() {
-        rootView = PhotoEditingPencilMenuOverlay(isMenuShowing: isMenuShowing, position: position, hoverPositionHolder: positionHolder)
+    func completeMenu(isCancelled: Bool) {
+        guard isCancelled == false else {
+            liaison.isMenuShowing = false
+            return
+        }
+
+        if let selectedTool = liaison.wrapThoseChilderen {
+            // tell the editing view about this
+            print("selecting \(selectedTool)")
+            liaison.isMenuShowing = false
+        } else {
+            print("leaving menu open")
+        }
     }
 
     // MARK: Boilerplate
@@ -44,8 +48,4 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
         let typeName = NSStringFromClass(type(of: self))
         fatalError("\(typeName) does not implement init(coder:)")
     }
-}
-
-class PhotoEditingPencilMenuHoverPositionHolder: NSObject, ObservableObject {
-    @Published var hoverPosition: CGPoint?
 }

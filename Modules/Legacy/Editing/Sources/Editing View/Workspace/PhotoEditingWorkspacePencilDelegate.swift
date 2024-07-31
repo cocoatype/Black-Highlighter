@@ -47,10 +47,9 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
             guard let thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat = squeeze.hoverPose else { return }
             updateContextualPalette(at: thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat.location)
         case .ended:
-            // handle selected button
-            fallthrough
+            completeContextualPalette(isCancelled: false)
         case .cancelled:
-            showContextualPalette(at: nil)
+            completeContextualPalette(isCancelled: true)
         @unknown default:
             break
         }
@@ -84,6 +83,10 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     private func updateContextualPalette(at location: CGPoint) {
         UIApplication.shared.sendAction(#selector(PhotoEditingViewController.updatePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
+    }
+
+    private func completeContextualPalette(isCancelled: Bool) {
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.completePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(isCancelled: isCancelled))
     }
 
     // MARK: Delegate Methods

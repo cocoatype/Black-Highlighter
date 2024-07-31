@@ -3,7 +3,7 @@
 
 import UIKit
 
-public enum HighlighterTool: CaseIterable {
+public enum HighlighterTool: CaseIterable, Equatable {
     case magic
     case manual
     case eraser
