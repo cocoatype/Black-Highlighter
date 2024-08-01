@@ -519,23 +519,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     // MARK: Pencil Menu
 
     private let pencilMenuViewController = PhotoEditingPencilMenuViewController()
-    @objc func togglePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
-        let location: CGPoint?
-        if let eventLocation = event.location {
-            location = view.convert(eventLocation, from: sender)
-        } else { location = nil }
-
-        pencilMenuViewController.toggleMenu(at: location)
-    }
-
     @objc func updatePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
-        guard let eventLocation = event.location else { return }
-        let location = view.convert(eventLocation, from: sender)
-        pencilMenuViewController.updateMenu(at: location)
-    }
-
-    @objc func completePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
-        pencilMenuViewController.completeMenu(isCancelled: event.isCancelled ?? false)
+        pencilMenuViewController.updateMenu(at: event.location?.converted(from: sender, to: view), phase: event.phase)
     }
 
     // MARK: Boilerplate

@@ -6,7 +6,7 @@ import Tools
 
 class PhotoEditingPencilMenuLiaison: NSObject, ObservableObject {
     @Published var menuPosition: CGPoint = .zero
-    @Published var isMenuShowing: Bool = false
+    @Published var state: PencilMenuState = .closed
     @Published var hoverPosition: CGPoint?
 
     // wrapThoseChilderen by @KaenAitch on 2024-07-29

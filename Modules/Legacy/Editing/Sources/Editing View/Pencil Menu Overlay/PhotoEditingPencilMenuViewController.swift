@@ -2,6 +2,7 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import SwiftUI
+import Tools
 import UIKit
 
 class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
@@ -14,31 +15,56 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
         view.isUserInteractionEnabled = false
     }
 
-    func toggleMenu(at position: CGPoint?) {
-        if let position {
-            liaison.menuPosition = position
-            CATransaction.flush()
+    func updateMenu(at position: CGPoint?, phase: PencilMenuInteractionPhase) {
+        switch phase {
+        case .began:
+            menuBegan(at: position)
+        case .changed:
+            menuChanged(at: position)
+        case .ended:
+            menuEnded()
+        case .cancelled:
+            menuCancelled()
         }
-        liaison.isMenuShowing.toggle()
     }
 
-    func updateMenu(at position: CGPoint) {
+    func menuBegan(at position: CGPoint?) {
+        switch liaison.state {
+        case .open:
+            liaison.state = .squeezed(next: .closed)
+        case .closed:
+            if let position {
+                liaison.menuPosition = position
+            }
+            liaison.state = .squeezed(next: .open)
+        case .squeezed:
+            // should never happen
+            break
+        }
+    }
+
+    func menuChanged(at position: CGPoint?) {
         liaison.hoverPosition = position
     }
 
-    func completeMenu(isCancelled: Bool) {
-        guard isCancelled == false else {
-            liaison.isMenuShowing = false
-            return
-        }
+    func menuEnded() {
+        // if we aren't showing the menu, do nothing
+        guard liaison.state.isOpen else { return }
 
+        // if something is selected, update the editing view and close
         if let selectedTool = liaison.wrapThoseChilderen {
-            // tell the editing view about this
+            // update the editing view
             print("selecting \(selectedTool)")
-            liaison.isMenuShowing = false
-        } else {
-            print("leaving menu open")
+
+            // close the menu
+            liaison.state = .closed
+        } else if case .squeezed(let next) = liaison.state { // otherwise, move to the next state
+            liaison.state = next
         }
+    }
+
+    func menuCancelled() {
+        liaison.state = .closed
     }
 
     // MARK: Boilerplate

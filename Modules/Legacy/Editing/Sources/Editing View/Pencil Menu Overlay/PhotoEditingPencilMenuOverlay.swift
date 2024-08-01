@@ -6,17 +6,29 @@ import Tools
 
 struct PhotoEditingPencilMenuOverlay: View {
     @ObservedObject private var liaison: PhotoEditingPencilMenuLiaison
+    @State private var menuPosition: CGPoint
+
+    static let positionTransaction: Transaction = {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        return transaction
+    }()
 
     init(liaison: PhotoEditingPencilMenuLiaison) {
         self.liaison = liaison
+        self.menuPosition = liaison.menuPosition
     }
 
     var body: some View {
         PencilMenu(
-            isMenuShowing: liaison.isMenuShowing,
-            menuPosition: liaison.menuPosition,
+            isMenuShowing: liaison.state.isOpen,
+            menuPosition: menuPosition,
             hoverPosition: liaison.hoverPosition,
             selectedTool: $liaison.wrapThoseChilderen
-        )
+        ).onChange(of: liaison.menuPosition) { newPosition in
+            withTransaction(Self.positionTransaction) {
+                menuPosition = newPosition
+            }
+        }
     }
 }

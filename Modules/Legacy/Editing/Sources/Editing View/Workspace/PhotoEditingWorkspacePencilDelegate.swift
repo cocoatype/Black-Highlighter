@@ -38,21 +38,13 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     @available(iOS 17.5, *)
     private func handlePaletteSqueeze(_ squeeze: UIPencilInteraction.Squeeze) {
-        switch squeeze.phase {
-        case .began:
-            showContextualPalette(at: squeeze.hoverPose?.location)
-        case .changed:
-            // thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat by @haiiux on 2024-07-29
-            // the hover pose, if it exists
-            guard let thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat = squeeze.hoverPose else { return }
-            updateContextualPalette(at: thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat.location)
-        case .ended:
-            completeContextualPalette(isCancelled: false)
-        case .cancelled:
-            completeContextualPalette(isCancelled: true)
-        @unknown default:
-            break
-        }
+        // thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat by @haiiux on 2024-07-29
+        // the location of the hover pose, if it exists
+        let thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat = squeeze.hoverPose?.location
+
+        let event = PhotoEditingWorkspacePencilEvent(location: thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat, phase: squeeze.phase)
+
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.updatePencilMenu(_:event:)), to: nil, from: workspaceView, for: event)
     }
 
     private func switchEraser() {
@@ -75,18 +67,6 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     private func showColorPalette() {
         UIApplication.shared.sendAction(#selector(PhotoEditingViewController.toggleColorPicker(_:)), to: nil, from: self, for: nil)
-    }
-
-    private func showContextualPalette(at location: CGPoint?) {
-        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.togglePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
-    }
-
-    private func updateContextualPalette(at location: CGPoint) {
-        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.updatePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(location: location))
-    }
-
-    private func completeContextualPalette(isCancelled: Bool) {
-        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.completePencilMenu(_:event:)), to: nil, from: workspaceView, for: PhotoEditingWorkspacePencilEvent(isCancelled: isCancelled))
     }
 
     // MARK: Delegate Methods
