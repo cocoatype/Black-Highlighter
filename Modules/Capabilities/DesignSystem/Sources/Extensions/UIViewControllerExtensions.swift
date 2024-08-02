@@ -12,7 +12,15 @@ extension UIViewController {
         addChild(to, removingExistingChildren: true, animated: true, embedView: embedView, layoutGuide: layoutGuide, completion: completion)
     }
 
-    private func addChild(_ to: UIViewController, removingExistingChildren: Bool, animated: Bool, embedView: UIView?, layoutGuide: UILayoutGuide?, completion: ((Bool) -> Void)?) {
+    // swiftlint:disable:next function_parameter_count
+    private func addChild(
+        _ to: UIViewController,
+        removingExistingChildren: Bool,
+        animated: Bool,
+        embedView: UIView?,
+        layoutGuide: UILayoutGuide?,
+        completion: ((Bool) -> Void)?
+    ) {
         guard
           let parentView = embedView ?? self.view,
           let toView = to.view
@@ -45,7 +53,7 @@ extension UIViewController {
                 toView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
                 toView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
                 toView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-                toView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor)
+                toView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             ])
         } else {
             toView.translatesAutoresizingMaskIntoConstraints = true

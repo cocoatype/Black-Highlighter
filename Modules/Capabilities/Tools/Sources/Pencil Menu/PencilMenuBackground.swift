@@ -15,7 +15,7 @@ struct PencilMenuBackground: View {
         let requiredLength = itemLength + paddingLength - lineWidth
         return requiredLength / PencilMenu.outerCircumference
     }
-    
+
     var body: some View {
         Circle()
             .trim(from: 0, to: Self.maxTrim)

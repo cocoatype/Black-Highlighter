@@ -1,18 +1,32 @@
 //  Created by Geoff Pado on 7/9/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Combine
 import SwiftUI
 import Tools
 import UIKit
 
-class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay> {
+class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPencilMenuOverlay>, PhotoEditingPencilMenuLiaison.Delegate {
     private let liaison = PhotoEditingPencilMenuLiaison()
+    private var cancellables = Set<AnyCancellable>()
 
     init() {
         super.init(rootView: PhotoEditingPencilMenuOverlay(liaison: liaison))
         view.isOpaque = false
         view.backgroundColor = .clear
+        liaison.delegate = self
         view.isUserInteractionEnabled = false
+
+        liaison.$state.sink { [weak self] state in
+            self?.view.isUserInteractionEnabled = state.isOpen
+        }.store(in: &cancellables)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.isOpaque = false
+        view.backgroundColor = .clear
+        view.isUserInteractionEnabled = true
     }
 
     func updateMenu(at position: CGPoint?, phase: PencilMenuInteractionPhase) {
@@ -29,6 +43,11 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
     }
 
     func menuBegan(at position: CGPoint?) {
+        var position = position
+        if position == nil && liaison.menuPosition == .zero {
+            position = view.bounds.center
+        }
+
         switch liaison.state {
         case .open:
             liaison.state = .squeezed(next: .closed)
@@ -53,17 +72,20 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
 
         // if something is selected, update the editing view and close
         if let selectedTool = liaison.wrapThoseChilderen {
-            // update the editing view
-            print("selecting \(selectedTool)")
-
-            // close the menu
-            liaison.state = .closed
+            completeMenu(with: selectedTool)
         } else if case .squeezed(let next) = liaison.state { // otherwise, move to the next state
             liaison.state = next
         }
     }
 
     func menuCancelled() {
+        liaison.state = .closed
+    }
+
+    // MARK: Liaison Delegate
+
+    func completeMenu(with tool: HighlighterTool) {
+        UIApplication.shared.sendAction(#selector(HighlighterToolSelectionHandler.selectHighlighterTool(_:event:)), to: nil, from: self, for: HighlighterToolSelectionEvent(tool: tool))
         liaison.state = .closed
     }
 

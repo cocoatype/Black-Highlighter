@@ -19,30 +19,35 @@ public struct PencilMenu: View {
     private let menuPosition: CGPoint
     private let hoverPosition: CGPoint?
     @Binding private var selectedTool: HighlighterTool?
+    private let toolSelectionHandler: (HighlighterTool) -> Void
     public init(
         isMenuShowing: Bool,
         menuPosition: CGPoint,
         hoverPosition: CGPoint?,
-        selectedTool: Binding<HighlighterTool?>
+        selectedTool: Binding<HighlighterTool?>,
+        toolSelectionHandler: @escaping (HighlighterTool) -> Void
     ) {
         self.isMenuShowing = isMenuShowing
         self.menuPosition = menuPosition
         self.hoverPosition = hoverPosition
         _selectedTool = selectedTool
+        self.toolSelectionHandler = toolSelectionHandler
     }
 
     public var body: some View {
         ZStack {
             PencilMenuBackground()
             ForEach(Self.indexedTools, id: \.0) { (tool, index) in
-                PencilMenuItem(tool: tool)
-                    .scaleEffect(selectedTool == tool ? Self.expandedScale : Self.regularScale)
-                    .transformEffect(itemTransform(index: index))
-                    .animation(.easeInOut(duration: 0.1), value: selectedTool)
+                PencilMenuItem(tool: tool) {
+                    toolSelectionHandler(tool)
+                }
+                .scaleEffect(selectedTool == tool ? Self.expandedScale : Self.regularScale)
+                .transformEffect(itemTransform(index: index))
+                .animation(.easeInOut(duration: 0.1), value: selectedTool)
             }
         }
         .onChange(of: hoverPosition) { _ in
-            let selectedIndexedTool = Self.indexedTools.first(where: { (tool, index) in
+            let selectedIndexedTool = Self.indexedTools.first(where: { (_, index) in
                 guard let adjustedPosition else { return false }
                 return path(at: index).contains(adjustedPosition)
             })
@@ -117,7 +122,7 @@ enum PencilMenuPreviews: PreviewProvider {
                 } label: {
                     Text("Toggle Menu \(isMenuShowing)")
                 }
-                PencilMenu(isMenuShowing: isMenuShowing, menuPosition: .zero, hoverPosition: nil, selectedTool: .constant(nil))
+                PencilMenu(isMenuShowing: isMenuShowing, menuPosition: .zero, hoverPosition: nil, selectedTool: .constant(nil)) { _ in }
             }
         }
     }

@@ -12,4 +12,13 @@ class PhotoEditingPencilMenuLiaison: NSObject, ObservableObject {
     // wrapThoseChilderen by @KaenAitch on 2024-07-29
     // the selected highlighter tool, if any
     @Published var wrapThoseChilderen: HighlighterTool?
+
+    weak var delegate: Delegate?
+    func completeMenu(with tool: HighlighterTool) {
+        delegate?.completeMenu(with: tool)
+    }
+
+    protocol Delegate: AnyObject {
+        func completeMenu(with tool: HighlighterTool)
+    }
 }

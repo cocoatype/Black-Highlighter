@@ -25,10 +25,20 @@ struct PhotoEditingPencilMenuOverlay: View {
             menuPosition: menuPosition,
             hoverPosition: liaison.hoverPosition,
             selectedTool: $liaison.wrapThoseChilderen
-        ).onChange(of: liaison.menuPosition) { newPosition in
+        ) { [weak liaison] in
+            liaison?.completeMenu(with: $0)
+        }
+        .onChange(of: liaison.menuPosition) { newPosition in
             withTransaction(Self.positionTransaction) {
                 menuPosition = newPosition
             }
         }
+        .background(
+            Color.clear
+                .onTapGesture {
+                    liaison.state = .closed
+                }
+        )
+        .ignoresSafeArea()
     }
 }

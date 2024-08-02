@@ -11,11 +11,12 @@ class HighlighterToolBarButtonItem: UIBarButtonItem {
         menu = UIMenu(
             image: HighlighterTool.magic.image,
             children: HighlighterTool.allCases.map { tool -> UIAction in
-                let selector = Self.selectAction(for: tool)
+                let event = HighlighterToolSelectionEvent(tool: tool)
+                let selector = #selector(PhotoEditingViewController.selectHighlighterTool(_:event:))
                 return UIAction(title: Self.title(for: tool), image: tool.image) { [weak self] _ in
                     guard let responder = self?.target as? UIResponder else { return }
                     let actionTarget = responder.target(forAction: selector, withSender: responder) as? UIResponder
-                    actionTarget?.perform(selector, with: responder)
+                    actionTarget?.perform(selector, with: responder, with: event)
                 }
             }
         )
@@ -29,14 +30,6 @@ class HighlighterToolBarButtonItem: UIBarButtonItem {
         case .magic: return Strings.magicToolItem
         case .manual: return Strings.manualToolItem
         case .eraser: return Strings.eraserToolItem
-        }
-    }
-
-    private static func selectAction(for tool: HighlighterTool) -> Selector {
-        switch tool {
-        case .magic: return #selector(PhotoEditingViewController.selectMagicHighlighter)
-        case .manual: return #selector(PhotoEditingViewController.selectManualHighlighter)
-        case .eraser: return #selector(PhotoEditingViewController.selectEraser)
         }
     }
 

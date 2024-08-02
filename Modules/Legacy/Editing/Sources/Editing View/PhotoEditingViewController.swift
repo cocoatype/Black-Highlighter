@@ -20,7 +20,7 @@ import UserActivities
 #warning("#61: Simplify this class")
 // swiftlint:disable file_length
 // swiftlint:disable:next type_body_length
-public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate, UIColorPickerViewControllerDelegate, UIPopoverPresentationControllerDelegate {
+public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate, UIColorPickerViewControllerDelegate, UIPopoverPresentationControllerDelegate, HighlighterToolSelectionHandler {
     public init(asset: PHAsset? = nil, image: UIImage? = nil, redactions: [Redaction]? = nil, completionHandler: ((UIImage) -> Void)? = nil) {
         self.asset = asset
         self.image = image
@@ -140,18 +140,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         updateToolbarItems()
     }
 
-    @objc public func selectMagicHighlighter() {
-        photoEditingView.highlighterTool = .magic
-        updateToolbarItems()
-    }
-
-    @objc public func selectManualHighlighter() {
-        photoEditingView.highlighterTool = .manual
-        updateToolbarItems()
-    }
-
-    @objc public func selectEraser() {
-        photoEditingView.highlighterTool = .eraser
+    @objc public func selectHighlighterTool(_ sender: Any, event: HighlighterToolSelectionEvent) {
+        photoEditingView.highlighterTool = event.tool
         updateToolbarItems()
     }
 

@@ -8,27 +8,26 @@ struct PencilMenuItem: View {
     static let diameter: Double = 36
 
     private let tool: HighlighterTool
-    init(tool: HighlighterTool) {
+    private let handler: () -> Void
+    init(tool: HighlighterTool, handler: @escaping () -> Void) {
         self.tool = tool
+        self.handler = handler
     }
 
     var body: some View {
-        Circle()
-            .fill(Color.cellBackground)
-            .frame(width: Self.diameter, height: Self.diameter)
-            .overlay(
-                tool.toolsImage.swiftUIImage
-                    .foregroundColor(.white)
-            )
+        Button(action: handler) {
+            PencilMenuItemLabel(tool: tool)
+                .frame(width: PencilMenuItem.diameter, height: PencilMenuItem.diameter)
+                .background(Color.clear)
+                .contentShape(Circle())
+        }
     }
 }
 
-enum PencilMenuItemPreviews: PreviewProvider {
-    static var previews: some View {
-        HStack {
-            ForEach(HighlighterTool.allCases, id: \.self) { tool in
-                PencilMenuItem(tool: tool)
-            }
+#Preview {
+    HStack {
+        ForEach(HighlighterTool.allCases, id: \.self) { tool in
+            PencilMenuItem(tool: tool) {}
         }
     }
 }
