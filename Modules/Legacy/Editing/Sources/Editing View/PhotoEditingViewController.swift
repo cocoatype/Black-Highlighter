@@ -13,13 +13,14 @@ import Photos
 import PurchaseMarketing
 import Redactions
 import Rendering
+import Tools
 import UIKit
 import UserActivities
 
 #warning("#61: Simplify this class")
 // swiftlint:disable file_length
 // swiftlint:disable:next type_body_length
-public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate, UIColorPickerViewControllerDelegate, UIPopoverPresentationControllerDelegate {
+public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate, UIColorPickerViewControllerDelegate, UIPopoverPresentationControllerDelegate, HighlighterToolSelectionHandler {
     public init(asset: PHAsset? = nil, image: UIImage? = nil, redactions: [Redaction]? = nil, completionHandler: ((UIImage) -> Void)? = nil) {
         self.asset = asset
         self.image = image
@@ -66,6 +67,8 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
             self?.photoEditingView.color = colorPanel.color
         })
         #endif
+
+        embed(pencilMenuViewController)
     }
 
     open override func loadView() {
@@ -128,27 +131,20 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     public var highlighterTool: HighlighterTool { return photoEditingView.highlighterTool }
 
     @objc func toggleHighlighterTool() {
-        let currentTool = photoEditingView.highlighterTool
-        let allTools = HighlighterTool.allCases
-        let currentToolIndex = allTools.firstIndex(of: currentTool) ?? allTools.startIndex
-        let nextToolIndex = (currentToolIndex + 1) % allTools.count
-        let nextTool = allTools[nextToolIndex]
-        photoEditingView.highlighterTool = nextTool
-        updateToolbarItems()
+        select(photoEditingView.highlighterTool.next)
     }
 
-    @objc public func selectMagicHighlighter() {
-        photoEditingView.highlighterTool = .magic
-        updateToolbarItems()
+    @objc public func selectHighlighterTool(_ sender: UICommand) {
+        guard let index = sender.propertyList as? Int else { return }
+        select(HighlighterTool.allCases[index])
     }
 
-    @objc public func selectManualHighlighter() {
-        photoEditingView.highlighterTool = .manual
-        updateToolbarItems()
+    @objc public func selectHighlighterTool(_ sender: Any, event: HighlighterToolSelectionEvent) {
+        select(event.tool)
     }
 
-    @objc public func selectEraser() {
-        photoEditingView.highlighterTool = .eraser
+    private func select(_ tool: HighlighterTool) {
+        photoEditingView.highlighterTool = tool
         updateToolbarItems()
     }
 
@@ -511,6 +507,13 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     @objc @MainActor public func showDebugPreferences(_ sender: Any) {
         guard #available(iOS 15, *) else { return }
         present(OverlayPreferencesHostingController(), animated: true)
+    }
+
+    // MARK: Pencil Menu
+
+    private let pencilMenuViewController = PhotoEditingPencilMenuViewController()
+    @objc func updatePencilMenu(_ sender: UIView, event: PhotoEditingWorkspacePencilEvent) {
+        pencilMenuViewController.updateMenu(at: event.location?.converted(from: sender, to: view), phase: event.phase)
     }
 
     // MARK: Boilerplate

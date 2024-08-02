@@ -1,6 +1,7 @@
 //  Created by Geoff Pado on 5/27/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Tools
 import UIKit
 
 class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDelegate {
@@ -33,6 +34,17 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
             break
         @unknown default: break
         }
+    }
+
+    @available(iOS 17.5, *)
+    private func handlePaletteSqueeze(_ squeeze: UIPencilInteraction.Squeeze) {
+        // thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat by @haiiux on 2024-07-29
+        // the location of the hover pose, if it exists
+        let thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat = squeeze.hoverPose?.location
+
+        let event = PhotoEditingWorkspacePencilEvent(location: thisVariableNameIsLongerThanTheTimeItTakesToFigureOutWhySettingTranslatesAutoresizingMaskIntoConstraintsToFalseFixedEverythingButYouStillDontKnowWhyWhichIsAnotherReasonSwiftUIIsGreat, phase: squeeze.phase)
+
+        UIApplication.shared.sendAction(#selector(PhotoEditingViewController.updatePencilMenu(_:event:)), to: nil, from: workspaceView, for: event)
     }
 
     private func switchEraser() {
@@ -70,8 +82,14 @@ class PhotoEditingWorkspacePencilDelegate: UIResponder, UIPencilInteractionDeleg
 
     @available(iOS 17.5, *)
     func pencilInteraction(_ interaction: UIPencilInteraction, didReceiveSqueeze squeeze: UIPencilInteraction.Squeeze) {
-        if squeeze.phase == .ended {
-            handleAction(UIPencilInteraction.preferredSqueezeAction)
+        guard UIPencilInteraction.preferredSqueezeAction == .showContextualPalette else {
+            if squeeze.phase == .ended {
+                handleAction(UIPencilInteraction.preferredSqueezeAction)
+            }
+
+            return
         }
+
+        handlePaletteSqueeze(squeeze)
     }
 }

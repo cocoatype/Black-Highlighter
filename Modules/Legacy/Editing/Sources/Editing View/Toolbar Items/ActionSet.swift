@@ -4,6 +4,7 @@
 import Defaults
 import Photos
 import Purchasing
+import Tools
 import UIKit
 
 struct ActionSet {

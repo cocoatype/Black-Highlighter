@@ -4,6 +4,7 @@
 #if targetEnvironment(macCatalyst)
 import AppKit
 import Editing
+import Tools
 import UIKit
 
 class ToolPickerItem: NSMenuToolbarItem {
@@ -19,18 +20,14 @@ class ToolPickerItem: NSMenuToolbarItem {
     }
 
     private var currentMenu: UIMenu {
-        UIMenu(title: Strings.menuTitle, children: [
-            UICommand(title: Strings.magicToolItem, image: UIImage(named: "highlighter.magic"), action: #selector(PhotoEditingViewController.selectMagicHighlighter), state: (delegate.highlighterTool == .magic ? .on : .off)),
-            UICommand(title: Strings.manualToolItem, image: UIImage(systemName: "highlighter"), action: #selector(PhotoEditingViewController.selectManualHighlighter), state: (delegate.highlighterTool == .manual ? .on : .off)),
-            UICommand(title: Strings.eraserToolItem, image: UIImage(named: "highlighter.eraser"), action: #selector(PhotoEditingViewController.selectEraser), state: (delegate.highlighterTool == .eraser ? .on : .off)),
-        ])
+        UIMenu(title: Strings.menuTitle, children: HighlighterTool.allCases.map { Command(tool: $0, currentTool: delegate.highlighterTool) })
     }
 
     private var selectedToolImage: UIImage? {
         switch delegate.highlighterTool {
-        case .magic: return UIImage(named: "highlighter.magic")?.applyingSymbolConfiguration(.init(scale: .large))
-        case .manual: return UIImage(named: "highlighter.manual")?.applyingSymbolConfiguration(.init(scale: .large))
-        case .eraser: return UIImage(named: "highlighter.eraser")?.applyingSymbolConfiguration(.init(scale: .large))
+        case .magic: return HighlighterTool.magic.image.applyingSymbolConfiguration(.init(scale: .large))
+        case .manual: return HighlighterTool.manual.image.applyingSymbolConfiguration(.init(scale: .large))
+        case .eraser: return HighlighterTool.eraser.image.applyingSymbolConfiguration(.init(scale: .large))
         }
     }
 
@@ -40,6 +37,26 @@ class ToolPickerItem: NSMenuToolbarItem {
     }
 
     private typealias Strings = CoreStrings.ToolPickerItem
+
+    private class Command: UICommand {
+        convenience init(tool: HighlighterTool, currentTool: HighlighterTool) {
+            self.init(title: Self.title(for: tool), image: tool.image, action: #selector(PhotoEditingViewController.selectHighlighterTool(_:)), propertyList: HighlighterTool.allCases.firstIndex(of: tool), state: (currentTool == tool ? .on : .off))
+        }
+
+        static func title(for tool: HighlighterTool) -> String {
+            switch tool {
+            case .magic: Strings.magicToolItem
+            case .manual: Strings.manualToolItem
+            case .eraser: Strings.eraserToolItem
+            }
+        }
+
+        @available(*, unavailable)
+        required init(coder: NSCoder) {
+            let typeName = NSStringFromClass(type(of: self))
+            fatalError("\(typeName) does not implement init(coder:)")
+        }
+    }
 }
 
 protocol ToolPickerItemDelegate: AnyObject {

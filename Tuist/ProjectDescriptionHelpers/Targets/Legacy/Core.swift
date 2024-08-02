@@ -22,6 +22,7 @@ public enum Core {
             .target(Purchasing.doublesTarget),
             .target(Scenes.target),
             .target(SettingsUI.target),
+            .target(Tools.target),
             .target(Unpurchased.target),
             .target(URLParsing.target),
             .target(UserActivities.target),

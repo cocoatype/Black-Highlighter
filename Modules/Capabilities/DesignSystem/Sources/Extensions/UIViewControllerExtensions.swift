@@ -4,57 +4,60 @@
 import UIKit
 
 extension UIViewController {
-    public func embed(_ newChild: UIViewController) {
-        if let existingChild = children.first {
-            existingChild.willMove(toParent: nil)
-            existingChild.view.removeFromSuperview()
-            existingChild.removeFromParent()
-        }
-
-        guard let newChildView = newChild.view else { return }
-        newChildView.frame = view.bounds
-        newChildView.translatesAutoresizingMaskIntoConstraints = false
-
-        addChild(newChild)
-        view.addSubview(newChildView)
-        newChild.didMove(toParent: self)
-
-        NSLayoutConstraint.activate([
-            newChildView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            newChildView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            newChildView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            newChildView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+    public func embed(_ newChild: UIViewController, embedView: UIView? = nil, layoutGuide: UILayoutGuide? = nil) {
+        addChild(newChild, removingExistingChildren: false, animated: false, embedView: embedView, layoutGuide: layoutGuide, completion: nil)
     }
 
-    public func transition(to child: UIViewController, completion: ((Bool) -> Void)? = nil) {
-        let duration = 0.3
+    public func transition(to: UIViewController, embedView: UIView? = nil, layoutGuide: UILayoutGuide? = nil, completion: ((Bool) -> Void)? = nil) {
+        addChild(to, removingExistingChildren: true, animated: true, embedView: embedView, layoutGuide: layoutGuide, completion: completion)
+    }
 
-        let current = children.last
-        guard let childView = child.view else { return }
+    // swiftlint:disable:next function_parameter_count
+    private func addChild(
+        _ to: UIViewController,
+        removingExistingChildren: Bool,
+        animated: Bool,
+        embedView: UIView?,
+        layoutGuide: UILayoutGuide?,
+        completion: ((Bool) -> Void)?
+    ) {
+        guard
+          let parentView = embedView ?? self.view,
+          let toView = to.view
+        else { return }
 
-        addChild(child)
+        let from = removingExistingChildren ? children.last : nil
+        from?.willMove(toParent: nil)
 
-        let newView = childView
-        newView.translatesAutoresizingMaskIntoConstraints = true
-        newView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        newView.frame = view.bounds
+        addChild(to)
 
-        if let existing = current {
-            existing.willMove(toParent: nil)
-
-            transition(from: existing, to: child, duration: duration, options: [.transitionCrossDissolve], animations: { }, completion: { done in
-                existing.removeFromParent()
-                child.didMove(toParent: self)
-                completion?(done)
-            })
+        if let layoutGuide = layoutGuide {
+            toView.frame = layoutGuide.layoutFrame
         } else {
-            view.addSubview(newView)
+            toView.frame = parentView.bounds
+        }
 
-            UIView.animate(withDuration: duration, delay: 0, options: [.transitionCrossDissolve], animations: { }, completion: { done in
-                child.didMove(toParent: self)
-                completion?(done)
-            })
+        let duration = animated ? 0.3 : 0
+        UIView.transition(with: parentView, duration: duration, options: [.transitionCrossDissolve], animations: {
+            from?.view.removeFromSuperview()
+            parentView.addSubview(toView)
+        }, completion: { done in
+            from?.removeFromParent()
+            to.didMove(toParent: self)
+            completion?(done)
+        })
+
+        if let layoutGuide = layoutGuide {
+            toView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                toView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+                toView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+                toView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+                toView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            ])
+        } else {
+            toView.translatesAutoresizingMaskIntoConstraints = true
+            toView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         }
     }
 }

@@ -6,6 +6,7 @@ import Defaults
 import Editing
 import Redactions
 import Scenes
+import Tools
 import UIKit
 import UserActivities
 
