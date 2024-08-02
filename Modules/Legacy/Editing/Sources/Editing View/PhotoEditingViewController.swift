@@ -131,17 +131,20 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
     public var highlighterTool: HighlighterTool { return photoEditingView.highlighterTool }
 
     @objc func toggleHighlighterTool() {
-        let currentTool = photoEditingView.highlighterTool
-        let allTools = HighlighterTool.allCases
-        let currentToolIndex = allTools.firstIndex(of: currentTool) ?? allTools.startIndex
-        let nextToolIndex = (currentToolIndex + 1) % allTools.count
-        let nextTool = allTools[nextToolIndex]
-        photoEditingView.highlighterTool = nextTool
-        updateToolbarItems()
+        select(photoEditingView.highlighterTool.next)
+    }
+
+    @objc public func selectHighlighterTool(_ sender: UICommand) {
+        guard let index = sender.propertyList as? Int else { return }
+        select(HighlighterTool.allCases[index])
     }
 
     @objc public func selectHighlighterTool(_ sender: Any, event: HighlighterToolSelectionEvent) {
-        photoEditingView.highlighterTool = event.tool
+        select(event.tool)
+    }
+
+    private func select(_ tool: HighlighterTool) {
+        photoEditingView.highlighterTool = tool
         updateToolbarItems()
     }
 

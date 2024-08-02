@@ -20,11 +20,7 @@ class ToolPickerItem: NSMenuToolbarItem {
     }
 
     private var currentMenu: UIMenu {
-        UIMenu(title: Strings.menuTitle, children: [
-            UICommand(title: Strings.magicToolItem, image: HighlighterTool.magic.image, action: #selector(PhotoEditingViewController.selectMagicHighlighter), state: (delegate.highlighterTool == .magic ? .on : .off)),
-            UICommand(title: Strings.manualToolItem, image: HighlighterTool.manual.image, action: #selector(PhotoEditingViewController.selectManualHighlighter), state: (delegate.highlighterTool == .manual ? .on : .off)),
-            UICommand(title: Strings.eraserToolItem, image: HighlighterTool.eraser.image, action: #selector(PhotoEditingViewController.selectEraser), state: (delegate.highlighterTool == .eraser ? .on : .off)),
-        ])
+        UIMenu(title: Strings.menuTitle, children: HighlighterTool.allCases.map { Command(tool: $0, currentTool: delegate.highlighterTool) })
     }
 
     private var selectedToolImage: UIImage? {
@@ -41,6 +37,26 @@ class ToolPickerItem: NSMenuToolbarItem {
     }
 
     private typealias Strings = CoreStrings.ToolPickerItem
+
+    private class Command: UICommand {
+        convenience init(tool: HighlighterTool, currentTool: HighlighterTool) {
+            self.init(title: Self.title(for: tool), image: tool.image, action: #selector(PhotoEditingViewController.selectHighlighterTool(_:)), propertyList: HighlighterTool.allCases.firstIndex(of: tool), state: (currentTool == tool ? .on : .off))
+        }
+
+        static func title(for tool: HighlighterTool) -> String {
+            switch tool {
+            case .magic: Strings.magicToolItem
+            case .manual: Strings.manualToolItem
+            case .eraser: Strings.eraserToolItem
+            }
+        }
+
+        @available(*, unavailable)
+        required init(coder: NSCoder) {
+            let typeName = NSStringFromClass(type(of: self))
+            fatalError("\(typeName) does not implement init(coder:)")
+        }
+    }
 }
 
 protocol ToolPickerItemDelegate: AnyObject {
