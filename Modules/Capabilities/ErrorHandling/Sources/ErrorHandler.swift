@@ -27,15 +27,18 @@ public struct ErrorHandler: ErrorHandling {
     }
 
     public func log(_ error: Error) {
-        let errorDescription: String
+        let errorID: String
         if type(of: error) is NSError.Type {
             let nsError = error as NSError
-            errorDescription = "\(nsError.domain) - \(nsError.code): \(nsError.localizedDescription)"
+            errorID = "\(nsError.domain) - \(nsError.code)"
         } else {
-            errorDescription = String(describing: error)
+            errorID = String(describing: error)
         }
 
-        logger.log(Event(name: Self.logError, info: ["errorDescription": errorDescription]))
+        logger.log(Event(name: Self.logError, info: [
+            Self.telemetryErrorIDKey: errorID,
+            Self.errorDescriptionKey: error.localizedDescription
+        ]))
     }
 
     public func crash(_ message: String) -> Never {
@@ -50,9 +53,14 @@ public struct ErrorHandler: ErrorHandling {
 
     // MARK: Event Names
 
-    private static let logError = Event.Name("logError")
+    private static let logError = Event.Name("TelemetryDeck.Error.occurred")
     private static let crash = Event.Name("crash")
     private static let notImplemented = Event.Name("notImplemented")
+
+    // MARK: Event Keys
+
+    private static let errorDescriptionKey = "errorDescription"
+    private static let telemetryErrorIDKey = "TelemetryDeck.Error.id"
 }
 
 @objc(ErrorHandling)
