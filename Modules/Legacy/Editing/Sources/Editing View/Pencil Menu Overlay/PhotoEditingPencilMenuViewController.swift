@@ -18,7 +18,10 @@ class PhotoEditingPencilMenuViewController: UIHostingController<PhotoEditingPenc
         view.isUserInteractionEnabled = false
 
         liaison.$state.sink { [weak self] state in
-            self?.view.isUserInteractionEnabled = state.isOpen
+            self?.view.isUserInteractionEnabled = switch state {
+            case .open: true
+            case .squeezed, .closed: false
+            }
         }.store(in: &cancellables)
     }
 
