@@ -37,7 +37,7 @@ public struct ErrorHandler: ErrorHandling {
 
         logger.log(Event(name: Self.logError, info: [
             Self.telemetryErrorIDKey: errorID,
-            Self.errorDescriptionKey: error.localizedDescription
+            Self.errorDescriptionKey: error.localizedDescription,
         ]))
     }
 

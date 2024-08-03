@@ -30,7 +30,7 @@ final class ErrorHandlerTests: XCTestCase {
         XCTAssertEqual(event.value, "TelemetryDeck.Error.occurred")
         XCTAssertEqual(event.info, [
             "TelemetryDeck.Error.id": "sample - 19",
-            "errorDescription": "The operation couldn’t be completed. (sample error 19.)"
+            "errorDescription": "The operation couldn’t be completed. (sample error 19.)",
         ])
     }
 
