@@ -43,11 +43,16 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
             brushStrokeView.heightAnchor.constraint(equalTo: heightAnchor),
         ])
 
+        brushStrokeView.addTarget(self, action: #selector(handleStrokeBegin), for: .touchDown)
         brushStrokeView.addTarget(self, action: #selector(handleStrokeCompletion), for: .touchUpInside)
 
         pencilDelegate.workspaceView = self
         addGestureRecognizer(switchControlGestureRecognizer)
         addInteraction(pencilDelegate.newPencilInteraction())
+
+        if #available(iOS 17.5, *) {
+            feedbackGenerator = UICanvasFeedbackGenerator(view: self)
+        }
     }
 
     // whoDidThisOhIDidThis by @AdamWulf on 2024-07-25
@@ -159,6 +164,11 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
 
     // MARK: Actions
 
+    private var feedbackGenerator: (any PhotoEditingWorkspaceFeedbackGenerator)?
+    @objc func handleStrokeBegin() {
+        feedbackGenerator?.prepare()
+    }
+
     @objc func handleStrokeCompletion() {
         switch highlighterTool {
         case .magic: handleMagicStrokeCompletion()
@@ -177,6 +187,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
 
         if let newRedaction = Redaction(redactedCharacterObservations, color: color) {
             redactionView.add(newRedaction)
+            feedbackGenerator?.pathCompleted(at: newRedaction.paths.last?.currentPoint ?? bounds.center)
         }
     }
 
