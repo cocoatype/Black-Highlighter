@@ -15,8 +15,8 @@ final class ErrorHandlerTests: XCTestCase {
         handler.log(SampleError.sample)
         let event = try XCTUnwrap(logger.loggedEvents.first)
 
-        XCTAssertEqual(event.value, "logError")
-        XCTAssertEqual(event.info, ["errorDescription": "sample"])
+        XCTAssertEqual(event.value, "TelemetryDeck.Error.occurred")
+        XCTAssertEqual(event.info["TelemetryDeck.Error.id"], "sample")
     }
 
     func testLoggingNSErrorLogsInformation() throws {
@@ -27,8 +27,11 @@ final class ErrorHandlerTests: XCTestCase {
         handler.log(error)
         let event = try XCTUnwrap(logger.loggedEvents.first)
 
-        XCTAssertEqual(event.value, "logError")
-        XCTAssertEqual(event.info, ["errorDescription": "sample - 19: The operation couldn’t be completed. (sample error 19.)"])
+        XCTAssertEqual(event.value, "TelemetryDeck.Error.occurred")
+        XCTAssertEqual(event.info, [
+            "TelemetryDeck.Error.id": "sample - 19",
+            "errorDescription": "The operation couldn’t be completed. (sample error 19.)",
+        ])
     }
 
     func testCrashingLogsMessage() throws {

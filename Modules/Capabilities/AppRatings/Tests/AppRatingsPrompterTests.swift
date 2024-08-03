@@ -58,8 +58,8 @@ class AppRatingsPrompterTests: XCTestCase {
         prompter.displayRatingsPrompt(in: nil)
 
         let event = try XCTUnwrap(spy.loggedEvents.first)
-        XCTAssertEqual(event.value, "logError")
-        XCTAssertEqual(event.info, ["errorDescription": "missingWindowScene"])
+        XCTAssertEqual(event.value, "TelemetryDeck.Error.occurred")
+        XCTAssertEqual(event.info["TelemetryDeck.Error.id"], "missingWindowScene")
     }
 
     func testDisplayingPromptLogsEvent() throws {
