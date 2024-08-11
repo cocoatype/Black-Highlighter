@@ -31,6 +31,7 @@ public enum App {
         settings: .settings(
             base: [
                 "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": "NO",
+                "TARGETED_DEVICE_FAMILY": "1,2,6",
             ],
             debug: [
                 "PROVISIONING_PROFILE_SPECIFIER": "match Development com.cocoatype.Highlighter",

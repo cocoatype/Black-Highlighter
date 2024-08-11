@@ -19,6 +19,11 @@ public enum TestHelpers {
         destinations: [.iPhone, .iPad, .macCatalyst, .appleVisionWithiPadDesign, .mac],
         product: .framework,
         bundleId: "com.cocoatype.Highlighter.TestHelpersInterface",
-        sources: ["Modules/TestHelpers/Interface/**"]
+        sources: ["Modules/TestHelpers/Interface/**"],
+        settings: .settings(
+            base: [
+                "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
+            ]
+        )
     )
 }

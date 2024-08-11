@@ -28,8 +28,12 @@ public enum Core {
             .target(UserActivities.target),
         ],
         settings: .settings(
+            base: [
+                "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER": false,
+            ],
             defaultSettings: .recommended(excluding: [
                 "CODE_SIGN_IDENTITY",
+                "DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER",
             ])
         )
     )
