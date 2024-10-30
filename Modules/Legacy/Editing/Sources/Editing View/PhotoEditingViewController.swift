@@ -300,6 +300,11 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         updateToolbarItems()
     }
 
+    @objc func selectedColorDidChange(_ sender: UIColorWell) {
+        guard let color = sender.selectedColor else { return }
+        photoEditingView.color = color
+    }
+
     // MARK: Undo/Redo
 
     private let localUndoManager = UndoManager()
