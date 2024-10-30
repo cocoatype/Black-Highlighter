@@ -24,6 +24,7 @@ public extension URL {
 extension String {
     init(_ staticString: StaticString) {
         self = staticString.withUTF8Buffer {
+            // swiftlint:disable:next optional_data_string_conversion
             String(decoding: $0, as: UTF8.self)
         }
     }
