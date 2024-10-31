@@ -1,7 +1,7 @@
 //  Created by Geoff Pado on 10/31/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
-final class PhotoEditingPathBrushStrokeView: UIControl, PhotoEditingBrushStrokeView {
+class PhotoEditingPathBrushStrokeView: UIControl, PhotoEditingBrushStrokeView {
     var color = UIColor.black {
         didSet { pathLayer?.strokeColor = color.cgColor }
     }
