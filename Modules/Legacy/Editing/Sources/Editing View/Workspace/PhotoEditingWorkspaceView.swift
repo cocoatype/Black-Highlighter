@@ -250,7 +250,7 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
     private let visualizationView = PhotoEditingObservationVisualizationView()
     private let debugView = PhotoEditingObservationDebugView()
     private let redactionView = PhotoEditingRedactionView()
-    private let brushStrokeView: (UIControl & PhotoEditingBrushStrokeView) = PhotoEditingCanvasBrushStrokeView()
+    private let brushStrokeView: (UIControl & PhotoEditingBrushStrokeView) = PhotoEditingPathBrushStrokeView()
     private let pencilDelegate = PhotoEditingWorkspacePencilDelegate()
 
     @available(*, unavailable)
