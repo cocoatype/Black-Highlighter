@@ -9,6 +9,7 @@ import Foundation
     func toggleHighlighterTool(_ sender: Any)
     func showColorPicker(_ sender: Any)
     func showAutoRedactAccess(_ sender: Any)
+    func selectedColorDidChange(_ sender: Any)
     func startSeeking(_ sender: Any)
     func showDebugPreferences(_ sender: Any)
 }
