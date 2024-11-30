@@ -9,7 +9,7 @@ import XCTest
 
 class SettingsContentTests: XCTestCase {
     func testSettingsContentContainsAppropriateSections() throws {
-        let content = try SettingsContent(state: .loading).inspect().find(SettingsContent.self)
+        let content = try SettingsContent(state: .loading).inspect().find(SettingsContent.self).implicitAnyView()
 
         try XCTAssertNoThrow(content.view(SettingsContentPurchasedFeaturesSection.self, 0), "Did not find purchased features section")
         try XCTAssertNoThrow(content.view(SettingsContentInformationSection.self, 1), "Did not find information section")
