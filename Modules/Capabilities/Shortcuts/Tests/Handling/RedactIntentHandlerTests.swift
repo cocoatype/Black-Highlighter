@@ -16,7 +16,7 @@ class RedactIntentHandlerTests: XCTestCase {
 
         do {
             _ = try await handler.handle(💩: intent) { _ in
-                return { file, _ in
+                return { file, _, _ in
                     RedactedFile(sourceImage: file, redactedImage: file, redactions: [])
                 }
             }

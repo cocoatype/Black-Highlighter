@@ -1,3 +1,14 @@
+"ColorEntity.colorName.black" = "Black";
+"ColorEntity.colorName.white" = "White";
+"ColorEntity.colorName.systemGray" = "Gray";
+"ColorEntity.colorName.systemRed" = "Red";
+"ColorEntity.colorName.systemOrange" = "Orange";
+"ColorEntity.colorName.systemYellow" = "Yellow";
+"ColorEntity.colorName.systemGreen" = "Green";
+"ColorEntity.colorName.systemBlue" = "Blue";
+"ColorEntity.colorName.systemPurple" = "Purple";
+"ColorEntity.displayRepresentation.title%@" = "%@";
+
 "DetectionKind.addresses" = "Addresses";
 "DetectionKind.names" = "Names";
 "DetectionKind.phoneNumbers" = "Phone Numbers";
@@ -8,17 +19,20 @@
 "OpenImageIntent.sourceImage.title" = "Source Image";
 "OpenImageIntent.title" = "Open Image";
 
+"RedactDetectionsIntent.color" = "Color";
 "RedactDetectionsIntent.description" = "Redact detected items in an image.";
 "RedactDetectionsIntent.detectionKind.title" = "Items to Detect";
 "RedactDetectionsIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact detected ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
 "RedactDetectionsIntent.sourceImages.title" = "Source Images";
 "RedactDetectionsIntent.title" = "Redact Detected Items";
 
+"RedactEverythingIntent.color" = "Color";
 "RedactEverythingIntent.description" = "Redact all text in an image.";
 "RedactEverythingIntent.parameterSummary${timCookCanEatMySocks}" = "Redact all text in ${timCookCanEatMySocks}";
 "RedactEverythingIntent.sourceImages.title" = "Source Images";
 "RedactEverythingIntent.title" = "Redact All Text";
 
+"RedactImageIntent.color" = "Color";
 "RedactImageIntent.description" = "Redact an image.";
 "RedactImageIntent.parameterSummary${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO}${timCookCanEatMySocks}" = "Redact occurrences of ${ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO} in ${timCookCanEatMySocks}";
 "RedactImageIntent.redactedWords.title" = "Redacted Words";

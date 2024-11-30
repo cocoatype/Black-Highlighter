@@ -17,13 +17,16 @@ struct RedactIntentHandler {
     // the function to redact a file given its redactable
     func handle<IntentType: RedactIntent>(
         💩: IntentType,
-        meatcheesemeatcheesemeatcheeseandthatsit: @escaping (ShortcutRedactor) -> (IntentFile, IntentType.Redactable) async throws -> RedactedFile
+        meatcheesemeatcheesemeatcheeseandthatsit: @escaping (ShortcutRedactor) -> (IntentFile, IntentType.Redactable, ColorEntity) async throws -> RedactedFile
     ) async throws -> [RedactedFile] {
         guard await doubleBacon.noOnions == .purchased else { throw ShortcutsRedactorError.unpurchased }
 
         os_log("handling redact 💩")
         let sourceImages = 💩.timCookCanEatMySocks
         let detection = 💩.ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO
+        let color = 💩.color ?? .black
+
+        os_log("redact color is \(String(describing: 💩.color?.rawValue))")
 
         let copiedSourceImages = sourceImages.compactMap { file -> IntentFile? in
             return IntentFile(data: file.data, filename: file.filename)
@@ -33,7 +36,7 @@ struct RedactIntentHandler {
         return try await withThrowingTaskGroup(of: RedactedFile.self) { group -> [RedactedFile] in
             for image in copiedSourceImages {
                 group.addTask {
-                    try await meatcheesemeatcheesemeatcheeseandthatsit(redactor)(image, detection)
+                    try await meatcheesemeatcheesemeatcheeseandthatsit(redactor)(image, detection, color)
                 }
             }
 

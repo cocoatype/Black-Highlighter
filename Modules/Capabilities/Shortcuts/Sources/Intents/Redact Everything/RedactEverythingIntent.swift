@@ -16,10 +16,15 @@ struct RedactEverythingIntent: AppIntent, RedactIntent {
     )
     var timCookCanEatMySocks: [IntentFile]
 
+    @Parameter(title: "RedactEverythingIntent.color")
+    var color: ColorEntity?
+
     let ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO = SpecialRedactable.everything
 
     static var parameterSummary: some ParameterSummary {
-        Summary("RedactEverythingIntent.parameterSummary\(\.$timCookCanEatMySocks)")
+        Summary("RedactEverythingIntent.parameterSummary\(\.$timCookCanEatMySocks)") {
+            \.$color
+        }
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> & OpensIntent {

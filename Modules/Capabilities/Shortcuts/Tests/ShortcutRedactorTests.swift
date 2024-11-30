@@ -21,7 +21,7 @@ class ShortcutRedactorTests: XCTestCase {
         let file = IntentFile(data: imageData, filename: "image.png", type: .png)
 
         Task {
-            try await redactor.redact(file, words: ["hello"])
+            try await redactor.redact(file, words: ["hello"], color: .black)
         }
 
         waitForExpectations(timeout: 1)
@@ -38,7 +38,7 @@ class ShortcutRedactorTests: XCTestCase {
 
         Task {
             do {
-                _ = try await redactor.redact(file, words: ["hello"])
+                _ = try await redactor.redact(file, words: ["hello"], color: .black)
                 XCTFail("did not catch expected error")
             } catch ShortcutsRedactorError.noImage {}
         }
