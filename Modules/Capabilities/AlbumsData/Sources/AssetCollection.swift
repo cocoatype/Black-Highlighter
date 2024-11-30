@@ -4,7 +4,7 @@
 import DesignSystem
 import Photos
 
-public struct AssetCollection: PhotoCollection {
+struct AssetCollection: PhotoCollection {
     public var assets: PHFetchResult<PHAsset> {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]

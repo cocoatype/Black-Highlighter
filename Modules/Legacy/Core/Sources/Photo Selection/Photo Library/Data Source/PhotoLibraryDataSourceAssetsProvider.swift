@@ -34,7 +34,6 @@ class PhotoLibraryDataSourceAssetsProvider: NSObject {
     }
 
     private func fetchAllPhotos() -> PHFetchResult<PHAsset> {
-        guard let collection = collection as? AssetCollection else { return PHFetchResult<PHAsset>() }
         return collection.assets
     }
 

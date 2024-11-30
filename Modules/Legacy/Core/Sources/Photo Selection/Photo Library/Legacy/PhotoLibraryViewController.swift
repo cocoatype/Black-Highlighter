@@ -9,7 +9,7 @@ import UIKit
 import UserActivities
 
 class PhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UIDropInteractionDelegate, PHPhotoLibraryChangeObserver {
-    init(collection: PhotoCollection = PhotoCollectionType.library.defaultCollection) {
+    init(collection: PhotoCollection) {
         self.dataSource = PhotoLibraryDataSource(collection)
         super.init(nibName: nil, bundle: nil)
 
