@@ -23,7 +23,7 @@ struct ColorRenderer {
     func data(for color: UIColor) throws -> Data {
         let imageSize = CGSize(width: 24, height: 24)
         let strokeColor = darkerColor(for: color)
-        let image = UIGraphicsImageRenderer(size: imageSize).image { context in
+        let image = UIGraphicsImageRenderer(size: imageSize).image { _ in
             strokeColor.setStroke()
             color.setFill()
 
