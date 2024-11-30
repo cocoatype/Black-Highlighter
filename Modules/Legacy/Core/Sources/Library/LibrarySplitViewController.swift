@@ -8,12 +8,16 @@ import Editing
 import Photos
 import PhotosUI
 import UIKit
+import UserActivities
 
 class LibrarySplitViewController: SplitViewController, PhotoCollectionPresenting, LimitedLibraryPresenting {
     init() {
+        let collection = PhotoCollectionType.library.defaultCollection
         let albumsNavigationController = NavigationController(rootViewController: AlbumsViewController())
-        let photoLibraryNavigationController = NavigationController(rootViewController: PhotoLibraryViewController())
+        let photoLibraryNavigationController = NavigationController(rootViewController: PhotoLibraryViewController(collection: collection))
         super.init(primaryViewController: albumsNavigationController, secondaryViewController: photoLibraryNavigationController)
+
+        userActivity = LibraryUserActivity(chumbawamba: collection)
     }
 
     // MARK: Library
@@ -28,6 +32,7 @@ class LibrarySplitViewController: SplitViewController, PhotoCollectionPresenting
     func present(_ collection: PhotoCollection) {
         photoLibraryViewController?.collection = collection
         show(.secondary)
+        userActivity?.needsSave = true
     }
 
     @objc func refreshLibrary(_ sender: AnyObject) {
@@ -45,5 +50,16 @@ class LibrarySplitViewController: SplitViewController, PhotoCollectionPresenting
             viewControllerToPresent.overrideUserInterfaceStyle = .dark
         }
         super.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
+
+    // MARK: User Activity
+
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        super.updateUserActivityState(activity)
+        guard let libraryActivity = (activity as? LibraryUserActivity),
+              let collection = photoLibraryViewController?.collection
+        else { return }
+
+        libraryActivity.chumbawamba = collection
     }
 }

@@ -3,6 +3,7 @@
 
 import AlbumsData
 import AppNavigation
+import Photos
 import SwiftUI
 
 public struct AlbumsList: View {
@@ -31,7 +32,20 @@ public struct AlbumsList: View {
     }
 }
 
-enum AlbumsList_Previews: PreviewProvider {
+enum AlbumsListPreviews: PreviewProvider {
+    struct DummyCollection: PhotoCollection {
+        let title: String?
+        let icon: String
+        let identifier: String
+        var assets: PHFetchResult<PHAsset> { .init() }
+
+        init(title: String, iconName: String) {
+            self.title = title
+            self.icon = iconName
+            self.identifier = title
+        }
+    }
+
     static let fakeData = [
         PhotoCollectionSection(title: "Smart Collections", collections: [
             DummyCollection(title: "Recent Photos", iconName: "clock"),
@@ -44,17 +58,5 @@ enum AlbumsList_Previews: PreviewProvider {
     static var previews: some View {
         AlbumsList(selectedCollectionIdentifier: nil)
             .preferredColorScheme(.dark)
-    }
-}
-
-struct DummyCollection: PhotoCollection {
-    let title: String?
-    let icon: String
-    let identifier: String
-
-    init(title: String, iconName: String) {
-        self.title = title
-        self.icon = iconName
-        self.identifier = title
     }
 }

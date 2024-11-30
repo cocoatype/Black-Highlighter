@@ -10,9 +10,6 @@
 // Title for the dismiss button
 "DismissBarButtonItem.title" = "Done";
 
-// Title for the editing user activity
-"EditingUserActivity.activityTitle" = "Redacting";
-
 // Title for the tool button
 "HighlighterToolBarButtonItem.buttonTitle" = "Tools";
 // Menu item for the eraser highlighter tool

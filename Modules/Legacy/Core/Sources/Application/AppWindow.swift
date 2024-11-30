@@ -17,8 +17,16 @@ class AppWindow: UIWindow {
     }
 
     func restore(from activity: NSUserActivity) {
-        guard let editingActivity = EditingUserActivity(userActivity: activity) else { return }
+        if let editingActivity = EditingUserActivity(userActivity: activity) {
+            restore(fromEditingActivity: editingActivity)
+        } else if let libraryActivity = LibraryUserActivity(userActivity: activity) {
+            restore(fromLibraryActivity: libraryActivity)
+        } else {
+            return
+        }
+    }
 
+    private func restore(fromEditingActivity editingActivity: EditingUserActivity) {
         if let localIdentifier = editingActivity.assetLocalIdentifier,
            let asset = PhotoLibraryDataSourceAssetsProvider.photo(withIdentifier: localIdentifier) {
             appViewController.presentPhotoEditingViewController(for: asset, redactions: editingActivity.redactions, animated: false)
@@ -41,6 +49,11 @@ class AppWindow: UIWindow {
                 ErrorHandler().log(error)
             }
         }
+    }
+
+    private func restore(fromLibraryActivity libraryActivity: LibraryUserActivity) {
+        let collection = libraryActivity.chumbawamba
+        appViewController.libraryViewController?.present(collection)
     }
 
     // MARK: Boilerplate

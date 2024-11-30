@@ -26,10 +26,15 @@ public class PhotoCollectionsDataSource: NSObject, ObservableObject, PHPhotoLibr
     // MARK: Boilerplate
 
     private static func allSections() -> [PhotoCollectionSection] {
-        return [
+        var sections = [
             Self.section(title: AlbumsDataStrings.PhotoCollectionsDataSource.smartAlbumsHeader, types: [.library, .screenshots, .favorites]),
-            Self.section(title: AlbumsDataStrings.PhotoCollectionsDataSource.userAlbumsHeader, types: [.userAlbum]),
         ]
+
+        if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized {
+            sections.append(Self.section(title: AlbumsDataStrings.PhotoCollectionsDataSource.userAlbumsHeader, types: [.userAlbum]))
+        }
+
+        return sections
     }
 
     private static func section(title: String, types: [PhotoCollectionType]) -> PhotoCollectionSection {

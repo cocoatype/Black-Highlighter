@@ -6,7 +6,7 @@ import Photos
 
 class PhotoLibraryDataSourceChangeCalculator: NSObject {
     init(collection: PhotoCollection) {
-        self.fetchResult = (collection as? AssetCollection)?.assets ?? PHFetchResult()
+        self.fetchResult = collection.assets
     }
 
     private func details(for change: PHChange) -> PHFetchResultChangeDetails<PHAsset>? {

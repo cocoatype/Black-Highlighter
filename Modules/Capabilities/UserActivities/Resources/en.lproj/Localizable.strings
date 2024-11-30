@@ -1,0 +1,5 @@
+// Title for the editing user activity
+"EditingUserActivity.activityTitle" = "Redacting";
+
+// Title for the library user activity
+"LibraryUserActivity.activityTitle" = "Selecting Image";

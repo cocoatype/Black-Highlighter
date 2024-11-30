@@ -50,7 +50,8 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
     }
 
     private var photoEditingViewController: PhotoEditingViewController? { ((presentedViewController as? NavigationController)?.viewControllers.first as? PhotoEditingViewController) }
-    var stateRestorationActivity: NSUserActivity? { photoEditingViewController?.userActivity }
+    var libraryViewController: LibrarySplitViewController? { children.first { $0 is LibrarySplitViewController } as? LibrarySplitViewController }
+    var stateRestorationActivity: NSUserActivity? { photoEditingViewController?.userActivity ?? libraryViewController?.userActivity }
 
     // MARK: Photo Editing View Controller
 

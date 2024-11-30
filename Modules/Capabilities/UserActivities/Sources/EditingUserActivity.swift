@@ -7,7 +7,7 @@ import UIKit
 public class EditingUserActivity: NSUserActivity {
     public init(assetLocalIdentifier: String? = nil, imageBookmarkData: Data? = nil, imageData: Data? = nil, redactions: [Redaction]? = nil) {
         super.init(activityType: EditingUserActivity.defaultActivityType)
-        title = EditingUserActivity.activityTitle
+        title = UserActivitiesStrings.EditingUserActivity.activityTitle
         self.assetLocalIdentifier = assetLocalIdentifier
         self.imageBookmarkData = imageBookmarkData
         self.imageData = imageData
@@ -80,5 +80,4 @@ public class EditingUserActivity: NSUserActivity {
     public static let redactionsKey = "EditingUserActivity.redactionsKey"
 
     public static let defaultActivityType = "com.cocoatype.Highlighter.editing"
-    private static let activityTitle = NSLocalizedString("EditingUserActivity.activityTitle", comment: "Title for the editing user activity")
 }
