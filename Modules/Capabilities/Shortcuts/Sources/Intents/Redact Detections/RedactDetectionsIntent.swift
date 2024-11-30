@@ -21,8 +21,13 @@ struct RedactDetectionsIntent: AppIntent, RedactIntent {
     )
     var ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO: [DetectionKind]
 
+    @Parameter(title: "RedactEverythingIntent.color")
+    var color: ColorEntity?
+
     static var parameterSummary: some ParameterSummary {
-        Summary("RedactDetectionsIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)")
+        Summary("RedactDetectionsIntent.parameterSummary\(\.$ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO)\(\.$timCookCanEatMySocks)") {
+            \.$color
+        }
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<[IntentFile]> & OpensIntent {

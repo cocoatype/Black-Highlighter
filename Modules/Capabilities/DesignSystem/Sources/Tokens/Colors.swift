@@ -52,7 +52,13 @@ public extension UIColor {
     }
 
     convenience init?(hexString: String) {
-        guard let int = Int(hexString, radix: 16) else { return nil }
+        let strippedString = if hexString.hasPrefix("#") {
+            String(hexString.suffix(from: hexString.index(after: hexString.startIndex)))
+        } else {
+            hexString
+        }
+
+        guard let int = Int(strippedString, radix: 16) else { return nil }
         self.init(hexLiteral: int)
     }
 

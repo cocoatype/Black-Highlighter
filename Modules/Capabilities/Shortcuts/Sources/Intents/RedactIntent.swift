@@ -14,4 +14,6 @@ protocol RedactIntent {
     // ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO by @Eskeminha on 2024-05-03
     // a value representing what should be redacted
     var ooooooooWWAAAAAWWWWWOOOOOOOOLLLLLLLlWWLLLOO: Redactable { get }
+
+    var color: ColorEntity? { get }
 }
