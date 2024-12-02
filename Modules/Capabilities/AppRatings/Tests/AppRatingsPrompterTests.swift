@@ -11,7 +11,7 @@ import XCTest
 @testable import Logging
 
 class AppRatingsPrompterTests: XCTestCase {
-    func testDisplayingPromptOnFirstAttemptDoesNotPrompt() throws {
+    func testDisplayingPromptOnFirstAttemptDoesNotPrompt() async throws {
         Defaults.numberOfSaves = 1
         let promptExpectation = expectation(description: "prompted")
         promptExpectation.isInverted = true
@@ -20,12 +20,12 @@ class AppRatingsPrompterTests: XCTestCase {
         }
 
         let windowScene = try InstanceHelper.create(UIWindowScene.self)
-        prompter.displayRatingsPrompt(in: windowScene)
+        await prompter.displayRatingsPrompt(in: windowScene)
 
-        waitForExpectations(timeout: 0.01)
+        await fulfillment(of: [promptExpectation], timeout: 0.01)
     }
 
-    func testDisplayingPromptOnThirdAttemptPrompts() throws {
+    func testDisplayingPromptOnThirdAttemptPrompts() async throws {
         Defaults.numberOfSaves = 3
         let promptExpectation = expectation(description: "prompted")
         let prompter = AppRatingsPrompter(logger: SpyLogger()) { _ in
@@ -33,42 +33,56 @@ class AppRatingsPrompterTests: XCTestCase {
         }
 
         let windowScene = try InstanceHelper.create(UIWindowScene.self)
-        prompter.displayRatingsPrompt(in: windowScene)
+        await prompter.displayRatingsPrompt(in: windowScene)
 
-        waitForExpectations(timeout: 1)
+        await fulfillment(of: [promptExpectation], timeout: 1)
     }
 
-    func testDisplayingPromptOnFifthAttemptPrompts() throws {
+    func testDisplayingPromptOnFifthAttemptDoesNotPrompt() async throws {
         Defaults.numberOfSaves = 5
+        let promptExpectation = expectation(description: "prompted")
+        promptExpectation.isInverted = true
+        let prompter = AppRatingsPrompter(logger: SpyLogger()) { _ in
+            promptExpectation.fulfill()
+        }
+
+        let windowScene = try InstanceHelper.create(UIWindowScene.self)
+        await prompter.displayRatingsPrompt(in: windowScene)
+
+        await fulfillment(of: [promptExpectation], timeout: 0.01)
+    }
+
+    func testDisplayingPromptOnSixthAttemptPrompts() async throws {
+        Defaults.numberOfSaves = 6
         let promptExpectation = expectation(description: "prompted")
         let prompter = AppRatingsPrompter(logger: SpyLogger()) { _ in
             promptExpectation.fulfill()
         }
 
         let windowScene = try InstanceHelper.create(UIWindowScene.self)
-        prompter.displayRatingsPrompt(in: windowScene)
+        await prompter.displayRatingsPrompt(in: windowScene)
 
-        waitForExpectations(timeout: 1)
+        await fulfillment(of: [promptExpectation], timeout: 1)
     }
 
-    func testDisplayingPromptWithNoWindowSceneLogsError() throws {
+    func testDisplayingPromptWithNoWindowSceneLogsError() async throws {
         let spy = SpyLogger()
         let prompter = AppRatingsPrompter(logger: spy) { _ in }
 
-        prompter.displayRatingsPrompt(in: nil)
+        await prompter.displayRatingsPrompt(in: nil)
 
         let event = try XCTUnwrap(spy.loggedEvents.first)
         XCTAssertEqual(event.value, "TelemetryDeck.Error.occurred")
         XCTAssertEqual(event.info["TelemetryDeck.Error.id"], "missingWindowScene")
     }
 
-    func testDisplayingPromptLogsEvent() throws {
+    func testDisplayingPromptLogsEvent() async throws {
         Defaults.numberOfSaves = 999
         let spy = SpyLogger()
         let prompter = AppRatingsPrompter(logger: spy) { _ in }
         let windowScene = try InstanceHelper.create(UIWindowScene.self)
 
-        prompter.displayRatingsPrompt(in: windowScene)
+        await prompter.displayRatingsPrompt(in: windowScene)
 
         let event = try XCTUnwrap(spy.loggedEvents.first)
         XCTAssertEqual(event.value, "AppRatingsPrompter.requestedRating")
