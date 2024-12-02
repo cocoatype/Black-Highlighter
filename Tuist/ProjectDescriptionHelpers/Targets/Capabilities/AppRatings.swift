@@ -5,6 +5,8 @@ public enum AppRatings {
         name: "AppRatings",
         dependencies: [
             .target(ErrorHandling.target(sdk: .catalyst)),
+            .target(Purchasing.target),
+            .target(PurchaseMarketing.target),
         ]
     )
 
