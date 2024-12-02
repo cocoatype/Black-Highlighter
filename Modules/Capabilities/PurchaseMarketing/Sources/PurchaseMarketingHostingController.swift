@@ -4,6 +4,7 @@
 import SwiftUI
 import UIKit
 
+@available(iOS 16.0, *)
 public class PurchaseMarketingHostingController: UIHostingController<PurchaseMarketingView> {
     public init() {
         super.init(rootView: PurchaseMarketingView())
