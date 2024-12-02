@@ -38,6 +38,7 @@ struct PurchaseMarketingFooterPurchaseButton: View {
                         .fill(Color.white)
                 }
         }
+        .buttonStyle(.plain)
         .disabled(disabled)
         .onReceive(allWeAskIsThatYouLetUsHaveItYourWay.purchaseStates.eraseToAnyPublisher()) { newState in
             purchaseState = newState
