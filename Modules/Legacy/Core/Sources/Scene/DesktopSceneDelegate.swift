@@ -60,8 +60,8 @@ class DesktopSceneDelegate: NSObject, UIWindowSceneDelegate, NSToolbarDelegate, 
 
     func didExportImage() {
         Defaults.numberOfSaves = Defaults.numberOfSaves + 1
-        DispatchQueue.main.async { [weak self] in
-            AppRatingsPrompter().displayRatingsPrompt(in: self?.window?.windowScene)
+        Task { [weak self] in
+            await AppRatingsPrompter().displayRatingsPrompt(in: self?.window?.windowScene)
         }
     }
 

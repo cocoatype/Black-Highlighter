@@ -29,7 +29,7 @@ extension PhotoEditingViewController {
                 clearHasMadeEdits()
 
                 Defaults.numberOfSaves += 1
-                AppRatingsPrompter().displayRatingsPrompt(in: view.window?.windowScene)
+                await AppRatingsPrompter().displayRatingsPrompt(in: view.window?.windowScene)
             } catch {
                 ErrorHandler().log(error)
             }
@@ -45,7 +45,9 @@ extension PhotoEditingViewController {
                 guard let self else { return }
                 let temporaryURL = try await preparedURL
                 let saveViewController = DesktopSaveViewController(url: temporaryURL) { [weak self] urls in
-                    AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
+                    Task {
+                        await AppRatingsPrompter().displayRatingsPrompt(in: self?.view.window?.windowScene)
+                    }
                     if let exportURL = urls.first {
                         self?.fileURLProvider?.updateRepresentedFileURL(to: exportURL)
                     }
