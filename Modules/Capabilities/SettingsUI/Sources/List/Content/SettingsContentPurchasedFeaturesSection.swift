@@ -17,7 +17,7 @@ struct SettingsContentPurchasedFeaturesSection: View {
 
     var body: some View {
         Section {
-            if purchaseState != .purchased {
+            if #available(iOS 16.0, *), purchaseState != .purchased {
                 PurchaseNavigationLink(destination: PurchaseMarketingView())
             }
 

@@ -23,7 +23,7 @@ public struct DesktopSettingsView: View {
         Group {
             if purchaseState == .purchased {
                 DesktopAutoRedactionsListViewControllerRepresentable()
-            } else {
+            } else if #available(iOS 16.0, *) {
                 PurchaseMarketingView()
             }
         }

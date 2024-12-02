@@ -86,7 +86,9 @@ class AppViewController: UIViewController, PhotoEditorPresenting, DocumentScanni
     // MARK: Settings View Controller
 
     @objc func presentPurchaseMarketing() {
-        present(PurchaseMarketingHostingController(), animated: true)
+        if #available(iOS 16.0, *) {
+            present(PurchaseMarketingHostingController(), animated: true)
+        }
     }
 
     @objc func presentSettingsViewController() {

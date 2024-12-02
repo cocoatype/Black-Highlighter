@@ -326,7 +326,9 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         present(
             PhotoEditingAutoRedactionsAccessProvider()
                 .autoRedactionsAccessViewController { [weak self] in
-                    self?.present(PurchaseMarketingHostingController(), animated: true)
+                    if #available(iOS 16, *) {
+                        self?.present(PurchaseMarketingHostingController(), animated: true)
+                    }
                 },
             animated: true
         )

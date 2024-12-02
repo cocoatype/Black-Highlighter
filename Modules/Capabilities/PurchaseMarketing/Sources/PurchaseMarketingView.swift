@@ -4,6 +4,7 @@
 import DesignSystem
 import SwiftUI
 
+@available(iOS 16.0, *)
 public struct PurchaseMarketingView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
@@ -50,6 +51,9 @@ public struct PurchaseMarketingView: View {
             }
             .fill()
             .navigationBarHidden(true)
+        }.safeAreaInset(edge: .bottom) {
+            PurchaseMarketingFooter()
+                .background(Color.appPrimary, ignoresSafeAreaEdges: .bottom)
         }
     }
 
@@ -75,11 +79,12 @@ public struct PurchaseMarketingView: View {
     private typealias Strings = PurchaseMarketingStrings.PurchaseMarketingView
 }
 
-enum PurchaseMarketingView_Previews: PreviewProvider {
-    static var previews: some View {
-        PurchaseMarketingView()
-            .preferredColorScheme(.dark)
-            .environment(\.readableWidth, 288)
-//            .previewLayout(.fixed(width: 640, height: 1024))
-    }
+@available(iOS 16.0, *)
+#Preview {
+    Color.black
+        .ignoresSafeArea()
+        .sheet(isPresented: .constant(true)) {
+            PurchaseMarketingView()
+                .frame(width: 640)
+        }
 }

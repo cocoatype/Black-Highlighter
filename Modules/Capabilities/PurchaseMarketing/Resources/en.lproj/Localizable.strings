@@ -10,6 +10,12 @@
 // Text separating the two purchase buttons
 "PurchaseButtonSeparator.text" = "or";
 
+"PurchaseMarketingFooterPrivacyLink.shortTitle" = "Privacy";
+"PurchaseMarketingFooterPrivacyLink.title" = "Privacy Policy";
+
+"PurchaseMarketingFooterRestoreLink.shortTitle" = "Restore";
+"PurchaseMarketingFooterRestoreLink.title" = "Restore Purchases";
+
 // Text for the headline in purchase marketing
 "PurchaseMarketingTopBarHeadlineLabel.text" = "Ultra Highlighter";
 
