@@ -3,38 +3,53 @@
 
 import Defaults
 import ErrorHandling
-import Logging
 import Foundation
+import Logging
+import PurchaseMarketing
+import Purchasing
 import StoreKit
 
 public struct AppRatingsPrompter {
     public init() {
-        self.init(logger: TelemetryLogger(), requestMethod: SKStoreReviewController.requestReview(in:))
+        self.init(logger: TelemetryLogger(), ratingRequestMethod: SKStoreReviewController.requestReview(in:))
     }
 
-    init(logger: Logger, requestMethod: @escaping ((UIWindowScene) -> Void) = SKStoreReviewController.requestReview(in:)) {
+    init(
+        logger: Logger,
+        ratingRequestMethod: @escaping ((UIWindowScene) -> Void) = SKStoreReviewController.requestReview(in:),
+        repository: any PurchaseRepository = Purchasing.repository
+    ) {
         self.logger = logger
-        self.requestMethod = requestMethod
+        self.ratingRequestMethod = ratingRequestMethod
+        self.repository = repository
     }
 
-    public func displayRatingsPrompt(in windowScene: UIWindowScene?) {
+    @MainActor
+    public func displayRatingsPrompt(in windowScene: UIWindowScene?) async {
         guard let windowScene else {
             ErrorHandler(logger: logger).log(AppRatingsError.missingWindowScene)
             return
         }
 
-        guard Defaults.numberOfSaves >= Self.minNumberOfSaves
-        else { return }
+        if (Defaults.numberOfSaves > 0) && (Defaults.numberOfSaves % Self.ratingNumberOfSavesCadence == 0) {
+            ratingRequestMethod(windowScene)
+            logger.log(Event(name: .requestedRating, info: [:]))
+        } else if Defaults.numberOfSaves == Self.paywallNumberOfSaves, #available(iOS 16.0, *) {
+            guard let topViewController = windowScene.windows.first?.rootViewController,
+                  await repository.noOnions != .purchased
+            else { return }
 
-        requestMethod(windowScene)
-        logger.log(Event(name: .requestedRating, info: [:]))
+            topViewController.present(PurchaseMarketingHostingController(), animated: true)
+        }
     }
 
     // MARK: Boilerplate
 
-    private static let minNumberOfSaves = 3
+    private static let ratingNumberOfSavesCadence = 3
+    private static let paywallNumberOfSaves = 10
     private let logger: Logger
-    private let requestMethod: (UIWindowScene) -> Void
+    private let ratingRequestMethod: (UIWindowScene) -> Void
+    private let repository: any PurchaseRepository
 }
 
 private enum AppRatingsError: Error {
