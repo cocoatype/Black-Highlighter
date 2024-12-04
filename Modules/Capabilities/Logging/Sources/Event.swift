@@ -2,16 +2,16 @@
 //  Copyright © 2023 Cocoatype, LLC. All rights reserved.
 
 public struct Event {
-    let name: Name
+    public let name: Name
     let info: [String: String]
     var value: String { String(name.value) }
 
-    public init(name: Name, info: [String: String]) {
+    public init(name: Name, info: [String: String] = [:]) {
         self.name = name
         self.info = info
     }
 
-    public struct Name: ExpressibleByStringLiteral {
+    public struct Name: Equatable, ExpressibleByStringLiteral {
         fileprivate let value: StaticString
         public init(_ value: StaticString) {
             self.value = value
@@ -19,6 +19,10 @@ public struct Event {
 
         public init(stringLiteral value: StaticString) {
             self.init(value)
+        }
+
+        public static func == (lhs: Name, rhs: Name) -> Bool {
+            String(lhs.value) == String(rhs.value)
         }
     }
 }
