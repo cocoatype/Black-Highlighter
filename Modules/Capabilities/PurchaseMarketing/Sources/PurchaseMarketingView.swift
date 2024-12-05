@@ -2,13 +2,18 @@
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
 import DesignSystem
+import Logging
 import SwiftUI
+import TestHelpersInterface
 
 @available(iOS 16.0, *)
 public struct PurchaseMarketingView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    public init() {}
+    private let logger: any Logger
+    public init(logger: any Logger = Logging.logger) {
+        self.logger = logger
+    }
 
     public var body: some View {
         GeometryReader { proxy in
@@ -55,6 +60,9 @@ public struct PurchaseMarketingView: View {
             PurchaseMarketingFooter()
                 .background(Color.appPrimary, ignoresSafeAreaEdges: .bottom)
         }
+        .onAppear {
+            logger.log(Event(name: .purchaseMarketingDisplayed))
+        }
     }
 
     private static let breakWidth = Double(640)
@@ -77,6 +85,7 @@ public struct PurchaseMarketingView: View {
     }
 
     private typealias Strings = PurchaseMarketingStrings.PurchaseMarketingView
+    let inspection = Inspection<Self>()
 }
 
 @available(iOS 16.0, *)
@@ -87,4 +96,8 @@ public struct PurchaseMarketingView: View {
             PurchaseMarketingView()
                 .frame(width: 640)
         }
+}
+
+extension Event.Name {
+    static let purchaseMarketingDisplayed = Event.Name("PurchaseMarketingView.displayed")
 }

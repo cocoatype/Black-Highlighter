@@ -3,13 +3,14 @@
 
 import Defaults
 import DesignSystem
+import Logging
 import UIKit
 
 public class UnpurchasedAlertControllerFactory {
     public init() {}
 
     public func alertController(for feature: UnpurchasedFeature) -> UIAlertController {
-        let alertController = UIAlertController(
+        let alertController = UnpurchasedAlertController(
             title: Strings.title,
             message: feature.message,
             preferredStyle: .alert

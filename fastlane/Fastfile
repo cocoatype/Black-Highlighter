@@ -3,7 +3,10 @@ default_platform(:ios)
 platform :ios do
   desc "Runs all the tests"
   lane :test do
-    run_tests(scheme: "Highlighter")
+    run_tests(
+      device: "iPhone 15",
+      scheme: "Highlighter"
+    )
   end
 
   desc "Submit a new beta build to Apple TestFlight"
