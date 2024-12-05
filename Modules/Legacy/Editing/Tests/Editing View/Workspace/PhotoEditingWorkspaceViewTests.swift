@@ -1,8 +1,11 @@
 //  Created by Geoff Pado on 4/11/21.
 //  Copyright © 2021 Cocoatype, LLC. All rights reserved.
 
-@testable import Editing
+import LoggingDoubles
 import XCTest
+
+@testable import Editing
+@testable import Logging
 
 class PhotoEditingWorkspaceViewTests: XCTestCase {
     func testBackgroundColorOnDesktopLightMode() throws {
@@ -59,5 +62,16 @@ class PhotoEditingWorkspaceViewTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
         }
+    }
+
+    func testWhenHandleStrokeCompletionThenEventLogged() throws {
+        let logger = SpyLogger()
+        let workspaceView = PhotoEditingWorkspaceView(logger: logger)
+        workspaceView.handleStrokeCompletion()
+
+        let loggedEvent = try XCTUnwrap(logger.loggedEvents.first)
+        XCTAssertEqual(loggedEvent.name, "PhotoEditingWorkspaceView.strokeCompleted")
+        XCTAssertEqual(loggedEvent.info["tool"], "magic")
+        XCTAssertEqual(loggedEvent.info["color"], "#000000")
     }
 }
