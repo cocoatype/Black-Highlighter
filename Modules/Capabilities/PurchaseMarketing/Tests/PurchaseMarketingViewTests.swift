@@ -13,8 +13,7 @@ final class PurchaseMarketingTests: XCTestCase {
         let logger = SpyLogger()
         let view = PurchaseMarketingView(logger: logger)
 
-        ViewHosting.host(view: view)
-        defer { ViewHosting.expel() }
+        try view.inspect().implicitAnyView().geometryReader().callOnAppear()
 
         let matchingEvents = logger.loggedEvents.count { event in
             event.name == .purchaseMarketingDisplayed

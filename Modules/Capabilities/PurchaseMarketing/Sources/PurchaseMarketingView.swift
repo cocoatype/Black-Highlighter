@@ -63,7 +63,6 @@ public struct PurchaseMarketingView: View {
         .onAppear {
             logger.log(Event(name: .purchaseMarketingDisplayed))
         }
-        .makeInspectable(with: inspection, rootView: self)
     }
 
     private static let breakWidth = Double(640)
