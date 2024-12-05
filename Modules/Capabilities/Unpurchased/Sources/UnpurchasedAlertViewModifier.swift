@@ -2,14 +2,21 @@
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
 import Defaults
+import Logging
 import SwiftUI
 
 public struct UnpurchasedAlertViewModifier: ViewModifier {
     @Binding private var isPresented: Bool
     private let feature: UnpurchasedFeature
-    init(for feature: UnpurchasedFeature, isPresented: Binding<Bool>) {
+    private let logger: any Logger
+    init(
+        for feature: UnpurchasedFeature,
+        isPresented: Binding<Bool>,
+        logger: any Logger = Logging.logger
+    ) {
         _isPresented = isPresented
         self.feature = feature
+        self.logger = logger
     }
 
     public func body(content: Content) -> some View {
@@ -30,6 +37,10 @@ public struct UnpurchasedAlertViewModifier: ViewModifier {
                     message: Text(feature.message),
                     dismissButton: .cancel(Text(Strings.dismissButton))
                 )
+            }
+        }.onChange(of: isPresented) { newValue in
+            if newValue {
+                logger.log(Event(name: "UnpurchasedAlertViewModifier.isPresented"))
             }
         }
     }

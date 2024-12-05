@@ -7,6 +7,7 @@ public enum Unpurchased {
         dependencies: [
             .target(Defaults.target),
             .target(DesignSystem.target),
+            .target(Logging.target(sdk: .catalyst)),
         ]
     )
 
@@ -14,6 +15,7 @@ public enum Unpurchased {
         name: "Unpurchased",
         dependencies: [
             .target(DesignSystem.target),
+            .target(Logging.doublesTarget),
         ]
     )
 }

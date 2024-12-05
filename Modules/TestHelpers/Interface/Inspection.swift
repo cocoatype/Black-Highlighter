@@ -19,4 +19,8 @@ public extension View {
     func makeInspectable<RootView: View>(with inspection: Inspection<RootView>, rootView: RootView) -> some View {
         self.onReceive(inspection.notice) { inspection.visit(rootView, $0) }
     }
+
+    func makeInspectable<RootView: ViewModifier>(with inspection: Inspection<RootView>, rootView: RootView) -> some View {
+        self.onReceive(inspection.notice) { inspection.visit(rootView, $0) }
+    }
 }
