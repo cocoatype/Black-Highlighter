@@ -2,13 +2,16 @@
 //  Copyright © 2019 Cocoatype, LLC. All rights reserved.
 
 @_implementationOnly import ClippingBezier
+import Logging
 import Observations
 import Redactions
 import Tools
 import UIKit
 
 class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
-    init() {
+    private let logger: any Logger
+    init(logger: any Logger = Logging.logger) {
+        self.logger = logger
         super.init(frame: .zero)
         isAccessibilityElement = false
         backgroundColor = .appBackground
@@ -175,6 +178,8 @@ class PhotoEditingWorkspaceView: UIControl, UIGestureRecognizerDelegate {
         case .manual: handleManualStrokeCompletion()
         case .eraser: handleEraserCompletion()
         }
+
+        logger.log(PhotoEditingWorkspaceViewTelemetryEventFactory().event(tool: highlighterTool, color: color))
 
         sendAction(#selector(PhotoEditingViewController.markHasMadeEdits), to: nil, for: nil)
     }
