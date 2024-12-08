@@ -5,16 +5,16 @@ import Photos
 import Redactions
 import UIKit
 
-public class OutputFactory {
+class PhotoOutputFactory: OutputFactory {
     private let preparedURL: URL
     private let redactions: [Redaction]
 
-    public init(preparedURL: URL, redactions: [Redaction]) {
+    init(preparedURL: URL, redactions: [Redaction]) {
         self.preparedURL = preparedURL
         self.redactions = redactions
     }
 
-    public func output(from input: PHContentEditingInput) throws -> PHContentEditingOutput {
+    func output(from input: PHContentEditingInput) throws -> PHContentEditingOutput {
         let output = PHContentEditingOutput(contentEditingInput: input)
         guard let formatVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { throw ExportingError.missingBundleVersion }
         let data = try JSONEncoder().encode(SaveActivityAdjustmentData(redactions: redactions))

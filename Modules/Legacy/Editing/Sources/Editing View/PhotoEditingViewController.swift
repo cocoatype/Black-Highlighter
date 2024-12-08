@@ -339,6 +339,30 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         dismiss(animated: true)
     }
 
+    @MainActor
+    private func autoRedact() {
+        let matchingObservations = matchingObservations(onlyActive: true)
+
+        if matchingObservations.count > 0 {
+            photoEditingView.redact(matchingObservations, joinSiblings: false)
+            markHasMadeEdits()
+        }
+    }
+
+    @MainActor
+    private func removeAutoRedactions() {
+        matchingObservations(onlyActive: false).forEach(photoEditingView.unredact)
+    }
+
+    @MainActor
+    private func updateAutoRedactions() {
+        // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
+        // dontMailYourCats by @KaenAitch on 2024-04-29
+
+        removeAutoRedactions()
+        autoRedact()
+    }
+
     // MARK: Key Commands
 
     #if targetEnvironment(macCatalyst)
@@ -441,30 +465,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
         return wordObservations + categoryObservations
     }
 
-    @MainActor
-    private func autoRedact() {
-        let matchingObservations = matchingObservations(onlyActive: true)
-
-        if matchingObservations.count > 0 {
-            photoEditingView.redact(matchingObservations, joinSiblings: false)
-            markHasMadeEdits()
-        }
-    }
-
-    @MainActor
-    private func removeAutoRedactions() {
-        matchingObservations(onlyActive: false).forEach(photoEditingView.unredact)
-    }
-
-    @MainActor
-    private func updateAutoRedactions() {
-        // thisMeetingCouldHaveBeenAnEmail by @nutterfi on 2024-04-29
-        // dontMailYourCats by @KaenAitch on 2024-04-29
-
-        removeAutoRedactions()
-        autoRedact()
-    }
-
     // MARK: User Activity
 
     open override func updateUserActivityState(_ activity: NSUserActivity) {
@@ -500,7 +500,6 @@ public class PhotoEditingViewController: UIViewController, UIScrollViewDelegate,
                 activityController.popoverPresentationController?.barButtonItem = shareBarButtonItem
                 activityController.completionWithItemsHandler = { [weak self] _, _, _, _ in
                     self?.clearHasMadeEdits()
-                    Defaults.numberOfSaves = Defaults.numberOfSaves + 1
                     self?.chain(selector: #selector(PhotoEditingActions.displayAppRatingsPrompt))
                 }
                 present(activityController, animated: true)

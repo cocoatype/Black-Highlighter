@@ -29,13 +29,13 @@ class PhotoExtensionViewController: UIViewController, PHContentEditingController
     func finishContentEditing(completionHandler: @escaping (PHContentEditingOutput?) -> Void) {
         Task { [weak self] in
             do {
-            guard let preparedURL = try await self?.editingViewController?.preparedURL,
-                  let redactions = self?.editingViewController?.redactions,
-                    let input = self?.input
-            else { return completionHandler(nil) }
+                guard let preparedURL = try await self?.editingViewController?.preparedURL,
+                      let redactions = self?.editingViewController?.redactions,
+                      let input = self?.input
+                else { return completionHandler(nil) }
 
-            let factory = OutputFactory(preparedURL: preparedURL, redactions: redactions)
-            let output = try factory.output(from: input)
+                let factory = Exporting.outputFactory(preparedURL: preparedURL, redactions: redactions)
+                let output = try factory.output(from: input)
                 completionHandler(output)
             } catch {
                 ErrorHandler().log(error)
