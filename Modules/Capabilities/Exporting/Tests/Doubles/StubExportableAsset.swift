@@ -6,7 +6,7 @@ import Photos
 @testable import Exporting
 
 struct StubExportableAsset: ExportableAsset {
-    func requestContentEditingInput(with options: PHContentEditingInputRequestOptions?) async -> (PHContentEditingInput?, [AnyHashable : Any]) {
+    func requestContentEditingInput(with options: PHContentEditingInputRequestOptions?) async -> (PHContentEditingInput?, [AnyHashable: Any]) {
         return (PHContentEditingInput(), [:])
     }
 

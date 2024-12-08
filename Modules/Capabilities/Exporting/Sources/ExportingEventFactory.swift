@@ -23,7 +23,7 @@ struct ExportingEventFactory {
             name: Self.eventName,
             info: [
                 Self.styleKey: styleValue,
-                Self.exportCountKey: String(Defaults.numberOfSaves)
+                Self.exportCountKey: String(Defaults.numberOfSaves),
             ]
         )
     }
