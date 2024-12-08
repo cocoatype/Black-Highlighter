@@ -1,50 +1,59 @@
 //  Created by Geoff Pado on 7/12/24.
 //  Copyright © 2024 Cocoatype, LLC. All rights reserved.
 
+import Defaults
 import ErrorHandling
 import Foundation
+import Logging
 import Photos
 import Redactions
 import UIKit
 
 public class InPlaceExporter: NSObject {
-    private let preparedURL: URL
-    private let asset: PHAsset
-    private let redactions: [Redaction]
+    public convenience init(
+        preparedURL: URL,
+        asset: PHAsset,
+        redactions: [Redaction]
+    ) {
+        self.init(
+            asset: asset,
+            outputFactory: PhotoOutputFactory(preparedURL: preparedURL, redactions: redactions),
+            library: PHPhotoLibrary.shared()
+        )
+    }
 
-    public init(preparedURL: URL, asset: PHAsset, redactions: [Redaction]) {
-        self.preparedURL = preparedURL
+    private let asset: any ExportableAsset
+    private let outputFactory: any OutputFactory
+    private let logger: any Logger
+    private let library: any PhotoLibrary
+    init(
+        asset: any ExportableAsset,
+        outputFactory: any OutputFactory,
+        logger: any Logger = Logging.logger,
+        library: any PhotoLibrary
+    ) {
         self.asset = asset
-        self.redactions = redactions
+        self.outputFactory = outputFactory
+        self.logger = logger
+        self.library = library
     }
 
     public func export() async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            asset.requestContentEditingInput(with: nil) { [weak self] contentEditingInput, _ in
-                Task { [weak self] in
-                    do {
-                        guard let self,
-                              let input = contentEditingInput
-                        else { throw ExportingError.noInputProvided }
+        let (contentEditingInput, _) = await asset.requestContentEditingInput(with: nil)
+        do {
+            guard let contentEditingInput else { throw ExportingError.noInputProvided }
 
-                        let factory = OutputFactory(preparedURL: preparedURL, redactions: redactions)
-                        let output = try factory.output(from: input)
+            let output = try outputFactory.output(from: contentEditingInput)
 
-                        try await PHPhotoLibrary.shared().performChanges { [asset] in
-                            let changeRequest = PHAssetChangeRequest(for: asset)
-                            changeRequest.contentEditingOutput = output
-                            print("Change request created with contentEditingOutput: \(output)")
-                        }
-
-                        print("Changes successfully committed to the photo library.")
-                        continuation.resume()
-                    } catch {
-                        ErrorHandler().log(error)
-                        print("Error during performChanges: \(error)")
-                        continuation.resume(throwing: error)
-                    }
-                }
+            try await library.performChanges { [asset] in
+                asset.changeRequest.contentEditingOutput = output
             }
+
+            Defaults.numberOfSaves = Defaults.numberOfSaves + 1
+            logger.log(ExportingEventFactory().event(style: .inPlace))
+        } catch {
+            ErrorHandler().log(error)
+            throw error
         }
     }
 }
