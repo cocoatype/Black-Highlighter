@@ -25,7 +25,7 @@ platform :ios do
     end
 
     # Build the app for App Store
-    build_app(
+    build_ios_app(
       cloned_source_packages_path: "SourcePackages",
       export_method: "app-store",
       scheme: "Highlighter")
